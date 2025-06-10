@@ -1,6 +1,7 @@
 "use client"
 
 import { useState, useEffect, useRef } from "react"
+import { TextGenerateEffect } from './ui/text-generate-effect';
 
 // Tech stack data with SVG icons
 const techStackData = [
@@ -143,7 +144,7 @@ export default function Techstack() {
 	const [isAnimating, setIsAnimating] = useState(false)
 	const [isPaused, setIsPaused] = useState(false)
 	const intervalRef = useRef(null)
-
+    const titleText = "My Tech Stack";
 	// Auto-scroll functionality
 	useEffect(() => {
 		if (!isPaused) {
@@ -185,13 +186,17 @@ export default function Techstack() {
 	}
 
 	return (
-		<section className="py-16 bg-white dark:bg-black px-4" id="skills">
+		<section className="py-6 bg-white dark:bg-black px-4" id="skills">
 			<div className="max-w-4xl mx-auto">
 				{/* Title */}
-				<div className="text-center mb-12">
-					<h2 className="text-2xl md:text-3xl font-bold text-black dark:text-white mb-4">Tech Stack</h2>
-					<div className="w-12 h-0.5 bg-neutral-400 dark:bg-neutral-600 mx-auto"></div>
-				</div>
+				 <div className="mb-12 text-center">
+                          <TextGenerateEffect
+                            words={titleText}
+                            className="text-3xl md:text-4xl font-bold text-black dark:text-white"
+                            duration={2.5}
+                            filter={true}
+                          />
+                        </div>
 
 				{/* Tech Stack Grid */}
 				<div className="relative mb-12" onMouseEnter={handleMouseEnter} onMouseLeave={handleMouseLeave}>
@@ -243,29 +248,33 @@ export default function Techstack() {
 
 				{/* Tech Stack Info */}
 				<div
-					className={`bg-neutral-50 dark:bg-neutral-900 border border-neutral-200 dark:border-neutral-800 rounded-lg p-4 md:p-5 transition-all duration-500 ${
+					className={`bg-neutral-50 dark:bg-neutral-900 border border-neutral-200 dark:border-neutral-800 rounded-lg p-6 md:p-5 transition-all duration-500 ${
 						isAnimating ? "opacity-0 transform translate-y-4" : "opacity-100 transform translate-y-0"
 					}`}
 				>
-					<div className="text-center max-w-xl mx-auto">
+					<div className="max-w-4xl">
+						{/* Header */}
 						<div className="flex items-center justify-center mb-3">
-							<div className="w-8 h-8 flex items-center justify-center bg-black dark:bg-white text-white dark:text-black rounded-md mr-3">
-								<div className="w-4 h-4">
-									{activeStack.icon}
-								</div>
-							</div>
-							<h3 className="text-lg md:text-xl font-bold text-black dark:text-white">{activeStack.name}</h3>
+							<h3 className="text-xl md:text-2xl font-bold text-black dark:text-white">{activeStack.name}</h3>
 						</div>
-						<p className="text-sm text-neutral-700 dark:text-neutral-300 leading-relaxed font-light mb-3">
-							{activeStack.description}
-						</p>
 						
-						{/* Project Usage Section */}
-						<div className="bg-white dark:bg-black border border-neutral-200 dark:border-neutral-800 rounded-md p-3">
-							<h4 className="text-sm font-semibold text-black dark:text-white mb-2">How I've Used This</h4>
-							<p className="text-xs text-neutral-600 dark:text-neutral-400 leading-relaxed">
-								{activeStack.projectUsage}
-							</p>
+						{/* Two Column Layout */}
+						<div className="grid md:grid-cols-2 gap-6">
+							{/* Description - Left Side */}
+							<div className="bg-white dark:bg-black border border-neutral-200 dark:border-neutral-800 rounded-lg p-4">
+								<h4 className="text-base font-semibold text-black dark:text-white mb-3">Description</h4>
+								<p className="text-sm text-neutral-600 dark:text-neutral-400 leading-relaxed">
+									{activeStack.description}
+								</p>
+							</div>
+
+							{/* Project Usage - Right Side */}
+							<div className="bg-white dark:bg-black border border-neutral-200 dark:border-neutral-800 rounded-lg p-4">
+								<h4 className="text-base font-semibold text-black dark:text-white mb-3">How I've Used This</h4>
+								<p className="text-sm text-neutral-600 dark:text-neutral-400 leading-relaxed">
+									{activeStack.projectUsage}
+								</p>
+							</div>
 						</div>
 					</div>
 				</div>

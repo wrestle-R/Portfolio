@@ -1,5 +1,6 @@
 import React from 'react';
 import { TextGenerateEffect } from './ui/text-generate-effect';
+import GitHubCalendar from 'react-github-calendar'
 
 const About = () => {
   const titleText = "About Me";
@@ -20,15 +21,17 @@ const About = () => {
         {/* Content */}
         <div className="max-w-4xl mx-auto space-y-8">
           {/* Introduction */}
-          <p className="text-lg md:text-xl font-light text-neutral-700 dark:text-neutral-300 leading-relaxed">
-            Hello! I'm <span className="font-semibold text-black dark:text-white">Russel Daniel Paul</span>, 
+          <p className="text-lg md:text-lg font-light text-neutral-700 dark:text-neutral-300 leading-relaxed">
+            Hello! I'm Russel Daniel Paul, 
             a passionate second-year engineering student who loves creating 
-            <span className="font-semibold text-black dark:text-white"> dark-themed websites</span> and finding 
-            <span className="font-semibold text-black dark:text-white">unique solutions</span> to complex problems. 
-            I specialize in the <span className="font-semibold text-black dark:text-white">MERN stack</span> and am currently 
-            exploring <span className="font-semibold text-black dark:text-white">Next.js</span> and other modern frameworks.
+            dark-themed websites and finding 
+            unique solutions to complex problems. 
+            I specialize in the MERN stack and am currently 
+            exploring Next.js and other modern frameworks.
           </p>
           
+          <GitHubCalendar username="wrestle-R" />
+
           {/* Achievements
           <p className="text-base md:text-lg text-neutral-600 dark:text-neutral-400 italic">
             Successfully participated in multiple hackathons with runner-up achievements and innovative solutions.
