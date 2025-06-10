@@ -17,14 +17,14 @@ const techStackData = [
 	},
 	{
 		id: 2,
-		name: "JavaScript",
+		name: "Git",
 		icon: (
 			<svg viewBox="0 0 24 24" className="w-8 h-8" fill="currentColor">
-				<path d="M0 0h24v24H0V0zm22.034 18.276c-.175-1.095-.888-2.015-3.003-2.873-.736-.345-1.554-.585-1.797-1.14-.091-.33-.105-.51-.046-.705.15-.646.915-.84 1.515-.66.39.12.75.42.976.9 1.034-.676 1.034-.676 1.755-1.125-.27-.42-.404-.601-.586-.78-.63-.705-1.469-1.065-2.834-1.034l-.705.089c-.676.165-1.32.525-1.71 1.005-1.14 1.291-.811 3.541.569 4.471 1.365 1.02 3.361 1.244 3.616 2.205.24 1.17-.87 1.545-1.966 1.41-.811-.18-1.26-.586-1.755-1.336l-1.83 1.051c.21.48.45.689.81 1.109 1.74 1.756 6.09 1.666 6.871-1.004.029-.09.24-.705.074-1.65l.046.067zm-8.983-7.245h-2.248c0 1.938-.009 3.864-.009 5.805 0 1.232.063 2.363-.138 2.711-.33.689-1.18.601-1.566.48-.396-.196-.597-.466-.83-.855-.063-.105-.11-.196-.127-.196l-1.825 1.125c.305.63.75 1.172 1.324 1.517.855.51 2.004.675 3.207.405.783-.226 1.458-.691 1.811-1.411.51-.93.402-2.07.397-3.346.012-2.054 0-4.109 0-6.179l.004-.056z" />
+				<path d="M23.546 10.93L13.067.452c-.604-.603-1.582-.603-2.188 0L8.708 2.627l2.76 2.76c.645-.215 1.379-.07 1.889.441.516.515.658 1.258.438 1.9l2.658 2.66c.645-.223 1.387-.078 1.9.435.721.72.721 1.884 0 2.604-.719.719-1.881.719-2.6 0-.539-.541-.674-1.337-.404-1.996L12.86 8.955v6.525c.176.086.342.203.488.348.713.721.713 1.883 0 2.6-.719.721-1.889.721-2.609 0-.719-.719-.719-1.879 0-2.598.182-.18.387-.316.605-.406V8.835c-.217-.091-.424-.222-.6-.401-.545-.545-.676-1.342-.396-2.009L7.636 3.7.45 10.881c-.6.605-.6 1.584 0 2.189l10.48 10.477c.604.604 1.582.604 2.186 0l10.43-10.43c.605-.603.605-1.582 0-2.187" />
 			</svg>
 		),
-		description: "Core programming language for both frontend interactivity and backend development",
-		projectUsage: "Primary language for all logic implementation. Created dynamic filtering algorithms in Screen Smart, interactive travel recommendations in Trippeer, and API endpoint handling."
+		description: "Distributed version control system for tracking changes in source code during development",
+		projectUsage: "Used for version control in all projects. Managed collaborative development in hackathon teams, maintained code history, and handled branching strategies for feature development in Screen Smart and Trippeer."
 	},
 	{
 		id: 3,
@@ -75,7 +75,7 @@ const techStackData = [
 		name: "PostgreSQL",
 		icon: (
 			<svg viewBox="0 0 24 24" className="w-8 h-8" fill="currentColor">
-				<path d="M23.111 5.441c-.592-.85-1.627-1.278-3.082-1.278-1.455 0-2.49.428-3.082 1.278-.593-.85-1.628-1.278-3.083-1.278-1.454 0-2.489.428-3.081 1.278-.593-.85-1.628-1.278-3.083-1.278-1.454 0-2.489.428-3.081 1.278C3.127 4.591 2.092 5.02.637 5.02L0 6.299c1.455 0 2.49-.428 3.082-1.278.593.85 1.628 1.278 3.083 1.278 1.454 0 2.489-.428 3.081-1.278.593.85 1.628 1.278 3.083 1.278 1.454 0 2.489-.428 3.081-1.278.593.85 1.628 1.278 3.083 1.278 1.454 0 2.49-.428 3.082-1.278L24 5.021c-0.319 0-.638.14-.889.42z" />
+				<path d="M17.128 0C15.892.001 14.717.173 13.736.511c-.906.312-1.798.817-2.556 1.486-.758-.669-1.65-1.174-2.556-1.486C7.643.173 6.468.001 5.232 0 2.566.008.391 1.512.047 3.758c-.255 1.673.054 3.358.728 4.841.88 1.942 2.206 3.677 3.888 5.066-.012.023-.025.045-.036.069-.382.813-.57 1.656-.557 2.502.017 1.206.387 2.389 1.075 3.415.688 1.026 1.695 1.895 3.084 2.367 1.389.472 2.915.447 4.291-.071 1.376-.518 2.602-1.554 3.44-2.909.838-1.355 1.089-2.925.706-4.408-.294-1.139-.902-2.184-1.745-3.002 1.682-1.389 3.008-3.124 3.888-5.066.674-1.483.983-3.168.728-4.841C23.609 1.512 21.434.008 18.768 0c-.547 0-1.094.055-1.64.169z" />
 			</svg>
 		),
 		description: "Advanced relational database system with complex queries and data integrity",
@@ -185,17 +185,17 @@ export default function Techstack() {
 	}
 
 	return (
-		<section className="min-h-screen flex items-center justify-center bg-white dark:bg-black px-4 py-20" id="skills">
-			<div className="max-w-6xl mx-auto">
+		<section className="py-16 bg-white dark:bg-black px-4" id="skills">
+			<div className="max-w-4xl mx-auto">
 				{/* Title */}
-				<div className="text-center mb-16">
-					<h2 className="text-3xl md:text-4xl font-bold text-black dark:text-white mb-4">Tech Stack</h2>
-					<div className="w-16 h-0.5 bg-neutral-400 dark:bg-neutral-600 mx-auto"></div>
+				<div className="text-center mb-12">
+					<h2 className="text-2xl md:text-3xl font-bold text-black dark:text-white mb-4">Tech Stack</h2>
+					<div className="w-12 h-0.5 bg-neutral-400 dark:bg-neutral-600 mx-auto"></div>
 				</div>
 
 				{/* Tech Stack Grid */}
-				<div className="relative mb-16" onMouseEnter={handleMouseEnter} onMouseLeave={handleMouseLeave}>
-					<div className="grid grid-cols-3 md:grid-cols-6 gap-6 mb-8">
+				<div className="relative mb-12" onMouseEnter={handleMouseEnter} onMouseLeave={handleMouseLeave}>
+					<div className="grid grid-cols-6 md:grid-cols-12 gap-2 md:gap-3 mb-6">
 						{techStackData.map((stack) => (
 							<div
 								key={stack.id}
@@ -205,16 +205,18 @@ export default function Techstack() {
 								}`}
 							>
 								<div
-									className={`w-20 h-20 md:w-24 md:h-24 flex items-center justify-center rounded-xl transition-all duration-500 mx-auto ${
+									className={`w-12 h-12 md:w-14 md:h-14 flex items-center justify-center rounded-lg transition-all duration-500 mx-auto ${
 										activeStack.id === stack.id
 											? "bg-black dark:bg-white text-white dark:text-black shadow-lg"
 											: "bg-neutral-100 dark:bg-neutral-900 text-neutral-700 dark:text-neutral-300 hover:bg-neutral-200 dark:hover:bg-neutral-800"
 									}`}
 								>
-									{stack.icon}
+									<div className="w-5 h-5 md:w-6 md:h-6">
+										{stack.icon}
+									</div>
 								</div>
 								<p
-									className={`text-center font-medium mt-3 text-sm transition-colors duration-300 ${
+									className={`text-center font-medium mt-1 text-xs transition-colors duration-300 ${
 										activeStack.id === stack.id
 											? "text-black dark:text-white"
 											: "text-neutral-600 dark:text-neutral-400"
@@ -227,11 +229,11 @@ export default function Techstack() {
 					</div>
 
 					{/* Progress indicators */}
-					<div className="flex justify-center space-x-2 mt-8">
+					<div className="flex justify-center space-x-1 mt-6">
 						{techStackData.map((stack) => (
 							<div
 								key={stack.id}
-								className={`w-2 h-2 rounded-full transition-all duration-300 ${
+								className={`w-1.5 h-1.5 rounded-full transition-all duration-300 ${
 									activeStack.id === stack.id ? "bg-black dark:bg-white" : "bg-neutral-300 dark:bg-neutral-700"
 								}`}
 							/>
@@ -241,25 +243,27 @@ export default function Techstack() {
 
 				{/* Tech Stack Info */}
 				<div
-					className={`bg-neutral-50 dark:bg-neutral-900 border border-neutral-200 dark:border-neutral-800 rounded-2xl p-8 md:p-12 transition-all duration-500 ${
+					className={`bg-neutral-50 dark:bg-neutral-900 border border-neutral-200 dark:border-neutral-800 rounded-lg p-4 md:p-5 transition-all duration-500 ${
 						isAnimating ? "opacity-0 transform translate-y-4" : "opacity-100 transform translate-y-0"
 					}`}
 				>
-					<div className="text-center max-w-3xl mx-auto">
-						<div className="flex items-center justify-center mb-6">
-							<div className="w-16 h-16 flex items-center justify-center bg-black dark:bg-white text-white dark:text-black rounded-xl mr-6">
-								{activeStack.icon}
+					<div className="text-center max-w-xl mx-auto">
+						<div className="flex items-center justify-center mb-3">
+							<div className="w-8 h-8 flex items-center justify-center bg-black dark:bg-white text-white dark:text-black rounded-md mr-3">
+								<div className="w-4 h-4">
+									{activeStack.icon}
+								</div>
 							</div>
-							<h3 className="text-2xl md:text-3xl font-bold text-black dark:text-white">{activeStack.name}</h3>
+							<h3 className="text-lg md:text-xl font-bold text-black dark:text-white">{activeStack.name}</h3>
 						</div>
-						<p className="text-lg text-neutral-700 dark:text-neutral-300 leading-relaxed font-light mb-6">
+						<p className="text-sm text-neutral-700 dark:text-neutral-300 leading-relaxed font-light mb-3">
 							{activeStack.description}
 						</p>
 						
 						{/* Project Usage Section */}
-						<div className="bg-white dark:bg-black border border-neutral-200 dark:border-neutral-800 rounded-xl p-6">
-							<h4 className="text-lg font-semibold text-black dark:text-white mb-3">How I've Used This Technology</h4>
-							<p className="text-base text-neutral-600 dark:text-neutral-400 leading-relaxed">
+						<div className="bg-white dark:bg-black border border-neutral-200 dark:border-neutral-800 rounded-md p-3">
+							<h4 className="text-sm font-semibold text-black dark:text-white mb-2">How I've Used This</h4>
+							<p className="text-xs text-neutral-600 dark:text-neutral-400 leading-relaxed">
 								{activeStack.projectUsage}
 							</p>
 						</div>
@@ -267,8 +271,8 @@ export default function Techstack() {
 				</div>
 
 				{/* Auto-scroll indicator */}
-				<div className="text-center mt-8">
-					<p className="text-sm text-neutral-500 dark:text-neutral-500 font-light">
+				<div className="text-center mt-6">
+					<p className="text-xs text-neutral-500 dark:text-neutral-500 font-light">
 						{isPaused ? "Auto-scroll paused" : "Auto-scrolling • Hover to pause"}
 					</p>
 				</div>
