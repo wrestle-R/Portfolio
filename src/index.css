@@ -1,0 +1,39 @@
+  @import "tailwindcss";
+
+  @import "@fontsource/montserrat"; /* Montserrat font */
+  @import "@fontsource/inter"; /* Inter font */
+
+  :root {
+    font-family: 'Inter', sans-serif;
+    color-scheme: light dark;
+    --color-primary: 0 0 0;      /* Black */
+    --color-secondary: 32 32 32; /* Dark Gray */
+    --color-accent: 180 180 180; /* Light Gray */
+    --color-bg: 255 255 255;     /* White background */
+  }
+
+  .dark {
+    --color-primary: 255 255 255; /* White */
+    --color-secondary: 200 200 200; /* Light Gray */
+    --color-accent: 100 100 100;    /* Dark Gray */
+    --color-bg: 0 0 0;             /* Black background */
+  }
+
+  h1, h2, h3, h4, h5, h6 {
+    font-family: 'Montserrat', sans-serif;
+  }
+
+  /* Black and white gradient text */
+  .text-gradient {
+    background: linear-gradient(to right, rgba(32, 32, 32, 0.9), rgba(0, 0, 0, 1));
+    background-clip: text;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+  }
+
+  .dark .text-gradient {
+    background: linear-gradient(to right, rgba(200, 200, 200, 0.9), rgba(255, 255, 255, 1));
+    background-clip: text;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+  }
