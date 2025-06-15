@@ -11,7 +11,7 @@ const projectsData = [
     url: "https://wordle-nine-snowy.vercel.app/", 
     github: "https://github.com/wrestle-R/Bible-Wordle",
     tech: ["React", "JavaScript", "CSS"],
-    image: "./public/Bible_Wordle.png"
+    image: "/Bible_Wordle.png"
   },
   {
     id: 2,
@@ -20,7 +20,7 @@ const projectsData = [
     url: "https://watchlist-a9568.web.app/",
     github: "https://github.com/wrestle-R/watchlist", 
     tech: ["React", "Tailwind", "Supabase", "OMDb API"],
-    image: "./public/Watchlist.png"
+    image: "/Watchlist.png"
   },
   {
     id: 3,
@@ -29,7 +29,7 @@ const projectsData = [
     url: "https://wrestle-r.github.io/walking-project/",
     github: "https://github.com/wrestle-R/walking-project",
     tech: ["HTML", "CSS", "JavaScript", "Data Analysis"],
-    image: "./public/The_Walking_Project.png"
+    image: "/The_Walking_Project.png"
   },
   {
     id: 4,
@@ -38,7 +38,7 @@ const projectsData = [
     url: "https://certifiyo.vercel.app/",
     github: "https://github.com/wrestle-R/certifiyo", 
     tech: ["React", "Node.js", "MongoDB", "OpenWeather API"],
-    image: "./public/Trippeer.png"
+    image: "/Trippeer.png"
   },
   {
     id: 5,
@@ -47,7 +47,7 @@ const projectsData = [
     url: "https://clarity-ai-virid.vercel.app/", 
     github: "https://github.com/romeirofernandes/ClarityAI",
     tech: ["React", "Node.js", "MongoDB", "Google Gemini AI"],
-    image: "./public/Clarity_Ai.png"
+    image: "/Clarity_Ai.png"
   }
 ]
 
