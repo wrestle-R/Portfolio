@@ -10,31 +10,39 @@ const projectsData = [
     description: "A biblical twist on the popular Wordle game with scripture-based words",
     url: "https://wordle-nine-snowy.vercel.app/", 
     github: "https://github.com/wrestle-R/Bible-Wordle",
-    tech: ["React", "JavaScript", "CSS"]
+    tech: ["React", "JavaScript", "CSS", "Firebase"]
   },
   {
     id: 2,
     name: "Watchlist",
-    description: "Movie and TV show tracking application with personalized recommendations",
+    description: "A personal movie and series tracker with genre-based watchlist, predictive search using OMDb API, and real-time data storage. Features an 'Unlisted' panel for quick daily notes across all pages.",
     url: "https://watchlist-a9568.web.app/",
     github: "https://github.com/wrestle-R/watchlist", 
-    tech: ["React", "Firebase", "JavaScript"]
+    tech: ["React", "Tailwind", "Supabase", "OMDb API"]
   },
   {
     id: 3,
-    name: "Certifiyo",
-    description: "Certificate generation and management platform",
-    url: "https://certifiyo.vercel.app/",
-    github: "https://github.com/wrestle-R/certifiyo", 
-    tech: ["React", "Next.js", "Vercel"]
+    name: "Walking Project",
+    description: "Comprehensive survey and report on Mumbai's footpaths with data-driven insights for improving walking conditions",
+    url: "https://wrestle-r.github.io/walking-project/",
+    github: "https://github.com/wrestle-R/walking-project",
+    tech: ["HTML", "CSS", "JavaScript", "Data Analysis"]
   },
   {
     id: 4,
+    name: "Trippeer",
+    description: "AI-powered travel planner that recommends destinations and builds full itineraries based on mood, budget, and travel time. Features reverse planning, AI itineraries, dashboard tracking, and real-time integrations.",
+    url: "https://certifiyo.vercel.app/",
+    github: "https://github.com/wrestle-R/certifiyo", 
+    tech: ["React", "Node.js", "MongoDB", "OpenWeather API", "Maps API"]
+  },
+  {
+    id: 5,
     name: "Clarity AI",
-    description: "AI-driven resume screening and candidate evaluation system",
+    description: "AI-powered learning companion that transforms PDFs into dynamic tools. Features document summaries, flashcards, quizzes, and Active Recall using Feynman Technique with speech-to-text feedback.",
     url: "https://clarity-ai-virid.vercel.app/", 
     github: "https://github.com/romeirofernandes/ClarityAI",
-    tech: ["React", "Node.js", "AI/ML"]
+    tech: ["React", "Node.js", "MongoDB", "Google Gemini AI", "Firebase Auth"]
   }
 ]
 
@@ -53,10 +61,13 @@ export default function Projects() {
             duration={2.5}
             filter={true}
           />
+          <p className="text-neutral-600 dark:text-neutral-400 text-sm mt-2">
+            Here are some of my featured projects - not all of them, just the ones I'm most proud of!
+          </p>
         </div>
 
         {/* Projects Grid */}
-        <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mb-8">
+        <div className="grid grid-cols-2 md:grid-cols-5 gap-4 mb-8">
           {projectsData.map((project) => (
             <div
               key={project.id}
@@ -67,8 +78,7 @@ export default function Projects() {
                   : "bg-neutral-50 dark:bg-neutral-900 text-black dark:text-white border-neutral-200 dark:border-neutral-800 hover:border-neutral-400 dark:hover:border-neutral-600"
               }`}
             >
-              <h3 className="font-semibold text-sm mb-1">{project.name}</h3>
-              <p className="text-xs opacity-80">{project.description}</p>
+              <h3 className="font-semibold text-sm">{project.name}</h3>
             </div>
           ))}
         </div>
