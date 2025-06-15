@@ -59,14 +59,14 @@ const Contact = () => {
         </div>
         
         {/* Contact Container */}
-        <div className="bg-gradient-to-br from-neutral-50 to-neutral-100 dark:from-neutral-900 dark:to-neutral-800 border border-neutral-200/50 dark:border-neutral-700/50 rounded-2xl shadow-lg dark:shadow-2xl backdrop-blur-sm overflow-hidden">
+        <div className="bg-neutral-900 rounded-2xl shadow-lg dark:shadow-2xl backdrop-blur-sm overflow-hidden">
           
           {/* Two Column Layout */}
           <div className="grid md:grid-cols-5 min-h-[350px]">
             
-            {/* Left Side - Connect Message */}
-            <div className="md:col-span-2 p-8 flex flex-col justify-center md:border-r border-neutral-200/50 dark:border-neutral-700/50">
-              <div className="space-y-6">
+            {/* Left Side - Connect Message - Hidden on mobile */}
+            <div className="hidden md:block md:col-span-2 p-8 flex-col justify-center md:border-r border-neutral-200/50 dark:border-neutral-700/50">
+              <div className="flex flex-col justify-center h-full space-y-6">
                 <div>
                   <h3 className="text-2xl font-bold text-black dark:text-white mb-4">
                     Let's Connect!
@@ -93,12 +93,12 @@ const Contact = () => {
               </div>
             </div>
 
-            {/* Right Side - Contact Form */}
-            <div className="md:col-span-3 p-8 flex flex-col justify-center">
-              <div className="space-y-6">
-                <h4 className="text-xl font-bold text-black dark:text-white">Send me a message</h4>
+            {/* Right Side - Contact Form - Full width on mobile */}
+            <div className="col-span-full md:col-span-3 p-6 md:p-8 flex flex-col justify-center">
+              <div className="space-y-4 md:space-y-6">
+                <h4 className="text-lg md:text-xl font-bold text-black dark:text-white text-center md:text-left">Send me a message</h4>
                 
-                <form onSubmit={handleSubmit} className="space-y-5">
+                <form onSubmit={handleSubmit} className="space-y-4 md:space-y-5">
                   <div className="space-y-2">
                     <label className="text-sm font-medium text-neutral-700 dark:text-neutral-300">
                       Email Address
@@ -123,7 +123,7 @@ const Contact = () => {
                       value={formData.message}
                       onChange={handleInputChange}
                       required
-                      rows={4}
+                      rows={3}
                       className="w-full px-4 py-3 bg-white/80 dark:bg-black/50 border border-neutral-300/50 dark:border-neutral-600/50 rounded-xl focus:ring-2 focus:ring-black/20 dark:focus:ring-white/20 focus:border-black dark:focus:border-white transition-all duration-200 text-black dark:text-white resize-none placeholder-neutral-500 dark:placeholder-neutral-400"
                       placeholder="Tell me about your project, idea, or just say hello..."
                     />
@@ -146,20 +146,20 @@ const Contact = () => {
                   </button>
                   
                   {submitStatus === 'success' && (
-                    <div className="flex items-center space-x-2 text-green-600 dark:text-green-400 font-medium animate-fade-in">
-                      <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 20 20">
+                    <div className="flex items-center space-x-2 text-green-600 dark:text-green-400 font-medium animate-fade-in text-sm">
+                      <svg className="w-4 h-4" fill="currentColor" viewBox="0 0 20 20">
                         <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clipRule="evenodd" />
                       </svg>
-                      <span>Message sent successfully! I'll get back to you soon.</span>
+                      <span>Message sent successfully!</span>
                     </div>
                   )}
                   
                   {submitStatus === 'error' && (
-                    <div className="flex items-center space-x-2 text-red-600 dark:text-red-400 font-medium animate-fade-in">
-                      <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 20 20">
+                    <div className="flex items-center space-x-2 text-red-600 dark:text-red-400 font-medium animate-fade-in text-sm">
+                      <svg className="w-4 h-4" fill="currentColor" viewBox="0 0 20 20">
                         <path fillRule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7 4a1 1 0 11-2 0 1 1 0 012 0zm-1-9a1 1 0 00-1 1v4a1 1 0 102 0V6a1 1 0 00-1-1z" clipRule="evenodd" />
                       </svg>
-                      <span>Failed to send message. Please try again.</span>
+                      <span>Failed to send message.</span>
                     </div>
                   )}
                 </form>

@@ -7,16 +7,16 @@ const projectsData = [
   {
     id: 1,
     name: "Bible Wordle",
-    description: "A biblical twist on the popular Wordle game with scripture-based words",
+    description: "Biblical twist on Wordle with scripture-based words",
     url: "https://wordle-nine-snowy.vercel.app/", 
     github: "https://github.com/wrestle-R/Bible-Wordle",
-    tech: ["React", "JavaScript", "CSS", "Firebase"],
+    tech: ["React", "JavaScript", "CSS"],
     image: "./public/Bible_Wordle.png"
   },
   {
     id: 2,
     name: "Watchlist",
-    description: "A personal movie and series tracker with genre-based watchlist, predictive search using OMDb API, and real-time data storage. Features an 'Unlisted' panel for quick daily notes across all pages.",
+    description: "Movie tracker with genre-based lists and OMDb API",
     url: "https://watchlist-a9568.web.app/",
     github: "https://github.com/wrestle-R/watchlist", 
     tech: ["React", "Tailwind", "Supabase", "OMDb API"],
@@ -25,7 +25,7 @@ const projectsData = [
   {
     id: 3,
     name: "Walking Project",
-    description: "Comprehensive survey and report on Mumbai's footpaths with data-driven insights for improving walking conditions",
+    description: "Survey and report on Mumbai's footpaths with data-driven insights",
     url: "https://wrestle-r.github.io/walking-project/",
     github: "https://github.com/wrestle-R/walking-project",
     tech: ["HTML", "CSS", "JavaScript", "Data Analysis"],
@@ -34,19 +34,19 @@ const projectsData = [
   {
     id: 4,
     name: "Trippeer",
-    description: "AI-powered travel planner that recommends destinations and builds full itineraries based on mood, budget, and travel time. Features reverse planning, AI itineraries, dashboard tracking, and real-time integrations.",
+    description: "AI travel planner recommending destinations and building itineraries based on preferences",
     url: "https://certifiyo.vercel.app/",
     github: "https://github.com/wrestle-R/certifiyo", 
-    tech: ["React", "Node.js", "MongoDB", "OpenWeather API", "Maps API"],
+    tech: ["React", "Node.js", "MongoDB", "OpenWeather API"],
     image: "./public/Trippeer.png"
   },
   {
     id: 5,
     name: "Clarity AI",
-    description: "AI-powered learning companion that transforms PDFs into dynamic tools. Features document summaries, flashcards, quizzes, and Active Recall using Feynman Technique with speech-to-text feedback.",
+    description: "AI learning companion that transforms PDFs into summaries, flashcards and quizzes",
     url: "https://clarity-ai-virid.vercel.app/", 
     github: "https://github.com/romeirofernandes/ClarityAI",
-    tech: ["React", "Node.js", "MongoDB", "Google Gemini AI", "Firebase Auth"],
+    tech: ["React", "Node.js", "MongoDB", "Google Gemini AI"],
     image: "./public/Clarity_Ai.png"
   }
 ]

@@ -200,7 +200,7 @@ export default function Techstack() {
 
 				{/* Tech Stack Grid */}
 				<div className="relative mb-12" onMouseEnter={handleMouseEnter} onMouseLeave={handleMouseLeave}>
-					<div className="grid grid-cols-6 md:grid-cols-12 gap-2 md:gap-3 mb-6">
+					<div className="grid grid-cols-6 md:grid-cols-12 gap-1 md:gap-3 mb-6">
 						{techStackData.map((stack) => (
 							<div
 								key={stack.id}
@@ -210,18 +210,18 @@ export default function Techstack() {
 								}`}
 							>
 								<div
-									className={`w-12 h-12 md:w-14 md:h-14 flex items-center justify-center rounded-lg transition-all duration-500 mx-auto ${
+									className={`w-10 h-10 md:w-14 md:h-14 flex items-center justify-center rounded-lg transition-all duration-500 mx-auto ${
 										activeStack.id === stack.id
 											? "bg-black dark:bg-white text-white dark:text-black shadow-lg"
 											: "bg-neutral-100 dark:bg-neutral-900 text-neutral-700 dark:text-neutral-300 hover:bg-neutral-200 dark:hover:bg-neutral-800"
 									}`}
 								>
-									<div className="w-5 h-5 md:w-6 md:h-6">
+									<div className="w-4 h-4 md:w-6 md:h-6">
 										{stack.icon}
 									</div>
 								</div>
 								<p
-									className={`text-center font-medium mt-1 text-xs transition-colors duration-300 ${
+									className={`text-center font-medium mt-1 text-[10px] md:text-xs transition-colors duration-300 ${
 										activeStack.id === stack.id
 											? "text-black dark:text-white"
 											: "text-neutral-600 dark:text-neutral-400"
@@ -238,7 +238,7 @@ export default function Techstack() {
 						{techStackData.map((stack) => (
 							<div
 								key={stack.id}
-								className={`w-1.5 h-1.5 rounded-full transition-all duration-300 ${
+								className={`w-1 h-1 md:w-1.5 md:h-1.5 rounded-full transition-all duration-300 ${
 									activeStack.id === stack.id ? "bg-black dark:bg-white" : "bg-neutral-300 dark:bg-neutral-700"
 								}`}
 							/>
@@ -248,30 +248,30 @@ export default function Techstack() {
 
 				{/* Tech Stack Info */}
 				<div
-					className={`bg-neutral-50 dark:bg-neutral-900 border border-neutral-200 dark:border-neutral-800 rounded-lg p-6 md:p-5 transition-all duration-500 ${
+					className={`bg-neutral-50 dark:bg-neutral-900 border border-neutral-200 dark:border-neutral-800 rounded-lg p-4 md:p-6 transition-all duration-500 ${
 						isAnimating ? "opacity-0 transform translate-y-4" : "opacity-100 transform translate-y-0"
 					}`}
 				>
 					<div className="max-w-4xl">
 						{/* Header */}
-						<div className="flex items-center justify-center mb-3">
-							<h3 className="text-xl md:text-2xl font-bold text-black dark:text-white">{activeStack.name}</h3>
+						<div className="flex items-center justify-center mb-3 md:mb-4">
+							<h3 className="text-lg md:text-2xl font-bold text-black dark:text-white">{activeStack.name}</h3>
 						</div>
 						
 						{/* Two Column Layout */}
-						<div className="grid md:grid-cols-2 gap-6">
+						<div className="grid md:grid-cols-2 gap-4 md:gap-6">
 							{/* Description - Left Side */}
-							<div className="bg-white dark:bg-black border border-neutral-200 dark:border-neutral-800 rounded-lg p-4">
-								<h4 className="text-base font-semibold text-black dark:text-white mb-3">Description</h4>
-								<p className="text-sm text-neutral-600 dark:text-neutral-400 leading-relaxed">
+							<div className="bg-white dark:bg-black border border-neutral-200 dark:border-neutral-800 rounded-lg p-3 md:p-4">
+								<h4 className="text-sm md:text-base font-semibold text-black dark:text-white mb-2 md:mb-3">Description</h4>
+								<p className="text-xs md:text-sm text-neutral-600 dark:text-neutral-400 leading-relaxed">
 									{activeStack.description}
 								</p>
 							</div>
 
 							{/* Project Usage - Right Side */}
-							<div className="bg-white dark:bg-black border border-neutral-200 dark:border-neutral-800 rounded-lg p-4">
-								<h4 className="text-base font-semibold text-black dark:text-white mb-3">How I've Used This</h4>
-								<p className="text-sm text-neutral-600 dark:text-neutral-400 leading-relaxed">
+							<div className="bg-white dark:bg-black border border-neutral-200 dark:border-neutral-800 rounded-lg p-3 md:p-4">
+								<h4 className="text-sm md:text-base font-semibold text-black dark:text-white mb-2 md:mb-3">How I've Used This</h4>
+								<p className="text-xs md:text-sm text-neutral-600 dark:text-neutral-400 leading-relaxed">
 									{activeStack.projectUsage}
 								</p>
 							</div>
@@ -280,7 +280,7 @@ export default function Techstack() {
 				</div>
 
 				{/* Auto-scroll indicator */}
-				<div className="text-center mt-6">
+				<div className="text-center mt-4 md:mt-6">
 					<p className="text-xs text-neutral-500 dark:text-neutral-500 font-light">
 						{isPaused ? "Auto-scroll paused" : "Auto-scrolling • Hover to pause"}
 					</p>
