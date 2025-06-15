@@ -3,6 +3,7 @@ import NavbarComponent from '../components/Navbar';
 import About from '../components/About';
 import Techstack from '../components/Techstack';
 import Projects from '../components/Projects';
+import Contact from '../components/Contact';
 
 const Home = () => {
   return (
@@ -11,6 +12,7 @@ const Home = () => {
       <About/>
       <Techstack />
       <Projects />
+      <Contact />
     </div>
   );
 };
