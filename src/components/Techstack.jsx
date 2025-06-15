@@ -186,7 +186,7 @@ export default function Techstack() {
 	}
 
 	return (
-		<section className="py-6 bg-white dark:bg-black px-4" id="skills">
+		<section className="pt-24 bg-white dark:bg-black px-4" id="skills">
 			<div className="max-w-4xl mx-auto">
 				{/* Title */}
 				 <div className="mb-12 text-center">
@@ -260,16 +260,16 @@ export default function Techstack() {
 						
 						{/* Two Column Layout */}
 						<div className="grid md:grid-cols-2 gap-4 md:gap-6">
-							{/* Description - Left Side */}
-							<div className="bg-white dark:bg-black border border-neutral-200 dark:border-neutral-800 rounded-lg p-3 md:p-4">
+							{/* Description - Left Side - Hidden on mobile */}
+							<div className="hidden md:block bg-white dark:bg-black border border-neutral-200 dark:border-neutral-800 rounded-lg p-3 md:p-4">
 								<h4 className="text-sm md:text-base font-semibold text-black dark:text-white mb-2 md:mb-3">Description</h4>
 								<p className="text-xs md:text-sm text-neutral-600 dark:text-neutral-400 leading-relaxed">
 									{activeStack.description}
 								</p>
 							</div>
 
-							{/* Project Usage - Right Side */}
-							<div className="bg-white dark:bg-black border border-neutral-200 dark:border-neutral-800 rounded-lg p-3 md:p-4">
+							{/* Project Usage - Right Side - Full width on mobile */}
+							<div className="col-span-full md:col-span-1 bg-white dark:bg-black border border-neutral-200 dark:border-neutral-800 rounded-lg p-3 md:p-4">
 								<h4 className="text-sm md:text-base font-semibold text-black dark:text-white mb-2 md:mb-3">How I've Used This</h4>
 								<p className="text-xs md:text-sm text-neutral-600 dark:text-neutral-400 leading-relaxed">
 									{activeStack.projectUsage}

@@ -45,7 +45,7 @@ const Contact = () => {
   };
 
   return (
-    <section className="bg-white dark:bg-black px-4 py-8" id="contact">
+    <section className="bg-white dark:bg-black px-4 py-24" id="contact">
       <div className="max-w-4xl mx-auto">
         {/* Animated Title - Outside Container */}
         <div className="text-center mb-8">

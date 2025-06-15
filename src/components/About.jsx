@@ -54,7 +54,7 @@ const About = () => {
   ];
   
   return (
-    <section className="bg-white dark:bg-black px-4 py-16" id="about">
+    <section className="bg-white dark:bg-black px-4 pt-32" id="about">
       <div className="max-w-4xl mx-auto text-center space-y-8">
         {/* Animated Title */}
         <TextGenerateEffect
