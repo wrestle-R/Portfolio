@@ -10,7 +10,8 @@ const projectsData = [
     description: "A biblical twist on the popular Wordle game with scripture-based words",
     url: "https://wordle-nine-snowy.vercel.app/", 
     github: "https://github.com/wrestle-R/Bible-Wordle",
-    tech: ["React", "JavaScript", "CSS", "Firebase"]
+    tech: ["React", "JavaScript", "CSS", "Firebase"],
+    image: "./public/Bible_Wordle.png"
   },
   {
     id: 2,
@@ -18,7 +19,8 @@ const projectsData = [
     description: "A personal movie and series tracker with genre-based watchlist, predictive search using OMDb API, and real-time data storage. Features an 'Unlisted' panel for quick daily notes across all pages.",
     url: "https://watchlist-a9568.web.app/",
     github: "https://github.com/wrestle-R/watchlist", 
-    tech: ["React", "Tailwind", "Supabase", "OMDb API"]
+    tech: ["React", "Tailwind", "Supabase", "OMDb API"],
+    image: "./public/Watchlist.png"
   },
   {
     id: 3,
@@ -26,7 +28,8 @@ const projectsData = [
     description: "Comprehensive survey and report on Mumbai's footpaths with data-driven insights for improving walking conditions",
     url: "https://wrestle-r.github.io/walking-project/",
     github: "https://github.com/wrestle-R/walking-project",
-    tech: ["HTML", "CSS", "JavaScript", "Data Analysis"]
+    tech: ["HTML", "CSS", "JavaScript", "Data Analysis"],
+    image: "./public/The_Walking_Project.png"
   },
   {
     id: 4,
@@ -34,7 +37,8 @@ const projectsData = [
     description: "AI-powered travel planner that recommends destinations and builds full itineraries based on mood, budget, and travel time. Features reverse planning, AI itineraries, dashboard tracking, and real-time integrations.",
     url: "https://certifiyo.vercel.app/",
     github: "https://github.com/wrestle-R/certifiyo", 
-    tech: ["React", "Node.js", "MongoDB", "OpenWeather API", "Maps API"]
+    tech: ["React", "Node.js", "MongoDB", "OpenWeather API", "Maps API"],
+    image: "./public/Trippeer.png"
   },
   {
     id: 5,
@@ -42,7 +46,8 @@ const projectsData = [
     description: "AI-powered learning companion that transforms PDFs into dynamic tools. Features document summaries, flashcards, quizzes, and Active Recall using Feynman Technique with speech-to-text feedback.",
     url: "https://clarity-ai-virid.vercel.app/", 
     github: "https://github.com/romeirofernandes/ClarityAI",
-    tech: ["React", "Node.js", "MongoDB", "Google Gemini AI", "Firebase Auth"]
+    tech: ["React", "Node.js", "MongoDB", "Google Gemini AI", "Firebase Auth"],
+    image: "./public/Clarity_Ai.png"
   }
 ]
 
@@ -105,16 +110,20 @@ export default function Projects() {
             </div>
           </div>
 
-          {/* Project Iframe */}
-          <div className="w-full h-96 md:h-[500px] bg-white dark:bg-neutral-800 rounded-lg border border-neutral-200 dark:border-neutral-700 overflow-hidden shadow-lg">
-            <iframe
-              src={activeProject.url}
-              title={`${activeProject.name} - Live Demo`}
-              className="w-full h-full border-0"
-              loading="lazy"
-              sandbox="allow-scripts allow-same-origin allow-forms allow-popups allow-presentation"
-              referrerPolicy="no-referrer-when-downgrade"
-            />
+          {/* Project Screenshot */}
+          <div className="w-full bg-white dark:bg-neutral-800 rounded-lg border border-neutral-200 dark:border-neutral-700 overflow-hidden shadow-lg">
+            {/* Responsive container that maintains aspect ratio */}
+            <div className="relative w-full" style={{ aspectRatio: '1332/768' }}>
+              <img
+                src={activeProject.image}
+                alt={`${activeProject.name} Screenshot`}
+                className="w-full h-full object-contain"
+                onError={(e) => {
+                  // Fallback placeholder if image doesn't exist
+                  e.target.src = `https://via.placeholder.com/1332x768/e5e5e5/666666?text=${encodeURIComponent(activeProject.name)}+Preview`;
+                }}
+              />
+            </div>
           </div>
 
           {/* Project Links */}

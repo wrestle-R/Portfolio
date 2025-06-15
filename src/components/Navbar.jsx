@@ -88,7 +88,7 @@ const NavbarComponent = () => {
             <AnimatePresence>
               {isMobileMenuOpen && (
                 <motion.div 
-                  className="md:hidden pt-4 pb-2 mt-2 space-y-3"
+                  className="md:hidden pt-4 pb-2 mt-2 space-y-3 bg-white/95 dark:bg-black/95 backdrop-blur-sm rounded-lg border border-neutral-200 dark:border-neutral-700 shadow-lg"
                   initial={{ height: 0, opacity: 0 }}
                   animate={{ height: "auto", opacity: 1 }}
                   exit={{ height: 0, opacity: 0 }}
