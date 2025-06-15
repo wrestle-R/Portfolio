@@ -45,10 +45,10 @@ const Contact = () => {
   };
 
   return (
-    <section className="bg-white dark:bg-black px-4 py-16" id="contact">
+    <section className="bg-white dark:bg-black px-4 py-8" id="contact">
       <div className="max-w-4xl mx-auto">
-        {/* Animated Title */}
-        <div className="text-center mb-12">
+        {/* Animated Title - Outside Container */}
+        <div className="text-center mb-8">
           <TextGenerateEffect
             words={titleText}
             className="text-3xl md:text-4xl font-bold text-black dark:text-white mb-3"
@@ -64,10 +64,10 @@ const Contact = () => {
         <div className="bg-gradient-to-br from-neutral-50 to-neutral-100 dark:from-neutral-900 dark:to-neutral-800 border border-neutral-200/50 dark:border-neutral-700/50 rounded-2xl shadow-lg dark:shadow-2xl backdrop-blur-sm overflow-hidden">
           
           {/* Two Column Layout */}
-          <div className="grid md:grid-cols-5 min-h-[400px]">
+          <div className="grid md:grid-cols-5 min-h-[350px]">
             
             {/* Left Side - Connect Message */}
-            <div className="md:col-span-2 bg-black/5 dark:bg-white/5 p-8 flex flex-col justify-center">
+            <div className="md:col-span-2 p-8 flex flex-col justify-center md:border-r border-neutral-200/50 dark:border-neutral-700/50">
               <div className="space-y-6">
                 <div>
                   <h3 className="text-2xl font-bold text-black dark:text-white mb-4">
