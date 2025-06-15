@@ -6,7 +6,7 @@ import { collection, addDoc } from 'firebase/firestore';
 import { db } from '../firebase.config';
 
 const Contact = () => {
-  const titleText = "Get In Touch";
+  const titleText = "Contact";
   const [formData, setFormData] = useState({
     email: '',
     message: ''
@@ -55,9 +55,7 @@ const Contact = () => {
             duration={2.5}
             filter={true}
           />
-          <p className="text-neutral-600 dark:text-neutral-400 text-lg">
-            Let's start a conversation
-          </p>
+          
         </div>
         
         {/* Contact Container */}
