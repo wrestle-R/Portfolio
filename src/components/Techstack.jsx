@@ -225,7 +225,7 @@ export default function Techstack() {
 					</div>
 
 					{/* Progress indicators */}
-					<div className="flex justify-center space-x-1 mt-6">
+					{/* <div className="flex justify-center space-x-1 mt-6">
 						{techStackData.map((stack) => (
 							<div
 								key={stack.id}
@@ -234,7 +234,7 @@ export default function Techstack() {
 								}`}
 							/>
 						))}
-					</div>
+					</div> */}
 				</div>
 
 				{/* Tech Stack Info */}
