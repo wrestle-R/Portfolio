@@ -56,6 +56,18 @@ const About = () => {
   return (
     <section className="bg-white dark:bg-black px-4 pt-32" id="about">
       <div className="max-w-4xl mx-auto text-center space-y-8">
+        {/* Profile Image and Name Side by Side */}
+        <div className="flex flex-col md:flex-row items-center justify-center gap-4 mb-6">
+          <img
+            src="/Dani.jpg"
+            alt="Russel Daniel"
+            className="w-20 h-20 md:w-24 md:h-24 rounded-full object-cover border-3 border-neutral-200 dark:border-neutral-700 shadow-md"
+          />
+          <h1 className="text-2xl md:text-3xl font-bold text-black dark:text-white">
+            Russel Daniel Paul
+          </h1>
+        </div>
+        
         {/* Animated Title */}
         {/* <TextGenerateEffect
           words={titleText}
