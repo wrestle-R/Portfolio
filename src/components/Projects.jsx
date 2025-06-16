@@ -134,7 +134,7 @@ export default function Projects() {
               rel="noopener noreferrer"
               className="px-6 py-3 bg-black dark:bg-white text-white dark:text-black rounded-lg text-sm font-medium hover:opacity-80 transition-opacity"
             >
-              🚀 Live Demo
+              Live Demo
             </a>
             <a
               href={activeProject.github}
@@ -142,7 +142,7 @@ export default function Projects() {
               rel="noopener noreferrer"
               className="px-6 py-3 border border-neutral-300 dark:border-neutral-700 text-black dark:text-white rounded-lg text-sm font-medium hover:bg-neutral-100 dark:hover:bg-neutral-800 transition-colors"
             >
-              📂 View Code
+              View Code
             </a>
           </div>
         </div>
