@@ -14,7 +14,7 @@ const techStackData = [
 			</svg>
 		),
 		description: "Frontend library for building interactive user interfaces with reusable components",
-		projectUsage: "Built responsive UIs for Screen Smart's resume dashboard and Trippeer's travel interface. Used hooks for state management and component lifecycle in both hackathon projects."
+		projectUsage: "Quite proficient and used React to build frontend of Bible Wordle, Clarity, Trippeer and many more projects."
 	},
 	{
 		id: 2,
@@ -25,7 +25,7 @@ const techStackData = [
 			</svg>
 		),
 		description: "Distributed version control system for tracking changes in source code during development",
-		projectUsage: "Used for version control in all projects. Managed collaborative development in hackathon teams, maintained code history, and handled branching strategies for feature development in Screen Smart and Trippeer."
+		projectUsage: "Use Git for all my project development and storage. Essential for version control."
 	},
 	{
 		id: 3,
@@ -36,7 +36,7 @@ const techStackData = [
 			</svg>
 		),
 		description: "Object-oriented programming language for enterprise applications and algorithms",
-		projectUsage: "Foundation language for algorithm development. Implemented complex resume scoring algorithms in Screen Smart and data processing pipelines. Used for object-oriented design patterns in hackathon projects."
+		projectUsage: "Learnt Spring Boot framework for making Recipe Vault which was necessary for college project."
 	},
 	{
 		id: 4,
@@ -47,7 +47,7 @@ const techStackData = [
 			</svg>
 		),
 		description: "JavaScript runtime for building scalable server-side applications and APIs",
-		projectUsage: "Backend server foundation for both projects. Handled file uploads in Screen Smart, managed API integrations for AI features, and created secure endpoints for user authentication."
+		projectUsage: "Made the backend of Danys Pizza, Talent Hunt and a todo list application."
 	},
 	{
 		id: 5,
@@ -58,7 +58,7 @@ const techStackData = [
 			</svg>
 		),
 		description: "Fast, minimalist web framework for Node.js applications and RESTful APIs",
-		projectUsage: "Built RESTful APIs for both projects. Created middleware for authentication, file handling routes in Screen Smart, and travel data endpoints in Trippeer with proper error handling."
+		projectUsage: "Used Express with Node.js for connecting backend services in my various projects."
 	},
 	{
 		id: 6,
@@ -69,7 +69,7 @@ const techStackData = [
 			</svg>
 		),
 		description: "NoSQL document database for flexible, scalable data storage solutions",
-		projectUsage: "Primary database for storing candidate profiles and scoring data in Screen Smart. Managed user preferences, travel history, and destination information in Trippeer using Mongoose ODM."
+		projectUsage: "My go-to database. I like NoSQL and used MongoDB for connecting with Node.js."
 	},
 	{
 		id: 7,
@@ -80,7 +80,7 @@ const techStackData = [
 			</svg>
 		),
 		description: "Advanced relational database system with complex queries and data integrity",
-		projectUsage: "Used with Supabase for complex relational data in Trippeer's travel recommendations. Handled user authentication tables and normalized travel destination data with proper relationships."
+		projectUsage: "Learnt PostgreSQL commands as part of DBMS in college and used for Recipe Vault."
 	},
 	{
 		id: 8,
@@ -91,7 +91,7 @@ const techStackData = [
 			</svg>
 		),
 		description: "Utility-first CSS framework for rapid responsive design development",
-		projectUsage: "Primary styling solution for both projects. Created dark-themed interfaces, mobile-responsive layouts, and custom animations for Screen Smart and Trippeer's user interfaces."
+		projectUsage: "I have used Tailwind in everything I have ever built. Just so much better."
 	},
 	{
 		id: 9,
@@ -102,7 +102,7 @@ const techStackData = [
 			</svg>
 		),
 		description: "React framework with server-side rendering and static site generation",
-		projectUsage: "Currently learning for production-ready applications. Planning to rebuild Screen Smart with SSR for better SEO and performance. Exploring API routes for streamlined backend integration."
+		projectUsage: "Used for making car showroom which fetches cars via API. Actively learning TypeScript."
 	},
 	{
 		id: 10,
@@ -113,7 +113,7 @@ const techStackData = [
 			</svg>
 		),
 		description: "Real-time bidirectional event-based communication library",
-		projectUsage: "Implemented real-time features in Trippeer for collaborative trip planning. Used for instant travel updates, live chat functionality, and synchronized user interactions across multiple clients."
+		projectUsage: "Made Chat Masala app using MERN stack and integrated WebRTC for Talent Hunt website."
 	},
 	{
 		id: 11,
@@ -124,7 +124,7 @@ const techStackData = [
 			</svg>
 		),
 		description: "JSON Web Tokens for secure authentication and authorization",
-		projectUsage: "Implemented secure user authentication in both projects. Used for protecting API routes in Screen Smart's admin panel and managing user sessions in Trippeer's travel booking system."
+		projectUsage: "Used JWT for keeping authorization in Talent Hunt and Danys Pizza applications."
 	},
 	{
 		id: 12,
@@ -135,7 +135,7 @@ const techStackData = [
 			</svg>
 		),
 		description: "Open-source Firebase alternative with PostgreSQL database and real-time features",
-		projectUsage: "Backend-as-a-Service for Trippeer project. Implemented real-time user authentication, travel data synchronization, and collaborative trip planning features with built-in PostgreSQL database."
+		projectUsage: "Used Supabase for storage of images and authorization of ScreenSmart and Watchlist."
 	}
 ]
 
