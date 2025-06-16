@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
+import { Link } from 'react-router-dom';
 
 // Simple utility function for classNames
 const cn = (...classes) => {
@@ -57,15 +58,18 @@ const NavbarComponent = () => {
                 {navItems.map((item, index) => (
                   <NavItem key={index} item={item} />
                 ))}
-                <motion.a 
-                  href="#resume" 
-                  className="ml-6 px-5 py-2 rounded-full bg-neutral-900 dark:bg-white text-white dark:text-black text-sm font-medium"
+                <motion.div
                   whileHover={{ scale: 1.05 }}
                   whileTap={{ scale: 0.95 }}
                   transition={{ type: "spring", stiffness: 400, damping: 17 }}
                 >
-                  Resume
-                </motion.a>
+                  <Link 
+                    to="/resume" 
+                    className="ml-6 px-5 py-2 rounded-full bg-neutral-900 dark:bg-white text-white dark:text-black text-sm font-medium inline-block"
+                  >
+                    Resume
+                  </Link>
+                </motion.div>
               </div>
 
               {/* Mobile Menu Toggle */}
@@ -107,15 +111,18 @@ const NavbarComponent = () => {
                       {item.name}
                     </motion.a>
                   ))}
-                  <motion.a
-                    href="#resume"
-                    className="block mt-4 px-4 py-2 rounded-md text-center text-white dark:text-black bg-neutral-900 dark:bg-white font-medium"
-                    onClick={() => setIsMobileMenuOpen(false)}
+                  <motion.div
                     whileHover={{ scale: 1.02 }}
                     transition={{ type: "spring", stiffness: 400, damping: 17 }}
                   >
-                    Resume
-                  </motion.a>
+                    <Link
+                      to="/resume"
+                      className="block mt-4 px-4 py-2 rounded-md text-center text-white dark:text-black bg-neutral-900 dark:bg-white font-medium"
+                      onClick={() => setIsMobileMenuOpen(false)}
+                    >
+                      Resume
+                    </Link>
+                  </motion.div>
                 </motion.div>
               )}
             </AnimatePresence>
@@ -193,13 +200,13 @@ const NavbarComponent = () => {
                         {item.name}
                       </motion.a>
                     ))}
-                    <motion.a
-                      href="#resume"
+                    <Link
+                      to="/resume"
                       className="block mt-2 px-3 py-2 rounded-md text-center text-white dark:text-black bg-neutral-900 dark:bg-white text-sm font-medium"
                       onClick={() => setIsMobileMenuOpen(false)}
                     >
                       Resume
-                    </motion.a>
+                    </Link>
                   </motion.div>
                 )}
               </AnimatePresence>

@@ -57,12 +57,12 @@ const About = () => {
     <section className="bg-white dark:bg-black px-4 pt-32" id="about">
       <div className="max-w-4xl mx-auto text-center space-y-8">
         {/* Animated Title */}
-        <TextGenerateEffect
+        {/* <TextGenerateEffect
           words={titleText}
           className="text-3xl md:text-4xl font-bold text-black dark:text-white"
           duration={2.5}
           filter={true}
-        />
+        /> */}
         
         {/* Description */}
         <p className="text-base text-neutral-600 dark:text-neutral-400 leading-relaxed max-w-2xl mx-auto">
