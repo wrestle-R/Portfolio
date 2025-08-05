@@ -59,7 +59,7 @@ const About = () => {
         {/* Profile Image and Name Side by Side */}
         <div className="flex flex-col md:flex-row items-center justify-center gap-4 mb-6">
           <img
-            src="/Dani.jpg"
+            src="/new_dp.jpg"
             alt="Russel Daniel"
             className="w-20 h-20 md:w-24 md:h-24 rounded-full object-cover border-3 border-neutral-200 dark:border-neutral-700 shadow-md"
           />
