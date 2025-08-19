@@ -186,13 +186,13 @@ export default function Techstack() {
 	}
 
 	return (
-		<section className="pt-24 bg-white dark:bg-black px-4" id="skills">
+		<section className="pt-24 bg-black px-4" id="skills">
 			<div className="max-w-4xl mx-auto">
 				{/* Title */}
 				 <div className="mb-12 text-center">
                           <TextGenerateEffect
                             words={titleText}
-                            className="text-3xl md:text-4xl font-bold text-black dark:text-white"
+                            className="text-3xl md:text-4xl font-bold text-white"
                             duration={2.5}
                             filter={true}
                           />
@@ -219,8 +219,8 @@ export default function Techstack() {
 								<div
 									className={`w-10 h-10 sm:w-12 sm:h-12 md:w-14 md:h-14 flex items-center justify-center rounded-xl transition-all duration-500 mx-auto shadow-sm ${
 										activeStack.id === stack.id
-											? "bg-black dark:bg-white text-white dark:text-black shadow-lg transform scale-105"
-											: "bg-neutral-100 dark:bg-neutral-900 text-neutral-700 dark:text-neutral-300 hover:bg-neutral-200 dark:hover:bg-neutral-800 hover:shadow-md"
+											? "bg-white text-black shadow-lg transform scale-105"
+											: "bg-neutral-900 text-neutral-300 hover:bg-neutral-800 hover:shadow-md"
 									}`}
 								>
 									<div className="w-5 h-5 sm:w-6 sm:h-6 md:w-7 md:h-7">
@@ -230,8 +230,8 @@ export default function Techstack() {
 								<p
 									className={`text-center font-medium mt-2 text-[10px] sm:text-xs transition-colors duration-300 ${
 										activeStack.id === stack.id
-											? "text-black dark:text-white font-semibold"
-											: "text-neutral-600 dark:text-neutral-400"
+											? "text-white font-semibold"
+											: "text-neutral-400"
 									}`}
 								>
 									{stack.name}
@@ -255,30 +255,30 @@ export default function Techstack() {
 
 				{/* Tech Stack Info */}
 				<div
-					className={`bg-neutral-50 dark:bg-neutral-900 border border-neutral-200 dark:border-neutral-800 rounded-lg p-4 md:p-6 transition-all duration-500 ${
+					className={`bg-neutral-900 border border-neutral-800 rounded-lg p-4 md:p-6 transition-all duration-500 ${
 						isAnimating ? "opacity-0 transform translate-y-4" : "opacity-100 transform translate-y-0"
 					}`}
 				>
 					<div className="max-w-4xl">
 						{/* Header */}
 						<div className="flex items-center justify-center mb-3 md:mb-4">
-							<h3 className="text-lg md:text-2xl font-bold text-black dark:text-white">{activeStack.name}</h3>
+							<h3 className="text-lg md:text-2xl font-bold text-white">{activeStack.name}</h3>
 						</div>
 						
 						{/* Two Column Layout */}
 						<div className="grid md:grid-cols-2 gap-4 md:gap-6">
 							{/* Description - Left Side - Hidden on mobile */}
-							<div className="hidden md:block bg-white dark:bg-black border border-neutral-200 dark:border-neutral-800 rounded-lg p-3 md:p-4">
-								<h4 className="text-sm md:text-base font-semibold text-black dark:text-white mb-2 md:mb-3">Description</h4>
-								<p className="text-xs md:text-sm text-neutral-600 dark:text-neutral-400 leading-relaxed">
+							<div className="hidden md:block bg-black border border-neutral-800 rounded-lg p-3 md:p-4">
+								<h4 className="text-sm md:text-base font-semibold text-white mb-2 md:mb-3">Description</h4>
+								<p className="text-xs md:text-sm text-neutral-400 leading-relaxed">
 									{activeStack.description}
 								</p>
 							</div>
 
 							{/* Project Usage - Right Side - Full width on mobile */}
-							<div className="col-span-full md:col-span-1 bg-white dark:bg-black border border-neutral-200 dark:border-neutral-800 rounded-lg p-3 md:p-4">
-								<h4 className="text-sm md:text-base font-semibold text-black dark:text-white mb-2 md:mb-3">How I've Used This</h4>
-								<p className="text-xs md:text-sm text-neutral-600 dark:text-neutral-400 leading-relaxed">
+							<div className="col-span-full md:col-span-1 bg-black border border-neutral-800 rounded-lg p-3 md:p-4">
+								<h4 className="text-sm md:text-base font-semibold text-white mb-2 md:mb-3">How I've Used This</h4>
+								<p className="text-xs md:text-sm text-neutral-400 leading-relaxed">
 									{activeStack.projectUsage}
 								</p>
 							</div>
@@ -288,7 +288,7 @@ export default function Techstack() {
 
 				{/* Auto-scroll indicator */}
 				<div className="text-center mt-4 md:mt-6">
-					<p className="text-xs text-neutral-500 dark:text-neutral-500 font-light">
+					<p className="text-xs text-neutral-500 font-light">
 						{isPaused ? "Auto-scroll paused" : "Auto-scrolling • Hover to pause"}
 					</p>
 				</div>

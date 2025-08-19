@@ -1,6 +1,7 @@
 import React from 'react';
 import { TextGenerateEffect } from './ui/text-generate-effect';
 import GitHubCalendar from 'react-github-calendar'
+import BackgroundGrid from './BackgroundGrid';
 
 const About = () => {
   const titleText = "About Me";
@@ -54,33 +55,25 @@ const About = () => {
   ];
   
   return (
-    <section className="bg-white dark:bg-black px-4 pt-32" id="about">
-      <div className="max-w-4xl mx-auto text-center space-y-8">
+    <section className="bg-black px-4 pt-32 relative" id="about">
+      <BackgroundGrid />
+      
+      <div className="max-w-4xl mx-auto text-center space-y-8 relative z-10">
         {/* Profile Image and Name Side by Side */}
         <div className="flex flex-col md:flex-row items-center justify-center gap-4 mb-6">
           <img
             src="/new_dp.jpg"
             alt="Russel Daniel"
-            className="w-20 h-20 md:w-24 md:h-24 rounded-full object-cover border-3 border-neutral-200 dark:border-neutral-700 shadow-md"
+            className="w-20 h-20 md:w-24 md:h-24 rounded-full object-cover border-3 border-neutral-700 shadow-md"
           />
-          <h1 className="text-2xl md:text-3xl font-bold text-black dark:text-white">
+          <h1 className="text-2xl md:text-3xl font-bold text-white">
             Russel Daniel Paul
           </h1>
         </div>
         
-        {/* Animated Title */}
-        {/* <TextGenerateEffect
-          words={titleText}
-          className="text-3xl md:text-4xl font-bold text-black dark:text-white"
-          duration={2.5}
-          filter={true}
-        /> */}
-        
         {/* Description */}
-        <p className="text-base text-neutral-600 dark:text-neutral-400 leading-relaxed max-w-2xl mx-auto">
+        <p className="text-base text-neutral-400 leading-relaxed max-w-2xl mx-auto">
   Engineering student messing around with web dev. MERN stack fan, mostly figuring things out as I go.
-
-
         </p>
         
         {/* Social Media Links */}
@@ -91,7 +84,7 @@ const About = () => {
               href={social.url}
               target="_blank"
               rel="noopener noreferrer"
-              className="w-10 h-10 flex items-center justify-center bg-neutral-100 dark:bg-neutral-800 hover:bg-neutral-200 dark:hover:bg-neutral-700 rounded-full transition-all duration-300 hover:scale-110 text-neutral-700 dark:text-neutral-300"
+              className="w-10 h-10 flex items-center justify-center bg-neutral-800 hover:bg-neutral-700 rounded-full transition-all duration-300 hover:scale-110 text-neutral-300"
               title={social.name}
             >
               {social.icon}

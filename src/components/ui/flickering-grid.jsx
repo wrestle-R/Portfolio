@@ -12,11 +12,11 @@ const FlickeringGrid = ({
   squareSize = 4,
   gridGap = 6,
   flickerChance = 0.1,
-  color = "rgb(107, 114, 128)",
+  color = "rgb(255, 255, 255)",
   width,
   height,
   className = "",
-  maxOpacity = 0.1,
+  maxOpacity = 1,
 }) => {
   const canvasRef = useRef(null);
   const containerRef = useRef(null);
@@ -26,12 +26,12 @@ const FlickeringGrid = ({
   const memoizedColor = useMemo(() => {
     const toRGBA = (color) => {
       if (typeof window === "undefined") {
-        return `rgba(0, 0, 0,`;
+        return `rgba(255, 255, 255,`;
       }
       const canvas = document.createElement("canvas");
       canvas.width = canvas.height = 1;
       const ctx = canvas.getContext("2d");
-      if (!ctx) return "rgba(107, 114, 128,";
+      if (!ctx) return "rgba(255, 255, 255,";
       ctx.fillStyle = color;
       ctx.fillRect(0, 0, 1, 1);
       const [r, g, b] = Array.from(ctx.getImageData(0, 0, 1, 1).data);
