@@ -7,7 +7,7 @@ import { db } from '../firebase.config';
 import BackgroundGrid from '../components/BackgroundGrid';
 
 const Resume = () => {
-  const resumePdf = "/resume.pdf";
+  const resumePdf = "/Resume.pdf";
   const resumeImage = "/Resume.jpg";
   const titleText = "Resume";
 
