@@ -32,7 +32,7 @@ export const TextGenerateEffect = ({
         {wordsArray.map((word, idx) => (
           <motion.span
             key={word + idx}
-            className="text-black dark:text-white opacity-0 inline-block mr-1"
+            className=" opacity-0 inline-block mr-1"
             style={{
               filter: filter ? "blur(8px)" : "none",
             }}

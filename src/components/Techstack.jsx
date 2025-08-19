@@ -119,15 +119,15 @@ const techStackData = [
 		description: "JSON Web Tokens for secure authentication and authorization",
 		projectUsage: "Used JWT for keeping authorization in Talent Hunt and Danys Pizza applications."
 	},
-	{
-		id: 12,
-		name: "Supabase",
-		icon: (
-			<img src="/supabase.jpeg" alt="Supabase" className="w-full h-full object-contain scale-150" />
-		),
-		description: "Open-source Firebase alternative with PostgreSQL database and real-time features",
-		projectUsage: "Used Supabase for storage of images and authorization of ScreenSmart and Watchlist."
-	},
+	// {
+	// 	id: 12,
+	// 	name: "Supabase",
+	// 	icon: (
+	// 		<img src="/supabase.jpeg" alt="Supabase" className="w-full h-full object-contain scale-150" />
+	// 	),
+	// 	description: "Open-source Firebase alternative with PostgreSQL database and real-time features",
+	// 	projectUsage: "Used Supabase for storage of images and authorization of ScreenSmart and Watchlist."
+	// },
 		{
 		id: 13,
 		name: "C/C++",
@@ -196,6 +196,13 @@ export default function Techstack() {
                             duration={2.5}
                             filter={true}
                           />
+						  <TextGenerateEffect
+						  words={"Skills are listed in decreasing order of familiarity from my strongest to the less familiar ones."}
+						  className="text-neutral-400 text-sm mt-2"
+						  duration={3}
+                           filter={true}
+							/>
+						  
                         </div>
 
 				{/* Tech Stack Grid */}

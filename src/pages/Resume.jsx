@@ -56,7 +56,7 @@ const Resume = () => {
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-white to-neutral-50 dark:from-black dark:to-neutral-900 relative">
+    <div className="min-h-screen bg-white/95 dark:bg-black/95 backdrop-blur-sm relative">
       {/* Enhanced Header with RDP and Back to Portfolio */}
       <header className="fixed top-0 left-0 right-0 z-40 bg-white/90 dark:bg-black/90 backdrop-blur-xl border-b border-neutral-200/30 dark:border-neutral-800/30 shadow-sm">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
