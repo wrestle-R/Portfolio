@@ -13,15 +13,15 @@ const projectsData = [
     tech: ["React", "JavaScript", "CSS"],
     image: "/Bible_Wordle.png"
   },
-  {
-    id: 2,
-    name: "Watchlist",
-    description: "Movie tracker with genre-based lists and OMDb API",
-    url: "https://watchlist-a9568.web.app/",
-    github: "https://github.com/wrestle-R/watchlist", 
-    tech: ["React", "Tailwind", "Supabase", "OMDb API"],
-    image: "/Watchlist.png"
-  },
+  // {
+  //   id: 2,
+  //   name: "Watchlist",
+  //   description: "Movie tracker with genre-based lists and OMDb API",
+  //   url: "https://watchlist-a9568.web.app/",
+  //   github: "https://github.com/wrestle-R/watchlist", 
+  //   tech: ["React", "Tailwind", "Supabase", "OMDb API"],
+  //   image: "/Watchlist.png"
+  // },
   {
     id: 3,
     name: "Walking Project",
@@ -48,7 +48,16 @@ const projectsData = [
     github: "https://github.com/romeirofernandes/ClarityAI",
     tech: ["React", "Node.js", "MongoDB", "Google Gemini AI"],
     image: "/Clarity_Ai.png"
-  }
+  },
+    {
+    id: 6,
+    name: "Healix",
+    description: "Healix is a next-generation telemedicine and digital health platform designed to connect patients and doctors seamlessly.",
+    url: "https://healix-med.vercel.app/", 
+    github: "https://github.com/wrestle-R/Healix",
+    tech: ["React", "Node.js", "MongoDB","Cloudinary","Firebase","A-frame"],
+    image: "/Healix.png"
+  },
 ]
 
 export default function Projects() {
@@ -77,7 +86,7 @@ export default function Projects() {
             <div
               key={project.id}
               onClick={() => setActiveProject(project)}
-              className={`cursor-pointer p-4 rounded-lg border transition-all duration-300 ${
+              className={`cursor-pointer py-4 pl-4 rounded-lg border transition-all duration-300 ${
                 activeProject.id === project.id
                   ? "bg-black dark:bg-white text-white dark:text-black border-black dark:border-white"
                   : "bg-neutral-50 dark:bg-neutral-900 text-black dark:text-white border-neutral-200 dark:border-neutral-800 hover:border-neutral-400 dark:hover:border-neutral-600"
