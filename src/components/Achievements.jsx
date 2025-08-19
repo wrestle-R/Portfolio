@@ -35,7 +35,7 @@ export default function Achievements() {
 	const titleText = "Achievements"
 
 	return (
-		<section className="py-16 bg-white dark:bg-black px-4" id="achievements">
+		<section className="py-16 bg-transparent px-4 relative z-10" id="achievements">
 			<div className="max-w-4xl mx-auto">
 				{/* Title */}
 				<div className="mb-12 text-center">

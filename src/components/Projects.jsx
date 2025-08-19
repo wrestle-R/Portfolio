@@ -65,7 +65,7 @@ export default function Projects() {
   const titleText = "My Projects"
 
   return (
-    <section className="pt-32 bg-white dark:bg-black px-4" id="projects">
+    <section className="pt-32 bg-transparent px-4 relative z-10" id="projects">
       <div className="max-w-4xl mx-auto">
         {/* Title */}
         <div className="mb-12 text-center">

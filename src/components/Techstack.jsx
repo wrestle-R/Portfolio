@@ -186,7 +186,7 @@ export default function Techstack() {
 	}
 
 	return (
-		<section className="pt-24 bg-black px-4" id="skills">
+		<section className="pt-24 bg-transparent px-4 relative z-10" id="skills">
 			<div className="max-w-4xl mx-auto">
 				{/* Title */}
 				 <div className="mb-12 text-center">
