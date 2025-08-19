@@ -127,6 +127,15 @@ const techStackData = [
 		),
 		description: "Open-source Firebase alternative with PostgreSQL database and real-time features",
 		projectUsage: "Used Supabase for storage of images and authorization of ScreenSmart and Watchlist."
+	},
+		{
+		id: 13,
+		name: "C/C++",
+		icon: (
+			<img src="cplusplus.png" alt="Supabase" className="w-full h-full object-contain scale-150" />
+		),
+		description: "C and C++ are general-purpose languages, with C focusing on efficiency and C++ adding OOP features.",
+		projectUsage: "I leveraged C and C++ to dive deep into core Data Structures and Algorithms."
 	}
 ]
 
