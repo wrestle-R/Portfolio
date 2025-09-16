@@ -73,8 +73,7 @@ const About = () => {
         
         {/* Description */}
         <p className="text-base text-neutral-400 leading-relaxed max-w-2xl mx-auto">
-  Engineering student messing around with web dev. MERN stack fan, mostly figuring things out as I go.
-        </p>
+Engineering student messing around with web dev. MERN stack fan with a solid foundation in web dev, learning AI/ML, and curious about IoT—mostly figuring things out as I go.        </p>
         
         {/* Social Media Links */}
         <div className="flex justify-center space-x-4">
