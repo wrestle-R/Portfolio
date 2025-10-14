@@ -33,12 +33,13 @@ export const ContributionGraph = ({ contributions, username }) => {
     return colors[level];
   };
 
-  // Group contributions by week
+  // Group contributions by week (Sunday to Saturday)
   const weeks = [];
   let currentWeek = [];
   
   contributions.forEach((day, index) => {
     currentWeek.push(day);
+    // Complete week has 7 days or it's the last day
     if (currentWeek.length === 7 || index === contributions.length - 1) {
       weeks.push([...currentWeek]);
       currentWeek = [];
@@ -46,9 +47,9 @@ export const ContributionGraph = ({ contributions, username }) => {
   });
 
   return (
-    <div className="flex items-center scale-115 justify-center">
+    <div className="flex items-center scale-115 justify-center overflow-x-auto md:overflow-x-visible">
       {/* Contribution Graph */}
-      <div className="inline-flex gap-1 p-5">
+      <div className="inline-flex gap-1 p-5 min-w-max">
         {weeks.map((week, weekIndex) => (
           <div key={weekIndex} className="flex flex-col gap-1">
             {week.map((day, dayIndex) => {
@@ -69,13 +70,14 @@ export const ContributionGraph = ({ contributions, username }) => {
                     }}
                   />
                   
-                  {/* Tooltip - Always on top, highly visible */}
+                  {/* Tooltip with maximum z-index */}
                   <div 
-                    className="absolute bottom-full left-1/2 transform -translate-x-1/2 mb-3 px-4 py-2.5 rounded-lg opacity-0 group-hover:opacity-100 transition-opacity duration-200 pointer-events-none whitespace-nowrap z-[9999] text-sm font-medium shadow-2xl"
+                    className="absolute bottom-full left-1/2 transform -translate-x-1/2 mb-3 px-4 py-2.5 rounded-lg opacity-0 group-hover:opacity-100 transition-opacity duration-200 pointer-events-none whitespace-nowrap text-sm font-medium shadow-2xl"
                     style={{ 
                       backgroundColor: 'oklch(0.2 0.01 0)',
                       color: 'oklch(0.95 0.01 0)',
-                      border: '2px solid oklch(var(--border))'
+                      border: '2px solid oklch(var(--border))',
+                      zIndex: 2147483647
                     }}
                   >
                     <div className="flex flex-col gap-0.5">
@@ -99,7 +101,8 @@ export const ContributionGraph = ({ contributions, username }) => {
                         height: 0,
                         borderLeft: '6px solid transparent',
                         borderRight: '6px solid transparent',
-                        borderTop: '6px solid oklch(0.2 0.01 0)'
+                        borderTop: '6px solid oklch(0.2 0.01 0)',
+                        zIndex: 2147483647
                       }}
                     />
                   </div>

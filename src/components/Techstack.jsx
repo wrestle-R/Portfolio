@@ -189,10 +189,10 @@ export default function Techstack() {
 		<section className="pt-24 px-4 relative z-10" style={{ backgroundColor: 'transparent' }} id="skills">
 			<div className="max-w-4xl mx-auto">
 				{/* Title */}
-				 <div className="mb-12 text-center">
+				 <div className="mb-12 text-left">
                           <TextGenerateEffect
                             words={titleText}
-                            className="text-3xl md:text-4xl font-bold"
+                            className="text-4xl font-bold"
                             duration={2.5}
                             filter={true}
                           />

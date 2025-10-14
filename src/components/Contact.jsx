@@ -48,7 +48,7 @@ const Contact = () => {
     <section className="px-4 py-24 relative z-10" style={{ backgroundColor: 'transparent' }} id="contact">
       <div className="max-w-4xl mx-auto">
         {/* Animated Title - Outside Container */}
-        <div className="text-center mb-8">
+        <div className="text-left mb-8">
           <TextGenerateEffect
             words={titleText}
             className="text-3xl md:text-4xl font-bold mb-3"

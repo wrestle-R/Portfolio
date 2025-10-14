@@ -5,6 +5,7 @@ import { getGitHubContributions } from '../lib/github-api';
 const Github = () => {
   const [contributions, setContributions] = useState([]);
   const [loading, setLoading] = useState(true);
+  const [totalContributions, setTotalContributions] = useState(0);
   const username = 'wrestle-R'; // Your GitHub username
 
   useEffect(() => {
@@ -12,6 +13,11 @@ const Github = () => {
       setLoading(true);
       const data = await getGitHubContributions(username);
       setContributions(data);
+      
+      // Calculate total contributions
+      const total = data.reduce((sum, day) => sum + day.count, 0);
+      setTotalContributions(total);
+      
       setLoading(false);
     };
 
@@ -25,6 +31,19 @@ const Github = () => {
       style={{ backgroundColor: 'oklch(var(--background))' }}
     >
       <div className="max-w-4xl mx-auto relative z-10">
+        <div className="mb-4 text-left">
+          <h2 className="text-4xl font-bold mb-2" style={{ color: 'oklch(var(--foreground))' }}>
+            GitHub Activity
+          </h2>
+          {!loading && (
+            <p className="text-lg" style={{ color: 'oklch(var(--muted-foreground))' }}>
+              <span className="font-semibold" style={{ color: 'oklch(0.65 0.20 145)' }}>
+                {totalContributions}
+              </span> contributions in the last year
+            </p>
+          )}
+        </div>
+        
         <div 
           className="rounded-lg shadow-lg border"
           style={{ 

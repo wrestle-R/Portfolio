@@ -1,5 +1,22 @@
-// Fetch GitHub contributions data
+// Fetch GitHub contributions data with primary API and fallback
 export async function getGitHubContributions(username) {
+  const token = import.meta.env.VITE_GITHUB_API;
+  
+  // Try primary GraphQL API first
+  if (token) {
+    try {
+      const contributions = await getGitHubContributionsGraphQL(username, token);
+      if (contributions && contributions.length > 0) {
+        const totalContributions = contributions.reduce((sum, day) => sum + day.count, 0);
+        console.log(`Primary API - Total contributions: ${totalContributions}`);
+        return contributions;
+      }
+    } catch (error) {
+      console.error('Primary API failed, falling back to jogruber API:', error);
+    }
+  }
+  
+  // Fallback to jogruber API
   try {
     const response = await fetch(
       `https://github-contributions-api.jogruber.de/v4/${username}?y=last`
@@ -18,9 +35,12 @@ export async function getGitHubContributions(username) {
       level: contribution.level
     }));
     
+    const totalContributions = contributions.reduce((sum, day) => sum + day.count, 0);
+    console.log(`Fallback API - Total contributions: ${totalContributions}`);
+    
     return contributions;
   } catch (error) {
-    console.error('Error fetching GitHub contributions:', error);
+    console.error('Error fetching GitHub contributions from fallback API:', error);
     return [];
   }
 }
@@ -60,10 +80,15 @@ export async function getGitHubContributionsGraphQL(username, token) {
     });
 
     if (!response.ok) {
-      throw new Error('Failed to fetch GitHub contributions');
+      throw new Error(`GitHub GraphQL API error: ${response.status}`);
     }
 
     const data = await response.json();
+    
+    if (data.errors) {
+      throw new Error(`GraphQL errors: ${JSON.stringify(data.errors)}`);
+    }
+    
     const weeks = data.data.user.contributionsCollection.contributionCalendar.weeks;
     
     // Flatten the weeks into a single array of contributions
@@ -77,7 +102,7 @@ export async function getGitHubContributionsGraphQL(username, token) {
 
     return contributions;
   } catch (error) {
-    console.error('Error fetching GitHub contributions:', error);
-    return [];
+    console.error('Error fetching GitHub contributions from GraphQL:', error);
+    throw error;
   }
 }

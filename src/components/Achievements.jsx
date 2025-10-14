@@ -35,13 +35,13 @@ export default function Achievements() {
 	const titleText = "Achievements"
 
 	return (
-		<section className="py-16 px-4 relative z-10" style={{ backgroundColor: 'transparent' }} id="achievements">
+		<section className="py-16 mt-20 px-4 relative z-10" style={{ backgroundColor: 'transparent' }} id="achievements">
 			<div className="max-w-4xl mx-auto">
 				{/* Title */}
-				<div className="mb-12 text-center">
+				<div className="mb-12 text-left">
 					<TextGenerateEffect
 						words={titleText}
-						className="text-3xl md:text-4xl font-bold"
+						className="text-4xl font-bold"
 						duration={2.5}
 						filter={true}
 					/>
