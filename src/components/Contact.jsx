@@ -2,12 +2,12 @@
 
 import React, { useState } from 'react';
 import { TextGenerateEffect } from './ui/text-generate-effect';
-import { collection, addDoc } from 'firebase/firestore';
-import { db } from '../firebase.config';
+import emailjs from '@emailjs/browser';
 
 const Contact = () => {
   const titleText = "Contact";
   const [formData, setFormData] = useState({
+    name: '',
     email: '',
     message: ''
   });
@@ -28,14 +28,26 @@ const Contact = () => {
     setSubmitStatus('');
 
     try {
-      await addDoc(collection(db, 'messages'), {
-        ...formData,
-        timestamp: new Date(),
-        read: false
+      const serviceId = import.meta.env.VITE_PUBLIC_EMAILJS_SERVICE_ID;
+      const templateId = import.meta.env.VITE_PUBLIC_EMAILJS_TEMPLATE_ID;
+      const publicKey = import.meta.env.VITE_PUBLIC_EMAILJS_PUBLIC_KEY;
+
+      // Initialize EmailJS
+      emailjs.init(publicKey);
+
+      // Send email
+      await emailjs.send(serviceId, templateId, {
+        name: formData.name,
+        email: formData.email,
+        message: formData.message,
+        time: new Date().toLocaleString('en-US', {
+          dateStyle: 'full',
+          timeStyle: 'short'
+        })
       });
       
       setSubmitStatus('success');
-      setFormData({ email: '', message: '' });
+      setFormData({ name: '', email: '', message: '' });
     } catch (error) {
       console.error('Error sending message:', error);
       setSubmitStatus('error');
@@ -45,10 +57,10 @@ const Contact = () => {
   };
 
   return (
-    <section className="px-4 py-24 relative z-10" style={{ backgroundColor: 'transparent' }} id="contact">
+    <section className="px-4 py-16 relative z-10" style={{ backgroundColor: 'transparent' }} id="contact">
       <div className="max-w-4xl mx-auto">
         {/* Animated Title - Outside Container */}
-        <div className="text-left mb-8">
+        <div className="text-left mb-6">
           <TextGenerateEffect
             words={titleText}
             className="text-3xl md:text-3xl font-bold mb-3"
@@ -62,45 +74,65 @@ const Contact = () => {
         <div className="rounded-2xl shadow-lg backdrop-blur-sm overflow-hidden" style={{ backgroundColor: 'oklch(var(--muted))' }}>
           
           {/* Two Column Layout */}
-          <div className="grid md:grid-cols-5 min-h-[350px]">
+          <div className="grid md:grid-cols-5">
             
             {/* Left Side - Connect Message - Hidden on mobile */}
-            <div className="hidden md:block md:col-span-2 p-8 flex-col justify-center" style={{ borderRight: '1px solid oklch(var(--border))' }}>
-              <div className="flex flex-col justify-center h-full space-y-6">
+            <div className="hidden md:block md:col-span-2 p-6 flex-col justify-center" style={{ borderRight: '1px solid oklch(var(--border))' }}>
+              <div className="flex flex-col justify-center h-full space-y-4">
                 <div>
-                  <h3 className="text-2xl font-bold mb-4" style={{ color: 'oklch(var(--foreground))' }}>
+                  <h3 className="text-xl font-bold mb-3" style={{ color: 'oklch(var(--foreground))' }}>
                     Let's Connect!
                   </h3>
-                  <p className="leading-relaxed" style={{ color: 'oklch(var(--muted-foreground))' }}>
+                  <p className="leading-relaxed text-sm" style={{ color: 'oklch(var(--muted-foreground))' }}>
                     Have an idea, project, or just want to chat? I'd love to hear from you and explore how we can work together to bring your vision to life.
                   </p>
                 </div>
                 
-                <div className="space-y-3">
+                <div className="space-y-2">
                   <div className="flex items-center space-x-3" style={{ color: 'oklch(var(--muted-foreground))' }}>
-                    <div className="w-2 h-2 rounded-full" style={{ backgroundColor: 'oklch(var(--foreground))' }}></div>
-                    <span className="text-sm">Quick response within 24 hours</span>
+                    <div className="w-1.5 h-1.5 rounded-full" style={{ backgroundColor: 'oklch(var(--foreground))' }}></div>
+                    <span className="text-xs">Quick response within 24 hours</span>
                   </div>
                   <div className="flex items-center space-x-3" style={{ color: 'oklch(var(--muted-foreground))' }}>
-                    <div className="w-2 h-2 rounded-full" style={{ backgroundColor: 'oklch(var(--foreground))' }}></div>
-                    <span className="text-sm">Open to collaborations & projects</span>
+                    <div className="w-1.5 h-1.5 rounded-full" style={{ backgroundColor: 'oklch(var(--foreground))' }}></div>
+                    <span className="text-xs">Open to collaborations & projects</span>
                   </div>
                   <div className="flex items-center space-x-3" style={{ color: 'oklch(var(--muted-foreground))' }}>
-                    <div className="w-2 h-2 rounded-full" style={{ backgroundColor: 'oklch(var(--foreground))' }}></div>
-                    <span className="text-sm">Always excited to discuss new ideas</span>
+                    <div className="w-1.5 h-1.5 rounded-full" style={{ backgroundColor: 'oklch(var(--foreground))' }}></div>
+                    <span className="text-xs">Always excited to discuss new ideas</span>
                   </div>
                 </div>
               </div>
             </div>
 
             {/* Right Side - Contact Form - Full width on mobile */}
-            <div className="col-span-full md:col-span-3 p-6 md:p-8 flex flex-col justify-center">
-              <div className="space-y-4 md:space-y-6">
-                <h4 className="text-lg md:text-xl font-bold text-center md:text-left" style={{ color: 'oklch(var(--foreground))' }}>Send me a message</h4>
+            <div className="col-span-full md:col-span-3 p-6 flex flex-col justify-center">
+              <div className="space-y-4">
+                <h4 className="text-lg font-bold text-center md:text-left" style={{ color: 'oklch(var(--foreground))' }}>Send me a message</h4>
                 
-                <form onSubmit={handleSubmit} className="space-y-4 md:space-y-5">
-                  <div className="space-y-2">
-                    <label className="text-sm font-medium" style={{ color: 'oklch(var(--muted-foreground))' }}>
+                <form onSubmit={handleSubmit} className="space-y-3">
+                  <div className="space-y-1">
+                    <label className="text-xs font-medium" style={{ color: 'oklch(var(--muted-foreground))' }}>
+                      Name
+                    </label>
+                    <input
+                      type="text"
+                      name="name"
+                      value={formData.name}
+                      onChange={handleInputChange}
+                      required
+                      className="w-full px-3 py-2 rounded-lg transition-all duration-200 text-sm"
+                      style={{
+                        backgroundColor: 'oklch(var(--background) / 0.8)',
+                        border: '1px solid oklch(var(--border))',
+                        color: 'oklch(var(--foreground))'
+                      }}
+                      placeholder="Your name"
+                    />
+                  </div>
+
+                  <div className="space-y-1">
+                    <label className="text-xs font-medium" style={{ color: 'oklch(var(--muted-foreground))' }}>
                       Email Address
                     </label>
                     <input
@@ -109,7 +141,7 @@ const Contact = () => {
                       value={formData.email}
                       onChange={handleInputChange}
                       required
-                      className="w-full px-4 py-3 rounded-xl transition-all duration-200"
+                      className="w-full px-3 py-2 rounded-lg transition-all duration-200 text-sm"
                       style={{
                         backgroundColor: 'oklch(var(--background) / 0.8)',
                         border: '1px solid oklch(var(--border))',
@@ -119,8 +151,8 @@ const Contact = () => {
                     />
                   </div>
                   
-                  <div className="space-y-2">
-                    <label className="text-sm font-medium" style={{ color: 'oklch(var(--muted-foreground))' }}>
+                  <div className="space-y-1">
+                    <label className="text-xs font-medium" style={{ color: 'oklch(var(--muted-foreground))' }}>
                       Your Message
                     </label>
                     <textarea
@@ -129,7 +161,7 @@ const Contact = () => {
                       onChange={handleInputChange}
                       required
                       rows={3}
-                      className="w-full px-4 py-3 rounded-xl resize-none transition-all duration-200"
+                      className="w-full px-3 py-2 rounded-lg resize-none transition-all duration-200 text-sm"
                       style={{
                         backgroundColor: 'oklch(var(--background) / 0.8)',
                         border: '1px solid oklch(var(--border))',
@@ -142,7 +174,7 @@ const Contact = () => {
                   <button
                     type="submit"
                     disabled={isSubmitting}
-                    className="w-full px-6 py-3 rounded-xl font-medium hover:scale-105 hover:shadow-lg transition-all duration-200 disabled:opacity-50 disabled:cursor-not-allowed disabled:hover:scale-100"
+                    className="w-full px-5 py-2.5 rounded-lg font-medium hover:scale-105 hover:shadow-lg transition-all duration-200 disabled:opacity-50 disabled:cursor-not-allowed disabled:hover:scale-100 text-sm"
                     style={{
                       backgroundColor: 'oklch(var(--primary))',
                       color: 'oklch(var(--primary-foreground))'

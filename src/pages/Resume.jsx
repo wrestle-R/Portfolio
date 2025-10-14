@@ -2,8 +2,7 @@
 
 import React, { useState } from 'react';
 import { TextGenerateEffect } from '../components/ui/text-generate-effect';
-import { collection, addDoc } from 'firebase/firestore';
-import { db } from '../firebase.config';
+import emailjs from '@emailjs/browser';
 
 const Resume = () => {
   const resumePdf = "/Resume.pdf";
@@ -11,7 +10,7 @@ const Resume = () => {
   const titleText = "Resume";
 
   const [showModal, setShowModal] = useState(false);
-  const [formData, setFormData] = useState({ email: '', message: '' });
+  const [formData, setFormData] = useState({ name: '', email: '', message: '' });
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [submitStatus, setSubmitStatus] = useState('');
 
@@ -26,13 +25,26 @@ const Resume = () => {
     setSubmitStatus('');
 
     try {
-      await addDoc(collection(db, 'messages'), {
-        ...formData,
-        timestamp: new Date(),
-        read: false
+      const serviceId = import.meta.env.VITE_PUBLIC_EMAILJS_SERVICE_ID;
+      const templateId = import.meta.env.VITE_PUBLIC_EMAILJS_TEMPLATE_ID;
+      const publicKey = import.meta.env.VITE_PUBLIC_EMAILJS_PUBLIC_KEY;
+
+      // Initialize EmailJS
+      emailjs.init(publicKey);
+
+      // Send email
+      await emailjs.send(serviceId, templateId, {
+        name: formData.name,
+        email: formData.email,
+        message: formData.message,
+        time: new Date().toLocaleString('en-US', {
+          dateStyle: 'full',
+          timeStyle: 'short'
+        })
       });
+      
       setSubmitStatus('success');
-      setFormData({ email: '', message: '' });
+      setFormData({ name: '', email: '', message: '' });
     } catch (error) {
       console.error('Error sending message:', error);
       setSubmitStatus('error');
@@ -92,7 +104,7 @@ const Resume = () => {
       {/* Contact Modal */}
       {showModal && (
         <div className="fixed inset-0 backdrop-blur-md flex items-center justify-center z-50 p-4" style={{ backgroundColor: 'oklch(var(--background) / 0.7)' }}>
-          <div className="rounded-3xl shadow-2xl p-6 md:p-8 w-full max-w-xl relative" style={{ backgroundColor: 'oklch(var(--muted))', border: '1px solid oklch(var(--border))' }}>
+          <div className="rounded-3xl shadow-2xl p-6 w-full max-w-xl relative" style={{ backgroundColor: 'oklch(var(--muted))', border: '1px solid oklch(var(--border))' }}>
             <button
               onClick={() => setShowModal(false)}
               className="absolute top-4 right-4 w-8 h-8 flex items-center justify-center rounded-full transition-all duration-200"
@@ -103,14 +115,33 @@ const Resume = () => {
               </svg>
             </button>
             
-            <div className="text-center mb-6">
+            <div className="text-center mb-5">
               
               <h2 className="text-2xl font-bold mb-2" style={{ color: 'oklch(var(--foreground))' }}>Let's Connect</h2>
               <p className="text-sm" style={{ color: 'oklch(var(--muted-foreground))' }}>I'd love to hear from you</p>
             </div>
 
-            <form onSubmit={handleSubmit} className="space-y-5">
-              <div className="space-y-2">
+            <form onSubmit={handleSubmit} className="space-y-4">
+              <div className="space-y-1.5">
+                <label className="block text-sm font-semibold" style={{ color: 'oklch(var(--muted-foreground))' }}>
+                  Name
+                </label>
+                <input
+                  type="text"
+                  name="name"
+                  value={formData.name}
+                  onChange={handleInputChange}
+                  required
+                  className="w-full px-4 py-2.5 rounded-xl transition-all duration-200"
+                  style={{ 
+                    backgroundColor: 'oklch(var(--background) / 0.5)',
+                    border: '1px solid oklch(var(--border))',
+                    color: 'oklch(var(--foreground))'
+                  }}
+                  placeholder="Your name"
+                />
+              </div>
+              <div className="space-y-1.5">
                 <label className="block text-sm font-semibold" style={{ color: 'oklch(var(--muted-foreground))' }}>
                   Email Address
                 </label>
@@ -120,7 +151,7 @@ const Resume = () => {
                   value={formData.email}
                   onChange={handleInputChange}
                   required
-                  className="w-full px-4 py-3 rounded-xl transition-all duration-200"
+                  className="w-full px-4 py-2.5 rounded-xl transition-all duration-200"
                   style={{ 
                     backgroundColor: 'oklch(var(--background) / 0.5)',
                     border: '1px solid oklch(var(--border))',
@@ -129,7 +160,7 @@ const Resume = () => {
                   placeholder="your.email@example.com"
                 />
               </div>
-              <div className="space-y-2">
+              <div className="space-y-1.5">
                 <label className="block text-sm font-semibold" style={{ color: 'oklch(var(--muted-foreground))' }}>
                   Your Message
                 </label>
@@ -138,20 +169,20 @@ const Resume = () => {
                   value={formData.message}
                   onChange={handleInputChange}
                   required
-                  rows={4}
-                  className="w-full px-4 py-3 rounded-xl resize-none transition-all duration-200"
+                  rows={3}
+                  className="w-full px-4 py-2.5 rounded-xl resize-none transition-all duration-200"
                   style={{ 
                     backgroundColor: 'oklch(var(--background) / 0.5)',
                     border: '1px solid oklch(var(--border))',
                     color: 'oklch(var(--foreground))'
                   }}
-                  placeholder="I'd appreciate your feedback on my portfolio or suggestions for improvement. Also open to discussing potential opportunities!"
+                  placeholder="Tell me about your project, idea, or just say hello..."
                 />
               </div>
               <button
                 type="submit"
                 disabled={isSubmitting}
-                className="w-full px-6 py-4 rounded-xl font-semibold hover:scale-[1.02] hover:shadow-xl transition-all duration-200 disabled:opacity-50 disabled:cursor-not-allowed disabled:hover:scale-100"
+                className="w-full px-6 py-3 rounded-xl font-semibold hover:scale-[1.02] hover:shadow-xl transition-all duration-200 disabled:opacity-50 disabled:cursor-not-allowed disabled:hover:scale-100"
                 style={{ 
                   backgroundColor: 'oklch(var(--primary))',
                   color: 'oklch(var(--primary-foreground))'
@@ -169,7 +200,7 @@ const Resume = () => {
               </button>
 
               {submitStatus === 'success' && (
-                <div className="flex items-center justify-center gap-2 text-sm font-medium rounded-lg py-3" style={{ color: 'oklch(var(--foreground))' }}>
+                <div className="flex items-center justify-center gap-2 text-sm font-medium rounded-lg py-2.5" style={{ color: 'oklch(var(--foreground))' }}>
                   <svg className="w-4 h-4" fill="currentColor" viewBox="0 0 20 20">
                     <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clipRule="evenodd" />
                   </svg>
@@ -177,7 +208,7 @@ const Resume = () => {
                 </div>
               )}
               {submitStatus === 'error' && (
-                <div className="flex items-center justify-center gap-2 text-sm font-medium rounded-lg py-3" style={{ color: 'oklch(var(--destructive))' }}>
+                <div className="flex items-center justify-center gap-2 text-sm font-medium rounded-lg py-2.5" style={{ color: 'oklch(var(--destructive))' }}>
                   <svg className="w-4 h-4" fill="currentColor" viewBox="0 0 20 20">
                     <path fillRule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7 4a1 1 0 11-2 0 1 1 0 012 0zm-1-9a1 1 0 00-1 1v4a1 1 0 102 0V6a1 1 0 00-1-1z" clipRule="evenodd" />
                   </svg>
