@@ -1,6 +1,5 @@
 import React from 'react';
 import { TextGenerateEffect } from './ui/text-generate-effect';
-import GitHubCalendar from 'react-github-calendar'
 
 const About = () => {
   const titleText = "About Me";
@@ -91,11 +90,6 @@ Engineering student messing around with web dev. MERN stack fan with a solid fou
               {social.icon}
             </a>
           ))}
-        </div>
-        
-        {/* GitHub Calendar */}
-        <div className="pt-4">
-          <GitHubCalendar username="wrestle-R" />
         </div>
       </div>
     </section>
