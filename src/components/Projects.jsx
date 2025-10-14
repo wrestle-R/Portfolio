@@ -65,17 +65,17 @@ export default function Projects() {
   const titleText = "My Projects"
 
   return (
-    <section className="pt-32 bg-transparent px-4 relative z-10" id="projects">
+    <section className="pt-32 px-4 relative z-10" style={{ backgroundColor: 'transparent' }} id="projects">
       <div className="max-w-4xl mx-auto">
         {/* Title */}
         <div className="mb-12 text-center">
           <TextGenerateEffect
             words={titleText}
-            className="text-3xl md:text-4xl font-bold text-black dark:text-white"
+            className="text-3xl md:text-4xl font-bold"
             duration={2.5}
             filter={true}
           />
-          <p className="text-neutral-600 dark:text-neutral-400 text-sm mt-2">
+          <p className="text-sm mt-2" style={{ color: 'oklch(var(--muted-foreground))' }}>
             Here are some of my featured projects - not all of them, just the ones I'm most proud of!
           </p>
         </div>
@@ -86,11 +86,20 @@ export default function Projects() {
             <div
               key={project.id}
               onClick={() => setActiveProject(project)}
-              className={`cursor-pointer py-4 pl-4 rounded-lg border transition-all duration-300 ${
+              className={`cursor-pointer py-4 pl-4 rounded-lg border transition-all duration-300`}
+              style={
                 activeProject.id === project.id
-                  ? "bg-black dark:bg-white text-white dark:text-black border-black dark:border-white"
-                  : "bg-neutral-50 dark:bg-neutral-900 text-black dark:text-white border-neutral-200 dark:border-neutral-800 hover:border-neutral-400 dark:hover:border-neutral-600"
-              }`}
+                  ? {
+                      backgroundColor: 'oklch(var(--primary))',
+                      color: 'oklch(var(--primary-foreground))',
+                      borderColor: 'oklch(var(--primary))'
+                    }
+                  : {
+                      backgroundColor: 'oklch(var(--muted))',
+                      color: 'oklch(var(--foreground))',
+                      borderColor: 'oklch(var(--border))'
+                    }
+              }
             >
               <h3 className="font-semibold text-sm">{project.name}</h3>
             </div>
@@ -98,20 +107,24 @@ export default function Projects() {
         </div>
 
         {/* Active Project Display */}
-        <div className="bg-neutral-50 dark:bg-neutral-900 border border-neutral-200 dark:border-neutral-800 rounded-lg p-6">
+        <div className="rounded-lg p-6" style={{ backgroundColor: 'oklch(var(--muted))', border: '1px solid oklch(var(--border))' }}>
           {/* Project Info */}
           <div className="mb-6">
-            <h2 className="text-2xl font-bold text-black dark:text-white mb-2">
+            <h2 className="text-2xl font-bold mb-2" style={{ color: 'oklch(var(--foreground))' }}>
               {activeProject.name}
             </h2>
-            <p className="text-neutral-600 dark:text-neutral-400 mb-3">
+            <p className="mb-3" style={{ color: 'oklch(var(--muted-foreground))' }}>
               {activeProject.description}
             </p>
             <div className="flex flex-wrap gap-2">
               {activeProject.tech.map((tech, index) => (
                 <span
                   key={index}
-                  className="px-2 py-1 bg-white dark:bg-black text-xs rounded border border-neutral-200 dark:border-neutral-800"
+                  className="px-2 py-1 text-xs rounded"
+                  style={{ 
+                    backgroundColor: 'oklch(var(--background))',
+                    border: '1px solid oklch(var(--border))'
+                  }}
                 >
                   {tech}
                 </span>
@@ -120,7 +133,7 @@ export default function Projects() {
           </div>
 
           {/* Project Screenshot */}
-          <div className="w-full bg-white dark:bg-neutral-800 rounded-lg border border-neutral-200 dark:border-neutral-700 overflow-hidden shadow-lg">
+          <div className="w-full rounded-lg overflow-hidden shadow-lg" style={{ backgroundColor: 'oklch(var(--background))', border: '1px solid oklch(var(--border))' }}>
             {/* Responsive container that maintains aspect ratio */}
             <div className="relative w-full" style={{ aspectRatio: '1332/768' }}>
               <img
@@ -141,7 +154,11 @@ export default function Projects() {
               href={activeProject.url}
               target="_blank"
               rel="noopener noreferrer"
-              className="px-6 py-3 bg-black dark:bg-white text-white dark:text-black rounded-lg text-sm font-medium hover:opacity-80 transition-opacity"
+              className="px-6 py-3 rounded-lg text-sm font-medium hover:opacity-80 transition-opacity"
+              style={{
+                backgroundColor: 'oklch(var(--primary))',
+                color: 'oklch(var(--primary-foreground))'
+              }}
             >
               Live Demo
             </a>
@@ -149,7 +166,11 @@ export default function Projects() {
               href={activeProject.github}
               target="_blank"
               rel="noopener noreferrer"
-              className="px-6 py-3 border border-neutral-300 dark:border-neutral-700 text-black dark:text-white rounded-lg text-sm font-medium hover:bg-neutral-100 dark:hover:bg-neutral-800 transition-colors"
+              className="px-6 py-3 rounded-lg text-sm font-medium transition-colors"
+              style={{
+                border: '1px solid oklch(var(--border))',
+                color: 'oklch(var(--foreground))'
+              }}
             >
               View Code
             </a>

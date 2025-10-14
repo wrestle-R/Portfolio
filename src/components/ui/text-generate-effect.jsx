@@ -27,7 +27,7 @@ export const TextGenerateEffect = ({
   }, [scope.current]);
 
   return (
-    <div className={cn("font-normal", className)}>
+    <div className={cn("font-normal", className)} style={{ color: 'oklch(var(--foreground))' }}>
       <motion.div ref={scope}>
         {wordsArray.map((word, idx) => (
           <motion.span
@@ -35,6 +35,7 @@ export const TextGenerateEffect = ({
             className=" opacity-0 inline-block mr-1"
             style={{
               filter: filter ? "blur(8px)" : "none",
+              color: 'oklch(var(--foreground))'
             }}
           >
             {word}{" "}

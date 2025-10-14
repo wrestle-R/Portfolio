@@ -35,17 +35,17 @@ export default function Achievements() {
 	const titleText = "Achievements"
 
 	return (
-		<section className="py-16 bg-transparent px-4 relative z-10" id="achievements">
+		<section className="py-16 px-4 relative z-10" style={{ backgroundColor: 'transparent' }} id="achievements">
 			<div className="max-w-4xl mx-auto">
 				{/* Title */}
 				<div className="mb-12 text-center">
 					<TextGenerateEffect
 						words={titleText}
-						className="text-3xl md:text-4xl font-bold text-black dark:text-white"
+						className="text-3xl md:text-4xl font-bold"
 						duration={2.5}
 						filter={true}
 					/>
-					<p className="text-neutral-600 dark:text-neutral-400 text-sm mt-2">
+					<p className="text-sm mt-2" style={{ color: 'oklch(var(--muted-foreground))' }}>
 						Hackathon wins and recognitions
 					</p>
 				</div>
@@ -53,52 +53,50 @@ export default function Achievements() {
 				{/* Achievements Grid - Show both side by side */}
 				<div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
 					{achievementsData.map((achievement) => (
-						<div key={achievement.id} className="bg-neutral-50 dark:bg-neutral-900 border border-neutral-200 dark:border-neutral-800 rounded-lg overflow-hidden">
+						<div key={achievement.id} className="rounded-lg overflow-hidden" style={{ backgroundColor: 'oklch(var(--muted))', border: '1px solid oklch(var(--border))' }}>
 							{/* Achievement Info */}
 							<div className="p-6">
 								<div className="space-y-4">
 									{/* Header */}
 									<div>
 										<div className="flex items-center gap-2 mb-2">
-											<span className="text-xs bg-black dark:bg-white text-white dark:text-black px-2 py-1 rounded">
+											<span className="text-xs px-2 py-1 rounded" style={{ backgroundColor: 'oklch(var(--primary))', color: 'oklch(var(--primary-foreground))' }}>
 												{achievement.type}
 											</span>
 										</div>
-										<h2 className="text-xl md:text-2xl font-bold text-black dark:text-white mb-1">
+										<h2 className="text-xl md:text-2xl font-bold mb-1" style={{ color: 'oklch(var(--foreground))' }}>
 											{achievement.title}
 										</h2>
-										{/* <p className="text-sm text-neutral-600 dark:text-neutral-400 mb-2">
-											{achievement.subtitle}
-										</p> */}
-										<h3 className="text-lg font-semibold text-black dark:text-white mb-2">
+										<h3 className="text-lg font-semibold mb-2" style={{ color: 'oklch(var(--foreground))' }}>
 											{achievement.project}
 										</h3>
-										<p className="text-neutral-600 dark:text-neutral-400 text-sm leading-relaxed">
+										<p className="text-sm leading-relaxed" style={{ color: 'oklch(var(--muted-foreground))' }}>
 											{achievement.description}
 										</p>
 									</div>
 
 									{/* Event Details */}
 									<div className="space-y-2 text-sm">
-										{/* <div className="flex items-center gap-2">
-											<span className="font-medium text-black dark:text-white">Date:</span>
-											<span className="text-neutral-600 dark:text-neutral-400">{achievement.date}</span>
-										</div> */}
 										<div className="flex items-center gap-2">
-											<span className="font-medium text-black dark:text-white">Host:</span>
-											<span className="text-neutral-600 dark:text-neutral-400">{achievement.host}</span>
+											<span className="font-medium" style={{ color: 'oklch(var(--foreground))' }}>Host:</span>
+											<span style={{ color: 'oklch(var(--muted-foreground))' }}>{achievement.host}</span>
 										</div>
 										<div className="flex items-center gap-2">
-											<span className="font-medium text-black dark:text-white">Duration:</span>
-											<span className="text-neutral-600 dark:text-neutral-400">{achievement.duration}</span>
+											<span className="font-medium" style={{ color: 'oklch(var(--foreground))' }}>Duration:</span>
+											<span style={{ color: 'oklch(var(--muted-foreground))' }}>{achievement.duration}</span>
 										</div>
 										<div className="flex items-start gap-2">
-											<span className="font-medium text-black dark:text-white">Team:</span>
+											<span className="font-medium" style={{ color: 'oklch(var(--foreground))' }}>Team:</span>
 											<div className="flex flex-wrap gap-1">
 												{achievement.teammates.map((teammate, index) => (
 													<span
 														key={index}
-														className="text-xs bg-white dark:bg-black text-black dark:text-white px-2 py-1 rounded border border-neutral-200 dark:border-neutral-700"
+														className="text-xs px-2 py-1 rounded"
+														style={{ 
+															backgroundColor: 'oklch(var(--background))',
+															color: 'oklch(var(--foreground))',
+															border: '1px solid oklch(var(--border))'
+														}}
 													>
 														{teammate}
 													</span>
@@ -108,7 +106,7 @@ export default function Achievements() {
 									</div>
 
 									{/* Certificate Image */}
-									<div className="w-full bg-white dark:bg-neutral-800 rounded-lg border border-neutral-200 dark:border-neutral-700 overflow-hidden shadow-lg">
+									<div className="w-full rounded-lg overflow-hidden shadow-lg" style={{ backgroundColor: 'oklch(var(--background))', border: '1px solid oklch(var(--border))' }}>
 										<div className="relative w-full" style={{ aspectRatio: '1075/921' }}>
 											<img
 												src={achievement.image}

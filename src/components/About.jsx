@@ -1,7 +1,6 @@
 import React from 'react';
 import { TextGenerateEffect } from './ui/text-generate-effect';
 import GitHubCalendar from 'react-github-calendar'
-import BackgroundGrid from './BackgroundGrid';
 
 const About = () => {
   const titleText = "About Me";
@@ -55,24 +54,23 @@ const About = () => {
   ];
   
   return (
-    <section className="bg-black px-4 pt-32 relative" id="about">
-      <BackgroundGrid />
-      
+    <section className="px-4 pt-32 relative" id="about" style={{ backgroundColor: 'oklch(var(--background))' }}>
       <div className="max-w-4xl mx-auto text-center space-y-8 relative z-10">
         {/* Profile Image and Name Side by Side */}
         <div className="flex flex-col md:flex-row items-center justify-center gap-4 mb-6">
           <img
             src="/new_dp.jpg"
             alt="Russel Daniel"
-            className="w-20 h-20 md:w-24 md:h-24 rounded-full object-cover border-3 border-neutral-700 shadow-md"
+            className="w-20 h-20 md:w-24 md:h-24 rounded-full object-cover shadow-md"
+            style={{ border: '3px solid oklch(var(--border))' }}
           />
-          <h1 className="text-2xl md:text-3xl font-bold text-white">
+          <h1 className="text-2xl md:text-3xl font-bold" style={{ color: 'oklch(var(--foreground))' }}>
             Russel Daniel Paul
           </h1>
         </div>
         
         {/* Description */}
-        <p className="text-base text-neutral-400 leading-relaxed max-w-2xl mx-auto">
+        <p className="text-base leading-relaxed max-w-2xl mx-auto" style={{ color: 'oklch(var(--muted-foreground))' }}>
 Engineering student messing around with web dev. MERN stack fan with a solid foundation in web dev, learning AI/ML, and curious about IoT—mostly figuring things out as I go.        </p>
         
         {/* Social Media Links */}
@@ -83,7 +81,11 @@ Engineering student messing around with web dev. MERN stack fan with a solid fou
               href={social.url}
               target="_blank"
               rel="noopener noreferrer"
-              className="w-10 h-10 flex items-center justify-center bg-neutral-800 hover:bg-neutral-700 rounded-full transition-all duration-300 hover:scale-110 text-neutral-300"
+              className="w-10 h-10 flex items-center justify-center rounded-full transition-all duration-300 hover:scale-110"
+              style={{ 
+                backgroundColor: 'oklch(var(--muted))',
+                color: 'oklch(var(--muted-foreground))'
+              }}
               title={social.name}
             >
               {social.icon}

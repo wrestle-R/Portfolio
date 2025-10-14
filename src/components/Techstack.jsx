@@ -186,19 +186,19 @@ export default function Techstack() {
 	}
 
 	return (
-		<section className="pt-24 bg-transparent px-4 relative z-10" id="skills">
+		<section className="pt-24 px-4 relative z-10" style={{ backgroundColor: 'transparent' }} id="skills">
 			<div className="max-w-4xl mx-auto">
 				{/* Title */}
 				 <div className="mb-12 text-center">
                           <TextGenerateEffect
                             words={titleText}
-                            className="text-3xl md:text-4xl font-bold text-white"
+                            className="text-3xl md:text-4xl font-bold"
                             duration={2.5}
                             filter={true}
                           />
 						  <TextGenerateEffect
 						  words={"Skills are listed in decreasing order of familiarity from my strongest to the less familiar ones."}
-						  className="text-neutral-400 text-sm mt-2"
+						  className="text-sm mt-2"
 						  duration={3}
                            filter={true}
 							/>
@@ -217,68 +217,69 @@ export default function Techstack() {
 								}`}
 							>
 								<div
-									className={`w-10 h-10 sm:w-12 sm:h-12 md:w-14 md:h-14 flex items-center justify-center rounded-xl transition-all duration-500 mx-auto shadow-sm ${
+									className={`w-10 h-10 sm:w-12 sm:h-12 md:w-14 md:h-14 flex items-center justify-center rounded-xl transition-all duration-500 mx-auto shadow-sm`}
+									style={
 										activeStack.id === stack.id
-											? "bg-white text-black shadow-lg transform scale-105"
-											: "bg-neutral-900 text-neutral-300 hover:bg-neutral-800 hover:shadow-md"
-									}`}
+											? {
+													backgroundColor: 'oklch(var(--primary-foreground))',
+													color: 'oklch(var(--primary))',
+													transform: 'scale(1.05)'
+											  }
+											: {
+													backgroundColor: 'oklch(var(--muted))',
+													color: 'oklch(var(--muted-foreground))'
+											  }
+									}
 								>
 									<div className="w-5 h-5 sm:w-6 sm:h-6 md:w-7 md:h-7">
 										{activeStack.id === stack.id && stack.activeIcon ? stack.activeIcon : stack.icon}
 									</div>
 								</div>
 								<p
-									className={`text-center font-medium mt-2 text-[10px] sm:text-xs transition-colors duration-300 ${
+									className={`text-center font-medium mt-2 text-[10px] sm:text-xs transition-colors duration-300`}
+									style={
 										activeStack.id === stack.id
-											? "text-white font-semibold"
-											: "text-neutral-400"
-									}`}
+											? { color: 'oklch(var(--foreground))', fontWeight: 600 }
+											: { color: 'oklch(var(--muted-foreground))' }
+									}
 								>
 									{stack.name}
 								</p>
 							</div>
 						))}
 					</div>
-
-					{/* Progress indicators */}
-					{/* <div className="flex justify-center space-x-1 mt-6">
-						{techStackData.map((stack) => (
-							<div
-								key={stack.id}
-								className={`w-1.5 h-1.5 md:w-2 md:h-2 rounded-full transition-all duration-300 ${
-									activeStack.id === stack.id ? "bg-black dark:bg-white scale-125" : "bg-neutral-300 dark:bg-neutral-700"
-								}`}
-							/>
-						))}
-					</div> */}
 				</div>
 
 				{/* Tech Stack Info */}
 				<div
-					className={`bg-neutral-900 border border-neutral-800 rounded-lg p-4 md:p-6 transition-all duration-500 ${
+					className={`rounded-lg p-4 md:p-6 transition-all duration-500 ${
 						isAnimating ? "opacity-0 transform translate-y-4" : "opacity-100 transform translate-y-0"
 					}`}
+					style={{
+						backgroundColor: 'oklch(var(--muted))',
+						border: '1px solid oklch(var(--border))'
+					}}
 				>
 					<div className="max-w-4xl">
 						{/* Header */}
 						<div className="flex items-center justify-center mb-3 md:mb-4">
-							<h3 className="text-lg md:text-2xl font-bold text-white">{activeStack.name}</h3>
+							<h3 className="text-lg md:text-2xl font-bold" style={{ color: 'oklch(var(--foreground))' }}>{activeStack.name}</h3>
 						</div>
 						
 						{/* Two Column Layout */}
 						<div className="grid md:grid-cols-2 gap-4 md:gap-6">
 							{/* Description - Left Side - Hidden on mobile */}
-							<div className="hidden md:block bg-black border border-neutral-800 rounded-lg p-3 md:p-4">
-								<h4 className="text-sm md:text-base font-semibold text-white mb-2 md:mb-3">Description</h4>
-								<p className="text-xs md:text-sm text-neutral-400 leading-relaxed">
+							<div className="hidden md:block rounded-lg p-3 md:p-4" style={{ backgroundColor: 'oklch(var(--background))', border: '1px solid oklch(var(--border))' }}>
+								<h4 className="text-sm md:text-base font-semibold mb-2 md:mb-3" style={{ color: 'oklch(var(--foreground))' }}>Description</h4>
+								<p className="text-xs md:text-sm leading-relaxed" style={{ color: 'oklch(var(--muted-foreground))' }}>
 									{activeStack.description}
 								</p>
 							</div>
 
 							{/* Project Usage - Right Side - Full width on mobile */}
-							<div className="col-span-full md:col-span-1 bg-black border border-neutral-800 rounded-lg p-3 md:p-4">
-								<h4 className="text-sm md:text-base font-semibold text-white mb-2 md:mb-3">How I've Used This</h4>
-								<p className="text-xs md:text-sm text-neutral-400 leading-relaxed">
+							<div className="col-span-full md:col-span-1 rounded-lg p-3 md:p-4" style={{ backgroundColor: 'oklch(var(--background))', border: '1px solid oklch(var(--border))' }}>
+								<h4 className="text-sm md:text-base font-semibold mb-2 md:mb-3" style={{ color: 'oklch(var(--foreground))' }}>How I've Used This</h4>
+								<p className="text-xs md:text-sm leading-relaxed" style={{ color: 'oklch(var(--muted-foreground))' }}>
 									{activeStack.projectUsage}
 								</p>
 							</div>
@@ -288,7 +289,7 @@ export default function Techstack() {
 
 				{/* Auto-scroll indicator */}
 				<div className="text-center mt-4 md:mt-6">
-					<p className="text-xs text-neutral-500 font-light">
+					<p className="text-xs font-light" style={{ color: 'oklch(var(--muted-foreground))' }}>
 						{isPaused ? "Auto-scroll paused" : "Auto-scrolling • Hover to pause"}
 					</p>
 				</div>
