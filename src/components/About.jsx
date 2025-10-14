@@ -52,46 +52,77 @@ const About = () => {
     }
   ];
   
-  return (
-    <section className="px-4 pt-32 relative" id="about" style={{ backgroundColor: 'oklch(var(--background))' }}>
-      <div className="max-w-4xl mx-auto text-center space-y-8 relative z-10">
-        {/* Profile Image and Name Side by Side */}
-        <div className="flex flex-col md:flex-row items-center justify-center gap-4 mb-6">
-          <img
-            src="/new_dp.jpg"
-            alt="Russel Daniel"
-            className="w-20 h-20 md:w-24 md:h-24 rounded-full object-cover shadow-md"
-            style={{ border: '3px solid oklch(var(--border))' }}
-          />
-          <h1 className="text-2xl md:text-3xl font-bold" style={{ color: 'oklch(var(--foreground))' }}>
-            Russel Daniel Paul
-          </h1>
+return (
+<section
+        className="px-4 pl-32 pt-32 pb-8 relative flex items-center justify-center"
+        id="about"
+        style={{ backgroundColor: 'oklch(var(--background))'}}
+    >
+        <div className="max-w-2xl mx-auto relative z-10">
+            <div className="flex flex-row gap-8 items-center">
+                {/* Left Side - Profile Box (70%) */}
+                <div
+                    className="flex-[9] p-8 rounded-xl shadow-lg border"
+                    style={{
+                        backgroundColor: 'oklch(var(--card))',
+                        borderColor: 'oklch(var(--border))',
+                    }}
+                >
+                    {/* Profile Image */}
+                    <div className="flex justify-center mb-6">
+                        <img
+                            src="/new_dp.jpg"
+                            alt="Russel Daniel"
+                            className="w-32 h-32 rounded-full object-cover shadow-lg"
+                            style={{ border: '4px solid oklch(var(--border))' }}
+                        />
+                    </div>
+
+                    {/* Name */}
+                    <div className="text-center mb-2">
+
+                        <h1
+                            className="text-3xl font-bold mt-1"
+                            style={{ color: 'oklch(var(--foreground))' }}
+                        >
+                            Russel Daniel Paul
+                        </h1>
+                    </div>
+
+                    {/* Description */}
+                    <p
+                        className="text-sm leading-relaxed text-center"
+                        style={{ color: 'oklch(var(--muted-foreground))' }}
+                    >
+                        Engineering student messing around with web dev. MERN stack fan with a
+                        solid foundation in web dev, learning AI/ML, and curious about IoT—mostly
+                        figuring things out as I go.
+                    </p>
+                </div>
+
+                {/* Right Side - Social Icons (30%) */}
+                <div className="w-[30%] flex flex-col gap-4">
+                    {socialLinks.map((social, index) => (
+                        <a
+                            key={index}
+                            href={social.url}
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            className="w-16 h-16 flex items-center justify-center rounded-xl transition-all duration-300 hover:scale-110 hover:rotate-6 group shadow-lg"
+                            style={{
+                                backgroundColor: 'oklch(var(--card))',
+                                borderColor: 'oklch(var(--border))',
+                                color: 'oklch(var(--muted-foreground))',
+                            }}
+                        >
+                            <div className="group-hover:scale-125 transition-transform duration-300">
+                                {social.icon}
+                            </div>
+                        </a>
+                    ))}
+                </div>
+            </div>
         </div>
-        
-        {/* Description */}
-        <p className="text-base leading-relaxed max-w-2xl mx-auto" style={{ color: 'oklch(var(--muted-foreground))' }}>
-Engineering student messing around with web dev. MERN stack fan with a solid foundation in web dev, learning AI/ML, and curious about IoT—mostly figuring things out as I go.        </p>
-        
-        {/* Social Media Links */}
-        <div className="flex justify-center space-x-4">
-          {socialLinks.map((social, index) => (
-            <a
-              key={index}
-              href={social.url}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="w-10 h-10 flex items-center justify-center rounded-full transition-all duration-300 hover:scale-110"
-              style={{ 
-                backgroundColor: 'oklch(var(--muted))',
-                color: 'oklch(var(--muted-foreground))'
-              }}
-              title={social.name}
-            >
-              {social.icon}
-            </a>
-          ))}
-        </div>
-      </div>
     </section>
   );
 };

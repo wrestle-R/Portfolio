@@ -69,23 +69,38 @@ export const ContributionGraph = ({ contributions, username }) => {
                     }}
                   />
                   
-                  {/* Tooltip */}
+                  {/* Tooltip - Always on top, highly visible */}
                   <div 
-                    className="absolute bottom-full left-1/2 transform -translate-x-1/2 mb-2 px-3 py-2 rounded-md opacity-0 group-hover:opacity-100 transition-opacity duration-200 pointer-events-none whitespace-nowrap z-50 text-xs shadow-lg"
+                    className="absolute bottom-full left-1/2 transform -translate-x-1/2 mb-3 px-4 py-2.5 rounded-lg opacity-0 group-hover:opacity-100 transition-opacity duration-200 pointer-events-none whitespace-nowrap z-[9999] text-sm font-medium shadow-2xl"
                     style={{ 
-                      backgroundColor: 'oklch(var(--popover))',
-                      color: 'oklch(var(--popover-foreground))',
-                      border: '1px solid oklch(var(--border))'
+                      backgroundColor: 'oklch(0.2 0.01 0)',
+                      color: 'oklch(0.95 0.01 0)',
+                      border: '2px solid oklch(var(--border))'
                     }}
                   >
-                    <strong>{day.count}</strong> contributions on {date.toLocaleDateString('en-US', { 
-                      month: 'short', 
-                      day: 'numeric',
-                      year: 'numeric'
-                    })}
+                    <div className="flex flex-col gap-0.5">
+                      <div className="font-bold text-base" style={{ color: 'oklch(0.65 0.20 145)' }}>
+                        {day.count} {day.count === 1 ? 'contribution' : 'contributions'}
+                      </div>
+                      <div className="text-xs" style={{ color: 'oklch(0.75 0.01 0)' }}>
+                        {date.toLocaleDateString('en-US', { 
+                          weekday: 'short',
+                          month: 'short', 
+                          day: 'numeric',
+                          year: 'numeric'
+                        })}
+                      </div>
+                    </div>
+                    {/* Arrow */}
                     <div 
-                      className="absolute top-full left-1/2 transform -translate-x-1/2 border-4 border-transparent"
-                      style={{ borderTopColor: 'oklch(var(--border))' }}
+                      className="absolute top-full left-1/2 transform -translate-x-1/2 -mt-px"
+                      style={{
+                        width: 0,
+                        height: 0,
+                        borderLeft: '6px solid transparent',
+                        borderRight: '6px solid transparent',
+                        borderTop: '6px solid oklch(0.2 0.01 0)'
+                      }}
                     />
                   </div>
                 </motion.div>
