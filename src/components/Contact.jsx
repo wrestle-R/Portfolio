@@ -51,7 +51,7 @@ const Contact = () => {
         <div className="text-left mb-8">
           <TextGenerateEffect
             words={titleText}
-            className="text-3xl md:text-4xl font-bold mb-3"
+            className="text-3xl md:text-3xl font-bold mb-3"
             duration={2.5}
             filter={true}
           />

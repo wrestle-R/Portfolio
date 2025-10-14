@@ -1,48 +1,46 @@
 // Fetch GitHub contributions data with primary API and fallback
 export async function getGitHubContributions(username) {
   const token = import.meta.env.VITE_GITHUB_API;
-  
+
+  let primaryContributions = [];
+  let fallbackContributions = [];
+
   // Try primary GraphQL API first
   if (token) {
     try {
-      const contributions = await getGitHubContributionsGraphQL(username, token);
-      if (contributions && contributions.length > 0) {
-        const totalContributions = contributions.reduce((sum, day) => sum + day.count, 0);
-        console.log(`Primary API - Total contributions: ${totalContributions}`);
-        return contributions;
-      }
+      primaryContributions = await getGitHubContributionsGraphQL(username, token);
+      console.log('Primary API Contributions:', primaryContributions);
     } catch (error) {
-      console.error('Primary API failed, falling back to jogruber API:', error);
+      console.error('Primary API failed:', error);
     }
   }
-  
-  // Fallback to jogruber API
+
+  // Fetch from fallback API
   try {
     const response = await fetch(
       `https://github-contributions-api.jogruber.de/v4/${username}?y=last`
     );
-    
+
     if (!response.ok) {
-      throw new Error('Failed to fetch GitHub contributions');
+      throw new Error('Failed to fetch GitHub contributions from fallback API');
     }
-    
+
     const data = await response.json();
-    
+
     // Transform the data to our expected format
-    const contributions = data.contributions.map(contribution => ({
+    fallbackContributions = data.contributions.map(contribution => ({
       date: contribution.date,
       count: contribution.count,
-      level: contribution.level
+      level: contribution.level,
     }));
-    
-    const totalContributions = contributions.reduce((sum, day) => sum + day.count, 0);
-    console.log(`Fallback API - Total contributions: ${totalContributions}`);
-    
-    return contributions;
+
+    console.log('Fallback API Contributions:', fallbackContributions);
   } catch (error) {
     console.error('Error fetching GitHub contributions from fallback API:', error);
-    return [];
   }
+
+  // Return the primary contributions if available, otherwise fallback contributions
+  return primaryContributions.length > 0 ? primaryContributions : fallbackContributions;
 }
 
 // Alternative: Fetch contributions using GitHub GraphQL API (requires token)
@@ -75,8 +73,8 @@ export async function getGitHubContributionsGraphQL(username, token) {
       },
       body: JSON.stringify({
         query,
-        variables: { username }
-      })
+        variables: { username },
+      }),
     });
 
     if (!response.ok) {
@@ -84,19 +82,19 @@ export async function getGitHubContributionsGraphQL(username, token) {
     }
 
     const data = await response.json();
-    
+
     if (data.errors) {
       throw new Error(`GraphQL errors: ${JSON.stringify(data.errors)}`);
     }
-    
+
     const weeks = data.data.user.contributionsCollection.contributionCalendar.weeks;
-    
+
     // Flatten the weeks into a single array of contributions
-    const contributions = weeks.flatMap(week => 
+    const contributions = weeks.flatMap(week =>
       week.contributionDays.map(day => ({
         date: day.date,
         count: day.contributionCount,
-        level: day.contributionLevel
+        level: day.contributionLevel,
       }))
     );
 

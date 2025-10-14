@@ -41,7 +41,7 @@ export default function Achievements() {
 				<div className="mb-12 text-left">
 					<TextGenerateEffect
 						words={titleText}
-						className="text-4xl font-bold"
+						className="text-3xl font-bold"
 						duration={2.5}
 						filter={true}
 					/>

@@ -32,16 +32,9 @@ const Github = () => {
     >
       <div className="max-w-4xl mx-auto relative z-10">
         <div className="mb-4 text-left">
-          <h2 className="text-4xl font-bold mb-2" style={{ color: 'oklch(var(--foreground))' }}>
+          <h2 className="text-3xl font-bold mb-2" style={{ color: 'oklch(var(--foreground))' }}>
             GitHub Activity
           </h2>
-          {!loading && (
-            <p className="text-lg" style={{ color: 'oklch(var(--muted-foreground))' }}>
-              <span className="font-semibold" style={{ color: 'oklch(0.65 0.20 145)' }}>
-                {totalContributions}
-              </span> contributions in the last year
-            </p>
-          )}
         </div>
         
         <div 

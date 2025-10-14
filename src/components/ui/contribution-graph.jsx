@@ -21,14 +21,14 @@ export const ContributionGraph = ({ contributions, username }) => {
     return 4;
   };
 
-  // Get color based on contribution level
+  // Get color based on contribution level (shades of black and gray)
   const getColor = (level) => {
     const colors = [
-      'oklch(0.25 0.01 0)', // Level 0 - almost black
-      'oklch(0.55 0.15 145)', // Level 1 - light green
-      'oklch(0.50 0.18 145)', // Level 2 - medium green
-      'oklch(0.45 0.20 145)', // Level 3 - darker green
-      'oklch(0.40 0.22 145)', // Level 4 - darkest green
+      'oklch(0.25 0.01 0)', // Level 0 - black
+      'oklch(0.35 0.02 0)', // Level 1 - dark gray
+      'oklch(0.45 0.03 0)', // Level 2 - medium gray
+      'oklch(0.55 0.04 0)', // Level 3 - light gray
+      'oklch(0.65 0.05 0)', // Level 4 - lightest gray
     ];
     return colors[level];
   };
@@ -54,58 +54,23 @@ export const ContributionGraph = ({ contributions, username }) => {
           <div key={weekIndex} className="flex flex-col gap-1">
             {week.map((day, dayIndex) => {
               const level = getContributionLevel(day.count);
-              const date = new Date(day.date);
-              
+
               return (
                 <motion.div
                   key={`${weekIndex}-${dayIndex}`}
                   whileHover={{ scale: 1.3 }}
                   className="group relative"
+                  style={{
+                    zIndex: 1, // Lower z-index for graph nodes
+                  }}
                 >
                   <div
                     className="w-2.5 h-2.5 rounded-sm transition-all duration-200 cursor-pointer"
                     style={{ 
                       backgroundColor: getColor(level),
-                      border: '1px solid oklch(var(--border) / 0.2)'
+                      border: '1px solid oklch(var(--border) / 0.2)',
                     }}
                   />
-                  
-                  {/* Tooltip with maximum z-index */}
-                  <div 
-                    className="absolute bottom-full left-1/2 transform -translate-x-1/2 mb-3 px-4 py-2.5 rounded-lg opacity-0 group-hover:opacity-100 transition-opacity duration-200 pointer-events-none whitespace-nowrap text-sm font-medium shadow-2xl"
-                    style={{ 
-                      backgroundColor: 'oklch(0.2 0.01 0)',
-                      color: 'oklch(0.95 0.01 0)',
-                      border: '2px solid oklch(var(--border))',
-                      zIndex: 2147483647
-                    }}
-                  >
-                    <div className="flex flex-col gap-0.5">
-                      <div className="font-bold text-base" style={{ color: 'oklch(0.65 0.20 145)' }}>
-                        {day.count} {day.count === 1 ? 'contribution' : 'contributions'}
-                      </div>
-                      <div className="text-xs" style={{ color: 'oklch(0.75 0.01 0)' }}>
-                        {date.toLocaleDateString('en-US', { 
-                          weekday: 'short',
-                          month: 'short', 
-                          day: 'numeric',
-                          year: 'numeric'
-                        })}
-                      </div>
-                    </div>
-                    {/* Arrow */}
-                    <div 
-                      className="absolute top-full left-1/2 transform -translate-x-1/2 -mt-px"
-                      style={{
-                        width: 0,
-                        height: 0,
-                        borderLeft: '6px solid transparent',
-                        borderRight: '6px solid transparent',
-                        borderTop: '6px solid oklch(0.2 0.01 0)',
-                        zIndex: 2147483647
-                      }}
-                    />
-                  </div>
                 </motion.div>
               );
             })}
