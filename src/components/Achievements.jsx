@@ -41,13 +41,11 @@ export default function Achievements() {
 				<div className="mb-12 text-left">
 					<TextGenerateEffect
 						words={titleText}
-						className="text-3xl font-bold"
+						className="text-3xl font-extrabold tracking-tight"
 						duration={2.5}
 						filter={true}
 					/>
-					<p className="text-sm mt-2" style={{ color: 'oklch(var(--muted-foreground))' }}>
-						Hackathon wins and recognitions
-					</p>
+
 				</div>
 
 				{/* Achievements Grid - Show both side by side */}

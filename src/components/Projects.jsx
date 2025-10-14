@@ -75,9 +75,6 @@ export default function Projects() {
             duration={2.5}
             filter={true}
           />
-          <p className="text-sm mt-2" style={{ color: 'oklch(var(--muted-foreground))' }}>
-            Here are some of my featured projects - not all of them, just the ones I'm most proud of!
-          </p>
         </div>
 
         {/* Projects Grid */}

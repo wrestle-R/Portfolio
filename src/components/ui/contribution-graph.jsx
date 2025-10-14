@@ -1,7 +1,10 @@
 import React from 'react';
 import { motion } from 'framer-motion';
+import { useTheme } from '../../context/ThemeContext'; // Import useTheme
 
 export const ContributionGraph = ({ contributions, username }) => {
+  const { theme } = useTheme(); // Get the current theme
+
   if (!contributions || contributions.length === 0) {
     return (
       <div className="flex items-center justify-center h-40">
@@ -21,16 +24,25 @@ export const ContributionGraph = ({ contributions, username }) => {
     return 4;
   };
 
-  // Get color based on contribution level (shades of black and gray)
+  // Define colors for light and dark themes
   const getColor = (level) => {
-    const colors = [
+    const darkColors = [
       'oklch(0.25 0.01 0)', // Level 0 - black
       'oklch(0.35 0.02 0)', // Level 1 - dark gray
       'oklch(0.45 0.03 0)', // Level 2 - medium gray
       'oklch(0.55 0.04 0)', // Level 3 - light gray
       'oklch(0.65 0.05 0)', // Level 4 - lightest gray
     ];
-    return colors[level];
+
+    const lightColors = [
+      'oklch(0.95 0.01 0)', // Level 0 - white
+      'oklch(0.85 0.02 0)', // Level 1 - light gray
+      'oklch(0.75 0.03 0)', // Level 2 - medium gray
+      'oklch(0.65 0.04 0)', // Level 3 - darker gray
+      'oklch(0.55 0.05 0)', // Level 4 - darkest gray
+    ];
+
+    return theme === 'dark' ? darkColors[level] : lightColors[level];
   };
 
   // Group contributions by week (Sunday to Saturday)

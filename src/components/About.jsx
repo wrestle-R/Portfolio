@@ -86,10 +86,7 @@ return (
                         className="text-sm leading-relaxed text-center"
                         style={{ color: 'oklch(var(--muted-foreground))' }}
                     >
-                        Engineering student messing around with web dev. MERN stack fan with a
-                        solid foundation in web dev, learning AI/ML, and curious about IoT—mostly
-                        figuring things out as I go.
-                    </p>
+Engineering student diving into web dev — big fan of the MERN stack, learning AI/ML, and getting into IoT. Just figuring things out one project at a time.                    </p>
                 </div>
 
                 {/* Right Side - Social Icons (30%) */}
