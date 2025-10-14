@@ -46,15 +46,15 @@ const About = () => {
   
 return (
 <section
-        className="px-4 pl-32 pt-28 pb-8 relative flex items-center justify-center"
+        className="px-4 pt-28 pb-8 relative flex items-center justify-center w-full"
         id="about"
         style={{ backgroundColor: 'oklch(var(--background))'}}
     >
-        <div className="max-w-2xl mx-auto relative z-10">
-            <div className="flex flex-row gap-8 items-center">
+        <div className="max-w-2xl mx-auto relative z-10 w-full">
+            <div className="flex flex-col md:flex-row gap-8 items-center">
                 {/* Left Side - Profile Box (70%) */}
                 <div
-                    className="flex-[9] p-8 rounded-xl shadow-lg border"
+                    className="flex-[9] p-8 rounded-xl shadow-lg border w-full"
                     style={{
                         backgroundColor: 'oklch(var(--card))',
                         borderColor: 'oklch(var(--border))',
@@ -93,7 +93,7 @@ return (
                 </div>
 
                 {/* Right Side - Social Icons (30%) */}
-                <div className="w-[30%] flex flex-col gap-4">
+                <div className="w-full md:w-[30%] flex flex-row md:flex-col gap-4 justify-center">
                     {socialLinks.map((social, index) => (
                         <a
                             key={index}

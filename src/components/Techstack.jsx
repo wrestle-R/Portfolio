@@ -196,12 +196,7 @@ export default function Techstack() {
                             duration={2.5}
                             filter={true}
                           />
-						  <TextGenerateEffect
-						  words={"Skills are listed in decreasing order of familiarity from my strongest to the less familiar ones."}
-						  className="text-sm mt-2"
-						  duration={3}
-                           filter={true}
-							/>
+	
 						  
                         </div>
 

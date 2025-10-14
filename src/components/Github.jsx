@@ -1,12 +1,14 @@
 import React, { useEffect, useState } from 'react';
 import { ContributionGraph, ContributionGraphSkeleton } from './ui/contribution-graph';
 import { getGitHubContributions } from '../lib/github-api';
+import { TextGenerateEffect } from './ui/text-generate-effect';
 
 const Github = () => {
   const [contributions, setContributions] = useState([]);
   const [loading, setLoading] = useState(true);
   const [totalContributions, setTotalContributions] = useState(0);
   const username = 'wrestle-R'; // Your GitHub username
+  const titleText = "GitHub Activity";
 
   useEffect(() => {
     const fetchContributions = async () => {
@@ -31,10 +33,13 @@ const Github = () => {
       style={{ backgroundColor: 'oklch(var(--background))' }}
     >
       <div className="max-w-4xl mx-auto relative z-10">
-        <div className="mb-4 text-left">
-          <h2 className="text-3xl font-bold mb-2" style={{ color: 'oklch(var(--foreground))' }}>
-            GitHub Activity
-          </h2>
+        <div className="mb-4 text-left sm:pl-0 pl-3">
+          <TextGenerateEffect
+            words={titleText}
+            className="text-3xl font-bold"
+            duration={1.5}
+            filter={true}
+          />
         </div>
         
         <div 
