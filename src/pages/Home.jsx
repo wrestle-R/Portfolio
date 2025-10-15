@@ -13,7 +13,7 @@ const Home = () => {
     <div className="min-h-screen">
       <NavbarComponent />
       <About/>
-      {/* <Github /> */}
+      <Github />
       <Techstack />
       <Projects />
       <Achievements />

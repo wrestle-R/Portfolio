@@ -28,12 +28,12 @@ const Github = () => {
 
   return (
     <section 
-      className="relative mt-8" 
+      className="relative pt-24 px-4" 
       id="github"
-      style={{ backgroundColor: 'oklch(var(--background))' }}
+      style={{ backgroundColor: 'transparent' }}
     >
       <div className="max-w-4xl mx-auto relative z-10">
-        <div className="mb-4 text-left sm:pl-0 pl-3">
+        <div className="mb-12 text-left">
           <TextGenerateEffect
             words={titleText}
             className="text-3xl font-bold"
@@ -43,10 +43,10 @@ const Github = () => {
         </div>
         
         <div 
-          className="rounded-lg shadow-lg border"
+          className="rounded-lg p-4 md:p-6 overflow-x-auto"
           style={{ 
-            backgroundColor: 'oklch(var(--card))',
-            borderColor: 'oklch(var(--border))'
+            backgroundColor: 'oklch(var(--muted))',
+            border: '1px solid oklch(var(--border))'
           }}
         >
           {loading ? (

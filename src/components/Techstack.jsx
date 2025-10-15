@@ -44,6 +44,9 @@ const techStackData = [
 		icon: (
 			<img src="/Node.png" alt="Node.js" className="w-full h-full object-contain scale-165" />
 		),
+		activeIcon: (
+			<img src="/Node_black.png" alt="Node.js" className="w-full h-full object-contain scale-165" />
+		),
 		description: "JavaScript runtime for building scalable server-side applications and APIs",
 		projectUsage: "Made the backend of Danys Pizza, Talent Hunt and a todo list application."
 	},
@@ -63,7 +66,10 @@ const techStackData = [
 		id: 6,
 		name: "MongoDB",
 		icon: (
-			<img src="/mongo	.png" alt="MongoDB" className="w-full h-full object-contain scale-130" />
+			<img src="/mongo.png" alt="MongoDB" className="w-full h-full object-contain scale-130" />
+		),
+		activeIcon: (
+			<img src="/mongo_black.png" alt="MongoDB" className="w-full h-full object-contain scale-130" />
 		),
 		description: "NoSQL document database for flexible, scalable data storage solutions",
 		projectUsage: "My go-to database. I like NoSQL and used MongoDB for connecting with Node.js."
@@ -74,6 +80,9 @@ const techStackData = [
 		icon: (
 			<img src="/postgresSql.png" alt="PostgreSQL" className="w-full h-full object-contain scale-130" />
 		),
+		activeIcon: (
+			<img src="/postgresSql_black.png" alt="PostgreSQL" className="w-full h-full object-contain scale-130" />
+		),
 		description: "Advanced relational database system with complex queries and data integrity",
 		projectUsage: "Learnt PostgreSQL commands as part of DBMS in college and used for Recipe Vault."
 	},
@@ -82,6 +91,9 @@ const techStackData = [
 		name: "Tailwind CSS",
 		icon: (
 			<img src="/Tailwind.png" alt="Tailwind CSS" className="w-full h-full object-contain scale-130" />
+		),
+		activeIcon: (
+			<img src="/Tailwind_black.png" alt="Tailwind CSS" className="w-full h-full object-contain scale-130" />
 		),
 		description: "Utility-first CSS framework for rapid responsive design development",
 		projectUsage: "I have used Tailwind in everything I have ever built. Just so much better."
@@ -116,23 +128,20 @@ const techStackData = [
 		icon: (
 			<img src="/jwt.png" alt="JWT" className="w-full h-full object-contain scale-150" />
 		),
+		activeIcon: (
+			<img src="/jwt_black.png" alt="JWT" className="w-full h-full object-contain scale-150" />
+		),
 		description: "JSON Web Tokens for secure authentication and authorization",
 		projectUsage: "Used JWT for keeping authorization in Talent Hunt and Danys Pizza applications."
 	},
-	// {
-	// 	id: 12,
-	// 	name: "Supabase",
-	// 	icon: (
-	// 		<img src="/supabase.jpeg" alt="Supabase" className="w-full h-full object-contain scale-150" />
-	// 	),
-	// 	description: "Open-source Firebase alternative with PostgreSQL database and real-time features",
-	// 	projectUsage: "Used Supabase for storage of images and authorization of ScreenSmart and Watchlist."
-	// },
-		{
+	{
 		id: 13,
 		name: "C/C++",
 		icon: (
-			<img src="cplusplus.png" alt="Supabase" className="w-full h-full object-contain scale-150" />
+			<img src="/cplusplus.png" alt="C/C++" className="w-full h-full object-contain scale-150" />
+		),
+		activeIcon: (
+			<img src="/cplusplus_black.png" alt="C/C++" className="w-full h-full object-contain scale-150" />
 		),
 		description: "C and C++ are general-purpose languages, with C focusing on efficiency and C++ adding OOP features.",
 		projectUsage: "I leveraged C and C++ to dive deep into core Data Structures and Algorithms."
