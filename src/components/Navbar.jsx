@@ -192,9 +192,9 @@ const NavbarComponent = () => {
             damping: 30,
           }}
           style={{ color: 'oklch(var(--foreground))' }}
-          className="text-lg font-bold tracking-wider"
+          className="text-lg font-extrabold tracking-wider"
         >
-          {visible ? "RDP" : "Russel Daniel Paul"}
+          {visible ? "RDP" : "RDP"}
         </motion.h1>
 
         <div className="flex items-center space-x-2">

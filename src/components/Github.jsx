@@ -43,9 +43,9 @@ const Github = () => {
         </div>
         
         <div 
-          className="rounded-lg p-4 md:p-6 overflow-x-auto"
+          className="rounded-lg p-4 md:p-6"
           style={{ 
-            backgroundColor: 'oklch(var(--muted))',
+            backgroundColor: 'oklch(var(--muted) / 0.6)', // reduced intensity
             border: '1px solid oklch(var(--border))'
           }}
         >

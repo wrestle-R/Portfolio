@@ -2,6 +2,7 @@
 
 import { useState, useEffect, useRef } from "react"
 import { TextGenerateEffect } from './ui/text-generate-effect';
+import { useTheme } from '../context/ThemeContext'; // Import ThemeContext
 
 // Tech stack data with image icons
 const techStackData = [
@@ -149,11 +150,13 @@ const techStackData = [
 ]
 
 export default function Techstack() {
-	const [activeStack, setActiveStack] = useState(techStackData[0])
-	const [isAnimating, setIsAnimating] = useState(false)
-	const [isPaused, setIsPaused] = useState(false)
-	const intervalRef = useRef(null)
+    const [activeStack, setActiveStack] = useState(techStackData[0])
+    const [isAnimating, setIsAnimating] = useState(false)
+    const [isPaused, setIsPaused] = useState(false)
+    const intervalRef = useRef(null)
+    const { theme } = useTheme(); // Get theme from context
     const titleText = "My Tech Stack";
+
 	// Auto-scroll functionality
 	useEffect(() => {
 		if (!isPaused) {
@@ -193,6 +196,17 @@ export default function Techstack() {
 	const handleMouseLeave = () => {
 		setTimeout(() => setIsPaused(false), 2000)
 	}
+
+	// Helper to decide icon for special stacks
+	const getStackIcon = (stack) => {
+		const specialNames = ["Java", "Next.js", "Express.js", "Socket.IO"];
+		if (specialNames.includes(stack.name)) {
+			if (theme === "light" && stack.activeIcon) return stack.activeIcon;
+			if (theme === "dark" && stack.icon) return stack.icon;
+		}
+		// Fallback to normal logic for others
+		return stack.icon;
+	};
 
 	return (
 		<section className="pt-24 px-4 relative z-10" style={{ backgroundColor: 'transparent' }} id="skills">
@@ -236,7 +250,7 @@ export default function Techstack() {
 									}
 								>
 									<div className="w-5 h-5 sm:w-6 sm:h-6 md:w-7 md:h-7">
-										{activeStack.id === stack.id && stack.activeIcon ? stack.activeIcon : stack.icon}
+										{getStackIcon(stack)}
 									</div>
 								</div>
 								<p

@@ -1,9 +1,17 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
 import { useTheme } from '../../context/ThemeContext';
 
 export const ContributionGraph = ({ contributions, username }) => {
   const { theme } = useTheme();
+  const [isMobile, setIsMobile] = useState(false);
+
+  useEffect(() => {
+    const checkMobile = () => setIsMobile(window.innerWidth < 768);
+    checkMobile();
+    window.addEventListener('resize', checkMobile);
+    return () => window.removeEventListener('resize', checkMobile);
+  }, []);
 
   if (!contributions || contributions.length === 0) {
     return (
@@ -54,10 +62,13 @@ export const ContributionGraph = ({ contributions, username }) => {
     }
   });
 
+  // Show only last 4 weeks on mobile
+  const visibleWeeks = isMobile ? weeks.slice(-40) : weeks;
+
   return (
     <div className="flex items-center justify-start md:overflow-x-hidden md:scale-115 md:justify-center">
-      <div className="inline-flex gap-1 overflow-x-auto md:overflow-x-hidden">
-        {weeks.map((week, weekIndex) => (
+      <div className="inline-flex gap-1 overflow-x-hidden">
+        {visibleWeeks.map((week, weekIndex) => (
           <div key={weekIndex} className="flex flex-col gap-1">
             {week.map((day, dayIndex) => {
               const level = getContributionLevel(day.count);

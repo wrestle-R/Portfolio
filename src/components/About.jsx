@@ -41,77 +41,81 @@ const About = () => {
         </svg>
       )
     },
-
   ];
   
-return (
-<section
-        className="px-4 pt-28 pb-8 relative flex items-center justify-center w-full"
-        id="about"
-        style={{ backgroundColor: 'oklch(var(--background))'}}
+  return (
+    <section
+      className="px-4 pt-28 pb-8 relative flex justify-center w-full min-h-screen md:min-h-0 md:items-start"
+      id="about"
+      style={{ backgroundColor: 'oklch(var(--background))'}}
     >
-        <div className="max-w-2xl mx-auto relative z-10 w-full">
-            <div className="flex flex-col md:flex-row gap-8 items-center">
-                {/* Left Side - Profile Box (70%) */}
-                <div
-                    className="flex-[9] p-8 rounded-xl shadow-lg border w-full"
-                    style={{
-                        backgroundColor: 'oklch(var(--card))',
-                        borderColor: 'oklch(var(--border))',
-                    }}
-                >
-                    {/* Profile Image */}
-                    <div className="flex justify-center mb-6">
-                        <img
-                            src="/new_dp.jpg"
-                            alt="Russel Daniel"
-                            className="w-32 h-32 rounded-full object-cover shadow-lg"
-                            style={{ border: '4px solid oklch(var(--border))' }}
-                        />
-                    </div>
-
-                    {/* Name */}
-                    <div className="text-center mb-2">
-
-                        <h1
-                            className="text-3xl font-bold mt-1"
-                            style={{ color: 'oklch(var(--foreground))' }}
-                        >
-                            Russel Daniel Paul
-                        </h1>
-                    </div>
-
-                    {/* Description */}
-                    <p
-                        className="text-sm leading-relaxed text-center"
-                        style={{ color: 'oklch(var(--muted-foreground))' }}
-                    >
-Engineering student diving into web dev — big fan of the MERN stack, learning AI/ML, and getting into IoT. Just figuring things out one project at a time.                    </p>
-                </div>
-
-                {/* Right Side - Social Icons (30%) */}
-                <div className="w-full md:w-[30%] flex flex-row md:flex-col gap-4 justify-center">
-                    {socialLinks.map((social, index) => (
-                        <a
-                            key={index}
-                            href={social.url}
-                            target="_blank"
-                            rel="noopener noreferrer"
-                            className="w-16 h-16 flex items-center justify-center rounded-xl transition-all duration-300 hover:scale-110 hover:rotate-6 group shadow-lg"
-                            style={{
-                                backgroundColor: 'oklch(var(--card))',
-                                borderColor: 'oklch(var(--border))',
-                                color: 'oklch(var(--muted-foreground))',
-                            }}
-                        >
-                            <div className="group-hover:scale-125 transition-transform duration-300">
-                                {social.icon}
-                            </div>
-                        </a>
-                    ))}
-                </div>
+      <div className="flex justify-center pl-24 w-full">
+        <div className="max-w-2xl w-full relative z-10 flex flex-col md:flex-row gap-8 items-center md:items-start justify-center">
+          {/* Left Side - Profile Box (70%) */}
+          <div
+            className="flex-[9] p-8 rounded-xl border w-full shadow-md hover:shadow-xl transition-shadow duration-300"
+            style={{
+              backgroundColor: 'oklch(var(--card))',
+              borderColor: 'oklch(var(--border))',
+              boxShadow: '0 4px 6px -1px oklch(var(--border) / 0.1), 0 2px 4px -1px oklch(var(--border) / 0.06)',
+            }}
+          >
+            {/* Profile Image */}
+            <div className="flex justify-center mb-6">
+              <img
+                src="/new_dp.jpg"
+                alt="Russel Daniel"
+                className="w-32 h-32 rounded-full object-cover shadow-md"
+                style={{ 
+                  border: '4px solid oklch(var(--border))',
+                  boxShadow: '0 4px 6px -1px oklch(var(--border) / 0.2), 0 2px 4px -1px oklch(var(--border) / 0.1)'
+                }}
+              />
             </div>
+
+            {/* Name */}
+            <div className="text-center mb-2">
+              <h1
+                className="text-3xl font-bold mt-1"
+                style={{ color: 'oklch(var(--foreground))' }}
+              >
+                Russel Daniel Paul
+              </h1>
+            </div>
+
+            {/* Description */}
+            <p
+              className="text-sm leading-relaxed text-center"
+              style={{ color: 'oklch(var(--muted-foreground))' }}
+            >
+              Engineering student diving into web dev — big fan of the MERN stack, learning AI/ML, and getting into IoT. Just figuring things out one project at a time.
+            </p>
+          </div>
+
+          {/* Right Side - Social Icons (30%) */}
+          <div className="w-full md:w-[30%] flex flex-row md:flex-col gap-4 justify-center">
+            {socialLinks.map((social, index) => (
+              <a
+                key={index}
+                href={social.url}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="w-16 h-16 flex items-center justify-center rounded-xl transition-all duration-300 hover:scale-110 hover:rotate-6 group shadow-sm hover:shadow-lg"
+                style={{
+                  backgroundColor: 'oklch(var(--card))',
+                  borderColor: 'oklch(var(--border))',
+                  color: 'oklch(var(--muted-foreground))',
+                  boxShadow: '0 2px 4px -1px oklch(var(--border) / 0.1), 0 1px 2px -1px oklch(var(--border) / 0.06)',
+                }}
+              >
+                <div className="group-hover:scale-125 transition-transform duration-300">
+                  {social.icon}
+                </div>
+              </a>
+            ))}
+          </div>
         </div>
+      </div>
     </section>
   );
 };
