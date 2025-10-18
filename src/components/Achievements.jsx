@@ -1,5 +1,6 @@
 "use client"
 
+import { useState } from 'react';
 import { TextGenerateEffect } from './ui/text-generate-effect';
 
 const achievementsData = [
@@ -33,6 +34,7 @@ const achievementsData = [
 
 export default function Achievements() {
 	const titleText = "Achievements"
+	const [selectedImage, setSelectedImage] = useState(null);
 
 	return (
 		<section className="py-16 mt-20 px-4 relative z-10" style={{ backgroundColor: 'transparent' }} id="achievements">
@@ -104,7 +106,10 @@ export default function Achievements() {
 									</div>
 
 									{/* Certificate Image */}
-									<div className="w-full rounded-lg overflow-hidden shadow-lg" style={{ backgroundColor: 'oklch(var(--background))', border: '1px solid oklch(var(--border))' }}>
+									<div className="w-full rounded-lg overflow-hidden shadow-lg cursor-pointer hover:opacity-90 transition-opacity" 
+										style={{ backgroundColor: 'oklch(var(--background))', border: '1px solid oklch(var(--border))' }}
+										onClick={() => setSelectedImage(achievement.image)}
+									>
 										<div className="relative w-full" style={{ aspectRatio: '1075/921' }}>
 											<img
 												src={achievement.image}
@@ -123,6 +128,52 @@ export default function Achievements() {
 						</div>
 					))}
 				</div>
+
+				{/* Lightbox Modal */}
+				{selectedImage && (
+					<div 
+						className="fixed inset-0 z-50 flex items-center justify-center p-4 backdrop-blur-sm"
+						style={{ backgroundColor: 'rgba(0, 0, 0, 0.8)' }}
+						onClick={() => setSelectedImage(null)}
+					>
+						<div className="relative w-full h-full flex items-center justify-center">
+							{/* Close Button */}
+							<button
+								onClick={() => setSelectedImage(null)}
+								className="absolute top-4 right-4 z-10 w-10 h-10 flex items-center justify-center rounded-full transition-all hover:scale-110"
+								style={{ 
+									backgroundColor: 'oklch(var(--card))',
+									color: 'oklch(var(--foreground))',
+									border: '2px solid oklch(var(--border))'
+								}}
+								aria-label="Close"
+							>
+								<svg 
+									xmlns="http://www.w3.org/2000/svg" 
+									className="h-6 w-6" 
+									fill="none" 
+									viewBox="0 0 24 24" 
+									stroke="currentColor"
+								>
+									<path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
+								</svg>
+							</button>
+
+							{/* Image Container - 80% of screen */}
+							<div 
+								className="relative max-w-[80vw] max-h-[80vh]"
+								onClick={(e) => e.stopPropagation()}
+							>
+								<img
+									src={selectedImage}
+									alt="Certificate"
+									className="w-full h-full object-contain rounded-lg shadow-2xl"
+									style={{ maxWidth: '80vw', maxHeight: '80vh' }}
+								/>
+							</div>
+						</div>
+					</div>
+				)}
 			</div>
 		</section>
 	)
