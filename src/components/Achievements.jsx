@@ -134,7 +134,7 @@ export default function Achievements() {
 					<div 
 						className="fixed inset-0 flex items-center justify-center p-4"
 						style={{ 
-							backgroundColor: 'rgba(0, 0, 0, 0.95)', 
+							backgroundColor: 'oklch(var(--background) / 0.95)', 
 							zIndex: 999999,
 							backdropFilter: 'blur(12px)',
 							WebkitBackdropFilter: 'blur(12px)'
@@ -145,7 +145,7 @@ export default function Achievements() {
 							{/* Close Button */}
 							<button
 								onClick={() => setSelectedImage(null)}
-								className="absolute top-4 right-4 w-10 h-10 flex items-center justify-center rounded-full transition-all hover:scale-110"
+								className="absolute top-4 right-4 w-10 h-10 flex items-center justify-center rounded-full transition-all hover:scale-110 hover:opacity-80"
 								style={{ 
 									backgroundColor: 'oklch(var(--card))',
 									color: 'oklch(var(--foreground))',
@@ -175,7 +175,11 @@ export default function Achievements() {
 									src={selectedImage}
 									alt="Certificate"
 									className="w-full h-full object-contain rounded-lg shadow-2xl"
-									style={{ maxWidth: '80vw', maxHeight: '80vh' }}
+									style={{ 
+										maxWidth: '80vw', 
+										maxHeight: '80vh',
+										border: '2px solid oklch(var(--border))'
+									}}
 								/>
 							</div>
 						</div>
