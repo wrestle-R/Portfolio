@@ -49,7 +49,7 @@ const NavbarComponent = () => {
   return (
     <motion.div
       ref={ref}
-      className="fixed inset-x-0 top-0 z-50 max-w-6xl mx-auto mb-16 md:mb-0"
+      className="fixed inset-x-0 top-0 z-40 max-w-6xl mx-auto mb-16 md:mb-0"
     >
       {/* Desktop Navbar */}
       <motion.div

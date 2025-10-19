@@ -57,7 +57,7 @@ const Contact = () => {
   };
 
   return (
-    <section className="px-4 py-16 relative z-10" style={{ backgroundColor: 'transparent' }} id="contact">
+    <section className="px-4 py-16 relative z-5" style={{ backgroundColor: 'transparent' }} id="contact">
       <div className="max-w-4xl mx-auto">
         {/* Animated Title - Outside Container */}
         <div className="text-left mb-6">

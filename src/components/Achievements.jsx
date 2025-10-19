@@ -132,19 +132,25 @@ export default function Achievements() {
 				{/* Lightbox Modal */}
 				{selectedImage && (
 					<div 
-						className="fixed inset-0 flex items-center justify-center p-4 backdrop-blur-sm"
-						style={{ backgroundColor: 'rgba(0, 0, 0, 0.8)', zIndex: 9999 }} // Highest z-index
+						className="fixed inset-0 flex items-center justify-center p-4"
+						style={{ 
+							backgroundColor: 'rgba(0, 0, 0, 0.95)', 
+							zIndex: 999999,
+							backdropFilter: 'blur(12px)',
+							WebkitBackdropFilter: 'blur(12px)'
+						}}
 						onClick={() => setSelectedImage(null)}
 					>
 						<div className="relative w-full h-full flex items-center justify-center">
 							{/* Close Button */}
 							<button
 								onClick={() => setSelectedImage(null)}
-								className="absolute top-4 right-4 z-50 w-10 h-10 flex items-center justify-center rounded-full transition-all hover:scale-110"
+								className="absolute top-4 right-4 w-10 h-10 flex items-center justify-center rounded-full transition-all hover:scale-110"
 								style={{ 
 									backgroundColor: 'oklch(var(--card))',
 									color: 'oklch(var(--foreground))',
-									border: '2px solid oklch(var(--border))'
+									border: '2px solid oklch(var(--border))',
+									zIndex: 1000000
 								}}
 								aria-label="Close"
 							>
@@ -163,6 +169,7 @@ export default function Achievements() {
 							<div 
 								className="relative max-w-[80vw] max-h-[80vh]"
 								onClick={(e) => e.stopPropagation()}
+								style={{ zIndex: 1000000 }}
 							>
 								<img
 									src={selectedImage}
