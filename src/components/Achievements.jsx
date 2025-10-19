@@ -132,15 +132,15 @@ export default function Achievements() {
 				{/* Lightbox Modal */}
 				{selectedImage && (
 					<div 
-						className="fixed inset-0 z-50 flex items-center justify-center p-4 backdrop-blur-sm"
-						style={{ backgroundColor: 'rgba(0, 0, 0, 0.8)' }}
+						className="fixed inset-0 flex items-center justify-center p-4 backdrop-blur-sm"
+						style={{ backgroundColor: 'rgba(0, 0, 0, 0.8)', zIndex: 9999 }} // Highest z-index
 						onClick={() => setSelectedImage(null)}
 					>
 						<div className="relative w-full h-full flex items-center justify-center">
 							{/* Close Button */}
 							<button
 								onClick={() => setSelectedImage(null)}
-								className="absolute top-4 right-4 z-10 w-10 h-10 flex items-center justify-center rounded-full transition-all hover:scale-110"
+								className="absolute top-4 right-4 z-50 w-10 h-10 flex items-center justify-center rounded-full transition-all hover:scale-110"
 								style={{ 
 									backgroundColor: 'oklch(var(--card))',
 									color: 'oklch(var(--foreground))',
