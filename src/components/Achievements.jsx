@@ -1,6 +1,6 @@
 "use client"
 
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { TextGenerateEffect } from './ui/text-generate-effect';
 
 const achievementsData = [
@@ -35,6 +35,20 @@ const achievementsData = [
 export default function Achievements() {
 	const titleText = "Achievements"
 	const [selectedImage, setSelectedImage] = useState(null);
+
+	// Disable scroll when image is open
+	useEffect(() => {
+		if (selectedImage) {
+			document.body.style.overflow = 'hidden';
+		} else {
+			document.body.style.overflow = 'unset';
+		}
+
+		// Cleanup function to ensure scroll is re-enabled when component unmounts
+		return () => {
+			document.body.style.overflow = 'unset';
+		};
+	}, [selectedImage]);
 
 	return (
 		<section className="py-16 mt-20 px-4 relative z-10" style={{ backgroundColor: 'transparent' }} id="achievements">
