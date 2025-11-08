@@ -6,6 +6,12 @@ const NotFound = () => {
   const quotes = [
     { text: "This page is just like her. Doesn't exist.", author: "Romeiro" },
     { text: "I'm going back to 505 (minus 101).", author: "Romeiro" },
+      { text: "Well, this is awkward, page not found.", author: "Someone Probably" },
+        { text: "Everyone deserves a vacation even this page.", author: "Unknown" },
+        { text: "This page went out to buy milk and never came back.", author: "Dark Mode probably" },
+        { text: "404: Like your hopes and dreams, gone.", author: "The Dreamers" }
+
+
   ];
   
   const [randomQuote] = useState(() => quotes[Math.floor(Math.random() * quotes.length)]);
