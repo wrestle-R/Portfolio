@@ -4,67 +4,86 @@ import { motion } from 'framer-motion';
 
 const NotFound = () => {
   const quotes = [
-    { text: "Not all who wander are lost, but you definitely are.", author: "404 Wisdom" },
-    { text: "The page you're looking for is in another castle.", author: "Internet Mario" },
-    { text: "Error 404: Witty comment not found.", author: "Anonymous" },
-    { text: "This is not the page you're looking for.", author: "Obi-Wan Kenobi" },
-    { text: "Houston, we have a 404 problem.", author: "Apollo 13" },
-    { text: "I looked everywhere for this page. Even behind the couch.", author: "Helpful Developer" },
-    { text: "The page exists... just not in this dimension.", author: "Multiverse Theory" },
-    { text: "404: Like my motivation, this page cannot be found.", author: "Relatable Content" },
-    { text: "Plot twist: The real 404 was the friends we made along the way.", author: "Philosophical Error" },
-    { text: "This page is on vacation. Probably somewhere nice.", author: "Envious Developer" }
+    { text: "This page is just like her. Doesn't exist.", author: "Romeiro" },
+    { text: "I'm going back to 505 (minus 101).", author: "Romeiro" },
   ];
-
-  // Pick a random quote on component mount (refreshes on page reload)
+  
   const [randomQuote] = useState(() => quotes[Math.floor(Math.random() * quotes.length)]);
-
+  
   return (
     <div 
-      className="min-h-screen flex items-center justify-center px-4"
+      className="min-h-screen flex items-center justify-center px-4 relative overflow-hidden"
       style={{ backgroundColor: 'oklch(var(--background))' }}
     >
-      <div className="text-center max-w-lg">
-        {/* 404 Number with animation */}
-        <motion.h1
-          initial={{ scale: 0.5, opacity: 0 }}
-          animate={{ scale: 1, opacity: 1 }}
+      {/* Decorative background elements */}
+      <div className="absolute inset-0 overflow-hidden pointer-events-none">
+        <motion.div
+          animate={{
+            scale: [1, 1.1, 1],
+            opacity: [0.02, 0.03, 0.02],
+          }}
+          transition={{
+            duration: 8,
+            repeat: Infinity,
+            ease: "easeInOut"
+          }}
+          className="absolute -top-1/4 -left-1/4 w-1/2 h-1/2 rounded-full blur-3xl"
+          style={{ backgroundColor: 'oklch(var(--primary))' }}
+        />
+      </div>
+
+      <div className="text-center max-w-lg relative z-10">
+        {/* 404 Number with enhanced animation and styling */}
+        <motion.div
+          initial={{ scale: 0.5, opacity: 0, y: -20 }}
+          animate={{ scale: 1, opacity: 1, y: 0 }}
           transition={{
             type: "spring",
-            stiffness: 260,
-            damping: 20,
+            stiffness: 200,
+            damping: 15,
             delay: 0.1
           }}
-          className="text-[8rem] md:text-[10rem] font-bold mb-2 leading-none"
-          style={{ color: 'oklch(var(--primary))' }}
+          className="relative mb-3"
         >
-          404
-        </motion.h1>
+          <h1
+            className="text-[5rem] md:text-[7rem] font-bold leading-none tracking-tight"
+            style={{ 
+              color: 'oklch(var(--primary))'
+            }}
+          >
+            404
+          </h1>
+        </motion.div>
         
-        {/* Page Not Found */}
+        {/* Page Not Found with better spacing */}
         <motion.h2
           initial={{ y: 20, opacity: 0 }}
           animate={{ y: 0, opacity: 1 }}
-          transition={{ delay: 0.2 }}
-          className="text-xl md:text-2xl font-semibold mb-6"
+          transition={{ delay: 0.25 }}
+          className="text-xl md:text-2xl font-semibold mb-8"
           style={{ color: 'oklch(var(--foreground))' }}
         >
           Page Not Found
         </motion.h2>
         
-        {/* Quote - Simple without card (show author) */}
+        {/* Quote with elegant card design */}
         <motion.div
-          initial={{ y: 20, opacity: 0 }}
+          initial={{ y: 30, opacity: 0 }}
           animate={{ y: 0, opacity: 1 }}
-          transition={{ delay: 0.3 }}
-          className="mb-6"
+          transition={{ delay: 0.35 }}
+          className="mb-6 px-4 py-4 rounded-xl"
+          style={{ 
+            backgroundColor: 'oklch(var(--muted) / 0.2)',
+            border: '1px solid oklch(var(--border) / 0.3)'
+          }}
         >
           <p 
-            className="text-base md:text-lg italic mb-1"
-            style={{ color: 'oklch(var(--muted-foreground))' }}
+            className="text-base md:text-lg italic mb-2 leading-relaxed"
+            style={{ color: 'oklch(var(--foreground))' }}
           >
             "{randomQuote.text}"
           </p>
+          
           <p
             className="text-sm"
             style={{ color: 'oklch(var(--muted-foreground))' }}
@@ -73,26 +92,28 @@ const NotFound = () => {
           </p>
         </motion.div>
         
-        {/* Navigation Button - Single Home button */}
+        {/* Navigation Button with enhanced styling */}
         <motion.div
           initial={{ y: 20, opacity: 0 }}
           animate={{ y: 0, opacity: 1 }}
-          transition={{ delay: 0.4 }}
-          whileHover={{ scale: 1.05 }}
-          whileTap={{ scale: 0.95 }}
+          transition={{ delay: 0.45 }}
         >
-          <Link 
-            to="/" 
-            className="px-5 py-2.5 rounded-full font-medium inline-block text-sm tracking-wide"
-            style={{
-              backgroundColor: 'oklch(var(--primary))',
-              color: 'oklch(var(--primary-foreground))'
-            }}
+          <motion.div
+            whileHover={{ scale: 1.05 }}
+            whileTap={{ scale: 0.95 }}
           >
-            Go Home
-          </Link>
+            <Link 
+              to="/" 
+              className="px-6 py-2.5 rounded-full font-medium inline-block text-sm tracking-wide"
+              style={{
+                backgroundColor: 'oklch(var(--primary))',
+                color: 'oklch(var(--primary-foreground))'
+              }}
+            >
+              Take Me Home
+            </Link>
+          </motion.div>
         </motion.div>
-        
       </div>
     </div>
   );
