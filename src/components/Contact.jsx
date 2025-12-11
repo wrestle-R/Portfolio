@@ -57,7 +57,7 @@ const Contact = () => {
   };
 
   return (
-    <section className="px-4 py-16 relative z-5" style={{ backgroundColor: 'transparent' }} id="contact">
+    <section className="px-4 pb-16 pt-10 relative z-5" style={{ backgroundColor: 'transparent' }} id="contact">
       <div className="max-w-4xl mx-auto">
         {/* Animated Title - Outside Container */}
         <div className="text-left mb-6">
@@ -91,16 +91,13 @@ const Contact = () => {
                 <div className="space-y-2">
                   <div className="flex items-center space-x-3" style={{ color: 'oklch(var(--muted-foreground))' }}>
                     <div className="w-1.5 h-1.5 rounded-full" style={{ backgroundColor: 'oklch(var(--foreground))' }}></div>
-                    <span className="text-xs">Quick response within 24 hours</span>
+                    <span className="text-xs">Quick responses</span>
                   </div>
                   <div className="flex items-center space-x-3" style={{ color: 'oklch(var(--muted-foreground))' }}>
                     <div className="w-1.5 h-1.5 rounded-full" style={{ backgroundColor: 'oklch(var(--foreground))' }}></div>
                     <span className="text-xs">Open to collaborations & projects</span>
                   </div>
-                  <div className="flex items-center space-x-3" style={{ color: 'oklch(var(--muted-foreground))' }}>
-                    <div className="w-1.5 h-1.5 rounded-full" style={{ backgroundColor: 'oklch(var(--foreground))' }}></div>
-                    <span className="text-xs">Always excited to discuss new ideas</span>
-                  </div>
+
                 </div>
               </div>
             </div>

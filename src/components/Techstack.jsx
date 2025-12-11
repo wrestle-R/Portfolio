@@ -113,27 +113,27 @@ const techStackData = [
 	},
 	{
 		id: 10,
-		name: "Socket.IO",
+		name: "FastAPI",
 		icon: (
-			<img src="/socketio_black.png" alt="Socket.IO" className="w-full h-full object-contain scale-130" />
+			<img src="/fastapi.svg" alt="FastAPI" className="w-full h-full object-contain scale-130" />
 		),
 		activeIcon: (
-			<img src="/socketio.png" alt="Socket.IO" className="w-full h-full object-contain" />
+			<img src="/fastapi.svg" alt="FastAPI" className="w-full h-full object-contain scale-130" />
 		),
-		description: "Real-time bidirectional event-based communication library",
-		projectUsage: "Made Chat Masala app using MERN stack and integrated WebRTC for Talent Hunt website."
+		description: "High-performance Python web framework for building APIs with automatic docs",
+		projectUsage: "Used to develop RESTful endpoints, implement SMTP functionality, and rapidly deploy backend services for prototyping."
 	},
 	{
 		id: 11,
-		name: "JWT",
+		name: "Python",
 		icon: (
-			<img src="/jwt.png" alt="JWT" className="w-full h-full object-contain scale-150" />
+			<img src="/python.png" alt="Python" className="w-full h-full object-contain scale-150" />
 		),
 		activeIcon: (
-			<img src="/jwt_black.png" alt="JWT" className="w-full h-full object-contain scale-150" />
+			<img src="/python.png" alt="Python" className="w-full h-full object-contain scale-150" />
 		),
-		description: "JSON Web Tokens for secure authentication and authorization",
-		projectUsage: "Used JWT for keeping authorization in Talent Hunt and Danys Pizza applications."
+		description: "General-purpose programming language used for scripting, automation, and backend development",
+		projectUsage: "Used Python for backend development (FastAPI and Flask) and for machine-learning workflows in Jupyter notebooks."
 	},
 	{
 		id: 13,
@@ -199,7 +199,7 @@ export default function Techstack() {
 
 	// Helper to decide icon for special stacks
 	const getStackIcon = (stack) => {
-		const specialNames = ["Java", "Next.js", "Express.js", "Socket.IO"];
+		const specialNames = ["Java", "Next.js", "Express.js", "FastAPI"];
 		if (specialNames.includes(stack.name)) {
 			if (theme === "light" && stack.activeIcon) return stack.activeIcon;
 			if (theme === "dark" && stack.icon) return stack.icon;

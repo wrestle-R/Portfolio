@@ -8,22 +8,13 @@ const projectsData = [
     id: 1,
     name: "Bible Wordle",
     description: "Biblical twist on Wordle with scripture-based words",
-    url: "https://wordle-nine-snowy.vercel.app/", 
+    url: "https://biblical-wordle.vercel.app/", 
     github: "https://github.com/wrestle-R/Bible-Wordle",
     tech: ["React", "JavaScript", "CSS"],
     image: "/Bible_Wordle.png"
   },
-  // {
-  //   id: 2,
-  //   name: "Watchlist",
-  //   description: "Movie tracker with genre-based lists and OMDb API",
-  //   url: "https://watchlist-a9568.web.app/",
-  //   github: "https://github.com/wrestle-R/watchlist", 
-  //   tech: ["React", "Tailwind", "Supabase", "OMDb API"],
-  //   image: "/Watchlist.png"
-  // },
   {
-    id: 3,
+    id: 2,
     name: "Walking Project",
     description: "Survey and report on Mumbai's footpaths with data-driven insights",
     url: "https://wrestle-r.github.io/walking-project/",
@@ -32,7 +23,7 @@ const projectsData = [
     image: "/The_Walking_Project.png"
   },
   {
-    id: 4,
+    id: 3,
     name: "Trippeer",
     description: "AI travel planner recommending destinations and building itineraries based on preferences",
     url: "https://certifiyo.vercel.app/",
@@ -41,7 +32,7 @@ const projectsData = [
     image: "/Trippeer.png"
   },
   {
-    id: 5,
+    id: 4,
     name: "Clarity AI",
     description: "AI learning companion that transforms PDFs into summaries, flashcards and quizzes",
     url: "https://clarity-ai-virid.vercel.app/", 
@@ -50,7 +41,7 @@ const projectsData = [
     image: "/Clarity_Ai.png"
   },
     {
-    id: 6,
+    id: 5,
     name: "Healix",
     description: "Healix is a next-generation telemedicine and digital health platform designed to connect patients and doctors seamlessly.",
     url: "https://healix-med.vercel.app/", 
@@ -65,7 +56,7 @@ export default function Projects() {
   const titleText = "My Projects"
 
   return (
-    <section className="pt-32 px-4 relative z-10" style={{ backgroundColor: 'transparent' }} id="projects">
+    <section className="pt-20 px-4 relative z-10" style={{ backgroundColor: 'transparent' }} id="projects">
       <div className="max-w-4xl mx-auto">
         {/* Title */}
         <div className="mb-8 text-left">

@@ -51,7 +51,7 @@ export default function Achievements() {
 	}, [selectedImage]);
 
 	return (
-		<section className="py-16 mt-20 px-4 relative z-10" style={{ backgroundColor: 'transparent' }} id="achievements">
+		<section className="py-16 mt-14 px-4 relative z-10" style={{ backgroundColor: 'transparent' }} id="achievements">
 			<div className="max-w-4xl mx-auto">
 				{/* Title */}
 				<div className="mb-12 text-left">
