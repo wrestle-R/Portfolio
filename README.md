@@ -7,7 +7,7 @@ Welcome to my personal portfolio website! Built to showcase my projects, skills,
 
 ### Live Demo
 
-[https://russeldanielpaul.vercel.app/](https://russeldanielpaul.vercel.app/)
+[https://russeldanielpaul.vercel.app/](https://russeldanielpaul.tech/)
 
 ---
 
