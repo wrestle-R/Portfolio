@@ -33,12 +33,12 @@ const projectsData = [
   },
   {
     id: 4,
-    name: "Clarity AI",
-    description: "AI learning companion that transforms PDFs into summaries, flashcards and quizzes",
-    url: "https://clarity-ai-virid.vercel.app/", 
-    github: "https://github.com/romeirofernandes/ClarityAI",
-    tech: ["React", "Node.js", "MongoDB", "Google Gemini AI"],
-    image: "/Clarity_Ai.png"
+    name: "Varte",
+    description: "Secure environment-variable management system with a web UI and a CLI. Includes an npm package `varte` for seamless workflows.",
+    url: "https://vathavaran-variables.vercel.app/", 
+    github: "https://github.com/wrestle-R/Vathavaran-Variables",
+    tech: ["React", "Node.js", "Firebase", "Cloudflare Workers"],
+    image: "/Varte.png"
   },
     {
     id: 5,

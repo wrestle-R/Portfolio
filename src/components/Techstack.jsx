@@ -16,7 +16,7 @@ const techStackData = [
 			<img src="/React_black.png" alt="React" className="w-full h-full pt-1 object-contain scale-145" />
 		),
 		description: "Frontend library for building interactive user interfaces with reusable components",
-		projectUsage: "Quite proficient and used React to build frontend of Bible Wordle, Clarity, Trippeer and many more projects."
+		projectUsage: "Quite proficient and used React to build frontend of Bible Wordle, Vathavaran Variables (Varte), Trippeer and many more projects."
 	},
 	{
 		id: 2,
