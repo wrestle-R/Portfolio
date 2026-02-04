@@ -3,6 +3,7 @@ import NavbarComponent from '../components/Navbar';
 import About from '../components/About';
 import Github from '../components/Github';
 import Techstack from '../components/Techstack';
+import Internship from '../components/Internship';
 import Projects from '../components/Projects';
 import Achievements from '../components/Achievements';
 import Contact from '../components/Contact';
@@ -15,6 +16,7 @@ const Home = () => {
       <About/>
       <Github />
       <Techstack />
+      <Internship />
       <Projects />
       <Achievements />
       <Contact />
