@@ -29,6 +29,19 @@ const achievementsData = [
         date: "17 May 2025",
         image: "/Certifiyo.jpg",
         type: "Second Runners Up"
+    },
+    {
+        id: 3,
+        title: "Neural Nexus 2.0",
+        subtitle: "AI/ML + Data Science Track",
+        project: "AI-Powered Trekking Platform",
+        description: "AI and Data Science driven trekking website and mobile app for intelligent trek recommendations, safety insights, and route visualizations.",
+        teammates: ["Shravya", "Gavin", "Aliqyaan"],
+        host: "Vijaybhoomi University",
+        duration: "7 day hybrid",
+        date: "December 2025",
+        image: "/Karjat.jpeg",
+        type: "Second Runners Up"
     }
 ]
 
