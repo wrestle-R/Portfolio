@@ -212,7 +212,7 @@ export default function Techstack() {
 		<section className="pt-24 px-4 relative z-10" style={{ backgroundColor: 'transparent' }} id="skills">
 			<div className="max-w-4xl mx-auto">
 				{/* Title */}
-				 <div className="mb-12 text-left">
+				 <div className="mb-6 md:mb-12 text-left">
                           <TextGenerateEffect
                             words={titleText}
                             className="text-3xl font-bold"

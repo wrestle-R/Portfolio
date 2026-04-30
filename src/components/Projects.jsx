@@ -59,7 +59,7 @@ export default function Projects() {
     <section className="pt-20 px-4 relative z-10" style={{ backgroundColor: 'transparent' }} id="projects">
       <div className="max-w-4xl mx-auto">
         {/* Title */}
-        <div className="mb-8 text-left">
+        <div className="mb-4 md:mb-8 text-left">
           <TextGenerateEffect
             words={titleText}
             className="text-3xl font-bold"

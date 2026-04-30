@@ -30,7 +30,7 @@ export default function Internship() {
     <section className="relative z-10 pt-20 px-4" style={{ backgroundColor: 'transparent' }} id="internship">
       <div className="max-w-4xl mx-auto">
         {/* Title */}
-        <div className="mb-12 text-left">
+        <div className="mb-6 md:mb-12 text-left">
           <TextGenerateEffect
             words={titleText}
             className="text-3xl font-bold"

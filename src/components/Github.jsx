@@ -8,7 +8,7 @@ const Github = () => {
   const [loading, setLoading] = useState(true);
   const [totalContributions, setTotalContributions] = useState(0);
   const username = 'wrestle-R'; // Your GitHub username
-  const titleText = "GitHub Activity";
+  const titleText = "GitHub";
 
   useEffect(() => {
     const fetchContributions = async () => {
@@ -28,12 +28,12 @@ const Github = () => {
 
   return (
     <section 
-      className="relative pt-24 px-4" 
+      className="relative w-full px-4 pt-8 md:pt-10" 
       id="github"
       style={{ backgroundColor: 'transparent' }}
     >
-      <div className="max-w-4xl mx-auto relative z-10">
-        <div className="mb-12 text-left">
+      <div className="max-w-4xl mx-auto relative z-10 w-full">
+        <div className="mb-3 md:mb-4 pb-4 md:pb-12 text-left pl-2">
           <TextGenerateEffect
             words={titleText}
             className="text-3xl font-bold"
@@ -42,22 +42,46 @@ const Github = () => {
           />
         </div>
         
-        <div 
-          className="rounded-lg p-4 md:p-6"
-          style={{ 
-            backgroundColor: 'oklch(var(--muted) / 0.6)', // reduced intensity
-            border: '1px solid oklch(var(--border))'
-          }}
+        <article 
+          className="rounded-[2rem] border p-2 md:p-3 w-full" 
+          style={{ backgroundColor: "oklch(var(--muted) / 0.38)", borderColor: "oklch(var(--border))" }}
         >
-          {loading ? (
-            <ContributionGraphSkeleton />
-          ) : (
-            <ContributionGraph 
-              contributions={contributions} 
-              username={username}
-            />
-          )}
-        </div>
+          <div
+            className="rounded-2xl border p-4 md:p-5 w-full flex flex-col items-center relative overflow-hidden"
+            style={{ borderColor: "oklch(var(--border))", backgroundColor: "oklch(var(--background) / 0.65)" }}
+          >
+            <div className="w-full flex mb-4">
+              {!loading && (
+                <div className="text-xs md:text-sm font-mono border px-3 py-1.5 rounded-full" style={{ borderColor: 'oklch(var(--border))', color: 'oklch(var(--muted-foreground))' }}>
+                  {totalContributions.toLocaleString()} contributions
+                </div>
+              )}
+            </div>
+
+            <div className="w-full overflow-x-hidden overflow-y-visible pb-1 pt-1 flex justify-center">
+              {loading ? (
+                <ContributionGraphSkeleton />
+              ) : (
+                <ContributionGraph 
+                  contributions={contributions} 
+                  username={username}
+                />
+              )}
+            </div>
+            
+            <div className="mt-4 hidden md:flex items-center justify-end w-full gap-2 text-xs font-mono" style={{ color: "oklch(var(--muted-foreground))" }}>
+              <span>Less</span>
+              <div className="flex gap-1 mx-1">
+                <div className="w-3 h-3 rounded-[3px]" style={{ backgroundColor: 'oklch(var(--muted))' }}></div>
+                <div className="w-3 h-3 rounded-[3px]" style={{ backgroundColor: 'oklch(0.65 0.05 0)', opacity: 0.4 }}></div>
+                <div className="w-3 h-3 rounded-[3px]" style={{ backgroundColor: 'oklch(0.55 0.04 0)', opacity: 0.6 }}></div>
+                <div className="w-3 h-3 rounded-[3px]" style={{ backgroundColor: 'oklch(0.45 0.03 0)', opacity: 0.8 }}></div>
+                <div className="w-3 h-3 rounded-[3px]" style={{ backgroundColor: 'oklch(0.25 0.01 0)' }}></div>
+              </div>
+              <span>More</span>
+            </div>
+          </div>
+        </article>
       </div>
     </section>
   );

@@ -67,7 +67,7 @@ export default function Achievements() {
 		<section className="py-16 mt-14 px-4 relative z-10" style={{ backgroundColor: 'transparent' }} id="achievements">
 			<div className="max-w-4xl mx-auto">
 				{/* Title */}
-				<div className="mb-12 text-left">
+				<div className="mb-6 md:mb-12 text-left">
 					<TextGenerateEffect
 						words={titleText}
 						className="text-3xl font-extrabold tracking-tight"
