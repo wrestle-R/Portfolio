@@ -75,6 +75,14 @@
     100% { opacity: 0.15; }
   }
 
+  @keyframes wiggle {
+    0% { transform: rotate(0deg) translateY(0); }
+    25% { transform: rotate(-3deg) translateY(-1px); }
+    50% { transform: rotate(3deg) translateY(0); }
+    75% { transform: rotate(-2deg) translateY(-1px); }
+    100% { transform: rotate(0deg) translateY(0); }
+  }
+
   @theme inline {
     --radius-sm: calc(var(--radius) - 4px);
     --radius-md: calc(var(--radius) - 2px);
