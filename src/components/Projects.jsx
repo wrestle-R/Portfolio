@@ -162,7 +162,7 @@ export default function Projects() {
                 <img
                   src={activeImage}
                   alt={`${activeProject.name} Screenshot`}
-                  className="h-full w-full object-contain transition-opacity duration-200"
+                  className="h-full w-full object-cover object-center transition-all duration-300"
                   onError={(e) => {
                     e.target.src = `https://via.placeholder.com/1332x768/e5e5e5/666666?text=${encodeURIComponent(activeProject.name)}+Preview`
                   }}
