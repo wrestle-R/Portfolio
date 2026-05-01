@@ -10,7 +10,7 @@ const Footer = () => {
         >
           <div className="flex flex-col items-center justify-between gap-3 text-sm md:flex-row">
             <div style={{ color: 'oklch(var(--muted-foreground))' }}>
-              © 2026 Russel Daniel Paul. All rights reserved.
+              © Running out of Excuses | <span className="text-red-500">♥</span> Russel
             </div>
 
             <div className="flex items-center gap-5 text-sm">

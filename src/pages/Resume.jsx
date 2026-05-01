@@ -147,9 +147,9 @@ const Resume = () => {
                   <h2 className="text-2xl font-bold" style={{ color: "oklch(var(--foreground))" }}>
                     Preview
                   </h2>
-                  <p className="mt-1 text-sm" style={{ color: "oklch(var(--muted-foreground))" }}>
+                  {/* <p className="mt-1 text-sm" style={{ color: "oklch(var(--muted-foreground))" }}>
                     Same file, rendered as an image for fast scanning.
-                  </p>
+                  </p> */}
                 </div>
                 <div className="inline-flex w-fit items-center gap-2 rounded-full border px-3 py-1.5 text-xs font-mono" style={{ borderColor: "oklch(var(--border))", color: "oklch(var(--muted-foreground))" }}>
                   <FileText className="h-3.5 w-3.5" aria-hidden="true" />
