@@ -1,5 +1,4 @@
 import React from "react";
-import { TextGenerateEffect } from "./ui/text-generate-effect";
 import { buildSubdomainUrl } from "../lib/domain-utils";
 
 const latestBlogPost = {
@@ -11,7 +10,6 @@ const latestBlogPost = {
 };
 
 const LatestBlog = () => {
-  const titleText = "Latest Blog";
   const blogBaseUrl = buildSubdomainUrl("blogs");
   const blogPostUrl = `${blogBaseUrl}/blog/${latestBlogPost.slug}/`;
 
@@ -27,15 +25,6 @@ const LatestBlog = () => {
       style={{ backgroundColor: "transparent" }}
     >
       <div className="max-w-4xl mx-auto relative z-10 w-full">
-        <div className="mb-3 md:mb-4 pb-4 md:pb-6 text-left pl-2">
-          <TextGenerateEffect
-            words={titleText}
-            className="text-3xl font-bold"
-            duration={1.5}
-            filter={true}
-          />
-        </div>
-
         <a
           href={blogPostUrl}
           target="_blank"
@@ -48,12 +37,12 @@ const LatestBlog = () => {
         >
           <article className="flex flex-col gap-4">
             <div className="flex items-start justify-between gap-3 flex-wrap">
-              <h3
-                className="text-xl md:text-2xl font-semibold leading-tight"
+              <h2
+                className="text-2xl font-bold leading-tight"
                 style={{ color: "oklch(var(--foreground))" }}
               >
-                {latestBlogPost.title}
-              </h3>
+                Last Blog: <span className="font-semibold">{latestBlogPost.title}</span>
+              </h2>
               <span
                 className="text-xs md:text-sm font-mono border px-3 py-1.5 rounded-full"
                 style={{
@@ -74,7 +63,7 @@ const LatestBlog = () => {
                 WebkitBoxOrient: "vertical",
               }}
             >
-              {latestBlogPost.excerpt}.......
+              {latestBlogPost.excerpt}
             </p>
           </article>
         </a>
