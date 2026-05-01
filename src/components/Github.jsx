@@ -33,7 +33,7 @@ const Github = () => {
       style={{ backgroundColor: 'transparent' }}
     >
       <div className="max-w-4xl mx-auto relative z-10 w-full">
-        <div className="mb-3 md:mb-4 pb-4 md:pb-12 text-left pl-2">
+        <div className="mb-3 md:mb-4 pb-4 md:pb-6 text-left pl-2">
           <TextGenerateEffect
             words={titleText}
             className="text-3xl font-bold"

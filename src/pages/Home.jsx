@@ -2,6 +2,7 @@ import React from 'react';
 import NavbarComponent from '../components/Navbar';
 import About from '../components/About';
 import Github from '../components/Github';
+import LatestBlog from '../components/LatestBlog';
 import Techstack from '../components/Techstack';
 import Internship from '../components/Internship';
 import Projects from '../components/Projects';
@@ -15,6 +16,7 @@ const Home = () => {
       <NavbarComponent />
       <About/>
       <Github />
+      <LatestBlog />
       <Techstack />
       <Internship />
       <Projects />
