@@ -110,12 +110,13 @@ export default function Projects() {
             </span>
           </div>
 
-          <div className="mb-5 grid grid-cols-6 gap-2 overflow-x-auto pb-1">
+          <div className="mb-5 grid grid-cols-3 gap-2 pb-1 md:grid-cols-6">
+            {/* Mobile: Show all 6 tabs as 2 rows */}
             {projectsData.map((project) => (
               <button
                 key={project.id}
                 onClick={() => setActiveProject(project)}
-                className="min-w-[150px] cursor-pointer rounded-lg border px-3 py-2 text-center text-sm font-medium transition-colors duration-200"
+                className="md:hidden w-full cursor-pointer rounded-lg border px-2 py-2 text-center text-xs sm:text-sm font-medium transition-colors duration-200 truncate"
                 style={
                   activeProject.id === project.id
                     ? {
@@ -129,13 +130,48 @@ export default function Projects() {
                         borderColor: "oklch(var(--border))",
                       }
                 }
+                title={project.name}
+              >
+                {project.name}
+              </button>
+            ))}
+            
+            {/* Desktop: Show all 6 tabs without horizontal scroll */}
+            {projectsData.map((project) => (
+              <button
+                key={project.id}
+                onClick={() => setActiveProject(project)}
+                className="hidden md:block w-full cursor-pointer rounded-lg border px-2 py-2 text-center text-xs lg:text-sm font-medium transition-colors duration-200 truncate"
+                style={
+                  activeProject.id === project.id
+                    ? {
+                        backgroundColor: "oklch(var(--primary))",
+                        color: "oklch(var(--primary-foreground))",
+                        borderColor: "oklch(var(--primary))",
+                      }
+                    : {
+                        backgroundColor: "oklch(var(--background))",
+                        color: "oklch(var(--foreground))",
+                        borderColor: "oklch(var(--border))",
+                      }
+                }
+                title={project.name}
               >
                 {project.name}
               </button>
             ))}
           </div>
 
-          <div className="rounded-xl border p-4 md:p-5" style={{ borderColor: "oklch(var(--border))", backgroundColor: "oklch(var(--background) / 0.75)" }}>
+          {/* Project Details with fade animation on tab switch */}
+          <div 
+            key={activeProject.id} 
+            className="animate-fade-in-up duration-300 rounded-xl border p-4 md:p-5" 
+            style={{ 
+              borderColor: "oklch(var(--border))", 
+              backgroundColor: "oklch(var(--background) / 0.75)",
+              animation: "fade-in 0.4s ease-out forwards"
+            }}
+          >
             <div className="mb-4">
               <h3 className="mb-2 text-2xl font-bold" style={{ color: "oklch(var(--foreground))" }}>
                 {activeProject.name}

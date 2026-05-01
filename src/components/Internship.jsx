@@ -7,13 +7,8 @@ const internshipData = {
   role: "Full Stack Engineer Intern - IoT Solutions",
   period: "Sept 2025 - Present",
   description:
-    "Built and maintained IoT dashboard solutions, APIs, and real-time device flows. Worked directly with Hostinger KVM 2 infrastructure, managed VPS deployments, configured and operated an EMQX broker, and integrated MQTT-based communication for live device telemetry and control.",
-  highlights: [
-    "Managed Hostinger KVM 2 and VPS environments",
-    "Set up and operated EMQX broker for production-like IoT flows",
-    "Implemented MQTT pipelines for real-time telemetry and control",
-    "Developed REST APIs and dashboard modules for monitoring",
-  ],
+    "Built and maintained IoT dashboard solutions, REST APIs, and real-time device communication systems, while managing Hostinger KVM 2 infrastructure and VPS deployments; configured and operated an EMQX broker to support MQTT-based pipelines for live telemetry, device control, and monitoring through integrated dashboard modules.",
+
   tech: ["Node.js", "Express", "MQTT", "EMQX", "VPS", "Hostinger KVM 2", "JavaScript", "HTML", "PHP"],
   darkModeImage: "/Techstack/technode_logo.png",
   lightModeImage: "/Techstack/technode_white_bg.png",
@@ -63,13 +58,6 @@ export default function Internship() {
             {internshipData.description}
           </p>
 
-          <div className="mb-4 grid gap-2">
-            {internshipData.highlights.map((item) => (
-              <div key={item} className="rounded-md border px-3 py-2 text-sm" style={{ borderColor: "oklch(var(--border))", color: "oklch(var(--foreground))", backgroundColor: "oklch(var(--background) / 0.7)" }}>
-                {item}
-              </div>
-            ))}
-          </div>
 
           <div className="flex flex-wrap gap-2">
             {internshipData.tech.map((tech) => (
