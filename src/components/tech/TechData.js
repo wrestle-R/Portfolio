@@ -4,9 +4,9 @@ export const techData = [
     items: [
       { name: "JavaScript", icon: "https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/javascript/javascript-original.svg" },
       { name: "TypeScript", icon: "https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/typescript/typescript-original.svg" },
-      { name: "Python", icon: "/python.png" },
-      { name: "Java", iconLight: "/java_black.png", iconDark: "/Java.png" },
-      { name: "C / C++", icon: "/cplusplus.png" },
+      { name: "Python", icon: "/Techstack/python.png" },
+      { name: "Java", iconLight: "/Techstack/java_black.png", iconDark: "/Techstack/Java.png" },
+      { name: "C / C++", icon: "/Techstack/cplusplus.png" },
       { name: "HTML", icon: "https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/html5/html5-original.svg" },
       { name: "CSS", icon: "https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/css3/css3-original.svg" },
       { name: "SQL", icon: "https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/sqlite/sqlite-original.svg" }
@@ -15,10 +15,10 @@ export const techData = [
   {
     category: "Frontend",
     items: [
-      { name: "React", icon: "/React.png" },
-      { name: "Next.js", iconLight: "/NEXT.png", iconDark: "/NEXT_black.png" },
-      { name: "Tailwind CSS", icon: "/Tailwind.png" },
-      { name: "React Native", icon: "/React.png" },
+      { name: "React", icon: "/Techstack/React.png" },
+      { name: "Next.js", iconLight: "/Techstack/NEXT.png", iconDark: "/Techstack/NEXT_black.png" },
+      { name: "Tailwind CSS", icon: "/Techstack/Tailwind.png" },
+      { name: "React Native", icon: "/Techstack/React.png" },
       { name: "Expo", iconLight: "https://cdn.simpleicons.org/expo/111111", iconDark: "https://cdn.simpleicons.org/expo/ffffff" },
       { name: "shadcn/ui", iconLight: "https://cdn.simpleicons.org/shadcnui/111111", iconDark: "https://cdn.simpleicons.org/shadcnui/ffffff" }
     ]
@@ -26,9 +26,9 @@ export const techData = [
   {
     category: "Backend",
     items: [
-      { name: "Node.js", icon: "/Node.png" },
-      { name: "Express.js", iconLight: "/express.png", iconDark: "/express_black.png" },
-      { name: "FastAPI", icon: "/fastapi.svg" },
+      { name: "Node.js", icon: "/Techstack/Node.png" },
+      { name: "Express.js", iconLight: "/Techstack/express.png", iconDark: "/Techstack/express_black.png" },
+      { name: "FastAPI", icon: "/Techstack/fastapi.svg" },
       { name: "Prisma ORM", iconLight: "https://cdn.simpleicons.org/prisma/2d3748", iconDark: "https://cdn.simpleicons.org/prisma/ffffff" },
       { name: "Nginx", icon: "https://cdn.simpleicons.org/nginx/009639" },
       { name: "MQTT", icon: "https://cdn.simpleicons.org/mqtt/660066" }
@@ -37,10 +37,10 @@ export const techData = [
   {
     category: "Databases",
     items: [
-      { name: "MongoDB", icon: "/mongo.png" },
-      { name: "PostgreSQL", icon: "/postgresSql.png" },
+      { name: "MongoDB", icon: "/Techstack/mongo.png" },
+      { name: "PostgreSQL", icon: "/Techstack/postgresSql.png" },
       { name: "SQLite", icon: "https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/sqlite/sqlite-original.svg" },
-      { name: "Supabase", icon: "/supabase.jpeg" }
+      { name: "Supabase", icon: "/Techstack/supabase.jpeg" }
     ]
   },
   {
@@ -56,9 +56,9 @@ export const techData = [
   {
     category: "Dev Tools",
     items: [
-      { name: "Git & GitHub", icon: "/Git.png" },
+      { name: "Git & GitHub", icon: "/Techstack/Git.png" },
       { name: "VS Code", icon: "https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/vscode/vscode-original.svg" },
-      { name: "Codex", icon: "/Codex.png" },
+      { name: "Codex", icon: "/Techstack/Codex.png" },
       { name: "GitHub Copilot", iconLight: "https://cdn.simpleicons.org/githubcopilot/111111", iconDark: "https://cdn.simpleicons.org/githubcopilot/ffffff" },
       { name: "Postman", icon: "https://cdn.simpleicons.org/postman/ff6c37" },
       { name: "Docker", icon: "https://cdn.simpleicons.org/docker/2496ed" },

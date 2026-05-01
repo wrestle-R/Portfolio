@@ -1,6 +1,49 @@
-import React, { createContext, useContext, useEffect, useState } from 'react';
+import React, { createContext, useCallback, useContext, useEffect, useState } from 'react';
 
 const ThemeContext = createContext();
+const THEME_KEY = 'theme';
+const VALID_THEMES = new Set(['light', 'dark']);
+
+const getCookieDomain = () => {
+  if (typeof window === 'undefined') return '';
+  const host = window.location.hostname;
+  if (!host || host === 'localhost' || host === '127.0.0.1' || host === '::1') return '';
+  if (host.endsWith('russeldanielpaul.tech')) return '.russeldanielpaul.tech';
+  return '';
+};
+
+const readThemeCookie = () => {
+  if (typeof document === 'undefined') return '';
+  const cookie = document.cookie
+    .split('; ')
+    .find((row) => row.startsWith(`${THEME_KEY}=`));
+  return cookie ? decodeURIComponent(cookie.split('=')[1]) : '';
+};
+
+const writeThemeCookie = (theme) => {
+  if (typeof document === 'undefined') return;
+  const maxAge = 60 * 60 * 24 * 365;
+  const domain = getCookieDomain();
+  const domainPart = domain ? `; domain=${domain}` : '';
+  document.cookie = `${THEME_KEY}=${encodeURIComponent(theme)}; path=/; max-age=${maxAge}; samesite=lax${domainPart}`;
+};
+
+const getPreferredTheme = () => {
+  const fromCookie = readThemeCookie();
+  if (VALID_THEMES.has(fromCookie)) return fromCookie;
+
+  const fromStorage = window.localStorage.getItem(THEME_KEY) || '';
+  if (VALID_THEMES.has(fromStorage)) return fromStorage;
+
+  return window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
+};
+
+const isEditableTarget = (target) => {
+  if (!(target instanceof HTMLElement)) return false;
+  const tag = target.tagName?.toLowerCase();
+  if (target.isContentEditable) return true;
+  return tag === 'input' || tag === 'textarea' || tag === 'select';
+};
 
 export const useTheme = () => {
   const context = useContext(ThemeContext);
@@ -11,40 +54,80 @@ export const useTheme = () => {
 };
 
 export const ThemeProvider = ({ children }) => {
-  const [theme, setTheme] = useState('dark'); // Default to dark theme
+  const [theme, setTheme] = useState('dark');
 
-  useEffect(() => {
-    console.log('ThemeContext initialized');
-    // Check localStorage for saved theme preference
-    const savedTheme = localStorage.getItem('theme');
-    console.log('Saved theme from localStorage:', savedTheme);
-    
-    if (savedTheme) {
-      setTheme(savedTheme);
-      document.documentElement.setAttribute('data-theme', savedTheme);
-    } else {
-      // Default to dark theme
-      document.documentElement.setAttribute('data-theme', 'dark');
-    }
+  const applyTheme = useCallback((nextTheme) => {
+    setTheme(nextTheme);
+    document.documentElement.setAttribute('data-theme', nextTheme);
+    window.localStorage.setItem(THEME_KEY, nextTheme);
+    writeThemeCookie(nextTheme);
   }, []);
 
-  const toggleTheme = () => {
-    const newTheme = theme === 'light' ? 'dark' : 'light';
-    console.log('Toggling theme from', theme, 'to', newTheme);
-    setTheme(newTheme);
-    document.documentElement.setAttribute('data-theme', newTheme);
-    localStorage.setItem('theme', newTheme);
-  };
+  const animateThemeTransition = useCallback((sourceEl, nextTheme) => {
+    const root = document.documentElement;
+    const supportsViewTransition = typeof document.startViewTransition === 'function';
 
-  const value = {
-    theme,
-    toggleTheme,
-  };
+    if (!supportsViewTransition || !sourceEl) {
+      applyTheme(nextTheme);
+      return;
+    }
 
-  console.log('Current theme:', theme);
+    const rect = sourceEl.getBoundingClientRect();
+    const x = rect.left + rect.width / 2;
+    const y = rect.top + rect.height / 2;
+    const maxX = Math.max(x, window.innerWidth - x);
+    const maxY = Math.max(y, window.innerHeight - y);
+    const endRadius = Math.hypot(maxX, maxY);
+
+    const transition = document.startViewTransition(() => {
+      applyTheme(nextTheme);
+    });
+
+    transition.ready.then(() => {
+      root.animate(
+        {
+          clipPath: [
+            `circle(0px at ${x}px ${y}px)`,
+            `circle(${endRadius}px at ${x}px ${y}px)`,
+          ],
+        },
+        {
+          duration: 880,
+          easing: 'cubic-bezier(0.16, 1, 0.3, 1)',
+          pseudoElement: '::view-transition-new(root)',
+        }
+      );
+    }).catch(() => {
+      // No-op fallback handled by normal applyTheme.
+    });
+  }, [applyTheme]);
+
+  useEffect(() => {
+    const initialTheme = getPreferredTheme();
+    applyTheme(initialTheme);
+  }, [applyTheme]);
+
+  const toggleTheme = useCallback((sourceEl = null) => {
+    const currentTheme = document.documentElement.getAttribute('data-theme') || theme;
+    const newTheme = currentTheme === 'light' ? 'dark' : 'light';
+    animateThemeTransition(sourceEl, newTheme);
+  }, [animateThemeTransition, theme]);
+
+  useEffect(() => {
+    const handleKeyDown = (event) => {
+      if (event.repeat) return;
+      if (event.key.toLowerCase() !== 'd') return;
+      if (isEditableTarget(event.target)) return;
+      event.preventDefault();
+      toggleTheme();
+    };
+
+    window.addEventListener('keydown', handleKeyDown);
+    return () => window.removeEventListener('keydown', handleKeyDown);
+  }, [toggleTheme]);
 
   return (
-    <ThemeContext.Provider value={value}>
+    <ThemeContext.Provider value={{ theme, toggleTheme }}>
       {children}
     </ThemeContext.Provider>
   );

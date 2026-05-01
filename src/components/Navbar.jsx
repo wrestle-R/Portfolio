@@ -19,8 +19,6 @@ const NavbarComponent = () => {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const { theme, toggleTheme } = useTheme();
   
-  console.log('Navbar - Current theme:', theme);
-  
   const navItems = [
     { name: "Blogs", link: buildSubdomainUrl("blogs"), external: true },
     { name: "Runny", link: buildSubdomainUrl("runny"), external: true },
@@ -43,9 +41,8 @@ const NavbarComponent = () => {
     setMobileMenuOpen(false);
   };
 
-  const handleThemeToggle = () => {
-    console.log('Theme toggle button clicked');
-    toggleTheme();
+  const handleThemeToggle = (event) => {
+    toggleTheme(event?.currentTarget || null);
   };
 
   return (

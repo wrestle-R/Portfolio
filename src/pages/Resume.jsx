@@ -5,8 +5,8 @@ import { TextGenerateEffect } from '../components/ui/text-generate-effect';
 import emailjs from '@emailjs/browser';
 
 const Resume = () => {
-  const resumePdf = "/Resume.pdf";
-  const resumeImage = "/Resume.jpg";
+  const resumePdf = "/Resume/Resume.pdf";
+  const resumeImage = "/Resume/Resume.jpg";
   const titleText = "Resume";
 
   const [showModal, setShowModal] = useState(false);
@@ -322,4 +322,3 @@ const Resume = () => {
 };
 
 export default Resume;
-
