@@ -36,7 +36,16 @@
   html, body {
     background-color: oklch(var(--background));
     color: oklch(var(--foreground));
-    transition: background-color 0.3s ease, color 0.3s ease;
+  }
+
+  .theme-transition::view-transition-old(root),
+  .theme-transition::view-transition-new(root) {
+    animation: none;
+    mix-blend-mode: normal;
+  }
+
+  .theme-transition * {
+    transition: none !important;
   }
 
   * {

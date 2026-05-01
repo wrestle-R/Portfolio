@@ -79,8 +79,13 @@ export const ThemeProvider = ({ children }) => {
     const maxY = Math.max(y, window.innerHeight - y);
     const endRadius = Math.hypot(maxX, maxY);
 
+    document.documentElement.classList.add('theme-transition');
     const transition = document.startViewTransition(() => {
       applyTheme(nextTheme);
+    });
+
+    transition.finished.finally(() => {
+      document.documentElement.classList.remove('theme-transition');
     });
 
     transition.ready.then(() => {
