@@ -1,4 +1,5 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
+import { motion } from "framer-motion";
 
 const shortBio =
   "Engineering student who enjoys building real products, breaking things, and fixing them fast.";
@@ -14,6 +15,16 @@ const socialLinks = [
     ),
   },
   {
+    name: "russeldanielpaul@gmail.com",
+    url: "mailto:russeldanielpaul@gmail.com",
+    icon: (
+      <svg viewBox="0 0 24 24" className="h-4 w-4" fill="none" stroke="currentColor" aria-hidden="true">
+        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M4 6h16v12H4z" />
+        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="m4 7 8 6 8-6" />
+      </svg>
+    ),
+  },
+  {
     name: "LinkedIn",
     url: "https://linkedin.com/in/russel-daniel-970b8a303",
     icon: (
@@ -25,6 +36,25 @@ const socialLinks = [
 ];
 
 const About = () => {
+  const [ageParts, setAgeParts] = useState({ whole: "0", decimal: "0000000000" });
+
+  useEffect(() => {
+    const birthDate = new Date("2005-03-22T11:45:00+05:30").getTime();
+    
+    const updateAge = () => {
+      const now = Date.now();
+      const diff = now - birthDate;
+      const ageInYears = diff / (1000 * 60 * 60 * 24 * 365.25);
+      const formattedAge = ageInYears.toFixed(10);
+      const [whole = "0", decimal = "0000000000"] = formattedAge.split(".");
+      setAgeParts({ whole, decimal });
+    };
+    
+    updateAge();
+    const interval = setInterval(updateAge, 80);
+    return () => clearInterval(interval);
+  }, []);
+
   return (
     <section
       className="relative flex w-full items-center justify-center px-4 pt-28"
@@ -32,11 +62,37 @@ const About = () => {
       style={{ backgroundColor: "oklch(var(--background))" }}
     >
       <div className="relative z-10 mx-auto w-full max-w-4xl">
-        <article className="rounded-[2rem] border p-3 md:p-4" style={{ backgroundColor: "oklch(var(--muted) / 0.38)", borderColor: "oklch(var(--border))" }}>
-          <div
-            className="rounded-2xl border p-5 md:p-6"
-            style={{ borderColor: "oklch(var(--border))", backgroundColor: "oklch(var(--background) / 0.65)" }}
-          >
+        <article 
+          className="rounded-xl border p-5 md:p-6 transition-colors duration-300 ease-in-out hover:bg-muted/50" 
+          style={{ backgroundColor: "oklch(var(--background))", borderColor: "oklch(var(--border))" }}
+        >
+          <div className="relative">
+            {/* Arch Logo / details on top right */}
+            <div className="hidden md:flex absolute top-0 right-0 flex-col items-start text-sm font-mono opacity-90" style={{ color: "oklch(var(--foreground) / 0.82)" }}>
+              <div className="flex items-center">
+                <svg className="w-3 h-3 mr-1.5" viewBox="0 0 24 24" fill="currentColor">
+                  <path d="M12 2L2 22h4.5l5.5-12.5L17.5 22H22L12 2zm0 6.5l-3 7h6l-3-7z" />
+                </svg>
+                <span>i use arch btw</span>
+              </div>
+              <div className="flex flex-col items-start mt-2 space-y-1.5 text-sm text-current">
+                <div className="flex items-center gap-1.5">
+                  <span className="tabular-nums tracking-tight">{ageParts.whole}.</span>
+                  <motion.span
+                    key={ageParts.decimal}
+                    initial={{ opacity: 0.55 }}
+                    animate={{ opacity: 1 }}
+                    transition={{ duration: 0.12, ease: "easeOut" }}
+                    className="tabular-nums tracking-tight"
+                  >
+                    {ageParts.decimal}
+                  </motion.span>
+                </div>
+                <span>Third year in computer engineering</span>
+                <span>Football | Running</span>
+              </div>
+            </div>
+
             <div className="space-y-2 font-mono text-sm">
               <p>
                 <span style={{ color: "oklch(var(--muted-foreground))" }}>$</span> whoami

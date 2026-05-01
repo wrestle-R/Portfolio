@@ -43,13 +43,9 @@ const Github = () => {
         </div>
         
         <article 
-          className="rounded-[2rem] border p-2 md:p-3 w-full" 
-          style={{ backgroundColor: "oklch(var(--muted) / 0.38)", borderColor: "oklch(var(--border))" }}
+          className="rounded-xl border p-4 md:p-6 w-full flex flex-col items-center relative overflow-hidden transition-colors duration-300 ease-in-out hover:bg-muted/50" 
+          style={{ backgroundColor: "oklch(var(--background))", borderColor: "oklch(var(--border))" }}
         >
-          <div
-            className="rounded-2xl border p-4 md:p-5 w-full flex flex-col items-center relative overflow-hidden"
-            style={{ borderColor: "oklch(var(--border))", backgroundColor: "oklch(var(--background) / 0.65)" }}
-          >
             <div className="w-full flex mb-4">
               {!loading && (
                 <div className="text-xs md:text-sm font-mono border px-3 py-1.5 rounded-full" style={{ borderColor: 'oklch(var(--border))', color: 'oklch(var(--muted-foreground))' }}>
@@ -80,7 +76,6 @@ const Github = () => {
               </div>
               <span>More</span>
             </div>
-          </div>
         </article>
       </div>
     </section>

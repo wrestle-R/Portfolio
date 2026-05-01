@@ -14,7 +14,6 @@ const LatestBlog = () => {
   const titleText = "Latest Blog";
   const blogBaseUrl = buildSubdomainUrl("blogs");
   const blogPostUrl = `${blogBaseUrl}/blog/${latestBlogPost.slug}/`;
-  const blogHomeUrl = `${blogBaseUrl}/blog`;
 
   const publishedDate = new Date(latestBlogPost.publishedAt).toLocaleDateString(
     "en-US",
@@ -37,20 +36,17 @@ const LatestBlog = () => {
           />
         </div>
 
-        <article
-          className="rounded-[2rem] border p-2 md:p-3 w-full"
+        <a
+          href={blogPostUrl}
+          target="_blank"
+          rel="noopener noreferrer"
+          className="block rounded-xl border p-4 md:p-6 w-full transition-colors duration-300 ease-in-out hover:bg-muted/50"
           style={{
-            backgroundColor: "oklch(var(--muted) / 0.38)",
+            backgroundColor: "oklch(var(--background))",
             borderColor: "oklch(var(--border))",
           }}
         >
-          <div
-            className="rounded-2xl border p-4 md:p-5 w-full flex flex-col gap-4"
-            style={{
-              borderColor: "oklch(var(--border))",
-              backgroundColor: "oklch(var(--background) / 0.65)",
-            }}
-          >
+          <article className="flex flex-col gap-4">
             <div className="flex items-start justify-between gap-3 flex-wrap">
               <h3
                 className="text-xl md:text-2xl font-semibold leading-tight"
@@ -70,41 +66,18 @@ const LatestBlog = () => {
             </div>
 
             <p
-              className="text-sm md:text-base leading-relaxed"
-              style={{ color: "oklch(var(--muted-foreground))" }}
+              className="text-sm md:text-base leading-relaxed overflow-hidden"
+              style={{
+                color: "oklch(var(--muted-foreground))",
+                display: "-webkit-box",
+                WebkitLineClamp: 2,
+                WebkitBoxOrient: "vertical",
+              }}
             >
-              {latestBlogPost.excerpt}
+              {latestBlogPost.excerpt}.......
             </p>
-
-            <div className="flex items-center gap-3 flex-wrap">
-              <a
-                href={blogPostUrl}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="px-4 py-2 rounded-full text-sm font-medium tracking-wide transition-opacity hover:opacity-85"
-                style={{
-                  backgroundColor: "oklch(var(--primary))",
-                  color: "oklch(var(--primary-foreground))",
-                }}
-              >
-                Read Post
-              </a>
-              <a
-                href={blogHomeUrl}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="px-4 py-2 rounded-full text-sm font-medium tracking-wide border transition-colors"
-                style={{
-                  borderColor: "oklch(var(--border))",
-                  color: "oklch(var(--foreground))",
-                  backgroundColor: "oklch(var(--background) / 0.35)",
-                }}
-              >
-                View All Blogs
-              </a>
-            </div>
-          </div>
-        </article>
+          </article>
+        </a>
       </div>
     </section>
   );
