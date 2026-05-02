@@ -97,8 +97,8 @@ export const ThemeProvider = ({ children }) => {
           ],
         },
         {
-          duration: 880,
-          easing: 'cubic-bezier(0.16, 1, 0.3, 1)',
+          duration: 960,
+          easing: 'cubic-bezier(0.55, 0, 0.8, 1)',
           pseudoElement: '::view-transition-new(root)',
         }
       );
