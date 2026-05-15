@@ -5,8 +5,13 @@ import Resume from './pages/Resume';
 import NotFound from './pages/NotFound';
 import { Analytics } from "@vercel/analytics/react"
 import { ThemeProvider } from './context/ThemeContext';
+import { registerCopyAttribution } from './lib/copyAttribution';
 
 function App() {
+  React.useEffect(() => {
+    return registerCopyAttribution();
+  }, []);
+
   return (
     <ThemeProvider>
       <Router>

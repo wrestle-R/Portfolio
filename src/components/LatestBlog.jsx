@@ -2,11 +2,11 @@ import React from "react";
 import { buildSubdomainUrl } from "../lib/domain-utils";
 
 const latestBlogPost = {
-  title: "20 days before 21",
-  publishedAt: "2026-03-02",
+  title: "6'1/10 human being",
+  publishedAt: "2026-05-14",
   excerpt:
-    "In about twenty days I turn 21, which apparently means I will be technically allowed to legally drink, get married, and sort of be responsible for myself.",
-  slug: "20-days-before-21",
+    "Somewhere between our third straight hackathon loss... being impressive isn’t the same as looking impressive.",
+  slug: "6-1-10-human-being",
 };
 
 const LatestBlog = () => {
