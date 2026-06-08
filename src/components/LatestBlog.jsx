@@ -2,11 +2,11 @@ import React from "react";
 import { buildSubdomainUrl } from "../lib/domain-utils";
 
 const latestBlogPost = {
-  title: "6'1/10 human being",
-  publishedAt: "2026-05-14",
+  title: "vpSSH",
+  publishedAt: "2026-06-08",
   excerpt:
-    "Somewhere between our third straight hackathon loss... being impressive isn’t the same as looking impressive.",
-  slug: "6-1-10-human-being",
+    "If someone had asked me 6 months ago what a VPS or SSH meant, I would've almost certainly thought it was the abbreviation for some disease.",
+  slug: "vpssh",
 };
 
 const LatestBlog = () => {
@@ -41,7 +41,7 @@ const LatestBlog = () => {
                 className="text-2xl font-bold leading-tight"
                 style={{ color: "oklch(var(--foreground))" }}
               >
-                Last Blog: <span className="font-semibold">{latestBlogPost.title}</span>
+                Latest Blog: <span className="font-semibold">{latestBlogPost.title}</span>
               </h2>
               <span
                 className="text-xs md:text-sm font-mono border px-3 py-1.5 rounded-full"
