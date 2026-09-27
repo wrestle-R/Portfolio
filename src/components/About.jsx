@@ -124,7 +124,7 @@ const About = () => {
                 </p>
               </div>
               <p>
-                <span style={{ color: "oklch(var(--muted-foreground))" }}>$</span> cat mindset.txt
+                <span style={{ color: "oklch(var(--muted-foreground))" }}>$</span> cat ethos.txt
               </p>
               <p className="pl-4 leading-relaxed" style={{ color: "oklch(var(--muted-foreground))" }}>
                 {shortBio}
