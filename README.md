@@ -7,8 +7,6 @@ Welcome to my personal portfolio website! Built to showcase my projects, skills,
 
 ### Live Domains
 
-[https://russeldanielpaul.tech/](https://russeldanielpaul.tech/)
-
 [https://russel.is-a.dev/](https://russel.is-a.dev/)
 
 [https://russeldanielpaul.is-a.dev/](https://russeldanielpaul.is-a.dev/)

@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from "react";
-import { motion } from "framer-motion";
 
 const shortBio =
   "Engineering student who enjoys building real products, breaking things, and fixing them fast.";
@@ -35,26 +34,24 @@ const socialLinks = [
   },
 ];
 
-const About = () => {
-  const [ageParts, setAgeParts] = useState({ whole: "0", decimal: "0000000000" });
+const birthTimestamp = new Date("2005-03-22T11:45:00+05:30").getTime();
+const getAge = () => ((Date.now() - birthTimestamp) / (1000 * 60 * 60 * 24 * 365.25)).toFixed(8);
+
+function LiveAge() {
+  const [age, setAge] = useState(getAge);
 
   useEffect(() => {
-    const birthDate = new Date("2005-03-22T11:45:00+05:30").getTime();
-    
-    const updateAge = () => {
-      const now = Date.now();
-      const diff = now - birthDate;
-      const ageInYears = diff / (1000 * 60 * 60 * 24 * 365.25);
-      const formattedAge = ageInYears.toFixed(10);
-      const [whole = "0", decimal = "0000000000"] = formattedAge.split(".");
-      setAgeParts({ whole, decimal });
-    };
-    
-    updateAge();
-    const interval = setInterval(updateAge, 80);
+    // Only this number updates; keep its DOM node and opacity stable.
+    const interval = setInterval(() => {
+      if (!document.hidden) setAge(getAge());
+    }, 250);
     return () => clearInterval(interval);
   }, []);
 
+  return <span className="live-age inline-block whitespace-nowrap tabular-nums tracking-tight" aria-label={`Age: ${Math.floor(Number(age))} years`}>{age}</span>;
+}
+
+const About = () => {
   return (
     <section
       className="relative flex w-full items-center justify-center px-4 pt-28"
@@ -76,18 +73,7 @@ const About = () => {
                 <span>i use arch btw</span>
               </div>
               <div className="flex flex-col items-start mt-2 space-y-1.5 text-sm text-current">
-                <div className="flex items-center gap-1.5">
-                  <span className="tabular-nums tracking-tight">{ageParts.whole}.</span>
-                  <motion.span
-                    key={ageParts.decimal}
-                    initial={{ opacity: 0.55 }}
-                    animate={{ opacity: 1 }}
-                    transition={{ duration: 0.12, ease: "easeOut" }}
-                    className="tabular-nums tracking-tight"
-                  >
-                    {ageParts.decimal}
-                  </motion.span>
-                </div>
+                <LiveAge />
                 <span>Third year in computer engineering</span>
                 <span>Football | Running</span>
               </div>

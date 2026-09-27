@@ -1,5 +1,6 @@
 import React, { createContext, useCallback, useContext, useEffect, useRef, useState } from 'react';
 import { flushSync } from 'react-dom';
+import { ROOT_DOMAIN } from '../lib/domain-utils';
 
 const ThemeContext = createContext();
 const THEME_KEY = 'theme';
@@ -9,7 +10,7 @@ const getCookieDomain = () => {
   if (typeof window === 'undefined') return '';
   const host = window.location.hostname;
   if (!host || host === 'localhost' || host === '127.0.0.1' || host === '::1') return '';
-  if (host.endsWith('russeldanielpaul.tech')) return '.russeldanielpaul.tech';
+  if (host === ROOT_DOMAIN || host.endsWith(`.${ROOT_DOMAIN}`)) return `.${ROOT_DOMAIN}`;
   return '';
 };
 

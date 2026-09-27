@@ -2,11 +2,11 @@ import React from "react";
 import { buildSubdomainUrl } from "../lib/domain-utils";
 
 const latestBlogPost = {
-  title: "vpSSH",
-  publishedAt: "2026-06-08",
+  title: "Yhprum's Law",
+  publishedAt: "2026-08-31",
   excerpt:
-    "If someone had asked me 6 months ago what a VPS or SSH meant, I would've almost certainly thought it was the abbreviation for some disease.",
-  slug: "vpssh",
+    "This is probably going to be one of my longer blogs. I've had a lot of things I wanted to write about over the past few months.",
+  slug: "yhprums-law",
 };
 
 const LatestBlog = () => {
@@ -15,7 +15,7 @@ const LatestBlog = () => {
 
   const publishedDate = new Date(latestBlogPost.publishedAt).toLocaleDateString(
     "en-US",
-    { month: "short", day: "numeric", year: "numeric" },
+    { month: "short", day: "numeric", year: "numeric", timeZone: "UTC" },
   );
 
   return (
