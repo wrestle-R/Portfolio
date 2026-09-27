@@ -179,7 +179,7 @@ export const ContributionGraph = ({ contributions }) => {
 
 export const ContributionGraphSkeleton = () => {
   return (
-    <div className="flex flex-col items-center justify-center w-full animate-pulse pb-0 pt-0">
+    <div className="flex flex-col items-center justify-center w-full github-loading-placeholder animate-pulse pb-0 pt-0">
       <div className="flex flex-col gap-2 min-w-max">
         {/* Months header skeleton */}
         <div className="flex relative h-5 mr-2 ml-10">
@@ -187,9 +187,9 @@ export const ContributionGraphSkeleton = () => {
         </div>
         
         <div className="flex gap-2">
-          <div className="inline-flex gap-1 min-w-max px-1">
+          <div className="inline-flex gap-1 min-w-max px-1 pb-1">
             {Array.from({ length: 39 }).map((_, weekIndex) => (
-              <div key={weekIndex} className="flex flex-col gap-1">
+              <div key={weekIndex} className={`flex-col gap-1 ${weekIndex >= 15 ? 'hidden md:flex' : 'flex'}`}>
                 {Array.from({ length: 7 }).map((_, dayIndex) => (
                   <div
                     key={`${weekIndex}-${dayIndex}`}

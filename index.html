@@ -3,9 +3,27 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <script>
+      (() => {
+        let theme;
+        try {
+          const cookie = document.cookie.split('; ').find((row) => row.startsWith('theme='));
+          theme = cookie ? decodeURIComponent(cookie.slice(6)) : '';
+        } catch { /* Invalid or unavailable cookies fall back to local preference. */ }
+        if (theme !== 'light' && theme !== 'dark') {
+          try { theme = localStorage.getItem('theme'); } catch { /* Storage is optional. */ }
+        }
+        if (theme !== 'light' && theme !== 'dark') {
+          theme = matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
+        }
+        document.documentElement.dataset.theme = theme;
+      })();
+    </script>
     <title>Russel Daniel Paul</title>
     <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90' font-family='Arial, sans-serif' font-weight='bold'>R</text></svg>" />
     <style>
+      :root { color-scheme: light; background: oklch(0.995 0 0); color: oklch(0.2 0 0); }
+      :root[data-theme='dark'] { color-scheme: dark; background: oklch(0.16 0 0); color: oklch(0.95 0 0); }
       html, body {
         overflow-x: hidden;
         width: 100%;

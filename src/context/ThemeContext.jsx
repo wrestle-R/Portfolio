@@ -29,11 +29,15 @@ const writeThemeCookie = (theme) => {
 };
 
 const getPreferredTheme = () => {
-  const fromCookie = readThemeCookie();
-  if (VALID_THEMES.has(fromCookie)) return fromCookie;
+  try {
+    const fromCookie = readThemeCookie();
+    if (VALID_THEMES.has(fromCookie)) return fromCookie;
+  } catch { /* Cookies can be unavailable or malformed. */ }
 
-  const fromStorage = window.localStorage.getItem(THEME_KEY) || '';
-  if (VALID_THEMES.has(fromStorage)) return fromStorage;
+  try {
+    const fromStorage = window.localStorage.getItem(THEME_KEY) || '';
+    if (VALID_THEMES.has(fromStorage)) return fromStorage;
+  } catch { /* Keep the site usable when storage is blocked. */ }
 
   return window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
 };
@@ -54,20 +58,20 @@ export const useTheme = () => {
 };
 
 export const ThemeProvider = ({ children }) => {
-  const [theme, setTheme] = useState('dark');
+  const [theme, setTheme] = useState(getPreferredTheme);
 
   const applyTheme = useCallback((nextTheme) => {
     setTheme(nextTheme);
     document.documentElement.setAttribute('data-theme', nextTheme);
-    window.localStorage.setItem(THEME_KEY, nextTheme);
-    writeThemeCookie(nextTheme);
+    try { window.localStorage.setItem(THEME_KEY, nextTheme); } catch { /* Optional persistence. */ }
+    try { writeThemeCookie(nextTheme); } catch { /* Optional persistence. */ }
   }, []);
 
   const animateThemeTransition = useCallback((sourceEl, nextTheme) => {
     const root = document.documentElement;
     const supportsViewTransition = typeof document.startViewTransition === 'function';
 
-    if (!supportsViewTransition || !sourceEl) {
+    if (!supportsViewTransition || !sourceEl || window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
       applyTheme(nextTheme);
       return;
     }

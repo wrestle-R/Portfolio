@@ -38,6 +38,22 @@
     color: oklch(var(--foreground));
   }
 
+  /* Focus and reduced motion must never wait for the entrance timeline. */
+  .section-reveal:focus-within {
+    opacity: 1 !important;
+    transform: none !important;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .section-reveal {
+      opacity: 1 !important;
+      transform: none !important;
+    }
+    .github-loading-placeholder {
+      animation: none !important;
+    }
+  }
+
   .theme-transition::view-transition-old(root),
   .theme-transition::view-transition-new(root) {
     animation: none;

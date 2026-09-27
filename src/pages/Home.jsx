@@ -9,20 +9,23 @@ import Projects from '../components/Projects';
 import Achievements from '../components/Achievements';
 import Contact from '../components/Contact';
 import Footer from '../components/Footer';
+import SectionReveal from '../components/ui/section-reveal';
+import { useHomeEntrance } from '../lib/use-home-entrance';
+
+const sections = [About, Github, LatestBlog, Techstack, Internship, Projects, Achievements, Contact, Footer];
 
 const Home = () => {
+  const entrance = useHomeEntrance();
   return (
     <div className="min-h-screen">
-      <NavbarComponent />
-      <About/>
-      <Github />
-      <LatestBlog />
-      <Techstack />
-      <Internship />
-      <Projects />
-      <Achievements />
-      <Contact />
-      <Footer />
+      <SectionReveal enabled={entrance} navigation>
+        <NavbarComponent />
+      </SectionReveal>
+      {sections.map((Section, index) => (
+        <SectionReveal key={index} enabled={entrance} index={index}>
+          <Section />
+        </SectionReveal>
+      ))}
     </div>
   );
 };

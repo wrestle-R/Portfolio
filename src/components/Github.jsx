@@ -1,53 +1,53 @@
 import React, { useEffect, useState } from 'react';
+import { AnimatePresence, motion as Motion, useReducedMotion } from 'framer-motion';
 import { ContributionGraph, ContributionGraphSkeleton } from './ui/contribution-graph';
 import { getGitHubContributions } from '../lib/github-api';
 
 const Github = () => {
-  const [contributions, setContributions] = useState([]);
-  const [loading, setLoading] = useState(true);
-  const [totalContributions, setTotalContributions] = useState(0);
-  const [currentMonthContributions, setCurrentMonthContributions] = useState(0);
-  const [averageMonthlyContributions, setAverageMonthlyContributions] = useState(0);
-  const username = 'wrestle-R'; // Your GitHub username
+  const [result, setResult] = useState({ status: 'loading', contributions: [] });
+  const reducedMotion = useReducedMotion();
+  const { status, contributions } = result;
+  const loading = status === 'loading';
+  const ready = status === 'ready';
+  const username = 'wrestle-R';
 
   useEffect(() => {
-    const fetchContributions = async () => {
-      setLoading(true);
-      const data = await getGitHubContributions(username);
-      setContributions(data);
-      
-      // Calculate total contributions
-      const total = data.reduce((sum, day) => sum + day.count, 0);
-      setTotalContributions(total);
-
-      const uniqueMonths = new Set(
-        data
-          .filter((day) => day.date)
-          .map((day) => {
-            const d = new Date(day.date);
-            return `${d.getFullYear()}-${d.getMonth()}`;
-          }),
-      );
-      const monthCount = Math.max(uniqueMonths.size, 1);
-      setAverageMonthlyContributions(Math.round(total / monthCount));
-      
-      // Calculate current month contributions
-      const now = new Date();
-      const currentMonthInt = now.getMonth();
-      const currentYearStr = now.getFullYear();
-      
-      const currentMonthTotal = data.filter(day => {
-        const d = new Date(day.date);
-        return d.getMonth() === currentMonthInt && d.getFullYear() === currentYearStr;
-      }).reduce((sum, day) => sum + day.count, 0);
-      
-      setCurrentMonthContributions(currentMonthTotal);
-      
-      setLoading(false);
+    let settled = false;
+    const finish = (nextResult) => {
+      if (settled) return;
+      settled = true;
+      window.clearTimeout(timeout);
+      setResult(nextResult);
     };
+    // A stalled external service must also leave the loading state.
+    const timeout = window.setTimeout(() => {
+      finish({ status: 'unavailable', contributions: [] });
+    }, 12000);
 
-    fetchContributions();
+    getGitHubContributions(username).then((data) => {
+      const valid = Array.isArray(data) && data.length > 0 && data.every((day) =>
+        day && Number.isFinite(day.count) && day.count >= 0 &&
+        typeof day.date === 'string' && Number.isFinite(Date.parse(day.date))
+      );
+      finish({ status: valid ? 'ready' : 'unavailable', contributions: valid ? data : [] });
+    }).catch(() => finish({ status: 'unavailable', contributions: [] }));
+
+    return () => {
+      settled = true;
+      window.clearTimeout(timeout);
+    };
   }, []);
+
+  const totalContributions = contributions.reduce((sum, day) => sum + day.count, 0);
+  const months = new Set(contributions.map((day) => day.date.slice(0, 7)));
+  const averageMonthlyContributions = Math.round(totalContributions / Math.max(months.size, 1));
+  const now = new Date();
+  const currentMonthContributions = contributions.reduce((sum, day) => {
+    const date = new Date(day.date);
+    return date.getMonth() === now.getMonth() && date.getFullYear() === now.getFullYear()
+      ? sum + day.count : sum;
+  }, 0);
+  const transition = { duration: reducedMotion ? 0 : 0.35, ease: 'easeOut' };
 
   return (
     <section 
@@ -60,42 +60,60 @@ const Github = () => {
           className="rounded-xl border p-5 md:p-6 w-full flex flex-col items-center relative overflow-hidden transition-colors duration-300 ease-in-out hover:bg-muted/50" 
           style={{ backgroundColor: "oklch(var(--background))", borderColor: "oklch(var(--border))" }}
         >
-            <div className="w-full flex items-start justify-between gap-3 md:gap-4 mb-4 md:mb-6">
-              <div className="flex flex-row flex-wrap items-center gap-3 md:gap-4">
-                <h2 className="text-2xl font-bold" style={{ color: 'oklch(var(--foreground))' }}>
-                  GitHub
-                </h2>
-                {!loading && (
-                  <div className="text-xs md:text-sm font-mono border px-3 py-1.5 rounded-full" style={{ borderColor: 'oklch(var(--border))', color: 'oklch(var(--muted-foreground))' }}>
+            <div className="grid w-full grid-cols-2 items-center gap-3 mb-4 md:mb-6 sm:grid-cols-[auto_1fr_auto]">
+              <h2 className="col-span-2 text-2xl font-bold sm:col-span-1" style={{ color: 'oklch(var(--foreground))' }}>
+                GitHub
+              </h2>
+              <div className="min-h-9 flex items-center">
+                {ready ? (
+                  <Motion.span initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={transition} className="whitespace-nowrap text-xs md:text-sm font-mono border px-3 py-1.5 rounded-full" style={{ borderColor: 'oklch(var(--border))', color: 'oklch(var(--muted-foreground))' }}>
                     {totalContributions.toLocaleString()} contributions
-                  </div>
-                )}
+                  </Motion.span>
+                ) : loading ? <span aria-hidden="true" className="github-loading-placeholder animate-pulse h-8 w-36 rounded-full" style={{ backgroundColor: 'oklch(var(--muted))' }} /> : null}
               </div>
-              {!loading && (
-                <div className="text-xs md:text-sm font-mono border px-3 py-1.5 rounded-full shrink-0" style={{ borderColor: 'oklch(var(--border))', color: 'oklch(var(--muted-foreground))' }}>
-                  {averageMonthlyContributions.toLocaleString()} avg/month
-                </div>
-              )}
+              <div className="min-h-9 flex items-center justify-end">
+                {ready ? (
+                  <Motion.span initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={transition} className="whitespace-nowrap text-xs md:text-sm font-mono border px-3 py-1.5 rounded-full" style={{ borderColor: 'oklch(var(--border))', color: 'oklch(var(--muted-foreground))' }}>
+                    {averageMonthlyContributions.toLocaleString()} avg/month
+                  </Motion.span>
+                ) : loading ? <span aria-hidden="true" className="github-loading-placeholder animate-pulse h-8 w-28 rounded-full" style={{ backgroundColor: 'oklch(var(--muted))' }} /> : null}
+              </div>
             </div>
 
-            <div className="w-full overflow-x-hidden overflow-y-visible pb-1 pt-1 flex justify-center">
-              {loading ? (
-                <ContributionGraphSkeleton />
-              ) : (
-                <ContributionGraph 
-                  contributions={contributions} 
-                  username={username}
-                />
-              )}
+            <p className="sr-only" role="status">
+              {loading ? 'Loading GitHub activity.' : ready ? 'GitHub activity loaded.' : 'GitHub activity is temporarily unavailable.'}
+            </p>
+            <div className="grid w-full min-h-[176px] overflow-x-hidden overflow-y-visible pb-1 pt-1" aria-busy={loading}>
+              <AnimatePresence initial={false}>
+                <Motion.div
+                  key={status}
+                  className="col-start-1 row-start-1 flex min-w-0 items-center justify-center"
+                  initial={{ opacity: 0 }}
+                  animate={{ opacity: 1 }}
+                  exit={{ opacity: 0 }}
+                  transition={transition}
+                >
+                  {loading ? (
+                    <div className="w-full" aria-hidden="true"><ContributionGraphSkeleton /></div>
+                  ) : ready ? (
+                    <ContributionGraph contributions={contributions} />
+                  ) : (
+                    <div className="text-center text-sm px-4" style={{ color: 'oklch(var(--muted-foreground))' }}>
+                      <p>GitHub activity is temporarily unavailable.</p>
+                      <a href={`https://github.com/${username}`} target="_blank" rel="noopener noreferrer" className="inline-block mt-2 underline underline-offset-4">View activity on GitHub</a>
+                    </div>
+                  )}
+                </Motion.div>
+              </AnimatePresence>
             </div>
-            
-            <div className="mt-4 flex flex-row items-center justify-between w-full text-xs font-mono" style={{ color: "oklch(var(--muted-foreground))" }}>
+
+            <div className="mt-4 flex flex-row items-center justify-between w-full text-xs font-mono md:min-h-8" style={{ color: "oklch(var(--muted-foreground))" }}>
               <div className="flex items-center">
-                {!loading && (
-                  <span className="hidden md:inline-flex border px-3 py-1.5 rounded-full" style={{ borderColor: 'oklch(var(--border))' }}>
+                {ready ? (
+                  <Motion.span initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={transition} className="hidden md:inline-flex border px-3 py-1 rounded-full" style={{ borderColor: "oklch(var(--border))", color: "oklch(var(--muted-foreground))" }}>
                     {currentMonthContributions} this month
-                  </span>
-                )}
+                  </Motion.span>
+                ) : loading ? <span aria-hidden="true" className="github-loading-placeholder hidden md:block animate-pulse h-7 w-28 rounded-full" style={{ backgroundColor: 'oklch(var(--muted))' }} /> : null}
               </div>
               <div className="hidden md:flex items-center justify-end gap-2">
                 <span>Less</span>
