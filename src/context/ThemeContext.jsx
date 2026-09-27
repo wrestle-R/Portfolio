@@ -1,4 +1,5 @@
-import React, { createContext, useCallback, useContext, useEffect, useState } from 'react';
+import React, { createContext, useCallback, useContext, useEffect, useRef, useState } from 'react';
+import { flushSync } from 'react-dom';
 
 const ThemeContext = createContext();
 const THEME_KEY = 'theme';
@@ -59,6 +60,7 @@ export const useTheme = () => {
 
 export const ThemeProvider = ({ children }) => {
   const [theme, setTheme] = useState(getPreferredTheme);
+  const nextRevealDirection = useRef('expand');
 
   const applyTheme = useCallback((nextTheme) => {
     setTheme(nextTheme);
@@ -69,6 +71,8 @@ export const ThemeProvider = ({ children }) => {
 
   const animateThemeTransition = useCallback((sourceEl, nextTheme) => {
     const root = document.documentElement;
+    if (root.classList.contains('theme-transition')) return;
+
     const supportsViewTransition = typeof document.startViewTransition === 'function';
 
     if (!supportsViewTransition || !sourceEl || window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
@@ -83,32 +87,33 @@ export const ThemeProvider = ({ children }) => {
     const maxY = Math.max(y, window.innerHeight - y);
     const endRadius = Math.hypot(maxX, maxY);
 
-    document.documentElement.classList.add('theme-transition');
-    const transition = document.startViewTransition(() => {
+    // Prepare the first-frame mask before either theme snapshot is captured.
+    root.style.setProperty('--theme-transition-x', `${x}px`);
+    root.style.setProperty('--theme-transition-y', `${y}px`);
+    root.style.setProperty('--theme-transition-radius', `${endRadius}px`);
+    root.dataset.themeReveal = nextRevealDirection.current;
+    root.classList.add('theme-transition');
+
+    const cleanup = () => {
+      root.classList.remove('theme-transition');
+      delete root.dataset.themeReveal;
+      root.style.removeProperty('--theme-transition-x');
+      root.style.removeProperty('--theme-transition-y');
+      root.style.removeProperty('--theme-transition-radius');
+    };
+
+    try {
+      const transition = document.startViewTransition(() => {
+        flushSync(() => applyTheme(nextTheme));
+      });
+      transition.finished.then(cleanup, cleanup);
+      transition.ready.then(() => {
+        nextRevealDirection.current = nextRevealDirection.current === 'expand' ? 'contract' : 'expand';
+      }, () => { /* A skipped transition still applies the theme. */ });
+    } catch {
+      cleanup();
       applyTheme(nextTheme);
-    });
-
-    transition.finished.finally(() => {
-      document.documentElement.classList.remove('theme-transition');
-    });
-
-    transition.ready.then(() => {
-      root.animate(
-        {
-          clipPath: [
-            `circle(0px at ${x}px ${y}px)`,
-            `circle(${endRadius}px at ${x}px ${y}px)`,
-          ],
-        },
-        {
-          duration: 960,
-          easing: 'cubic-bezier(0.55, 0, 0.8, 1)',
-          pseudoElement: '::view-transition-new(root)',
-        }
-      );
-    }).catch(() => {
-      // No-op fallback handled by normal applyTheme.
-    });
+    }
   }, [applyTheme]);
 
   useEffect(() => {
