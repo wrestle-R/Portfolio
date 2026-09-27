@@ -3,6 +3,8 @@
 import { useMemo, useState } from "react"
 import { useTheme } from "../context/ThemeContext"
 
+// Previous project entries preserved for future use.
+/*
 const projectsData = [
   {
     id: 1,
@@ -84,6 +86,66 @@ const projectsData = [
     imageDark: "/Projects/Bible_Wordle_dark.png",
   },
 ]
+*/
+
+const projectsData = [
+  {
+    id: 1,
+    name: "Multi Codex",
+    description:
+      "Desktop app for managing multiple Codex accounts and launching them in isolated VS Code windows. Each account keeps its own login and workspace, with repeat launches opening a fresh window without changing your default Codex login.",
+    url: "https://github.com/wrestle-R/multi-codex/releases/latest",
+    primaryLabel: "Download App",
+    github: "https://github.com/wrestle-R/multi-codex",
+    tech: ["React", "TypeScript", "Rust", "Tauri", "Vite"],
+    imageLight: "/Projects/multi-codex_preview_light.png",
+    imageDark: "/Projects/multi-codex_preview_dark.png",
+  },
+  {
+    id: 2,
+    name: "Varte",
+    description:
+      "Secure environment-variable management system with web UI and CLI support through the npm package varte.",
+    url: "https://vathavaran-variables.vercel.app/",
+    github: "https://github.com/wrestle-R/Vathavaran-Variables",
+    tech: ["React", "Node.js", "Firebase", "Cloudflare Workers"],
+    imageLight: "/Projects/Varte_preview_light.png",
+    imageDark: "/Projects/Varte_preview_dark.png",
+  },
+  {
+    id: 3,
+    name: "Bible Wordle",
+    description: "Biblical twist on Wordle with scripture-based words.",
+    url: "https://biblical-wordle.vercel.app/",
+    github: "https://github.com/wrestle-R/Bible-Wordle",
+    tech: ["React", "JavaScript", "CSS"],
+    imageLight: "/Projects/Bible_Wordle_preview_light.png",
+    imageDark: "/Projects/Bible_Wordle_preview_dark.png",
+  },
+  {
+    id: 4,
+    name: "ASOIAF",
+    description:
+      "Interactive Map of Ice and Fire exploring the realms and character journeys of Game of Thrones, House of the Dragon, and A Knight of the Seven Kingdoms. Browse characters and trace their stories and movements season by season.",
+    url: "https://asoiaf-rdp.vercel.app/",
+    github: "https://github.com/wrestle-R/ASOIAF",
+    tech: ["React", "JavaScript", "Tailwind CSS", "Vite"],
+    imageLight: "/Projects/ASOIAF_preview_light.png",
+    imageDark: "/Projects/ASOIAF_preview_dark.png",
+  },
+  {
+    id: 5,
+    name: "HyprTrack",
+    description:
+      "Standalone desktop app for tracking local Hyprland activity on Arch Linux. An event-driven Python collector records application usage in SQLite, while the dashboard provides focus insights, application rankings, and grouped activity sessions with all data kept on your machine.",
+    url: "https://github.com/wrestle-R/HyprTrack/releases/latest",
+    primaryLabel: "Download App",
+    github: "https://github.com/wrestle-R/HyprTrack",
+    tech: ["React", "TypeScript", "Rust", "Tauri", "Python", "SQLite"],
+    imageLight: "/Projects/HyprTrack_preview_light.png",
+    imageDark: "/Projects/HyprTrack_preview_dark.png",
+  },
+]
 
 export default function Projects() {
   const [activeProject, setActiveProject] = useState(projectsData[0])
@@ -110,8 +172,8 @@ export default function Projects() {
             </span>
           </div>
 
-          <div className="mb-5 grid grid-cols-3 gap-2 pb-1 md:grid-cols-6">
-            {/* Mobile: Show all 6 tabs as 2 rows */}
+          <div className="mb-5 grid grid-cols-3 gap-2 pb-1 md:grid-cols-5">
+            {/* Mobile: Show project tabs in 2 rows */}
             {projectsData.map((project) => (
               <button
                 key={project.id}
@@ -136,7 +198,7 @@ export default function Projects() {
               </button>
             ))}
             
-            {/* Desktop: Show all 6 tabs without horizontal scroll */}
+            {/* Desktop: Show all project tabs without horizontal scroll */}
             {projectsData.map((project) => (
               <button
                 key={project.id}
@@ -197,8 +259,8 @@ export default function Projects() {
               <div className="relative w-full" style={{ aspectRatio: "1332/768" }}>
                 <img
                   src={activeImage}
-                  alt={`${activeProject.name} Screenshot`}
-                  className="h-full w-full object-cover object-center transition-all duration-300"
+                  alt={`${activeProject.name} Preview`}
+                  className="block h-full w-full object-fill transition-all duration-300"
                   onError={(e) => {
                     e.target.src = `https://via.placeholder.com/1332x768/e5e5e5/666666?text=${encodeURIComponent(activeProject.name)}+Preview`
                   }}
@@ -214,7 +276,7 @@ export default function Projects() {
                 className="rounded-lg px-5 py-2.5 text-sm font-medium transition-opacity hover:opacity-85"
                 style={{ backgroundColor: "oklch(var(--primary))", color: "oklch(var(--primary-foreground))" }}
               >
-                Live Demo
+                {activeProject.primaryLabel || "Live Demo"}
               </a>
               <a
                 href={activeProject.github}
