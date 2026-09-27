@@ -19,6 +19,7 @@ export const techData = [
       { name: "Next.js", iconLight: "/Techstack/NEXT.png", iconDark: "/Techstack/NEXT_black.png" },
       { name: "Tailwind CSS", icon: "/Techstack/Tailwind.png" },
       { name: "React Native", icon: "/Techstack/React.png" },
+      { name: "Tauri", icon: "https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/tauri/tauri-original.svg" },
       { name: "Expo", iconLight: "https://cdn.simpleicons.org/expo/111111", iconDark: "https://cdn.simpleicons.org/expo/ffffff" },
       { name: "shadcn/ui", iconLight: "https://cdn.simpleicons.org/shadcnui/111111", iconDark: "https://cdn.simpleicons.org/shadcnui/ffffff" }
     ]
@@ -29,7 +30,6 @@ export const techData = [
       { name: "Node.js", icon: "/Techstack/Node.png" },
       { name: "Express.js", iconLight: "/Techstack/express.png", iconDark: "/Techstack/express_black.png" },
       { name: "FastAPI", icon: "/Techstack/fastapi.svg" },
-      { name: "Prisma ORM", iconLight: "https://cdn.simpleicons.org/prisma/2d3748", iconDark: "https://cdn.simpleicons.org/prisma/ffffff" },
       { name: "Nginx", icon: "https://cdn.simpleicons.org/nginx/009639" },
       { name: "MQTT", icon: "https://cdn.simpleicons.org/mqtt/660066" }
     ]

@@ -1,76 +1,110 @@
 "use client"
 
+import { BriefcaseBusiness } from "lucide-react"
 import { useTheme } from "../context/ThemeContext"
+import "./Internship.css"
 
-const internshipData = {
-  company: "Technode",
-  role: "Full Stack Engineer Intern - IoT Solutions",
-  period: "Sept 2025 - Present",
-  description:
-    "Built and maintained IoT dashboard solutions, REST APIs, and real-time device communication systems, while managing Hostinger KVM 2 infrastructure and VPS deployments; configured and operated an EMQX broker to support MQTT-based pipelines for live telemetry, device control, and monitoring through integrated dashboard modules.",
+const experiences = [
+  {
+    company: "Technode",
+    role: "Full Stack Engineer — IoT Solutions",
+    period: "Sept 2025 – May 2026",
+    achievements: [
+      "Redesigned and modernized the company’s landing page and primary website, improving visual consistency and the user experience across key customer-facing pages.",
+      "Maintained and enhanced an IoT dashboard built with React and Java for real-time device monitoring, analytics, and management, improving functionality, performance, and usability.",
+    ],
+    tech: ["React", "Java", "JavaScript", "IoT"],
+    darkModeImage: "/Techstack/technode_logo.png",
+    lightModeImage: "/Techstack/technode_white_bg.png",
+  },
+  {
+    company: "NetstellarIOT Solutions",
+    role: "Full Stack Developer — IoT Platforms",
+    period: "June 2026 – August 2026",
+    achievements: [
+      "Optimized the data ingestion pipeline by introducing a queue-based processing system.",
+      "Increased ingestion throughput from 1,600 to 10,000 requests per minute—a 6.25× improvement.",
+    ],
+    tech: ["Queues", "IoT"],
+    darkModeImage: "/Techstack/netstellar-iot-dark.svg",
+    lightModeImage: "/Techstack/netstellar-iot-light.svg",
+  },
+  {
+    company: "Technode",
+    role: "Full Stack Engineer — IoT Solutions",
+    period: "Sept 2026 – Present",
+    achievements: [
+      "Developed and deployed a separate MQTT-based IoT dashboard using Next.js and Docker on a Hostinger VPS, enabling scalable real-time device communication, monitoring, and management.",
+    ],
+    tech: ["Next.js", "Docker", "MQTT", "VPS", "Hostinger"],
+    darkModeImage: "/Techstack/technode_logo.png",
+    lightModeImage: "/Techstack/technode_white_bg.png",
+  },
+]
 
-  tech: ["Node.js", "Express", "MQTT", "EMQX", "VPS", "Hostinger KVM 2", "JavaScript", "HTML", "PHP"],
-  darkModeImage: "/Techstack/technode_logo.png",
-  lightModeImage: "/Techstack/technode_white_bg.png",
+const techColors = {
+  React: "cyan",
+  Java: "orange",
+  JavaScript: "yellow",
+  "Next.js": "neutral",
+  Docker: "blue",
+  MQTT: "purple",
+  VPS: "neutral",
+  Hostinger: "purple",
+  Queues: "purple",
+  IoT: "cyan",
 }
 
 export default function Internship() {
   const { theme } = useTheme()
 
   return (
-    <section className="relative z-10 w-full px-4 pt-8 md:pt-10" id="internship" style={{ backgroundColor: "transparent" }}>
-      <div className="mx-auto w-full max-w-4xl">
-        <article
-          className="w-full overflow-hidden rounded-xl border p-5 md:p-6 transition-colors duration-300 ease-in-out hover:bg-muted/50"
-          style={{ backgroundColor: "oklch(var(--background))", borderColor: "oklch(var(--border))" }}
-        >
-          <div className="mb-5 flex items-start justify-between gap-3 border-b pb-3" style={{ borderColor: "oklch(var(--border))" }}>
-            <h2 className="text-2xl font-bold" style={{ color: "oklch(var(--foreground))" }}>
-              Professional Experience
-            </h2>
-            <span className="rounded-full border px-3 py-1.5 text-xs font-mono" style={{ borderColor: "oklch(var(--border))", color: "oklch(var(--muted-foreground))" }}>
-              {internshipData.period}
-            </span>
-          </div>
+    <section className="relative z-10 w-full px-4 pt-8 md:pt-10" id="internship" aria-labelledby="experience-heading">
+      <div className="experience-panel mx-auto w-full max-w-4xl">
+        <header className="experience-header">
+          <BriefcaseBusiness aria-hidden="true" strokeWidth={1.6} />
+          <h2 id="experience-heading">Professional Experience</h2>
+        </header>
 
-          <div className="mb-5 flex flex-col items-center gap-4 sm:flex-row sm:items-start">
-            <div
-              className="overflow-hidden rounded-lg border px-3 py-2"
-              style={{ borderColor: "oklch(var(--border))", backgroundColor: "oklch(var(--background))", width: "170px", aspectRatio: "430/120" }}
-            >
-              <img
-                src={theme === "dark" ? internshipData.darkModeImage : internshipData.lightModeImage}
-                alt={`${internshipData.company} Logo`}
-                className="h-full w-full object-contain"
-              />
-            </div>
-            <div className="flex-1">
-              <h3 className="text-lg font-semibold" style={{ color: "oklch(var(--foreground))" }}>
-                {internshipData.company}
-              </h3>
-              <p className="mt-1 text-sm font-medium" style={{ color: "oklch(var(--muted-foreground))" }}>
-                {internshipData.role}
-              </p>
-            </div>
-          </div>
-
-          <p className="mb-4 text-sm leading-relaxed md:text-base" style={{ color: "oklch(var(--muted-foreground))" }}>
-            {internshipData.description}
-          </p>
-
-
-          <div className="flex flex-wrap gap-2">
-            {internshipData.tech.map((tech) => (
-              <span
-                key={tech}
-                className="rounded-md border px-2.5 py-1 text-xs font-medium"
-                style={{ borderColor: "oklch(var(--border))", backgroundColor: "oklch(var(--background))", color: "oklch(var(--foreground))" }}
-              >
-                {tech}
+        <ol className="experience-timeline">
+          {experiences.map((experience) => (
+            <li key={experience.period} className="experience-entry">
+              <p className="experience-date">{experience.period}</p>
+              <span className="experience-marker" aria-hidden="true">
+                <span />
               </span>
-            ))}
-          </div>
-        </article>
+              <article className="experience-content">
+                <div className="experience-logo">
+                  <img
+                    src={theme === "dark" ? experience.darkModeImage : experience.lightModeImage}
+                    alt={`${experience.company} logo`}
+                    width="430"
+                    height="120"
+                  />
+                </div>
+                <div className="experience-identity">
+                  <div className="experience-name">
+                    <h3>{experience.company}</h3>
+                    <span className="experience-intern">Intern</span>
+                  </div>
+                  <p className="experience-role">{experience.role}</p>
+                </div>
+
+                <ul className="experience-achievements">
+                  {experience.achievements.map((achievement) => (
+                    <li key={achievement}>{achievement}</li>
+                  ))}
+                </ul>
+
+                <ul className="experience-technologies" aria-label="Technologies">
+                  {experience.tech.map((tech) => (
+                    <li key={tech} data-color={techColors[tech]}>{tech}</li>
+                  ))}
+                </ul>
+              </article>
+            </li>
+          ))}
+        </ol>
       </div>
     </section>
   )
