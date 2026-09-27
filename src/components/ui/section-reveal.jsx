@@ -1,7 +1,7 @@
 import { useEffect, useLayoutEffect, useRef, useState } from 'react';
 import { motion as Motion, useAnimationControls, useInView } from 'framer-motion';
 
-const EASE = [0.22, 1, 0.36, 1];
+const EASE = [0.16, 1, 0.3, 1];
 
 export default function SectionReveal({ children, enabled, index = 0, navigation = false }) {
   const ref = useRef(null);
@@ -16,18 +16,21 @@ export default function SectionReveal({ children, enabled, index = 0, navigation
   }, [navigation]);
 
   useEffect(() => {
-    const visible = navigation ? { opacity: 1 } : { opacity: 1, y: 0 };
+    const visible = navigation ? { opacity: 1 } : { opacity: 1, y: 0, scale: 1, filter: 'blur(0px)' };
     if (!enabled || focused) {
-      controls.set(visible);
+      controls.set(navigation ? visible : { ...visible, filter: 'none' });
     } else if (inView || navigation) {
       const initial = initialViewport.current;
       controls.start({
         ...visible,
         transition: {
-          duration: navigation ? 0.6 : initial ? 0.9 : 0.55,
-          delay: navigation || !initial ? 0 : Math.min(0.12 + index * 0.1, 0.5),
+          duration: navigation ? 0.7 : initial ? 1.15 : 0.8,
+          delay: navigation || !initial ? 0 : Math.min(0.16 + index * 0.18, 0.7),
           ease: EASE,
         },
+        // Release the filter's containing block after the reveal so fixed
+        // descendants (such as certificate dialogs) remain viewport-relative.
+        ...(navigation ? {} : { transitionEnd: { filter: 'none' } }),
       });
     }
   }, [controls, enabled, focused, inView, index, navigation]);
@@ -37,7 +40,7 @@ export default function SectionReveal({ children, enabled, index = 0, navigation
       ref={ref}
       className={`section-reveal${navigation ? ' relative z-40' : ''}`}
       data-entrance={enabled ? 'animated' : 'instant'}
-      initial={enabled ? { opacity: 0, ...(navigation ? {} : { y: 12 }) } : false}
+      initial={enabled ? { opacity: 0, ...(navigation ? {} : { y: 32, scale: 0.985, filter: 'blur(7px)' }) } : false}
       animate={controls}
       onFocusCapture={() => setFocused(true)}
     >

@@ -42,16 +42,73 @@
   .section-reveal:focus-within {
     opacity: 1 !important;
     transform: none !important;
+    filter: none !important;
   }
+
+  /* A single sweep and a paced text sequence bring the terminal card into focus. */
+  @keyframes hero-focus-in {
+    from { opacity: 0; transform: translateY(14px); filter: blur(5px); }
+    to { opacity: 1; transform: none; filter: none; }
+  }
+
+  @keyframes hero-light-pass {
+    0% { transform: translateX(-120%); opacity: 0; }
+    25% { opacity: 1; }
+    75% { opacity: 1; }
+    100% { transform: translateX(120%); opacity: 0; }
+  }
+
+  [data-entrance='animated'] .hero-intro::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+    background: linear-gradient(110deg, transparent 25%, oklch(var(--foreground) / 0.07) 50%, transparent 75%);
+    animation: hero-light-pass 1.7s 0.2s cubic-bezier(0.22, 1, 0.36, 1) both;
+  }
+
+  [data-entrance='animated'] .hero-copy > *,
+  [data-entrance='animated'] .hero-facts,
+  [data-entrance='animated'] .hero-socials > a {
+    animation: hero-focus-in 0.85s cubic-bezier(0.16, 1, 0.3, 1) both;
+    animation-delay: calc(0.3s + var(--reveal-order, 0) * 0.085s);
+  }
+
+  .hero-copy > :nth-child(2) { --reveal-order: 1; }
+  .hero-copy > :nth-child(3) { --reveal-order: 2; }
+  .hero-copy > :nth-child(4) { --reveal-order: 3; }
+  .hero-copy > :nth-child(5) { --reveal-order: 4; }
+  .hero-copy > :nth-child(6) { --reveal-order: 5; }
+  .hero-copy > :nth-child(7) { --reveal-order: 6; }
+  .hero-copy > :nth-child(8) { --reveal-order: 7; }
+  .hero-copy > :nth-child(9) { --reveal-order: 8; }
+  .hero-facts { --reveal-order: 4; }
+  .hero-socials > :nth-child(1) { --reveal-order: 9; }
+  .hero-socials > :nth-child(2) { --reveal-order: 10; }
+  .hero-socials > :nth-child(3) { --reveal-order: 11; }
+
+  .section-reveal:focus-within .hero-copy > *,
+  .section-reveal:focus-within .hero-facts,
+  .section-reveal:focus-within .hero-socials > a,
+  .section-reveal:focus-within .hero-intro::after {
+    animation: none;
+  }
+
+  .section-reveal:focus-within .hero-intro::after { opacity: 0; }
 
   @media (prefers-reduced-motion: reduce) {
     .section-reveal {
       opacity: 1 !important;
       transform: none !important;
+      filter: none !important;
     }
-    .github-loading-placeholder {
+    .github-loading-placeholder,
+    [data-entrance='animated'] .hero-copy > *,
+    [data-entrance='animated'] .hero-facts,
+    [data-entrance='animated'] .hero-socials > a {
       animation: none !important;
     }
+    [data-entrance='animated'] .hero-intro::after { display: none; }
   }
 
   .theme-transition::view-transition-old(root),

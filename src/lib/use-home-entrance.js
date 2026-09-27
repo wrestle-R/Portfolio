@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
 import { useReducedMotion } from 'framer-motion';
 
-const SESSION_KEY = 'portfolio:entrance:v1';
+const SESSION_KEY = 'portfolio:entrance:v2';
 let completedInMemory = false;
 
 function hasCompletedEntrance() {
@@ -31,7 +31,7 @@ export function useHomeEntrance() {
         // In-memory state still covers navigation when storage is unavailable.
       }
     };
-    const timer = window.setTimeout(complete, reducedMotion || hasAnchor ? 0 : 1500);
+    const timer = window.setTimeout(complete, reducedMotion || hasAnchor ? 0 : 2200);
     // Once a visitor jumps to an anchor, do not restart the entrance afterward.
     const handleHash = () => {
       if (window.location.hash) setHasAnchor(true);

@@ -63,12 +63,12 @@ const About = () => {
     >
       <div className="relative z-10 mx-auto w-full max-w-4xl">
         <article 
-          className="rounded-xl border p-5 md:p-6 transition-colors duration-300 ease-in-out hover:bg-muted/50" 
+          className="hero-intro relative isolate overflow-hidden rounded-xl border p-5 md:p-6 transition-colors duration-300 ease-in-out hover:bg-muted/50"
           style={{ backgroundColor: "oklch(var(--background))", borderColor: "oklch(var(--border))" }}
         >
           <div className="relative">
             {/* Arch Logo / details on top right */}
-            <div className="hidden md:flex absolute top-0 right-0 flex-col items-start text-sm font-mono opacity-90" style={{ color: "oklch(var(--foreground) / 0.82)" }}>
+            <div className="hero-facts hidden md:flex absolute top-0 right-0 flex-col items-start text-sm font-mono opacity-90" style={{ color: "oklch(var(--foreground) / 0.82)" }}>
               <div className="flex items-center">
                 <svg className="w-3 h-3 mr-1.5" viewBox="0 0 24 24" fill="currentColor">
                   <path d="M12 2L2 22h4.5l5.5-12.5L17.5 22H22L12 2zm0 6.5l-3 7h6l-3-7z" />
@@ -93,7 +93,7 @@ const About = () => {
               </div>
             </div>
 
-            <div className="space-y-2 font-mono text-sm">
+            <div className="hero-copy space-y-2 font-mono text-sm">
               <p>
                 <span style={{ color: "oklch(var(--muted-foreground))" }}>$</span> whoami
               </p>
@@ -131,7 +131,7 @@ const About = () => {
               </p>
             </div>
 
-            <div className="mt-5 flex flex-wrap gap-2">
+            <div className="hero-socials mt-5 flex flex-wrap gap-2">
               {socialLinks.map((social) => (
                 <a
                   key={social.name}
