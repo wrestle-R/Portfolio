@@ -13,6 +13,8 @@
     "@emailjs/browser": "^4.4.1",
     "@fontsource/inter": "^5.2.5",
     "@fontsource/montserrat": "^5.2.5",
+    "@react-three/drei": "^10.7.9",
+    "@react-three/fiber": "^9.8.1",
     "@tabler/icons-react": "^3.31.0",
     "@tailwindcss/vite": "^4.1.6",
     "@vercel/analytics": "^1.5.0",
@@ -26,7 +28,8 @@
     "react-github-calendar": "^4.5.7",
     "react-router-dom": "^7.6.2",
     "tailwind-merge": "^3.3.1",
-    "tailwindcss": "^4.1.6"
+    "tailwindcss": "^4.1.6",
+    "three": "^0.186.1"
   },
   "devDependencies": {
     "@eslint/js": "^9.25.0",

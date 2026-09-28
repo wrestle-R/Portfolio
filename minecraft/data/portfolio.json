@@ -1,0 +1,151 @@
+{
+  "identity": {
+    "name": "Russel Daniel Paul",
+    "bio": "Fourth-year engineering student who enjoys building real products, breaking things, and fixing them fast.",
+    "email": "russeldanielpaul@gmail.com",
+    "github": "https://github.com/wrestle-R",
+    "linkedin": "https://linkedin.com/in/russel-daniel-970b8a303"
+  },
+  "projects": [
+    {
+      "id": 1,
+      "name": "Multi Codex",
+      "description": "Desktop app for managing multiple Codex accounts and launching them in isolated VS Code windows. Each account keeps its own login and workspace, with repeat launches opening a fresh window without changing your default Codex login.",
+      "url": "https://github.com/wrestle-R/multi-codex/releases/latest",
+      "primaryLabel": "Download App",
+      "github": "https://github.com/wrestle-R/multi-codex",
+      "tech": ["React", "TypeScript", "Rust", "Tauri", "Vite"],
+      "imageLight": "multi-codex_preview_light.png",
+      "imageDark": "multi-codex_preview_dark.png"
+    },
+    {
+      "id": 2,
+      "name": "Varte",
+      "description": "Secure environment-variable management system with web UI and CLI support through the npm package varte.",
+      "url": "https://vathavaran-variables.vercel.app/",
+      "github": "https://github.com/wrestle-R/Vathavaran-Variables",
+      "tech": ["React", "Node.js", "Firebase", "Cloudflare Workers"],
+      "imageLight": "Varte_preview_light.png",
+      "imageDark": "Varte_preview_dark.png"
+    },
+    {
+      "id": 3,
+      "name": "Bible Wordle",
+      "description": "Biblical twist on Wordle with scripture-based words.",
+      "url": "https://biblical-wordle.vercel.app/",
+      "github": "https://github.com/wrestle-R/Bible-Wordle",
+      "tech": ["React", "JavaScript", "CSS"],
+      "imageLight": "Bible_Wordle_preview_light.png",
+      "imageDark": "Bible_Wordle_preview_dark.png"
+    },
+    {
+      "id": 4,
+      "name": "ASOIAF",
+      "description": "Interactive Map of Ice and Fire exploring the realms and character journeys of Game of Thrones, House of the Dragon, and A Knight of the Seven Kingdoms. Browse characters and trace their stories and movements season by season.",
+      "url": "https://asoiaf-rdp.vercel.app/",
+      "github": "https://github.com/wrestle-R/ASOIAF",
+      "tech": ["React", "JavaScript", "Tailwind CSS", "Vite"],
+      "imageLight": "ASOIAF_preview_light.png",
+      "imageDark": "ASOIAF_preview_dark.png"
+    },
+    {
+      "id": 5,
+      "name": "HyprTrack",
+      "description": "Standalone desktop app for tracking local Hyprland activity on Arch Linux. An event-driven Python collector records application usage in SQLite, while the dashboard provides focus insights, application rankings, and grouped activity sessions with all data kept on your machine.",
+      "url": "https://github.com/wrestle-R/HyprTrack/releases/latest",
+      "primaryLabel": "Download App",
+      "github": "https://github.com/wrestle-R/HyprTrack",
+      "tech": ["React", "TypeScript", "Rust", "Tauri", "Python", "SQLite"],
+      "imageLight": "HyprTrack_preview_light.png",
+      "imageDark": "HyprTrack_preview_dark.png"
+    }
+  ],
+  "experiences": [
+    {
+      "company": "Technode",
+      "role": "Full Stack Engineer \u2014 IoT Solutions",
+      "period": "Sept 2025 \u2013 May 2026",
+      "achievements": [
+        "Redesigned and modernized the company\u2019s landing page and primary website, improving visual consistency and the user experience across key customer-facing pages.",
+        "Maintained and enhanced an IoT dashboard built with React and Java for real-time device monitoring, analytics, and management, improving functionality, performance, and usability."
+      ],
+      "tech": ["React", "Java", "JavaScript", "IoT"]
+    },
+    {
+      "company": "NetstellarIOT Solutions",
+      "role": "Full Stack Developer \u2014 IoT Platforms",
+      "period": "June 2026 \u2013 August 2026",
+      "achievements": [
+        "Optimized the data ingestion pipeline by introducing a queue-based processing system.",
+        "Increased ingestion throughput from 1,600 to 10,000 requests per minute\u2014a 6.25\u00d7 improvement."
+      ],
+      "tech": ["Queues", "IoT"]
+    },
+    {
+      "company": "Technode",
+      "role": "Full Stack Engineer \u2014 IoT Solutions",
+      "period": "Sept 2026 \u2013 Present",
+      "achievements": [
+        "Developed and deployed a separate MQTT-based IoT dashboard using Next.js and Docker on a Hostinger VPS, enabling scalable real-time device communication, monitoring, and management."
+      ],
+      "tech": ["Next.js", "Docker", "MQTT", "VPS", "Hostinger"]
+    }
+  ],
+  "skills": [
+    {
+      "category": "Languages",
+      "items": [
+        "JavaScript",
+        "TypeScript",
+        "Python",
+        "Java",
+        "C / C++",
+        "HTML",
+        "CSS",
+        "SQL"
+      ]
+    },
+    {
+      "category": "Frontend",
+      "items": [
+        "React",
+        "Next.js",
+        "Tailwind CSS",
+        "React Native",
+        "Tauri",
+        "Expo",
+        "shadcn/ui"
+      ]
+    },
+    {
+      "category": "Backend",
+      "items": ["Node.js", "Express.js", "FastAPI", "Nginx", "MQTT"]
+    },
+    {
+      "category": "Databases",
+      "items": ["MongoDB", "PostgreSQL", "SQLite", "Supabase"]
+    },
+    {
+      "category": "Cloud & Infra",
+      "items": [
+        "Vercel",
+        "Cloudflare Workers",
+        "Hostinger KVM",
+        "Clerk Auth",
+        "Cloudinary"
+      ]
+    },
+    {
+      "category": "Dev Tools",
+      "items": [
+        "Git & GitHub",
+        "VS Code",
+        "Codex",
+        "GitHub Copilot",
+        "Postman",
+        "Docker",
+        "Ubuntu"
+      ]
+    }
+  ]
+}

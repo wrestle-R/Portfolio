@@ -50,11 +50,11 @@
   left: 0.4375rem;
   top: 0.75rem;
   bottom: -0.75rem;
-  width: 1px;
-  background: oklch(var(--muted-foreground) / 0.4);
+  width: 2px;
+  background: oklch(var(--muted-foreground) / 0.5);
 }
 
-.experience-entry:last-child::before { bottom: 0; }
+.experience-entry:last-child::before { display: none; }
 
 .experience-date {
   grid-column: 2;

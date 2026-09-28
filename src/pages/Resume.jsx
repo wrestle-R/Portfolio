@@ -8,7 +8,7 @@ const resumePdf = "/Resume/Resume.pdf";
 const resumeImage = "/Resume/Resume.jpg";
 
 const resumeFacts = [
-  "computer engineering",
+  "fourth-year computer engineering student",
   "mern | next | ai/ml | iot",
   "projects, internships, and build notes",
 ];

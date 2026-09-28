@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 
 const shortBio =
-  "Engineering student who enjoys building real products, breaking things, and fixing them fast.";
+  "Fourth-year engineering student who enjoys building real products, breaking things, and fixing them fast.";
 
 const socialLinks = [
   {
@@ -74,7 +74,7 @@ const About = () => {
               </div>
               <div className="flex flex-col items-start mt-2 space-y-1.5 text-sm text-current">
                 <LiveAge />
-                <span>Third year in computer engineering</span>
+                <span>Fourth year in computer engineering</span>
                 <span>Football | Running</span>
               </div>
             </div>

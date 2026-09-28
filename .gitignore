@@ -13,6 +13,9 @@ dist-ssr
 *.local
 .env
 
+# Local Minecraft portfolio handoff and reference inputs
+/docs/
+
 # Editor directories and files
 .vscode/*
 !.vscode/extensions.json
