@@ -14,6 +14,7 @@ import PortfolioContent from "./components/PortfolioContent";
 import Panel from "./components/Panel";
 import AmbientMusic from "./components/AmbientMusic";
 import SceneBoundary from "./components/SceneBoundary";
+import LoadingScreen from "./components/LoadingScreen";
 import "./minecraft.css";
 const HouseScene = lazy(() => import("./scene/HouseScene"));
 
@@ -33,6 +34,10 @@ export default function MinecraftPage() {
     [ready, setReady] = useState(false),
     [error, setError] = useState("");
   const [attempt, setAttempt] = useState(0);
+  const [download, setDownload] = useState({ loaded: 0, total: 0 });
+  const downloadCallback = useCallback(({ loaded, total }) => {
+    setDownload({ loaded, total });
+  }, []);
   const [mobile, setMobile] = useState(() => window.matchMedia("(max-width: 700px), (pointer: coarse)").matches);
   useEffect(() => {
     const query = window.matchMedia("(max-width: 700px), (pointer: coarse)");
@@ -153,6 +158,7 @@ export default function MinecraftPage() {
     }
     setError("");
     setReady(false);
+    setDownload({ loaded: 0, total: 0 });
     setAttempt((a) => a + 1);
     setStaticView(false);
   }
@@ -221,6 +227,7 @@ export default function MinecraftPage() {
                   controller={controller}
                   onChapter={setChapter}
                   onReady={readyCallback}
+                  onProgress={downloadCallback}
                   onFailure={failure}
                   openPanel={openPanel}
                   theme={theme}
@@ -229,14 +236,9 @@ export default function MinecraftPage() {
             </SceneBoundary>
           </div>
           {!ready && (
-            <div className="mc-loading" role="status">
-              <div className="mc-loading-cube" />
-              <span>Placing the last few blocks…</span>
-              <button onClick={() => setStaticView(true)}>
-                Read portfolio instead ↗
-              </button>
-            </div>
+            <LoadingScreen download={download} onRead={() => setStaticView(true)} />
           )}
+          {ready && <>
           {!mobile && <button
             className="mc-explore-toggle"
             onClick={() => changeMode(mode === "tour" ? "explore" : "tour")}
@@ -294,6 +296,7 @@ export default function MinecraftPage() {
           <span className="mc-sr-only" aria-live="polite">
             Chapter {chapter + 1}: {chapters[chapter].label}
           </span>
+          </>}
         </>
       )}
       {panel && <Panel section={panel} theme={theme} onClose={closePanel} />}

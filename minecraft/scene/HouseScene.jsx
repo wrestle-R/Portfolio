@@ -19,8 +19,8 @@ import useDaylight from "./useDaylight";
 import CameraRig from "../controls/CameraRig";
 import portfolio, { preview } from "../data/content";
 
-function House() {
-  const { scene } = useLoader(GLTFLoader, houseUrl);
+function House({ onProgress }) {
+  const { scene } = useLoader(GLTFLoader, houseUrl, undefined, onProgress);
   const world = useMemo(() => {
     const copy = scene.clone(true);
     copy.traverse((mesh) => {
@@ -139,6 +139,7 @@ export default function HouseScene({
   controller,
   onChapter,
   onReady,
+  onProgress,
   onFailure,
   openPanel,
 }) {
@@ -173,7 +174,7 @@ export default function HouseScene({
       }
     >
       <WorldLighting preset={preset} />
-      <House />
+      <House onProgress={onProgress} />
       <EntranceDetails preset={preset} />
       <DisplayBoard
         controller={controller}
