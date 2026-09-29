@@ -12,12 +12,13 @@ import { chapters } from "./data/layout";
 import { createController } from "./controls/navigation";
 import PortfolioContent from "./components/PortfolioContent";
 import Panel from "./components/Panel";
+import AmbientMusic from "./components/AmbientMusic";
 import SceneBoundary from "./components/SceneBoundary";
 import "./minecraft.css";
 const HouseScene = lazy(() => import("./scene/HouseScene"));
 
 export default function MinecraftPage() {
-  const { theme, toggleTheme } = useTheme();
+  const { theme } = useTheme();
   const controller = useRef(createController()).current;
   const reloadOnRetry = useRef(false);
   const [staticView, setStaticView] = useState(
@@ -89,15 +90,6 @@ export default function MinecraftPage() {
     controller.mode = next;
     setMode(next);
   }
-  function goTo(index) {
-    if (mode === "explore") {
-      controller.saved = chapters[index].progress;
-      changeMode("tour");
-    }
-    controller.target = chapters[index].progress;
-    controller.yaw = 0;
-    controller.pitch = 0;
-  }
   function showWorld() {
     if (reloadOnRetry.current) {
       window.location.reload();
@@ -120,36 +112,20 @@ export default function MinecraftPage() {
       className={`mc-root ${staticView ? "mc-is-static" : ""}`}
       data-minecraft-theme={theme}
     >
-      <header className="mc-header">
-        <Link to="/" className="mc-brand" aria-label="Back to main portfolio">
-          <span className="mc-block-mark">r</span>
-          <span>
-            RDP<span className="mc-brand-sub"> / a little world</span>
-          </span>
-        </Link>
-        <div className="mc-header-actions">
-          <button
-            onClick={() => (staticView ? showWorld() : setStaticView(true))}
-          >
-            {staticView ? "Enter world" : "Read portfolio"}{" "}
-            <span aria-hidden="true">↗</span>
-          </button>
-          <button
-            className="mc-icon"
-            onClick={(e) => toggleTheme(e.currentTarget)}
-            aria-label={`Switch to ${theme === "dark" ? "light" : "dark"} theme`}
-          >
-            {theme === "dark" ? "☼" : "☾"}
-          </button>
-          <button
-            className="mc-icon"
-            onClick={() => openPanel("help")}
-            aria-label="Controls and help"
-          >
-            ?
-          </button>
-        </div>
-      </header>
+      <Link to="/" className="mc-back">
+        ← Back to portfolio
+      </Link>
+      <h1 className="mc-sr-only">Russel Daniel Paul’s Minecraft portfolio</h1>
+      <a
+        className="mc-reader-shortcut"
+        href="#read-portfolio"
+        onClick={(event) => {
+          event.preventDefault();
+          setStaticView(true);
+        }}
+      >
+        Read an accessible version
+      </a>
       {staticView ? (
         <div className="mc-static" tabIndex={-1}>
           {error && (
@@ -212,80 +188,22 @@ export default function MinecraftPage() {
               </button>
             </div>
           )}
-          <div className="mc-location" aria-hidden="true">
-            <span className="mc-status-dot" /> SNOWBOUND / RUSSEL’S WORLD
-          </div>
-          <aside className="mc-chapter-copy">
-            <span className="mc-eyebrow">
-              0{chapter + 1} / {chapters[chapter].label.toUpperCase()}
-            </span>
-            <h1>{chapters[chapter].title}</h1>
-            <p>{chapters[chapter].detail}</p>
-            <button
-              className="mc-story-link"
-              onClick={() =>
-                chapter === 0 ? goTo(1) : openPanel(chapters[chapter].id)
-              }
-            >
-              {chapter === 0
-                ? "Come on in"
-                : chapter === 4
-                  ? "Say hello"
-                  : "Open field notes"}{" "}
-              <span>↗</span>
-            </button>
-          </aside>
-          <div className="mc-mode">
-            <button
-              className={mode === "tour" ? "is-active" : ""}
-              aria-pressed={mode === "tour"}
-              onClick={() => changeMode("tour")}
-            >
-              Guided tour
-            </button>
-            <button
-              className={mode === "explore" ? "is-active" : ""}
-              aria-pressed={mode === "explore"}
-              onClick={() => changeMode("explore")}
-            >
-              Explore
-            </button>
-          </div>
-          <div className="mc-bottom">
-            <div className="mc-navigation-row">
-              <span className="mc-nav-caption">THE HOUSE TOUR</span>
-              <button
-                onClick={() => {
-                  changeMode("tour");
-                  controller.saved = 0;
-                  goTo(0);
-                }}
-              >
-                ↺ Replay
-              </button>
-            </div>
-            <nav className="mc-chapters" aria-label="House tour chapters">
-              {chapters.map((c, i) => (
-                <button
-                  key={c.id}
-                  aria-current={chapter === i ? "step" : undefined}
-                  onClick={() => goTo(i)}
-                >
-                  <span>0{i + 1}</span>
-                  <strong>{c.label}</strong>
-                  <i />
-                </button>
-              ))}
-            </nav>
-            <div className="mc-bottom-hint">
-              <span>
-                {mode === "tour"
-                  ? "Scroll to wander · Drag to look"
-                  : "W A S D to walk · Drag to look"}
-              </span>
-              <span>Made of blocks & curiosity</span>
-            </div>
-          </div>
+          <button
+            className="mc-explore-toggle"
+            onClick={() => changeMode(mode === "tour" ? "explore" : "tour")}
+            aria-pressed={mode === "explore"}
+            title={
+              mode === "tour"
+                ? "Walk freely with W A S D; drag to look"
+                : "Return to your saved scroll position"
+            }
+          >
+            {mode === "tour" ? "Explore freely" : "Back to guided path"}
+          </button>
+          <p className="mc-gesture-hint" aria-hidden="true">
+            Scroll to enter · Drag to look · Click the signs
+          </p>
+          <AmbientMusic />
           <div className="mc-touch-controls">
             {mode === "tour" ? (
               <button

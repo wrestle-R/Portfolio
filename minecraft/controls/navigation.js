@@ -12,7 +12,7 @@ export function floorAt(x, z) {
     )
       return null;
   }
-  if (z > -r && z < 1 + r && Math.abs(x) > 3 - r) return null;
+  if (z > -r && z < 3.4 + r && Math.abs(x) > 3 - r) return null;
   if (z < 0) return Math.abs(x) < HOUSE.halfWidth - 0.7 - r ? 0 : null;
   if (z < 4) return Math.abs(x) < 4.5 - r ? 0 : null;
   if (z <= 16) return Math.abs(x) < 3.5 - r ? -(z - 4) / 2 : null;

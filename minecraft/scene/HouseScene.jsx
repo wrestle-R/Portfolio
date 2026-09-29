@@ -1,103 +1,137 @@
-import { useEffect, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { Canvas, useLoader } from "@react-three/fiber";
 import {
   CanvasTexture,
   SRGBColorSpace,
-  LinearFilter,
-  NoToneMapping,
+  ACESFilmicToneMapping,
+  MeshStandardMaterial,
+  AdditiveBlending,
+  NearestFilter,
+  DoubleSide,
 } from "three";
 import { GLTFLoader } from "three/addons/loaders/GLTFLoader.js";
+import lanterns from "../assets/models/lanterns.json";
 import houseUrl from "../assets/models/house.glb?url";
 
+import DisplayBoard from "./DisplayBoard";
+import WorldLighting from "./WorldLighting";
+import useDaylight from "./useDaylight";
 import CameraRig from "../controls/CameraRig";
 import portfolio, { preview } from "../data/content";
 
 function House() {
   const { scene } = useLoader(GLTFLoader, houseUrl);
-  return <primitive object={scene} dispose={null} />;
+  const world = useMemo(() => {
+    const copy = scene.clone(true);
+    copy.traverse((mesh) => {
+      if (!mesh.isMesh) return;
+      const source = mesh.material;
+      const luminous = /lantern|glowstone/.test(source.name);
+      mesh.castShadow = !luminous;
+      mesh.receiveShadow = true;
+      // Keep luminous pixels bright; all structural materials now receive real light.
+      mesh.material = luminous
+        ? source.clone()
+        : new MeshStandardMaterial({
+            map: source.map,
+            vertexColors: true,
+            roughness: 0.94,
+            metalness: 0,
+            alphaTest: source.alphaTest,
+            side: /chain|flower|daisy/.test(source.name)
+              ? DoubleSide
+              : source.side,
+          });
+      if (luminous) {
+        mesh.material.toneMapped = false;
+        mesh.material.side = DoubleSide;
+      }
+    });
+    return copy;
+  }, [scene]);
+  useEffect(
+    () => () =>
+      world.traverse((mesh) => {
+        if (mesh.isMesh) mesh.material.dispose();
+      }),
+    [world],
+  );
+  return <primitive object={world} dispose={null} />;
 }
-function Sign({
-  position,
-  rotation = [0, 0, 0],
-  title,
-  caption,
-  image,
-  onClick,
-  controller,
-}) {
-  const [map, setMap] = useState(null);
+function EntranceDetails({ preset }) {
+  const [maps, setMaps] = useState(null);
   useEffect(() => {
-    let cancelled = false;
-    const canvas = document.createElement("canvas");
-    canvas.width = 768;
-    canvas.height = image ? 560 : 370;
-    const ctx = canvas.getContext("2d");
-    const texture = new CanvasTexture(canvas);
-    texture.colorSpace = SRGBColorSpace;
-    texture.minFilter = LinearFilter;
-    function paint(picture) {
-      if (cancelled) return;
-      ctx.fillStyle = "#33261a";
-      ctx.fillRect(0, 0, canvas.width, canvas.height);
-      ctx.fillStyle = "#b79867";
-      ctx.fillRect(18, 18, canvas.width - 36, canvas.height - 36);
-      // Quiet plank grain keeps the sign part of the build.
-      for (let y = 24; y < canvas.height - 18; y += 62) {
-        ctx.fillStyle = "#a28457";
-        ctx.fillRect(18, y, canvas.width - 36, 5);
-      }
-      if (picture) ctx.drawImage(picture, 36, 36, 696, 320);
-      let y = image ? 397 : 95;
-      ctx.textAlign = "center";
-      ctx.fillStyle = "#403321";
-      ctx.font = "22px Monocraft, monospace";
-      ctx.fillText(caption, 384, y, 665);
-      ctx.fillStyle = "#251e14";
-      ctx.font = "38px Monocraft, monospace";
-      ctx.fillText(title, 384, y + 62, 665);
-      ctx.fillStyle = "#403321";
-      ctx.font = "24px Monocraft, monospace";
-      ctx.fillText("OPEN ↗", 384, y + 112);
-      texture.needsUpdate = true;
-      setMap(texture);
+    const banner = document.createElement("canvas");
+    banner.width = 32;
+    banner.height = 80;
+    const ctx = banner.getContext("2d");
+    ctx.fillStyle = "#343536";
+    ctx.fillRect(0, 0, 32, 80);
+    ctx.fillStyle = "#a9a292";
+    ctx.fillRect(2, 0, 2, 80);
+    ctx.fillRect(28, 0, 2, 80);
+    ctx.fillStyle = "#eee1c7";
+    for (let y = 0; y < 5; y++) ctx.fillRect(5 + y, y, 22 - y * 2, 1);
+    for (let y = 0; y < 25; y++) {
+      const half = Math.floor(y / 2);
+      ctx.fillRect(15 - half, 35 + y, 4, 1);
+      ctx.fillRect(13 + half, 35 + y, 4, 1);
     }
-    let picture;
-    if (image) {
-      picture = new Image();
-      picture.onload = () => paint(picture);
-      picture.onerror = () => paint();
-      picture.src = image;
-    }
-    paint();
-    document.fonts.load("22px Monocraft").then(
-      () => paint(picture?.complete && picture.naturalWidth ? picture : null),
-      () => paint(picture?.complete && picture.naturalWidth ? picture : null),
-    );
+    ctx.fillRect(14, 19, 4, 12);
+    ctx.fillRect(10, 23, 12, 4);
+    // Notched cloth foot, with a crisp pixel silhouette.
+    for (let y = 0; y < 12; y++) ctx.clearRect(15 - y, 68 + y, 2 + y * 2, 1);
+    const cloth = new CanvasTexture(banner);
+    cloth.colorSpace = SRGBColorSpace;
+    cloth.magFilter = NearestFilter;
+    const glow = document.createElement("canvas");
+    glow.width = glow.height = 64;
+    const light = glow.getContext("2d");
+    const gradient = light.createRadialGradient(32, 32, 1, 32, 32, 32);
+    gradient.addColorStop(0, "rgba(255,255,255,0.65)");
+    gradient.addColorStop(0.22, "rgba(255,255,255,0.2)");
+    gradient.addColorStop(1, "rgba(255,255,255,0)");
+    light.fillStyle = gradient;
+    light.fillRect(0, 0, 64, 64);
+    const halo = new CanvasTexture(glow);
+    setMaps({ cloth, halo });
     return () => {
-      cancelled = true;
-      texture.dispose();
-      if (picture) {
-        picture.onload = null;
-        picture.onerror = null;
-      }
+      cloth.dispose();
+      halo.dispose();
     };
-  }, [title, caption, image]);
+  }, []);
+  if (!maps) return null;
   return (
-    <mesh
-      position={position}
-      rotation={rotation}
-      onClick={(e) => {
-        e.stopPropagation();
-        if (!controller.moved && !controller.paused) onClick();
-      }}
-    >
-      <planeGeometry args={[3.2, image ? 2.33 : 1.54]} />
-      <meshBasicMaterial
-        key={map?.uuid || "loading"}
-        map={map}
-        color={map ? "white" : "#ede6d5"}
-      />
-    </mesh>
+    <>
+      {[-1, 1].map((side) => (
+        <mesh key={side} position={[side * 4.25, 3.15, 4.08]}>
+          <planeGeometry args={[1.05, 2.6]} />
+          <meshBasicMaterial
+            map={maps.cloth}
+            transparent
+            alphaTest={0.5}
+            side={DoubleSide}
+          />
+        </mesh>
+      ))}
+      {lanterns
+        .filter(
+          (lamp) =>
+            lamp.position[2] > 0 || Math.round(lamp.position[2]) % 10 === -2,
+        )
+        .map((lamp, i) => (
+          <sprite key={i} position={lamp.position} scale={[1.4, 1.4, 1.4]}>
+            <spriteMaterial
+              map={maps.halo}
+              color={lamp.soul ? "#76ddff" : "#ffb54a"}
+              transparent
+              opacity={preset.glow}
+              blending={AdditiveBlending}
+              depthWrite={false}
+            />
+          </sprite>
+        ))}
+    </>
   );
 }
 export default function HouseScene({
@@ -108,6 +142,7 @@ export default function HouseScene({
   openPanel,
   theme,
 }) {
+  const { period, preset } = useDaylight();
   const [visible, setVisible] = useState(!document.hidden);
   useEffect(() => {
     const update = () => setVisible(!document.hidden);
@@ -116,6 +151,8 @@ export default function HouseScene({
   }, []);
   return (
     <Canvas
+      shadows="soft"
+      data-time-of-day={period}
       frameloop={visible ? "always" : "never"}
       dpr={[1, window.matchMedia("(pointer: coarse)").matches ? 1 : 1.5]}
       camera={{ position: [0, -4.35, 23], fov: 64, near: 0.08, far: 100 }}
@@ -125,40 +162,32 @@ export default function HouseScene({
         powerPreference: "high-performance",
       }}
       onCreated={({ gl }) => {
-        gl.toneMapping = NoToneMapping;
+        gl.toneMapping = ACESFilmicToneMapping;
+        gl.toneMappingExposure = 1.2;
         gl.outputColorSpace = SRGBColorSpace;
       }}
       fallback={
         <div className="mc-no-webgl">
-          3D isn’t available on this device. Choose Read portfolio above.
+          3D isn’t available on this device. Use the accessible portfolio link.
         </div>
       }
     >
-      <color attach="background" args={["#91adf5"]} />
-      <fog attach="fog" args={["#b7cef6", 50, 110]} />
-      {[
-        [0, 22, -40, 38, 9],
-        [-24, 19, -10, 14, 26],
-        [25, 24, 5, 22, 12],
-      ].map(([x, y, z, w, d]) => (
-        <mesh key={x} position={[x, y, z]}>
-          <boxGeometry args={[w, 1, d]} />
-          <meshBasicMaterial color="#edf2ff" />
-        </mesh>
-      ))}
+      <WorldLighting preset={preset} />
       <House />
-      <Sign
+      <EntranceDetails preset={preset} />
+      <DisplayBoard
         controller={controller}
-        position={[0, 4.45, 1.06]}
-        title="RUSSEL’S PLACE"
-        caption="A portfolio in blocks"
+        position={[0, 4.2, 3.75]}
+        kind="entrance"
+        title="RUSSEL DANIEL PAUL"
+        caption="Welcome to my corner of the world"
         onClick={() => openPanel("about")}
       />
       {portfolio.projects.map((p, i) => (
-        <Sign
+        <DisplayBoard
           controller={controller}
           key={p.id}
-          position={[-5.7, 2.5, -5.5 - i * 5]}
+          position={[-5.7, 2.5, -5 - i * 5]}
           rotation={[0, Math.PI / 2, 0]}
           title={p.name}
           caption={`0${i + 1} / SELECTED WORK`}
@@ -167,17 +196,17 @@ export default function HouseScene({
         />
       ))}
       {portfolio.experiences.map((e, i) => (
-        <Sign
+        <DisplayBoard
           controller={controller}
           key={i}
-          position={[5.7, 2.6, -15.5 - i * 5]}
+          position={[5.7, 2.6, -25.5 + i * 5]}
           rotation={[0, -Math.PI / 2, 0]}
           title={e.company}
           caption={e.period}
           onClick={() => openPanel("experience")}
         />
       ))}
-      <Sign
+      <DisplayBoard
         controller={controller}
         position={[0, 2.5, -28.96]}
         title="LET’S BUILD."
@@ -189,6 +218,7 @@ export default function HouseScene({
         onChapter={onChapter}
         onReady={onReady}
         onFailure={onFailure}
+        openPanel={openPanel}
       />
     </Canvas>
   );

@@ -110,8 +110,8 @@ export default function PortfolioContent({ section, theme }) {
     return (
       <div className="mc-help-content">
         <p>
-          A small house tour, at your pace. Sound is off; there’s nothing to
-          rush.
+          A small house tour, at your pace. Use the music button to switch the
+          soft instrumental soundtrack on or off.
         </p>
         <dl>
           <dt>Guided tour</dt>
@@ -122,8 +122,8 @@ export default function PortfolioContent({ section, theme }) {
           <dt>Keyboard</dt>
           <dd>
             Focus the scene. Arrow keys look; Page Up / Down change chapters;
-            Home / End go to the start / finish. The chapter buttons and all
-            portfolio details work with Tab and Enter.
+            Home / End go to the start / finish. Press Enter to open the current
+            chapter’s details.
           </dd>
           <dt>Explore</dt>
           <dd>
@@ -138,8 +138,8 @@ export default function PortfolioContent({ section, theme }) {
           </dd>
           <dt>Prefer reading?</dt>
           <dd>
-            Read portfolio has the same projects, experience, and contact links
-            without the 3D scene.
+            The accessible version has the same projects, experience, and
+            contact links without the 3D scene.
           </dd>
         </dl>
       </div>

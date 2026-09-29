@@ -9,10 +9,11 @@ export default function CameraRig({
   onChapter,
   onReady,
   onFailure,
+  openPanel,
 }) {
   const { camera, gl, size } = useThree();
   useEffect(() => {
-    camera.fov = size.width < 700 ? 75 : 64;
+    camera.fov = size.width < 700 ? 73 : 58;
     camera.updateProjectionMatrix();
   }, [camera, size.width]);
   const scratch = useRef({
@@ -30,7 +31,7 @@ export default function CameraRig({
       host = canvas.parentElement;
     canvas.setAttribute(
       "aria-label",
-      "Interactive Minecraft house. Use the chapter controls or scroll to tour.",
+      "Interactive Minecraft house. Scroll to tour, drag to look, or use Page Up and Page Down. Enter opens chapter details.",
     );
     canvas.tabIndex = 0;
     const reset = () => {
@@ -104,6 +105,11 @@ export default function CameraRig({
     const key = (e) => {
       if (controller.paused || e.target !== canvas) return;
       const k = e.key.toLowerCase();
+      if (k === "enter") {
+        e.preventDefault();
+        openPanel(chapters[Math.max(1, chapterAt(controller.progress))].id);
+        return;
+      }
       if (
         [
           "w",
@@ -170,7 +176,7 @@ export default function CameraRig({
       document.removeEventListener("visibilitychange", reset);
       canvas.removeEventListener("webglcontextlost", lost);
     };
-  }, [camera, gl, controller, onFailure]);
+  }, [camera, gl, controller, onFailure, openPanel]);
   useFrame((state, delta) => {
     const s = scratch.current,
       c = controller;
