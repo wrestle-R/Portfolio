@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react";
+import portfolio from "../data/content";
 import { CanvasTexture, SRGBColorSpace, LinearFilter } from "three";
 
 export default function DisplayBoard({
@@ -14,13 +15,14 @@ export default function DisplayBoard({
   const [map, setMap] = useState(null);
   const [hovered, setHovered] = useState(false);
   const entrance = kind === "entrance";
-  const width = entrance ? 4.4 : image ? 3.05 : 3.5;
-  const height = entrance ? 1.12 : image ? 2.35 : 1.65;
+  const tools = kind === "tools";
+  const width = entrance ? 5.5 : tools ? 4.4 : image ? 3.05 : 3.5;
+  const height = entrance ? 1.75 : tools ? 3.5 : image ? 2.35 : 1.65;
   useEffect(() => {
     let cancelled = false;
     const canvas = document.createElement("canvas");
     canvas.width = 1280;
-    canvas.height = entrance ? 320 : image ? 980 : 600;
+    canvas.height = entrance ? 408 : tools ? 1020 : image ? 980 : 600;
     const ctx = canvas.getContext("2d");
     const texture = new CanvasTexture(canvas);
     texture.colorSpace = SRGBColorSpace;
@@ -30,14 +32,55 @@ export default function DisplayBoard({
       if (cancelled) return;
       const w = canvas.width,
         h = canvas.height;
-      ctx.fillStyle = "#192526";
+      ctx.fillStyle = entrance ? "#e8d9b5" : "#192526";
       ctx.fillRect(0, 0, w, h);
       // Understated inlay; all text remains inside a generous safe area.
       ctx.strokeStyle = "#716449";
       ctx.lineWidth = 3;
       ctx.strokeRect(24, 24, w - 48, h - 48);
       ctx.textAlign = "left";
-      if (image) {
+      if (entrance) {
+        ctx.fillStyle = "#796343";
+        ctx.font = "22px Monocraft, monospace";
+        ctx.textAlign = "center";
+        ctx.fillText("THE WORLD OF", w / 2, 74);
+        ctx.fillStyle = "#30291f";
+        ctx.font = "100px Monocraft, monospace";
+        ctx.fillText("RUSSEL", w / 2, 192);
+        ctx.font = "76px Monocraft, monospace";
+        ctx.fillText("DANIEL PAUL", w / 2, 282);
+        ctx.fillStyle = "#796343";
+        ctx.font = "22px Monocraft, monospace";
+        ctx.fillText("DEVELOPER  ·  BUILDER  ·  EXPLORER", w / 2, 352);
+      } else if (tools) {
+        ctx.fillStyle = "#b9a078";
+        ctx.font = "24px Monocraft, monospace";
+        ctx.fillText("04 / THE WORKBENCH", 70, 90);
+        ctx.fillStyle = "#f5e7c9";
+        ctx.font = "52px Monocraft, monospace";
+        ctx.fillText(title, 70, 166);
+        portfolio.skills.forEach((skill, index) => {
+          const x = 70 + (index % 2) * 590;
+          const y = 280 + Math.floor(index / 2) * 220;
+          ctx.fillStyle = "#e0bd7e";
+          ctx.font = "29px Monocraft, monospace";
+          ctx.fillText(skill.category, x, y);
+          ctx.fillStyle = "#d5d4c3";
+          ctx.font = "25px Monocraft, monospace";
+          let line = "", row = 0;
+          for (const word of skill.items.join(" · ").split(" ")) {
+            if (ctx.measureText(line + word).width > 505) {
+              ctx.fillText(line, x, y + 48 + row++ * 38);
+              line = "";
+            }
+            line += word + " ";
+          }
+          ctx.fillText(line, x, y + 48 + row * 38);
+        });
+        ctx.fillStyle = "#b9a078";
+        ctx.font = "24px Monocraft, monospace";
+        ctx.fillText("A FEW FAMILIAR TOOLS. ALWAYS LEARNING MORE.  ↗", 70, 952);
+      } else if (image) {
         ctx.fillStyle = "#ad9873";
         ctx.font = "24px Monocraft, monospace";
         ctx.fillText(caption, 65, 85);
@@ -120,7 +163,7 @@ export default function DisplayBoard({
         picture.onerror = null;
       }
     };
-  }, [title, caption, image, entrance]);
+  }, [title, caption, image, entrance, tools]);
   return (
     <group position={position} rotation={rotation}>
       <mesh position={[0, 0, -0.06]} castShadow receiveShadow>

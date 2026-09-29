@@ -29,8 +29,23 @@ export default function MinecraftPage() {
   const [panel, setPanel] = useState(null),
     [ready, setReady] = useState(false),
     [error, setError] = useState("");
-  const [lookTouch, setLookTouch] = useState(false),
-    [attempt, setAttempt] = useState(0);
+  const [attempt, setAttempt] = useState(0);
+  const [mobile, setMobile] = useState(() => window.matchMedia("(max-width: 700px), (pointer: coarse)").matches);
+  useEffect(() => {
+    const query = window.matchMedia("(max-width: 700px), (pointer: coarse)");
+    const update = () => {
+      setMobile(query.matches);
+      if (query.matches) {
+        controller.mode = "tour";
+        controller.lookTouch = false;
+        controller.keys.clear();
+        controller.drag = null;
+        setMode("tour");
+      }
+    };
+    query.addEventListener("change", update);
+    return () => query.removeEventListener("change", update);
+  }, [controller]);
   const readyCallback = useCallback(() => setReady(true), []);
   const failure = useCallback((message, reload = false) => {
     reloadOnRetry.current = reload;
@@ -100,13 +115,6 @@ export default function MinecraftPage() {
     setAttempt((a) => a + 1);
     setStaticView(false);
   }
-  function pad(key, pressed, event) {
-    event.preventDefault();
-    if (pressed) {
-      event.currentTarget.setPointerCapture(event.pointerId);
-      controller.keys.add(key);
-    } else controller.keys.delete(key);
-  }
   return (
     <main
       className={`mc-root ${staticView ? "mc-is-static" : ""}`}
@@ -145,7 +153,7 @@ export default function MinecraftPage() {
               Take the house tour ↗
             </button>
           </div>
-          {["about", "projects", "experience", "contact"].map((section, i) => (
+          {["about", "projects", "tools", "experience", "contact"].map((section, i) => (
             <section
               className="mc-static-section"
               key={section}
@@ -188,7 +196,7 @@ export default function MinecraftPage() {
               </button>
             </div>
           )}
-          <button
+          {!mobile && <button
             className="mc-explore-toggle"
             onClick={() => changeMode(mode === "tour" ? "explore" : "tour")}
             aria-pressed={mode === "explore"}
@@ -199,45 +207,36 @@ export default function MinecraftPage() {
             }
           >
             {mode === "tour" ? "Explore freely" : "Back to guided path"}
-          </button>
-          <p className="mc-gesture-hint" aria-hidden="true">
-            Scroll to enter · Drag to look · Click the signs
+          </button>}
+          <nav className="mc-journey" aria-label="Portfolio timeline">
+            <ol>
+              {chapters.map((stop, index) => (
+                <li key={stop.id} className={index <= chapter ? "is-reached" : ""}>
+                  <button aria-current={chapter === index ? "step" : undefined}
+                    onClick={() => {
+                      changeMode("tour");
+                      controller.target = stop.progress;
+                      controller.saved = stop.progress;
+                      controller.yaw = 0;
+                      controller.pitch = 0;
+                    }}>
+                    <span className="mc-journey-dot">{String(index + 1).padStart(2, "0")}</span>
+                    <span>{stop.label}</span>
+                  </button>
+                </li>
+              ))}
+            </ol>
+          </nav>
+          <div className="mc-chapter-caption">
+            <span>CHAPTER {String(chapter + 1).padStart(2, "0")} / {String(chapters.length).padStart(2, "0")}</span>
+            <button onClick={() => openPanel(chapter === 0 ? "about" : chapters[chapter].id)}>
+              {chapters[chapter].title} <span aria-hidden="true">↗</span>
+            </button>
+          </div>
+          <p className="mc-gesture-hint">
+            <span aria-hidden="true">↓</span> {mobile ? "Swipe up to follow the story" : "Scroll to follow the story · Drag to look"}
           </p>
           <AmbientMusic />
-          <div className="mc-touch-controls">
-            {mode === "tour" ? (
-              <button
-                className={lookTouch ? "is-active" : ""}
-                aria-pressed={lookTouch}
-                onClick={() => {
-                  controller.lookTouch = !lookTouch;
-                  setLookTouch(!lookTouch);
-                }}
-              >
-                {lookTouch ? "Look: on" : "Look around"}
-              </button>
-            ) : (
-              <div className="mc-pad" aria-label="Walking controls">
-                {[
-                  ["w", "↑", "Walk forward"],
-                  ["a", "←", "Walk left"],
-                  ["s", "↓", "Walk backward"],
-                  ["d", "→", "Walk right"],
-                ].map(([key, label, name]) => (
-                  <button
-                    key={key}
-                    aria-label={name}
-                    onPointerDown={(e) => pad(key, true, e)}
-                    onPointerUp={(e) => pad(key, false, e)}
-                    onPointerCancel={(e) => pad(key, false, e)}
-                    onLostPointerCapture={() => controller.keys.delete(key)}
-                  >
-                    {label}
-                  </button>
-                ))}
-              </div>
-            )}
-          </div>
           <span className="mc-sr-only" aria-live="polite">
             Chapter {chapter + 1}: {chapters[chapter].label}
           </span>

@@ -139,7 +139,7 @@ export default function CameraRig({
               Math.max(
                 0,
                 Math.min(
-                  4,
+                  chapters.length - 1,
                   chapterAt(controller.target) + (k === "pageup" ? -1 : 1),
                 ),
               )

@@ -34,6 +34,7 @@ function House() {
         ? source.clone()
         : new MeshStandardMaterial({
             map: source.map,
+            color: source.color,
             vertexColors: true,
             roughness: 0.94,
             metalness: 0,
@@ -177,7 +178,7 @@ export default function HouseScene({
       <EntranceDetails preset={preset} />
       <DisplayBoard
         controller={controller}
-        position={[0, 4.2, 3.75]}
+        position={[0, 4.35, 4.05]}
         kind="entrance"
         title="RUSSEL DANIEL PAUL"
         caption="Welcome to my corner of the world"
@@ -195,14 +196,23 @@ export default function HouseScene({
           onClick={() => openPanel(`project-${p.id}`)}
         />
       ))}
+      <DisplayBoard
+        controller={controller}
+        position={[5.7, 2.5, -10]}
+        rotation={[0, -Math.PI / 2, 0]}
+        title="Tools of the trade"
+        caption="THE WORKBENCH / LANGUAGES TO INFRASTRUCTURE"
+        kind="tools"
+        onClick={() => openPanel("tools")}
+      />
       {portfolio.experiences.map((e, i) => (
         <DisplayBoard
           controller={controller}
           key={i}
-          position={[5.7, 2.6, -25.5 + i * 5]}
+          position={[5.7, 2.6, -15.5 - i * 5]}
           rotation={[0, -Math.PI / 2, 0]}
           title={e.company}
-          caption={e.period}
+          caption={`0${i + 1} / ${e.period}`}
           onClick={() => openPanel("experience")}
         />
       ))}

@@ -70,16 +70,18 @@ export default function PortfolioContent({ section, theme }) {
             </li>
           ))}
         </ol>
-        <h3>Tools of the trade</h3>
-        <div className="mc-skills">
-          {portfolio.skills.map((s) => (
-            <div key={s.category}>
-              <h4>{s.category}</h4>
-              <p>{s.items.join(" · ")}</p>
-            </div>
-          ))}
-        </div>
       </>
+    );
+  if (section === "tools")
+    return (
+      <div className="mc-skills">
+        {portfolio.skills.map((skill) => (
+          <div key={skill.category}>
+            <h4>{skill.category}</h4>
+            <p>{skill.items.join(" · ")}</p>
+          </div>
+        ))}
+      </div>
     );
   if (section === "contact")
     return (
@@ -117,7 +119,7 @@ export default function PortfolioContent({ section, theme }) {
           <dt>Guided tour</dt>
           <dd>
             Scroll or swipe vertically to move. Drag the scene to look around.
-            On touch, switch on Look to turn instead of travel.
+            On phones, swipe up to follow the story.
           </dd>
           <dt>Keyboard</dt>
           <dd>
@@ -127,8 +129,7 @@ export default function PortfolioContent({ section, theme }) {
           </dd>
           <dt>Explore</dt>
           <dd>
-            W / A / S / D walk. Drag or use arrows to look. On touch, use the
-            walking pad and drag the scene to look. Stairs and edges keep you
+            W / A / S / D walk. Drag or use arrows to look. Free exploration is available on desktop. Stairs and edges keep you
             inside the house.
           </dd>
           <dt>Back to tour</dt>

@@ -572,3 +572,96 @@
     display: none;
   }
 }
+
+/* The chapter rail stays visible as the visitor moves through the house. */
+.mc-journey {
+  position: absolute;
+  z-index: 15;
+  top: max(20px, env(safe-area-inset-top));
+  right: 24px;
+  padding: 12px 20px;
+  background: #201d17d9;
+  border: 1px solid #f4e5c038;
+  color: #fff4dd;
+  backdrop-filter: blur(12px);
+}
+.mc-journey ol {
+  display: flex;
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  gap: 0;
+}
+.mc-journey li { position: relative; width: 82px; }
+.mc-journey li:not(:last-child)::after {
+  content: "";
+  position: absolute;
+  top: 13px;
+  left: calc(50% + 14px);
+  width: 54px;
+  height: 1px;
+  background: #f4e5c033;
+}
+.mc-journey .is-reached::after { background: #c9a96b !important; }
+.mc-journey button {
+  display: grid;
+  justify-items: center;
+  gap: 7px;
+  width: 100%;
+  padding: 0;
+  border: 0;
+  background: none;
+  color: #b7ad97;
+  font: 9px Monocraft, monospace;
+}
+.mc-journey-dot {
+  display: grid;
+  place-items: center;
+  width: 27px;
+  height: 27px;
+  border: 1px solid #71644a;
+  font-size: 9px;
+}
+.mc-journey .is-reached .mc-journey-dot { border-color: #c9a96b; color: #eddbb2; }
+.mc-journey [aria-current] .mc-journey-dot { background: #eddbb2; color: #30291f; }
+.mc-journey [aria-current], .mc-journey button:hover { color: #fff4dd; }
+.mc-chapter-caption {
+  position: absolute;
+  left: 50%;
+  bottom: 82px;
+  transform: translateX(-50%);
+  color: #fff4dd;
+  text-align: center;
+  text-shadow: 0 2px 8px #171713;
+  width: min(90%, 600px);
+}
+.mc-chapter-caption > span { font: 9px Monocraft, monospace; letter-spacing: 2px; }
+.mc-chapter-caption button {
+  display: block;
+  margin: 8px auto 0;
+  padding: 7px 12px;
+  background: #201d17d9;
+  border: 1px solid #f4e5c038;
+  font: 15px Monocraft, monospace;
+  color: #fff4dd;
+}
+.mc-chapter-caption button:hover { background: #413727; }
+.mc-gesture-hint { animation: none; bottom: 29px; }
+.mc-gesture-hint > span { display: inline-block; margin-right: 7px; font-size: 18px; }
+@media (max-width: 1000px) {
+  .mc-journey { padding: 10px; }
+  .mc-journey li { width: 62px; }
+  .mc-journey li:not(:last-child)::after { width: 34px; }
+}
+@media (max-width: 700px), (pointer: coarse) {
+  .mc-explore-toggle, .mc-touch-controls { display: none; }
+  .mc-journey { top: max(78px, calc(env(safe-area-inset-top) + 62px)); left: 16px; right: 16px; padding: 11px 6px; }
+  .mc-journey ol { width: 100%; }
+  .mc-journey li { flex: 1; width: auto; }
+  .mc-journey li:not(:last-child)::after { width: calc(100% - 28px); }
+  .mc-journey button { font-size: 8px; }
+  .mc-journey-dot { width: 24px; height: 24px; }
+  .mc-chapter-caption { bottom: 103px; }
+  .mc-chapter-caption button { font-size: 12px; line-height: 1.6; }
+  .mc-gesture-hint { display: block; bottom: max(32px, env(safe-area-inset-bottom)); left: 20px; transform: none; font-size: 9px; }
+}
