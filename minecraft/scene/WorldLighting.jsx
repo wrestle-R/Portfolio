@@ -6,6 +6,7 @@ export default function WorldLighting({ preset }) {
     () => ({
       zenith: { value: new Color(preset.sky) },
       horizon: { value: new Color(preset.horizon) },
+      cloudStrength: { value: preset.stars ? 0.08 : 0.55 },
     }),
     [preset],
   );
@@ -35,7 +36,26 @@ export default function WorldLighting({ preset }) {
           depthWrite={false}
           uniforms={skyUniforms}
           vertexShader={`varying vec3 direction; void main(){direction=position;gl_Position=projectionMatrix*modelViewMatrix*vec4(position,1.);}`}
-          fragmentShader={`uniform vec3 zenith; uniform vec3 horizon; varying vec3 direction; void main(){float t=smoothstep(-.1,.65,normalize(direction).y);gl_FragColor=vec4(mix(horizon,zenith,t),1.);\n#include <tonemapping_fragment>\n#include <colorspace_fragment> }`}
+          fragmentShader={`
+            uniform vec3 zenith; uniform vec3 horizon; uniform float cloudStrength;
+            varying vec3 direction;
+            float hash(vec2 p) { return fract(sin(dot(p,vec2(127.1,311.7)))*43758.5453); }
+            float noise(vec2 p) {
+              vec2 i=floor(p), f=fract(p); f=f*f*(3.-2.*f);
+              return mix(mix(hash(i),hash(i+vec2(1,0)),f.x),mix(hash(i+vec2(0,1)),hash(i+vec2(1,1)),f.x),f.y);
+            }
+            void main(){
+              vec3 d=normalize(direction);
+              float t=smoothstep(-.1,.65,d.y);
+              vec3 sky=mix(horizon,zenith,t);
+              vec2 p=d.xz/max(d.y+.25,.1)*2.6;
+              float n=noise(p)*.55+noise(p*2.1)*.28+noise(p*4.3)*.17;
+              float clouds=smoothstep(.48,.72,n)*smoothstep(.02,.3,d.y)*cloudStrength;
+              gl_FragColor=vec4(mix(sky,horizon*1.12,clouds),1.);
+              #include <tonemapping_fragment>
+              #include <colorspace_fragment>
+            }`}
+
         />
       </mesh>
       {preset.stars && (
@@ -56,6 +76,11 @@ export default function WorldLighting({ preset }) {
       )}
       <hemisphereLight
         args={[preset.ambientSky, preset.ground, preset.ambient]}
+      />
+      <directionalLight
+        position={[0, 10, 20]}
+        color={preset.sun}
+        intensity={preset.ambient * 0.3}
       />
       <directionalLight
         position={preset.sunPosition}

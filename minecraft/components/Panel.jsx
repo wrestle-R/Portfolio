@@ -3,9 +3,8 @@ import PortfolioContent from "./PortfolioContent";
 const titles = {
   about: "Hello, I’m Russel.",
   projects: "Selected work.",
-  tools: "Tools of the trade",
   experience: "Learning by shipping.",
-  contact: "Let’s build something.",
+  contact: "Tools of the trade",
   help: "Make yourself at home.",
 };
 export default function Panel({ section, theme, onClose }) {

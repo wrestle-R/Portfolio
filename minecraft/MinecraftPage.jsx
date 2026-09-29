@@ -153,7 +153,7 @@ export default function MinecraftPage() {
               Take the house tour ↗
             </button>
           </div>
-          {["about", "projects", "tools", "experience", "contact"].map((section, i) => (
+          {["about", "projects", "experience", "contact"].map((section, i) => (
             <section
               className="mc-static-section"
               key={section}

@@ -665,3 +665,8 @@
   .mc-chapter-caption button { font-size: 12px; line-height: 1.6; }
   .mc-gesture-hint { display: block; bottom: max(32px, env(safe-area-inset-bottom)); left: 20px; transform: none; font-size: 9px; }
 }
+
+/* Long tool names remain readable inside the scrollable details panel. */
+.mc-dialog { overflow-y: auto; overflow-x: hidden; }
+.mc-skills > div { min-width: 0; }
+.mc-skills p { overflow-wrap: anywhere; }

@@ -72,20 +72,18 @@ export default function PortfolioContent({ section, theme }) {
         </ol>
       </>
     );
-  if (section === "tools")
-    return (
-      <div className="mc-skills">
-        {portfolio.skills.map((skill) => (
-          <div key={skill.category}>
-            <h4>{skill.category}</h4>
-            <p>{skill.items.join(" · ")}</p>
-          </div>
-        ))}
-      </div>
-    );
   if (section === "contact")
     return (
       <div className="mc-contact-content">
+        <div className="mc-skills">
+          {portfolio.skills.map((skill) => (
+            <div key={skill.category}>
+              <h4>{skill.category}</h4>
+              <p>{skill.items.join(" · ")}</p>
+            </div>
+          ))}
+        </div>
+        <h3>Let’s build something.</h3>
         <p>
           Have an idea, a project, or something interesting to talk about? I’d
           love to hear it.

@@ -196,15 +196,6 @@ export default function HouseScene({
           onClick={() => openPanel(`project-${p.id}`)}
         />
       ))}
-      <DisplayBoard
-        controller={controller}
-        position={[5.7, 2.5, -10]}
-        rotation={[0, -Math.PI / 2, 0]}
-        title="Tools of the trade"
-        caption="THE WORKBENCH / LANGUAGES TO INFRASTRUCTURE"
-        kind="tools"
-        onClick={() => openPanel("tools")}
-      />
       {portfolio.experiences.map((e, i) => (
         <DisplayBoard
           controller={controller}

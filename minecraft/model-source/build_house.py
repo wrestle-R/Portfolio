@@ -123,8 +123,11 @@ for x in range(-7,7):
     fill(x,x,5,peak,-1,1,'spruce_planks')
     detail(x,peak+.5,-1.2,'deepslate_tile_slab',scale=(1,1,4.8),type='bottom')
     detail(x,peak+1,-1.2,'snow',scale=(1,1,4.8),layers='2')
+    detail(x,peak,3.0,'deepslate_bricks',scale=(1,.75,.65))
+    detail(x,peak+.75,3.0,'snow',scale=(1,1,.65),layers='2')
     # End-grain rafters give every stepped roof course depth.
-    detail(x+.12,peak+.12,2.65,'dark_oak_log',scale=(.76,.5,.6),axis='z')
+    detail(x+.12,peak-.5,2.85,'dark_oak_log',scale=(.76,.65,.8),axis='z')
+    detail(x+.15,peak-.46,3.6,'oak_trapdoor',scale=(.7,.7,.3),facing='south',half='bottom',open='true')
 # A continuous tie beam and king post make the gable read as architecture.
 detail(-6.8,5.45,2.9,'dark_oak_log',scale=(13.6,.45,.55),axis='x')
 detail(-.22,5.5,2.9,'dark_oak_log',scale=(.44,5.25,.5),axis='y')
@@ -137,10 +140,16 @@ for side in (-1,1):
     detail(side*3.55-.65,1.25,2.15,'stone_brick_slab',scale=(1.3,1,1.3),type='bottom')
     detail(side*4.25-.65,4.5,3.8,'dark_oak_log',scale=(1.3,.18,.25),axis='x')
 # A warm pendant sits above the broad parchment name plaque.
-detail(-.12,6.7,3.65,'iron_chain',scale=(.24,1.1,.24),axis='y')
-lantern(0,5.8,3.77,size=1.2)
+detail(-.3,10.75,2.9,'oak_trapdoor',scale=(.6,.6,.3),facing='south',half='bottom',open='true')
 detail(-2.95,3.3,3.65,'dark_oak_planks',scale=(5.9,2.1,.24))
 for x in (-2.2,2.2): detail(x-.08,5.3,3.8,'iron_chain',scale=(.16,.6,.16),axis='y')
+
+# Leaf clusters break up the straight planter edges and trail beside the plaque.
+for side in (-1,1):
+    for dx,dy,dz,size in ((0,0,0,.8),(.45,.18,.1,.65),(-.3,.25,.05,.6),(.75,-.3,.12,.5),(.65,-.8,.1,.45)):
+        detail(side*(2.6+dx)-size/2,5.35+dy,3.45+dz,'azalea_leaves',scale=(size,size,.7),persistent='true',distance='1')
+    for y in (1.5,2.1,2.7):
+        detail(side*5.05-.5,y,2.85,'spruce_stairs',scale=(1, .6, .9),facing='north',half='top',shape='straight')
 
 # Half-unit treads retain the shared navigation slope. Real stair models give
 # the white center strip a continuous riser rather than disconnected thin lines.
@@ -174,7 +183,9 @@ for x,z in ((-8,2),(7,2)):
             for dz in range(-r,r+1):
                 if abs(dx)==r and abs(dz)==r: continue
                 put(x+dx,y,z+dz,'spruce_leaves',persistent='true',distance='1')
-                if y==9: put(x+dx,y+1,z+dz,'snow',layers='1')
+                if y in (7,9): detail(x+dx,y+.93,z+dz,'snow',layers='1')
+    for dx,dy,dz in ((-1.8,7,1.2),(1.2,8,1.4),(.3,9,1),(-.6,8.5,1.3)):
+        detail(x+dx,dy,z+dz,'azalea_leaves',scale=(1.3,1.2,1.1),persistent='true',distance='1')
 # A restrained teal-and-cherry feature at the end of the corridor.
 for x in (-5,4):
     put(x,0,-28,'dark_oak_planks')
@@ -182,8 +193,6 @@ for x in (-5,4):
     put(x,2,-28,'cherry_leaves',persistent='true',distance='1')
 for x in range(-3,3): put(x,-1,-28,'warped_planks')
 for x in (-2,1): lantern(x+.5,.1,-28,soul=True,hanging=False)
-# Central workbench exhibit, opposite the project gallery.
-detail(5.72,.65,-12.35,'dark_oak_planks',scale=(.25,3.7,4.7))
 
 # Frame backings and the connected in-world experience timeline.
 for z in (-5,-10,-15,-20,-25):
