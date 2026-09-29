@@ -141,7 +141,6 @@ export default function HouseScene({
   onReady,
   onFailure,
   openPanel,
-  theme,
 }) {
   const { period, preset } = useDaylight();
   const [visible, setVisible] = useState(!document.hidden);
@@ -192,21 +191,21 @@ export default function HouseScene({
           rotation={[0, Math.PI / 2, 0]}
           title={p.name}
           caption={`0${i + 1} / SELECTED WORK`}
-          image={preview(p, theme)}
+          image={preview(p, "dark")}
           onClick={() => openPanel(`project-${p.id}`)}
         />
       ))}
       <group position={[5.63, 1.32, -15.5]}>
         <mesh position={[0, 0, -5]}>
-          <boxGeometry args={[0.055, 0.06, 10]} />
-          <meshStandardMaterial color="#c6ad78" roughness={0.8} />
+          <boxGeometry args={[0.075, 0.12, 10]} />
+          <meshBasicMaterial color="#d8b776" toneMapped={false} />
         </mesh>
         {[0, -5, -10].map((z, index) => (
           <group key={z} position={[0, 0, z]}>
-            <mesh position={[0, 0.25, 0]}><boxGeometry args={[0.055, 0.5, 0.055]} /><meshStandardMaterial color="#c6ad78" /></mesh>
-            <mesh><boxGeometry args={[0.09, 0.23, 0.23]} /><meshStandardMaterial color="#e8d5a4" /></mesh>
+            <mesh position={[0, 0.25, 0]}><boxGeometry args={[0.075, 0.5, 0.075]} /><meshBasicMaterial color="#d8b776" toneMapped={false} /></mesh>
+            <mesh><boxGeometry args={[0.12, 0.34, 0.34]} /><meshBasicMaterial color="#f0c878" toneMapped={false} /></mesh>
             {index < 2 && <mesh position={[0, 0, -2.5]} rotation={[-Math.PI / 2, 0, 0]}>
-              <coneGeometry args={[0.19, 0.4, 3]} /><meshStandardMaterial color="#e8d5a4" />
+              <coneGeometry args={[0.34, 0.85, 3]} /><meshBasicMaterial color="#f0c878" toneMapped={false} />
             </mesh>}
           </group>
         ))}
@@ -218,7 +217,7 @@ export default function HouseScene({
           position={[5.7, 2.6, -15.5 - i * 5]}
           rotation={[0, -Math.PI / 2, 0]}
           title={e.company}
-          logo={e.logo}
+          logo={e.logoDark}
           subtitle={e.role}
           kind="experience"
           caption={`0${i + 1} / ${e.period}`}

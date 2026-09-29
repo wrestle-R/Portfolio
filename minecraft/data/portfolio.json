@@ -103,7 +103,8 @@
         "IoT"
       ],
       "id": "experience-1",
-      "logo": "/Techstack/technode_white_bg.png"
+      "logo": "/Techstack/technode_white_bg.png",
+      "logoDark": "/Techstack/technode_logo.png"
     },
     {
       "company": "NetstellarIOT Solutions",
@@ -118,7 +119,8 @@
         "IoT"
       ],
       "id": "experience-2",
-      "logo": "/Techstack/netstellar-iot-light.svg"
+      "logo": "/Techstack/netstellar-iot-light.svg",
+      "logoDark": "/Techstack/netstellar-iot-dark.svg"
     },
     {
       "company": "Technode",
@@ -135,7 +137,8 @@
         "Hostinger"
       ],
       "id": "experience-3",
-      "logo": "/Techstack/technode_white_bg.png"
+      "logo": "/Techstack/technode_white_bg.png",
+      "logoDark": "/Techstack/technode_logo.png"
     }
   ],
   "skills": [

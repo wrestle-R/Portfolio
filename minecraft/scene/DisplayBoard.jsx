@@ -35,7 +35,7 @@ export default function DisplayBoard({
       if (cancelled) return;
       const w = 1280,
         h = canvas.height / 2;
-      ctx.fillStyle = entrance ? "#e8d9b5" : "#f2eee4";
+      ctx.fillStyle = entrance ? "#e8d9b5" : "#1d2926";
       ctx.fillRect(0, 0, w, h);
       // Understated inlay; all text remains inside a generous safe area.
       ctx.strokeStyle = "#716449";
@@ -56,10 +56,10 @@ export default function DisplayBoard({
         ctx.font = "22px Monocraft, monospace";
         ctx.fillText("EXPLORE     BUILD     LEARN", w / 2, 352);
       } else if (image) {
-        ctx.fillStyle = "#7c7567";
+        ctx.fillStyle = "#b9ad91";
         ctx.font = "24px Monocraft, monospace";
         ctx.fillText(caption, 65, 85);
-        ctx.fillStyle = "#e4dfd4";
+        ctx.fillStyle = "#111a19";
         ctx.fillRect(60, 125, 1160, 600);
         if (picture) {
           const scale = Math.min(1160 / picture.width, 600 / picture.height);
@@ -73,14 +73,14 @@ export default function DisplayBoard({
             ih,
           );
         }
-        ctx.fillStyle = "#273c33";
+        ctx.fillStyle = "#eee7d7";
         ctx.font = "600 58px Inter, sans-serif";
         ctx.fillText(title, 65, 820, 1090);
-        ctx.fillStyle = "#6d7569";
+        ctx.fillStyle = "#b5bdaf";
         ctx.font = "25px Monocraft, monospace";
         ctx.fillText("Explore project", 65, 903);
         ctx.textAlign = "right";
-        ctx.fillStyle = "#47624d";
+        ctx.fillStyle = "#c9ae7c";
         ctx.font = "42px Monocraft, monospace";
         ctx.fillText("↗", 1200, 906);
       } else {
@@ -89,23 +89,26 @@ export default function DisplayBoard({
           const scale = Math.min(450 / picture.width, 100 / picture.height);
           ctx.drawImage(picture, (w - picture.width * scale) / 2, 64, picture.width * scale, picture.height * scale);
         }
-        ctx.fillStyle = "#80725b";
+        ctx.fillStyle = "#c9ae7c";
         ctx.font = "26px Monocraft, monospace";
         ctx.fillText(caption.toUpperCase(), w / 2, logo ? 225 : 135, 1100);
-        ctx.fillStyle = "#293e33";
+        ctx.fillStyle = "#eee7d7";
         ctx.font = "600 57px Inter, sans-serif";
         ctx.fillText(title, w / 2, logo ? 325 : 306, 1110);
         if (subtitle) {
-          ctx.fillStyle = "#6b7167";
+          ctx.fillStyle = "#b5bdaf";
           ctx.font = "30px Inter, sans-serif";
           ctx.fillText(subtitle, w / 2, 392, 1110);
         }
-        ctx.strokeStyle = "#d6cebd";
-        ctx.lineWidth = 2;
-        ctx.beginPath(); ctx.moveTo(90, 447); ctx.lineTo(1190, 447); ctx.stroke();
-        ctx.fillStyle = "#4c614c";
-        ctx.font = "29px Inter, sans-serif";
-        ctx.fillText("Read the story  ↗", w / 2, 518);
+        if (kind !== "experience") {
+          ctx.strokeStyle = "#475248";
+          ctx.lineWidth = 2;
+          ctx.beginPath(); ctx.moveTo(90, 447); ctx.lineTo(1190, 447); ctx.stroke();
+          ctx.fillStyle = "#c9ae7c";
+          ctx.font = "29px Inter, sans-serif";
+          ctx.fillText("Read the story  ↗", w / 2, 518);
+        }
+
       }
       texture.needsUpdate = true;
       setMap(texture);
@@ -130,7 +133,7 @@ export default function DisplayBoard({
         picture.onerror = null;
       }
     };
-  }, [title, caption, image, logo, subtitle, entrance]);
+  }, [title, caption, image, logo, subtitle, entrance, kind]);
   return (
     <group position={position} rotation={rotation}>
       <mesh position={[0, 0, -0.06]} castShadow receiveShadow>
