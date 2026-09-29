@@ -31,10 +31,20 @@ export default function CameraRig({
       host = canvas.parentElement;
     canvas.setAttribute(
       "aria-label",
-      "Interactive Minecraft house. Scroll to tour, drag to look, or use Page Up and Page Down. Enter opens chapter details.",
+      "Interactive Minecraft house. Scroll to tour, move your mouse to look on desktop, or use Page Up and Page Down. Enter opens chapter details.",
     );
     canvas.tabIndex = 0;
+    const desktopPointer = window.matchMedia("(min-width: 701px) and (hover: hover) and (pointer: fine)");
+    let lastMouse = null;
+    const leave = () => { lastMouse = null; };
+    const look = (dx, dy) => {
+      const limit = controller.mode === "tour" ? 0.96 : Infinity;
+      const pitchLimit = controller.mode === "tour" ? 0.44 : 1.3;
+      controller.yaw = Math.max(-limit, Math.min(limit, controller.yaw - dx * 0.003));
+      controller.pitch = Math.max(-pitchLimit, Math.min(pitchLimit, controller.pitch - dy * 0.003));
+    };
     const reset = () => {
+      lastMouse = null;
       controller.keys.clear();
       controller.drag = null;
     };
@@ -72,8 +82,17 @@ export default function CameraRig({
       canvas.setPointerCapture(e.pointerId);
     };
     const move = (e) => {
+      if (controller.paused) {
+        lastMouse = null;
+        return;
+      }
+      const mouseLook = e.pointerType === "mouse" && desktopPointer.matches;
+      if (mouseLook) {
+        if (lastMouse) look(e.clientX - lastMouse.x, e.clientY - lastMouse.y);
+        lastMouse = { x: e.clientX, y: e.clientY };
+      }
       const d = controller.drag;
-      if (!d || d.id !== e.pointerId || controller.paused) return;
+      if (!d || d.id !== e.pointerId) return;
       const dx = e.clientX - d.x,
         dy = e.clientY - d.y;
       if (Math.hypot(e.clientX - d.startX, e.clientY - d.startY) > 8)
@@ -83,19 +102,7 @@ export default function CameraRig({
           0,
           Math.min(1, controller.target - dy / (window.innerHeight * 3)),
         );
-      else {
-        const limit = controller.mode === "tour" ? 0.96 : Infinity;
-        controller.yaw = Math.max(
-          -limit,
-          Math.min(limit, controller.yaw - dx * 0.003),
-        );
-        controller.pitch = Math.max(
-          -1.3,
-          Math.min(1.3, controller.pitch - dy * 0.003),
-        );
-        if (controller.mode === "tour")
-          controller.pitch = Math.max(-0.44, Math.min(0.44, controller.pitch));
-      }
+      else if (!mouseLook) look(dx, dy);
       d.x = e.clientX;
       d.y = e.clientY;
     };
@@ -157,6 +164,7 @@ export default function CameraRig({
     canvas.addEventListener("pointerdown", down);
     canvas.addEventListener("pointermove", move);
     canvas.addEventListener("pointerup", up);
+    canvas.addEventListener("pointerleave", leave);
     canvas.addEventListener("pointercancel", reset);
     canvas.addEventListener("keydown", key);
     window.addEventListener("keyup", keyup);
@@ -169,6 +177,7 @@ export default function CameraRig({
       canvas.removeEventListener("pointerdown", down);
       canvas.removeEventListener("pointermove", move);
       canvas.removeEventListener("pointerup", up);
+      canvas.removeEventListener("pointerleave", leave);
       canvas.removeEventListener("pointercancel", reset);
       canvas.removeEventListener("keydown", key);
       window.removeEventListener("keyup", keyup);
@@ -252,6 +261,7 @@ export default function CameraRig({
         progress: +c.progress.toFixed(3),
         position: camera.position.toArray().map((v) => +v.toFixed(2)),
         mode: c.mode,
+        look: [+c.yaw.toFixed(3), +c.pitch.toFixed(3)],
       });
     }
   });

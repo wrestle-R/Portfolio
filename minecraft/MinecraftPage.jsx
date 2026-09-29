@@ -202,7 +202,7 @@ export default function MinecraftPage() {
             aria-pressed={mode === "explore"}
             title={
               mode === "tour"
-                ? "Walk freely with W A S D; drag to look"
+                ? "Walk freely with W A S D; move your mouse to look"
                 : "Return to your saved scroll position"
             }
           >
@@ -234,7 +234,7 @@ export default function MinecraftPage() {
             </button>
           </div>
           <p className="mc-gesture-hint">
-            <span aria-hidden="true">↓</span> {mobile ? "Swipe up to follow the story" : "Scroll to follow the story · Drag to look"}
+            <span aria-hidden="true">↓</span> {mobile ? "Swipe up to follow the story" : "Scroll to follow the story · Move mouse to look"}
           </p>
           <AmbientMusic />
           <span className="mc-sr-only" aria-live="polite">

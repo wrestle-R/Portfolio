@@ -116,7 +116,7 @@ export default function PortfolioContent({ section, theme }) {
         <dl>
           <dt>Guided tour</dt>
           <dd>
-            Scroll or swipe vertically to move. Drag the scene to look around.
+            Scroll or swipe vertically to move. Move your mouse to look around on desktop.
             On phones, swipe up to follow the story.
           </dd>
           <dt>Keyboard</dt>
@@ -127,7 +127,7 @@ export default function PortfolioContent({ section, theme }) {
           </dd>
           <dt>Explore</dt>
           <dd>
-            W / A / S / D walk. Drag or use arrows to look. Free exploration is available on desktop. Stairs and edges keep you
+            W / A / S / D walk. Move your mouse or use arrows to look. Free exploration is available on desktop. Stairs and edges keep you
             inside the house.
           </dd>
           <dt>Back to tour</dt>

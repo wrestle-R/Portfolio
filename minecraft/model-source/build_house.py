@@ -175,16 +175,16 @@ for i in range(24):
 # Landing's centerline continues to the first step.
 for z in range(1,4): detail(-.5,-1,z,'smooth_quartz')
 
-# Tall trunks and small irregular crowns, matching the two trees above the stairs.
-for x,z in ((-8,2),(7,2)):
-    fill(x,x,0,7,z,z,'dark_oak_log',axis='y')
-    for y,r in ((6,2),(7,2),(8,1),(9,1)):
+# Taller alpine trees sit behind the gateway, leaving the facade unobstructed.
+for x,z in ((-8,-4),(7,-4)):
+    fill(x,x,0,17,z,z,'dark_oak_log',axis='y')
+    for y,r in ((10,2),(11,2),(12,2),(13,2),(14,2),(15,2),(16,1),(17,1),(18,1),(19,0)):
         for dx in range(-r,r+1):
             for dz in range(-r,r+1):
-                if abs(dx)==r and abs(dz)==r: continue
+                if r > 0 and abs(dx)==r and abs(dz)==r: continue
                 put(x+dx,y,z+dz,'spruce_leaves',persistent='true',distance='1')
-                if y in (7,9): detail(x+dx,y+.93,z+dz,'snow',layers='1')
-    for dx,dy,dz in ((-1.8,7,1.2),(1.2,8,1.4),(.3,9,1),(-.6,8.5,1.3)):
+                if y in (11,13,15,18,19): detail(x+dx,y+.93,z+dz,'snow',layers='1')
+    for dx,dy,dz in ((-1.8,13,1.2),(1.2,15,1.4),(.3,18,1),(-.6,16.5,1.3)):
         detail(x+dx,dy,z+dz,'azalea_leaves',scale=(1.3,1.2,1.1),persistent='true',distance='1')
 # A restrained teal-and-cherry feature at the end of the corridor.
 for x in (-5,4):
