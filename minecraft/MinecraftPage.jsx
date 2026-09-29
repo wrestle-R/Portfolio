@@ -20,6 +20,9 @@ const HouseScene = lazy(() => import("./scene/HouseScene"));
 export default function MinecraftPage() {
   const { theme } = useTheme();
   const controller = useRef(createController()).current;
+  const [locked, setLocked] = useState(false);
+  const [lockError, setLockError] = useState("");
+  const [sensitivity, setSensitivity] = useState(1.2);
   const reloadOnRetry = useRef(false);
   const [staticView, setStaticView] = useState(
     () => window.matchMedia("(prefers-reduced-motion: reduce)").matches,
@@ -36,6 +39,7 @@ export default function MinecraftPage() {
     const update = () => {
       setMobile(query.matches);
       if (query.matches) {
+        if (document.pointerLockElement) document.exitPointerLock();
         controller.mode = "tour";
         controller.lookTouch = false;
         controller.keys.clear();
@@ -46,6 +50,41 @@ export default function MinecraftPage() {
     query.addEventListener("change", update);
     return () => query.removeEventListener("change", update);
   }, [controller]);
+  useEffect(() => {
+    const update = () => {
+      const active = !!document.pointerLockElement;
+      controller.locked = active;
+      setLocked(active);
+      controller.keys.clear();
+      controller.drag = null;
+      if (!active) {
+        controller.mode = "tour";
+        setMode("tour");
+      }
+    };
+    const failed = () => setLockError("Mouse capture was unavailable. Click to try again, or return to the guided path.");
+    document.addEventListener("pointerlockchange", update);
+    document.addEventListener("pointerlockerror", failed);
+    return () => {
+      document.removeEventListener("pointerlockchange", update);
+      document.removeEventListener("pointerlockerror", failed);
+      if (document.pointerLockElement) document.exitPointerLock();
+    };
+  }, [controller]);
+  async function captureMouse() {
+    const canvas = document.querySelector(".mc-scene canvas");
+    setLockError("");
+    if (!canvas?.requestPointerLock) {
+      setLockError("This browser does not support mouse capture. Use the guided path instead.");
+      return;
+    }
+    try {
+      canvas.focus({ preventScroll: true });
+      await canvas.requestPointerLock();
+    } catch {
+      setLockError("Mouse capture was unavailable. Click to try again, or return to the guided path.");
+    }
+  }
   const readyCallback = useCallback(() => setReady(true), []);
   const failure = useCallback((message, reload = false) => {
     reloadOnRetry.current = reload;
@@ -57,6 +96,7 @@ export default function MinecraftPage() {
       controller.keys.clear();
       controller.drag = null;
       controller.paused = true;
+      if (document.pointerLockElement) document.exitPointerLock();
       setPanel(section);
     },
     [controller],
@@ -100,6 +140,7 @@ export default function MinecraftPage() {
     return () => clearTimeout(timeout);
   }, [staticView, ready, attempt, failure]);
   function changeMode(next) {
+    if (next === "tour" && document.pointerLockElement) document.exitPointerLock();
     controller.keys.clear();
     controller.drag = null;
     controller.mode = next;
@@ -117,7 +158,7 @@ export default function MinecraftPage() {
   }
   return (
     <main
-      className={`mc-root ${staticView ? "mc-is-static" : ""}`}
+      className={`mc-root ${staticView ? "mc-is-static" : ""} ${locked ? "mc-pointer-locked" : ""}`}
       data-minecraft-theme={theme}
     >
       <Link to="/" className="mc-back">
@@ -208,6 +249,19 @@ export default function MinecraftPage() {
           >
             {mode === "tour" ? "Explore freely" : "Back to guided path"}
           </button>}
+          {!mobile && mode === "explore" && !locked && !panel && (
+            <div className="mc-explore-start">
+              <span className="mc-eyebrow">FREE EXPLORATION</span>
+              <h2>Make yourself at home.</h2>
+              <p>W A S D to walk. Move your mouse to look.<br />Aim at a board and click to read. Press Esc to return.</p>
+              <label htmlFor="mc-sensitivity">Mouse sensitivity <span>{sensitivity.toFixed(1)}</span></label>
+              <input id="mc-sensitivity" type="range" min="0.4" max="2" step="0.1" value={sensitivity}
+                onChange={(event) => { const value = Number(event.target.value); setSensitivity(value); controller.sensitivity = value / 1000; }} />
+              <button className="mc-primary" onClick={captureMouse}>Click to explore</button>
+              {lockError && <p role="alert">{lockError}</p>}
+            </div>
+          )}
+          {locked && <div className="mc-crosshair" aria-hidden="true">+</div>}
           <nav className="mc-journey" aria-label="Portfolio timeline">
             <ol>
               {chapters.map((stop, index) => (
@@ -234,7 +288,7 @@ export default function MinecraftPage() {
             </button>
           </div>
           <p className="mc-gesture-hint">
-            <span aria-hidden="true">↓</span> {mobile ? "Swipe up to follow the story" : mode === "explore" ? "W A S D to walk · Move mouse to look" : "Scroll to follow the story · Drag to look"}
+            <span aria-hidden="true">↓</span> {mobile ? "Swipe up to follow the story" : mode === "explore" ? "W A S D to walk · Click to read · Esc to return" : "Scroll to follow the story · Drag to look"}
           </p>
           <AmbientMusic />
           <span className="mc-sr-only" aria-live="polite">

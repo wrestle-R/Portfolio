@@ -1,6 +1,6 @@
 import { useEffect, useRef } from "react";
 import { useFrame, useThree } from "@react-three/fiber";
-import { Euler, Quaternion, Vector3 } from "three";
+import { Euler, Quaternion, Vector3, Raycaster } from "three";
 import { chapterAt, chapters, sampleRail } from "../data/layout";
 import { floorAt, moveWalker } from "./navigation";
 
@@ -11,7 +11,7 @@ export default function CameraRig({
   onFailure,
   openPanel,
 }) {
-  const { camera, gl, size } = useThree();
+  const { camera, gl, size, scene } = useThree();
   useEffect(() => {
     camera.fov = size.width < 700 ? 73 : 58;
     camera.updateProjectionMatrix();
@@ -34,17 +34,13 @@ export default function CameraRig({
       "Interactive Minecraft house. Scroll to tour and drag to look; in Explore, move your mouse to look, or use Page Up and Page Down. Enter opens chapter details.",
     );
     canvas.tabIndex = 0;
-    const desktopPointer = window.matchMedia("(min-width: 701px) and (hover: hover) and (pointer: fine)");
-    let lastMouse = null;
-    const leave = () => { lastMouse = null; };
     const look = (dx, dy) => {
       const limit = controller.mode === "tour" ? 0.96 : Infinity;
       const pitchLimit = controller.mode === "tour" ? 0.44 : 1.3;
-      controller.yaw = Math.max(-limit, Math.min(limit, controller.yaw - dx * 0.0012));
-      controller.pitch = Math.max(-pitchLimit, Math.min(pitchLimit, controller.pitch - dy * 0.0012));
+      controller.yaw = Math.max(-limit, Math.min(limit, controller.yaw - dx * controller.sensitivity));
+      controller.pitch = Math.max(-pitchLimit, Math.min(pitchLimit, controller.pitch - dy * controller.sensitivity));
     };
     const reset = () => {
-      lastMouse = null;
       controller.keys.clear();
       controller.drag = null;
     };
@@ -68,7 +64,7 @@ export default function CameraRig({
         );
     };
     const down = (e) => {
-      if (controller.paused || e.button > 0) return;
+      if (controller.paused || controller.mode === "explore" || e.button > 0) return;
       canvas.focus({ preventScroll: true });
       controller.moved = false;
       controller.drag = {
@@ -82,15 +78,7 @@ export default function CameraRig({
       canvas.setPointerCapture(e.pointerId);
     };
     const move = (e) => {
-      if (controller.paused) {
-        lastMouse = null;
-        return;
-      }
-      const mouseLook = controller.mode === "explore" && e.pointerType === "mouse" && desktopPointer.matches;
-      if (mouseLook) {
-        if (lastMouse) look(e.clientX - lastMouse.x, e.clientY - lastMouse.y);
-        lastMouse = { x: e.clientX, y: e.clientY };
-      } else lastMouse = null;
+      if (controller.paused || controller.mode === "explore") return;
       const d = controller.drag;
       if (!d || d.id !== e.pointerId) return;
       const dx = e.clientX - d.x,
@@ -102,19 +90,34 @@ export default function CameraRig({
           0,
           Math.min(1, controller.target - dy / (window.innerHeight * 3)),
         );
-      else if (!mouseLook) look(dx, dy);
+      else look(dx, dy);
       d.x = e.clientX;
       d.y = e.clientY;
+    };
+    const lockedMove = (event) => {
+      if (document.pointerLockElement === canvas && controller.mode === "explore" && !controller.paused)
+        look(event.movementX, event.movementY);
+    };
+    const raycaster = new Raycaster();
+    const activate = () => {
+      raycaster.setFromCamera({ x: 0, y: 0 }, camera);
+      const hit = raycaster.intersectObjects(scene.children, true)[0];
+      hit?.object.userData.onActivate?.();
+    };
+    const lockedClick = (event) => {
+      if (event.button === 0 && controller.locked && !controller.paused) activate();
     };
     const up = () => {
       controller.drag = null;
     };
     const key = (e) => {
-      if (controller.paused || e.target !== canvas) return;
+      if (controller.paused || e.target !== canvas || (controller.mode === "explore" && !controller.locked)) return;
       const k = e.key.toLowerCase();
+      if (k === "escape" && controller.locked) { document.exitPointerLock(); return; }
       if (k === "enter") {
         e.preventDefault();
-        openPanel(chapters[Math.max(1, chapterAt(controller.progress))].id);
+        if (controller.locked) activate();
+        else openPanel(chapters[Math.max(1, chapterAt(controller.progress))].id);
         return;
       }
       if (
@@ -164,7 +167,8 @@ export default function CameraRig({
     canvas.addEventListener("pointerdown", down);
     canvas.addEventListener("pointermove", move);
     canvas.addEventListener("pointerup", up);
-    canvas.addEventListener("pointerleave", leave);
+    document.addEventListener("mousemove", lockedMove);
+    canvas.addEventListener("click", lockedClick);
     canvas.addEventListener("pointercancel", reset);
     canvas.addEventListener("keydown", key);
     window.addEventListener("keyup", keyup);
@@ -177,7 +181,8 @@ export default function CameraRig({
       canvas.removeEventListener("pointerdown", down);
       canvas.removeEventListener("pointermove", move);
       canvas.removeEventListener("pointerup", up);
-      canvas.removeEventListener("pointerleave", leave);
+      document.removeEventListener("mousemove", lockedMove);
+      canvas.removeEventListener("click", lockedClick);
       canvas.removeEventListener("pointercancel", reset);
       canvas.removeEventListener("keydown", key);
       window.removeEventListener("keyup", keyup);
@@ -185,7 +190,7 @@ export default function CameraRig({
       document.removeEventListener("visibilitychange", reset);
       canvas.removeEventListener("webglcontextlost", lost);
     };
-  }, [camera, gl, controller, onFailure, openPanel]);
+  }, [camera, gl, scene, controller, onFailure, openPanel]);
   useFrame((state, delta) => {
     const s = scratch.current,
       c = controller;
@@ -262,6 +267,8 @@ export default function CameraRig({
         position: camera.position.toArray().map((v) => +v.toFixed(2)),
         mode: c.mode,
         look: [+c.yaw.toFixed(3), +c.pitch.toFixed(3)],
+        locked: c.locked,
+        pixelRatio: gl.getPixelRatio(),
       });
     }
   });

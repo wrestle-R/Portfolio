@@ -43,16 +43,17 @@ export default function PortfolioContent({ section, theme }) {
         ))}
       </div>
     );
-  if (section === "experience")
+  if (section === "experience" || section.startsWith("experience-"))
     return (
       <>
         <ol className="mc-experiences" aria-label="Experience timeline">
-          {portfolio.experiences.map((e, i) => (
+          {portfolio.experiences.filter((e) => section === "experience" || e.id === section).map((e) => (
             <li className="mc-experience-step" key={`${e.company}-${e.period}`}>
               <span className="mc-timeline-node" aria-hidden="true">
-                0{i + 1}
+                0{portfolio.experiences.indexOf(e) + 1}
               </span>
               <article>
+                <img className="mc-company-logo" src={e.logo} alt={`${e.company} logo`} />
                 <span className="mc-eyebrow">{e.period}</span>
                 <h3>{e.company}</h3>
                 <p className="mc-role">{e.role} · Intern</p>
@@ -127,7 +128,7 @@ export default function PortfolioContent({ section, theme }) {
           </dd>
           <dt>Explore</dt>
           <dd>
-            W / A / S / D walk. Move your mouse or use arrows to look. Free exploration is available on desktop. Stairs and edges keep you
+            Click “Click to explore” to capture your mouse. W / A / S / D walk; move your mouse to look and aim at boards to read. Escape releases the mouse and returns to the guided path. Free exploration is available on desktop. Stairs and edges keep you
             inside the house.
           </dd>
           <dt>Back to tour</dt>

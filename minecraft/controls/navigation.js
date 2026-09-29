@@ -35,6 +35,8 @@ export function createController() {
     pitch: 0,
     mode: "tour",
     paused: false,
+    locked: false,
+    sensitivity: 0.0012,
     lookTouch: false,
     keys: new Set(),
     drag: null,

@@ -1,4 +1,5 @@
 import { useEffect, useRef } from "react";
+import portfolio from "../data/content";
 import PortfolioContent from "./PortfolioContent";
 const descriptions = {
   about: "A little about the person behind this world.",
@@ -16,6 +17,7 @@ const titles = {
 };
 export default function Panel({ section, theme, onClose }) {
   const ref = useRef(null);
+  const experience = portfolio.experiences.find((item) => item.id === section);
   useEffect(() => {
     const previous = document.activeElement,
       dialog = ref.current;
@@ -56,9 +58,9 @@ export default function Panel({ section, theme, onClose }) {
       </div>
       <div className="mc-panel-body">
         <header className="mc-panel-intro">
-          <span className="mc-eyebrow">{section.startsWith("project-") ? "SELECTED BUILD" : section === "contact" ? "THE WORKBENCH" : section.toUpperCase()}</span>
-          <h2 id="mc-panel-title">{titles[section] || "Behind the build."}</h2>
-          <p>{descriptions[section] || "A closer look at the idea, the tools, and the finished product."}</p>
+          <span className="mc-eyebrow">{experience ? "EXPERIENCE / FIELD NOTES" : section.startsWith("project-") ? "SELECTED BUILD" : section === "contact" ? "THE WORKBENCH" : section.toUpperCase()}</span>
+          <h2 id="mc-panel-title">{experience?.company || titles[section] || "Behind the build."}</h2>
+          <p>{experience ? `${experience.period} · ${experience.role}` : descriptions[section] || "A closer look at the idea, the tools, and the finished product."}</p>
         </header>
         <PortfolioContent section={section} theme={theme} />
       </div>

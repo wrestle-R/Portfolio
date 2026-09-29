@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { CanvasTexture, SRGBColorSpace, LinearFilter } from "three";
+import { CanvasTexture, SRGBColorSpace, LinearMipmapLinearFilter } from "three";
 
 export default function DisplayBoard({
   position,
@@ -7,6 +7,8 @@ export default function DisplayBoard({
   title,
   caption,
   image,
+  logo,
+  subtitle,
   onClick,
   controller,
   kind = "journal",
@@ -19,23 +21,26 @@ export default function DisplayBoard({
   useEffect(() => {
     let cancelled = false;
     const canvas = document.createElement("canvas");
-    canvas.width = 1280;
-    canvas.height = entrance ? 408 : image ? 980 : 600;
+    canvas.width = 2560;
+    canvas.height = (entrance ? 408 : image ? 980 : 600) * 2;
     const ctx = canvas.getContext("2d");
+    ctx.scale(2, 2);
+    ctx.imageSmoothingEnabled = true;
+    ctx.imageSmoothingQuality = "high";
     const texture = new CanvasTexture(canvas);
     texture.colorSpace = SRGBColorSpace;
-    texture.minFilter = LinearFilter;
-    texture.anisotropy = 4;
+    texture.minFilter = LinearMipmapLinearFilter;
+    texture.anisotropy = 8;
     function paint(picture) {
       if (cancelled) return;
-      const w = canvas.width,
-        h = canvas.height;
-      ctx.fillStyle = entrance ? "#e8d9b5" : "#192526";
+      const w = 1280,
+        h = canvas.height / 2;
+      ctx.fillStyle = entrance ? "#e8d9b5" : "#f2eee4";
       ctx.fillRect(0, 0, w, h);
       // Understated inlay; all text remains inside a generous safe area.
       ctx.strokeStyle = "#716449";
       ctx.lineWidth = 3;
-      ctx.strokeRect(24, 24, w - 48, h - 48);
+      if (entrance) ctx.strokeRect(24, 24, w - 48, h - 48);
       ctx.textAlign = "left";
       if (entrance) {
         ctx.fillStyle = "#796343";
@@ -51,10 +56,10 @@ export default function DisplayBoard({
         ctx.font = "22px Monocraft, monospace";
         ctx.fillText("EXPLORE     BUILD     LEARN", w / 2, 352);
       } else if (image) {
-        ctx.fillStyle = "#ad9873";
+        ctx.fillStyle = "#7c7567";
         ctx.font = "24px Monocraft, monospace";
         ctx.fillText(caption, 65, 85);
-        ctx.fillStyle = "#0c1416";
+        ctx.fillStyle = "#e4dfd4";
         ctx.fillRect(60, 125, 1160, 600);
         if (picture) {
           const scale = Math.min(1160 / picture.width, 600 / picture.height);
@@ -68,60 +73,52 @@ export default function DisplayBoard({
             ih,
           );
         }
-        ctx.fillStyle = "#f2e5c9";
-        ctx.font = "52px Monocraft, monospace";
+        ctx.fillStyle = "#273c33";
+        ctx.font = "600 58px Inter, sans-serif";
         ctx.fillText(title, 65, 820, 1090);
-        ctx.fillStyle = "#bbaa88";
+        ctx.fillStyle = "#6d7569";
         ctx.font = "25px Monocraft, monospace";
         ctx.fillText("Explore project", 65, 903);
         ctx.textAlign = "right";
-        ctx.fillStyle = "#ddbf7e";
+        ctx.fillStyle = "#47624d";
         ctx.font = "42px Monocraft, monospace";
         ctx.fillText("↗", 1200, 906);
       } else {
         ctx.textAlign = "center";
-        ctx.fillStyle = "#b9a078";
-        ctx.font = `${entrance ? 22 : 30}px Monocraft, monospace`;
-        ctx.fillText(caption.toUpperCase(), w / 2, entrance ? 83 : 135, 1100);
-        ctx.fillStyle = "#f5e7c9";
-        ctx.font = `${entrance ? 66 : 54}px Monocraft, monospace`;
-        const words = title.split(" ");
-        const lines = [];
-        let line = "";
-        for (const word of words) {
-          const next = line ? line + " " + word : word;
-          if (ctx.measureText(next).width > 1080 && line) {
-            lines.push(line);
-            line = word;
-          } else line = next;
+        if (logo && picture) {
+          const scale = Math.min(450 / picture.width, 100 / picture.height);
+          ctx.drawImage(picture, (w - picture.width * scale) / 2, 64, picture.width * scale, picture.height * scale);
         }
-        lines.push(line);
-        const baseline = entrance ? 191 : lines.length > 1 ? 270 : 306;
-        lines.forEach((text, i) =>
-          ctx.fillText(text, w / 2, baseline + i * 74, 1100),
-        );
-        ctx.fillStyle = "#b9a078";
-        ctx.font = `${entrance ? 21 : 28}px Monocraft, monospace`;
-        ctx.fillText(
-          entrance
-            ? "DEVELOPER  /  BUILDER  /  EXPLORER"
-            : "Read the story  ↗",
-          w / 2,
-          entrance ? 262 : 485,
-        );
+        ctx.fillStyle = "#80725b";
+        ctx.font = "26px Monocraft, monospace";
+        ctx.fillText(caption.toUpperCase(), w / 2, logo ? 225 : 135, 1100);
+        ctx.fillStyle = "#293e33";
+        ctx.font = "600 57px Inter, sans-serif";
+        ctx.fillText(title, w / 2, logo ? 325 : 306, 1110);
+        if (subtitle) {
+          ctx.fillStyle = "#6b7167";
+          ctx.font = "30px Inter, sans-serif";
+          ctx.fillText(subtitle, w / 2, 392, 1110);
+        }
+        ctx.strokeStyle = "#d6cebd";
+        ctx.lineWidth = 2;
+        ctx.beginPath(); ctx.moveTo(90, 447); ctx.lineTo(1190, 447); ctx.stroke();
+        ctx.fillStyle = "#4c614c";
+        ctx.font = "29px Inter, sans-serif";
+        ctx.fillText("Read the story  ↗", w / 2, 518);
       }
       texture.needsUpdate = true;
       setMap(texture);
     }
     let picture;
-    if (image) {
+    if (image || logo) {
       picture = new Image();
       picture.onload = () => paint(picture);
       picture.onerror = () => paint();
-      picture.src = image;
+      picture.src = image || logo;
     }
     paint();
-    document.fonts.load("32px Monocraft").then(
+    Promise.all([document.fonts.load("32px Monocraft"), document.fonts.load("600 58px Inter")]).then(
       () => paint(picture?.complete && picture.naturalWidth ? picture : null),
       () => paint(),
     );
@@ -133,29 +130,29 @@ export default function DisplayBoard({
         picture.onerror = null;
       }
     };
-  }, [title, caption, image, entrance]);
+  }, [title, caption, image, logo, subtitle, entrance]);
   return (
     <group position={position} rotation={rotation}>
       <mesh position={[0, 0, -0.06]} castShadow receiveShadow>
-        <boxGeometry args={[width + 0.3, height + 0.3, 0.2]} />
-        <meshStandardMaterial color="#30241b" roughness={0.9} />
+        <boxGeometry args={[width + 0.16, height + 0.16, 0.16]} />
+        <meshStandardMaterial color="#292a25" roughness={0.9} />
       </mesh>
       {[
-        [-width / 2 - 0.055, 0, 0.11, height + 0.15],
-        [width / 2 + 0.055, 0, 0.11, height + 0.15],
-        [0, height / 2 + 0.055, width + 0.22, 0.11],
-        [0, -height / 2 - 0.055, width + 0.22, 0.11],
+        [-width / 2 - 0.055, 0, 0.055, height + 0.15],
+        [width / 2 + 0.055, 0, 0.055, height + 0.15],
+        [0, height / 2 + 0.055, width + 0.16, 0.055],
+        [0, -height / 2 - 0.055, width + 0.16, 0.055],
       ].map(([x, y, w, h], i) => (
         <mesh key={i} position={[x, y, 0.065]} castShadow>
           <boxGeometry args={[w, h, 0.12]} />
           <meshStandardMaterial
-            color={hovered ? "#c5a56b" : "#937244"}
+            color={entrance ? "#937244" : hovered ? "#6c7666" : "#3a4138"}
             roughness={0.65}
-            metalness={0.25}
+            metalness={0.05}
           />
         </mesh>
       ))}
-      {[-1, 1].flatMap((x) =>
+      {entrance && [-1, 1].flatMap((x) =>
         [-1, 1].map((y) => (
           <mesh
             key={`${x}-${y}`}
@@ -172,11 +169,12 @@ export default function DisplayBoard({
       )}
       <mesh
         position={[0, 0, 0.055]}
+        userData={{ onActivate: onClick }}
         onPointerOver={() => setHovered(true)}
         onPointerOut={() => setHovered(false)}
         onClick={(event) => {
           event.stopPropagation();
-          if (!controller.moved && !controller.paused) onClick();
+          if (!controller.locked && !controller.moved && !controller.paused) onClick();
         }}
       >
         <planeGeometry args={[width, height]} />

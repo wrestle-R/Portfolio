@@ -1,9 +1,9 @@
 {
   "source": "Minecraft 26.3 client block models/textures; authored house based on user recording",
   "blocks": 31734,
-  "detailModels": 494,
-  "materials": 26,
-  "triangles": 40900,
-  "bytes": 5437900,
-  "sha256": "d0f2c4221cb85fbddd3487d26fd60511b68aa6025638271a36a379f013108631"
+  "detailModels": 489,
+  "materials": 25,
+  "triangles": 40880,
+  "bytes": 5433648,
+  "sha256": "9e1a078e261a25620948acafaa81d465008c67555ec53675f9a041609a48e67b"
 }

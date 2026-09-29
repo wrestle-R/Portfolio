@@ -121,10 +121,14 @@ for x in range(-7,7):
     detail(x+.15,peak-.46,3.6,'oak_trapdoor',scale=(.7,.7,.3),facing='south',half='bottom',open='true')
 # A continuous tie beam and king post make the gable read as architecture.
 detail(-6.8,5.45,2.9,'dark_oak_log',scale=(13.6,.45,.55),axis='x')
-detail(-.22,5.5,2.9,'dark_oak_log',scale=(.44,5.25,.5),axis='y')
+detail(-.22,8.9,2.9,'dark_oak_log',scale=(.44,1.85,.5),axis='y')
+# Layered lintels and pendant corbels articulate the center of the gable.
+for y,half,depth in ((7.9,1.15,3.05),(7.45,1.7,3.2),(7.0,2.25,3.35),(6.55,2.65,3.5)):
+    detail(-half,y,depth,'dark_oak_log',scale=(half*2,.3,.5),axis='x')
+for x,length in ((-1.65,1.0),(-.8,1.45),(.8,1.45),(1.65,1.0)):
+    detail(x-.16,6.3,3.5,'dark_oak_log',scale=(.32,length,.45),axis='y')
+    detail(x-.25,6.2,3.48,'spruce_stairs',scale=(.5,.5,.55),facing='north',half='top',shape='straight')
 for side in (-1,1):
-    for step in range(5):
-        detail(side*(.7+step*.65)-.2,9.25-step*.65,2.95,'dark_oak_log',scale=(.5,.65,.48),axis='y')
     detail(side*3.5-.18,5.5,2.9,'dark_oak_log',scale=(.36,2.25,.5),axis='y')
     # Substantial stone feet and inset timber pillars frame the open doorway.
     detail(side*3.55-.55,0,2.25,'stone_bricks',scale=(1.1,1.3,1.1))
@@ -202,12 +206,10 @@ for x in (-2,1): lantern(x+.5,.1,-28,soul=True,hanging=False)
 
 # Frame backings and the connected in-world experience timeline.
 for z in (-5,-10,-15,-20,-25):
-    detail(-6.02,1.2,z-1.7,'dark_oak_planks',scale=(.3,2.6,3.4))
+    detail(-6.02,1.24,z-1.6,'polished_deepslate',scale=(.24,2.52,3.2))
 for z in (-15.5,-20.5,-25.5):
     detail(5.72,1.7,z-1.7,'dark_oak_planks',scale=(.3,1.8,3.4))
-    detail(5.65,1.1,z-.13,'gold_block',scale=(.12,.26,.26))
-    detail(5.68,1.3,z-.04,'dark_oak_log',scale=(.1,.4,.08),axis='y')
-detail(5.7,1.18,-25.5,'dark_oak_log',scale=(.1,.1,10),axis='z')
+
 
 # Bake Minecraft-style directional light and per-corner occlusion. A restrained
 # warm block-light field provides soft pools under lanterns without point-light cost.

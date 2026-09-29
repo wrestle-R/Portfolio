@@ -14,7 +14,13 @@
       "url": "https://github.com/wrestle-R/multi-codex/releases/latest",
       "primaryLabel": "Download App",
       "github": "https://github.com/wrestle-R/multi-codex",
-      "tech": ["React", "TypeScript", "Rust", "Tauri", "Vite"],
+      "tech": [
+        "React",
+        "TypeScript",
+        "Rust",
+        "Tauri",
+        "Vite"
+      ],
       "imageLight": "multi-codex_preview_light.png",
       "imageDark": "multi-codex_preview_dark.png"
     },
@@ -24,7 +30,12 @@
       "description": "Secure environment-variable management system with web UI and CLI support through the npm package varte.",
       "url": "https://vathavaran-variables.vercel.app/",
       "github": "https://github.com/wrestle-R/Vathavaran-Variables",
-      "tech": ["React", "Node.js", "Firebase", "Cloudflare Workers"],
+      "tech": [
+        "React",
+        "Node.js",
+        "Firebase",
+        "Cloudflare Workers"
+      ],
       "imageLight": "Varte_preview_light.png",
       "imageDark": "Varte_preview_dark.png"
     },
@@ -34,7 +45,11 @@
       "description": "Biblical twist on Wordle with scripture-based words.",
       "url": "https://biblical-wordle.vercel.app/",
       "github": "https://github.com/wrestle-R/Bible-Wordle",
-      "tech": ["React", "JavaScript", "CSS"],
+      "tech": [
+        "React",
+        "JavaScript",
+        "CSS"
+      ],
       "imageLight": "Bible_Wordle_preview_light.png",
       "imageDark": "Bible_Wordle_preview_dark.png"
     },
@@ -44,7 +59,12 @@
       "description": "Interactive Map of Ice and Fire exploring the realms and character journeys of Game of Thrones, House of the Dragon, and A Knight of the Seven Kingdoms. Browse characters and trace their stories and movements season by season.",
       "url": "https://asoiaf-rdp.vercel.app/",
       "github": "https://github.com/wrestle-R/ASOIAF",
-      "tech": ["React", "JavaScript", "Tailwind CSS", "Vite"],
+      "tech": [
+        "React",
+        "JavaScript",
+        "Tailwind CSS",
+        "Vite"
+      ],
       "imageLight": "ASOIAF_preview_light.png",
       "imageDark": "ASOIAF_preview_dark.png"
     },
@@ -55,7 +75,14 @@
       "url": "https://github.com/wrestle-R/HyprTrack/releases/latest",
       "primaryLabel": "Download App",
       "github": "https://github.com/wrestle-R/HyprTrack",
-      "tech": ["React", "TypeScript", "Rust", "Tauri", "Python", "SQLite"],
+      "tech": [
+        "React",
+        "TypeScript",
+        "Rust",
+        "Tauri",
+        "Python",
+        "SQLite"
+      ],
       "imageLight": "HyprTrack_preview_light.png",
       "imageDark": "HyprTrack_preview_dark.png"
     }
@@ -63,32 +90,52 @@
   "experiences": [
     {
       "company": "Technode",
-      "role": "Full Stack Engineer \u2014 IoT Solutions",
-      "period": "Sept 2025 \u2013 May 2026",
+      "role": "Full Stack Engineer — IoT Solutions",
+      "period": "Sept 2025 – May 2026",
       "achievements": [
-        "Redesigned and modernized the company\u2019s landing page and primary website, improving visual consistency and the user experience across key customer-facing pages.",
+        "Redesigned and modernized the company’s landing page and primary website, improving visual consistency and the user experience across key customer-facing pages.",
         "Maintained and enhanced an IoT dashboard built with React and Java for real-time device monitoring, analytics, and management, improving functionality, performance, and usability."
       ],
-      "tech": ["React", "Java", "JavaScript", "IoT"]
+      "tech": [
+        "React",
+        "Java",
+        "JavaScript",
+        "IoT"
+      ],
+      "id": "experience-1",
+      "logo": "/Techstack/technode_white_bg.png"
     },
     {
       "company": "NetstellarIOT Solutions",
-      "role": "Full Stack Developer \u2014 IoT Platforms",
-      "period": "June 2026 \u2013 August 2026",
+      "role": "Full Stack Developer — IoT Platforms",
+      "period": "June 2026 – August 2026",
       "achievements": [
         "Optimized the data ingestion pipeline by introducing a queue-based processing system.",
-        "Increased ingestion throughput from 1,600 to 10,000 requests per minute\u2014a 6.25\u00d7 improvement."
+        "Increased ingestion throughput from 1,600 to 10,000 requests per minute—a 6.25× improvement."
       ],
-      "tech": ["Queues", "IoT"]
+      "tech": [
+        "Queues",
+        "IoT"
+      ],
+      "id": "experience-2",
+      "logo": "/Techstack/netstellar-iot-light.svg"
     },
     {
       "company": "Technode",
-      "role": "Full Stack Engineer \u2014 IoT Solutions",
-      "period": "Sept 2026 \u2013 Present",
+      "role": "Full Stack Engineer — IoT Solutions",
+      "period": "Sept 2026 – Present",
       "achievements": [
         "Developed and deployed a separate MQTT-based IoT dashboard using Next.js and Docker on a Hostinger VPS, enabling scalable real-time device communication, monitoring, and management."
       ],
-      "tech": ["Next.js", "Docker", "MQTT", "VPS", "Hostinger"]
+      "tech": [
+        "Next.js",
+        "Docker",
+        "MQTT",
+        "VPS",
+        "Hostinger"
+      ],
+      "id": "experience-3",
+      "logo": "/Techstack/technode_white_bg.png"
     }
   ],
   "skills": [
@@ -119,11 +166,22 @@
     },
     {
       "category": "Backend",
-      "items": ["Node.js", "Express.js", "FastAPI", "Nginx", "MQTT"]
+      "items": [
+        "Node.js",
+        "Express.js",
+        "FastAPI",
+        "Nginx",
+        "MQTT"
+      ]
     },
     {
       "category": "Databases",
-      "items": ["MongoDB", "PostgreSQL", "SQLite", "Supabase"]
+      "items": [
+        "MongoDB",
+        "PostgreSQL",
+        "SQLite",
+        "Supabase"
+      ]
     },
     {
       "category": "Cloud & Infra",

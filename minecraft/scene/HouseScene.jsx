@@ -155,7 +155,7 @@ export default function HouseScene({
       shadows="soft"
       data-time-of-day={period}
       frameloop={visible ? "always" : "never"}
-      dpr={[1, window.matchMedia("(pointer: coarse)").matches ? 1 : 1.5]}
+      dpr={[1, 2]}
       camera={{ position: [0, -4.35, 23], fov: 64, near: 0.08, far: 100 }}
       gl={{
         antialias: true,
@@ -196,6 +196,21 @@ export default function HouseScene({
           onClick={() => openPanel(`project-${p.id}`)}
         />
       ))}
+      <group position={[5.63, 1.32, -15.5]}>
+        <mesh position={[0, 0, -5]}>
+          <boxGeometry args={[0.055, 0.06, 10]} />
+          <meshStandardMaterial color="#c6ad78" roughness={0.8} />
+        </mesh>
+        {[0, -5, -10].map((z, index) => (
+          <group key={z} position={[0, 0, z]}>
+            <mesh position={[0, 0.25, 0]}><boxGeometry args={[0.055, 0.5, 0.055]} /><meshStandardMaterial color="#c6ad78" /></mesh>
+            <mesh><boxGeometry args={[0.09, 0.23, 0.23]} /><meshStandardMaterial color="#e8d5a4" /></mesh>
+            {index < 2 && <mesh position={[0, 0, -2.5]} rotation={[-Math.PI / 2, 0, 0]}>
+              <coneGeometry args={[0.19, 0.4, 3]} /><meshStandardMaterial color="#e8d5a4" />
+            </mesh>}
+          </group>
+        ))}
+      </group>
       {portfolio.experiences.map((e, i) => (
         <DisplayBoard
           controller={controller}
@@ -203,8 +218,11 @@ export default function HouseScene({
           position={[5.7, 2.6, -15.5 - i * 5]}
           rotation={[0, -Math.PI / 2, 0]}
           title={e.company}
+          logo={e.logo}
+          subtitle={e.role}
+          kind="experience"
           caption={`0${i + 1} / ${e.period}`}
-          onClick={() => openPanel("experience")}
+          onClick={() => openPanel(e.id)}
         />
       ))}
       <DisplayBoard
