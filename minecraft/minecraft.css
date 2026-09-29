@@ -750,4 +750,19 @@
 .mc-crosshair { position: absolute; z-index: 16; top: 50%; left: 50%; transform: translate(-50%, -50%); pointer-events: none; color: white; font: 26px/1 monospace; text-shadow: 0 1px 2px #000; }
 .mc-pointer-locked .mc-journey, .mc-pointer-locked .mc-back, .mc-pointer-locked .mc-chapter-caption, .mc-pointer-locked .mc-explore-toggle, .mc-pointer-locked .mc-music { visibility: hidden; }
 .mc-company-logo { display: block; max-width: 200px; max-height: 58px; object-fit: contain; object-position: left center; margin-bottom: 22px; }
-.mc-experience-step:not(:last-child)::after { content: "↓"; position: absolute; bottom: 10px; left: 10px; color: var(--mc-accent); background: var(--mc-paper); }
+.mc-experience-step:not(:last-child)::after {
+  content: "↓";
+  position: absolute;
+  bottom: 4px;
+  left: 4px;
+  display: grid;
+  place-items: center;
+  width: 26px;
+  height: 26px;
+  border: 1px solid var(--mc-accent);
+  border-radius: 50%;
+  background: var(--mc-paper);
+  color: var(--mc-accent);
+  font-size: 17px;
+  font-weight: 700;
+}
