@@ -76,11 +76,11 @@ export default function PortfolioContent({ section, theme }) {
     return (
       <div className="mc-contact-content">
         <div className="mc-skills">
-          {portfolio.skills.map((skill) => (
-            <div key={skill.category}>
-              <h4>{skill.category}</h4>
-              <p>{skill.items.join(" · ")}</p>
-            </div>
+          {portfolio.skills.map((skill, index) => (
+            <section className="mc-tool-group" key={skill.category}>
+              <div className="mc-tool-label"><span>{String(index + 1).padStart(2, "0")}</span><h4>{skill.category}</h4></div>
+              <ul className="mc-tool-items">{skill.items.map((item) => <li key={item}>{item}</li>)}</ul>
+            </section>
           ))}
         </div>
         <h3>Let’s build something.</h3>
@@ -116,7 +116,7 @@ export default function PortfolioContent({ section, theme }) {
         <dl>
           <dt>Guided tour</dt>
           <dd>
-            Scroll or swipe vertically to move. Move your mouse to look around on desktop.
+            Scroll or swipe vertically to move. On desktop, hold and drag to look around on the guided path.
             On phones, swipe up to follow the story.
           </dd>
           <dt>Keyboard</dt>

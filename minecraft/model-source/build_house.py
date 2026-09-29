@@ -102,15 +102,6 @@ for side in (-1,1):
     detail(side*4.7-.9,5.2,1,'spruce_slab',scale=(1.8,1,2.4),type='bottom')
     detail(side*5.35-.6,2.45,1.3,'spruce_slab',scale=(1.2,1,1.65),type='bottom')
     detail(side*5.35-.25,2,1.5,'dark_oak_fence',scale=(.5,1,1))
-    # Planters and staggered foliage tucked around the stone shoulders.
-    for level,z in ((.5,3.2),(2.9,3.0),(5.1,3.2)):
-        cx=side*(4.95 if level<3 else 2.4)
-        detail(cx-.55,level,z,'spruce_trapdoor',scale=(1.1,1,1),half='bottom',facing='south',open='false')
-        detail(cx-.5,level+.22,z,'azalea_leaves',scale=(1, .65, .8),persistent='true',distance='1')
-        for dx in (-.3,.1,.38):
-            detail(cx+dx-.16,level+.65,z+.15,'oxeye_daisy',scale=(.4,.5,.4))
-        for dy,dx in ((-.15,.35),(-.6,.2),(-1,.38)):
-            detail(cx+side*dx-.2,level+dy,z+.4,'azalea_leaves',scale=(.45,.65,.45),persistent='true',distance='1')
     # A pair of cooler hanging lanterns sits just inside the warm facade lights.
     detail(side*2.9-.12,4.55,2.35,'iron_chain',scale=(.24,1.15,.24),axis='y')
     lantern(side*2.9,3.65,2.47,soul=True)
@@ -144,12 +135,12 @@ detail(-.3,10.75,2.9,'oak_trapdoor',scale=(.6,.6,.3),facing='south',half='bottom
 detail(-2.95,3.3,3.65,'dark_oak_planks',scale=(5.9,2.1,.24))
 for x in (-2.2,2.2): detail(x-.08,5.3,3.8,'iron_chain',scale=(.16,.6,.16),axis='y')
 
-# Leaf clusters break up the straight planter edges and trail beside the plaque.
+# Clean carved timber shoulders, with no planted blocks on the roof.
 for side in (-1,1):
-    for dx,dy,dz,size in ((0,0,0,.8),(.45,.18,.1,.65),(-.3,.25,.05,.6),(.75,-.3,.12,.5),(.65,-.8,.1,.45)):
-        detail(side*(2.6+dx)-size/2,5.35+dy,3.45+dz,'azalea_leaves',scale=(size,size,.7),persistent='true',distance='1')
     for y in (1.5,2.1,2.7):
-        detail(side*5.05-.5,y,2.85,'spruce_stairs',scale=(1, .6, .9),facing='north',half='top',shape='straight')
+        detail(side*5.05-.5,y,2.85,'spruce_stairs',scale=(1,.6,.9),facing='north',half='top',shape='straight')
+detail(-.1,7.2,3.5,'iron_chain',scale=(.2,1,.2),axis='y')
+lantern(0,6.25,3.6)
 
 # Half-unit treads retain the shared navigation slope. Real stair models give
 # the white center strip a continuous riser rather than disconnected thin lines.
@@ -175,17 +166,32 @@ for i in range(24):
 # Landing's centerline continues to the first step.
 for z in range(1,4): detail(-.5,-1,z,'smooth_quartz')
 
-# Taller alpine trees sit behind the gateway, leaving the facade unobstructed.
-for x,z in ((-8,-4),(7,-4)):
-    fill(x,x,0,17,z,z,'dark_oak_log',axis='y')
-    for y,r in ((10,2),(11,2),(12,2),(13,2),(14,2),(15,2),(16,1),(17,1),(18,1),(19,0)):
-        for dx in range(-r,r+1):
-            for dz in range(-r,r+1):
-                if r > 0 and abs(dx)==r and abs(dz)==r: continue
-                put(x+dx,y,z+dz,'spruce_leaves',persistent='true',distance='1')
-                if y in (11,13,15,18,19): detail(x+dx,y+.93,z+dz,'snow',layers='1')
-    for dx,dy,dz in ((-1.8,13,1.2),(1.2,15,1.4),(.3,18,1),(-.6,16.5,1.3)):
-        detail(x+dx,dy,z+dz,'azalea_leaves',scale=(1.3,1.2,1.1),persistent='true',distance='1')
+# Broad-crowned dark oaks behind the gateway: thick trunks, branching limbs,
+# overlapping irregular leaf clusters, rather than conical spruce silhouettes.
+for side in (-1,1):
+    x = -11 if side < 0 else 9
+    z = -6
+    fill(x,x+1,0,15,z,z+1,'dark_oak_log',axis='y')
+    clusters = [(.5,17,.5,3.6,2.6),(-2.5,14.5,1,2.8,2),
+                (3,15.5,0,3,2.2),(-1.5,19,-.5,2.8,1.8),
+                (2,18,2,2.7,2),(.5,14,-2.5,3,2)]
+    for branch, (dx,cy,dz,rx,ry) in enumerate(clusters):
+        for step in range(4):
+            f=step/3
+            put(round(x+.5+dx*f),round(11+(cy-13)*f),round(z+.5+dz*f),'dark_oak_log',axis='y' if step<2 else 'x')
+        for ox in range(-4,5):
+            for oy in range(-3,4):
+                for oz in range(-4,5):
+                    distance=(ox/rx)**2+(oy/ry)**2+(oz/(rx*.85))**2
+                    irregular=.12*math.sin(ox*3+oz*7+branch)
+                    if distance > 1+irregular: continue
+                    pos=(round(x+dx+ox),round(cy+oy),round(z+dz+oz))
+                    if pos not in blocks: put(*pos,'dark_oak_leaves',persistent='true',distance='1')
+    # Small hanging lights on the outer branches echo the entrance lanterns.
+    lx=side*13
+    detail(lx-.1,12,-4,'iron_chain',scale=(.2,1.4,.2),axis='y')
+    lantern(lx,11,-3.9,size=1.15)
+
 # A restrained teal-and-cherry feature at the end of the corridor.
 for x in (-5,4):
     put(x,0,-28,'dark_oak_planks')
@@ -213,7 +219,7 @@ def emit(p,state,scale=(1,1,1),grid=False):
         if grid and cull:
             neighbor=blocks.get(tuple(p[i]+cull[i] for i in range(3)))
             if neighbor and models.full_cube(neighbor): continue
-        if 'spruce_leaves' in texture: tint=(95,130,98,255)
+        if 'dark_oak_leaves' in texture: tint=(91,126,57,255)
         g=groups[(texture,tint)]
         world=verts*np.array(scale)+np.array(p)
         luminous=any(n in texture for n in ('lantern','glowstone'))

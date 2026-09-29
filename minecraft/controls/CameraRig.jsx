@@ -31,7 +31,7 @@ export default function CameraRig({
       host = canvas.parentElement;
     canvas.setAttribute(
       "aria-label",
-      "Interactive Minecraft house. Scroll to tour, move your mouse to look on desktop, or use Page Up and Page Down. Enter opens chapter details.",
+      "Interactive Minecraft house. Scroll to tour and drag to look; in Explore, move your mouse to look, or use Page Up and Page Down. Enter opens chapter details.",
     );
     canvas.tabIndex = 0;
     const desktopPointer = window.matchMedia("(min-width: 701px) and (hover: hover) and (pointer: fine)");
@@ -40,8 +40,8 @@ export default function CameraRig({
     const look = (dx, dy) => {
       const limit = controller.mode === "tour" ? 0.96 : Infinity;
       const pitchLimit = controller.mode === "tour" ? 0.44 : 1.3;
-      controller.yaw = Math.max(-limit, Math.min(limit, controller.yaw - dx * 0.003));
-      controller.pitch = Math.max(-pitchLimit, Math.min(pitchLimit, controller.pitch - dy * 0.003));
+      controller.yaw = Math.max(-limit, Math.min(limit, controller.yaw - dx * 0.0012));
+      controller.pitch = Math.max(-pitchLimit, Math.min(pitchLimit, controller.pitch - dy * 0.0012));
     };
     const reset = () => {
       lastMouse = null;
@@ -86,11 +86,11 @@ export default function CameraRig({
         lastMouse = null;
         return;
       }
-      const mouseLook = e.pointerType === "mouse" && desktopPointer.matches;
+      const mouseLook = controller.mode === "explore" && e.pointerType === "mouse" && desktopPointer.matches;
       if (mouseLook) {
         if (lastMouse) look(e.clientX - lastMouse.x, e.clientY - lastMouse.y);
         lastMouse = { x: e.clientX, y: e.clientY };
-      }
+      } else lastMouse = null;
       const d = controller.drag;
       if (!d || d.id !== e.pointerId) return;
       const dx = e.clientX - d.x,

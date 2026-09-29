@@ -1,12 +1,16 @@
-import { useMemo } from "react";
+import { useMemo, useRef } from "react";
+import { useFrame } from "@react-three/fiber";
 import { BackSide, Color } from "three";
 
 export default function WorldLighting({ preset }) {
+  const sky = useRef(null);
+  useFrame(({ camera }) => {
+    if (sky.current) sky.current.position.copy(camera.position);
+  });
   const skyUniforms = useMemo(
     () => ({
       zenith: { value: new Color(preset.sky) },
       horizon: { value: new Color(preset.horizon) },
-      cloudStrength: { value: preset.stars ? 0.08 : 0.55 },
     }),
     [preset],
   );
@@ -29,35 +33,38 @@ export default function WorldLighting({ preset }) {
     <>
       <color attach="background" args={[preset.sky]} />
       <fog attach="fog" args={[preset.fog, 42, 100]} />
-      <mesh>
-        <sphereGeometry args={[90, 24, 16]} />
+      <mesh ref={sky} renderOrder={-1}>
+        <sphereGeometry args={[65, 24, 16]} />
         <shaderMaterial
           side={BackSide}
           depthWrite={false}
+          depthTest={false}
           uniforms={skyUniforms}
           vertexShader={`varying vec3 direction; void main(){direction=position;gl_Position=projectionMatrix*modelViewMatrix*vec4(position,1.);}`}
           fragmentShader={`
-            uniform vec3 zenith; uniform vec3 horizon; uniform float cloudStrength;
+            uniform vec3 zenith; uniform vec3 horizon;
             varying vec3 direction;
-            float hash(vec2 p) { return fract(sin(dot(p,vec2(127.1,311.7)))*43758.5453); }
-            float noise(vec2 p) {
-              vec2 i=floor(p), f=fract(p); f=f*f*(3.-2.*f);
-              return mix(mix(hash(i),hash(i+vec2(1,0)),f.x),mix(hash(i+vec2(0,1)),hash(i+vec2(1,1)),f.x),f.y);
-            }
             void main(){
-              vec3 d=normalize(direction);
-              float t=smoothstep(-.1,.65,d.y);
-              vec3 sky=mix(horizon,zenith,t);
-              vec2 p=d.xz/max(d.y+.25,.1)*2.6;
-              float n=noise(p)*.55+noise(p*2.1)*.28+noise(p*4.3)*.17;
-              float clouds=smoothstep(.48,.72,n)*smoothstep(.02,.3,d.y)*cloudStrength;
-              gl_FragColor=vec4(mix(sky,horizon*1.12,clouds),1.);
+              float t=smoothstep(-.1,.65,normalize(direction).y);
+              gl_FragColor=vec4(mix(horizon,zenith,t),1.);
               #include <tonemapping_fragment>
               #include <colorspace_fragment>
             }`}
 
         />
       </mesh>
+      {/* Shallow voxel clouds: broad tops, stepped outlines, shaded undersides. */}
+      {[
+        [-29, 29, -22, 12, 8], [-19, 29, -26, 8, 5], [-35, 29, -15, 8, 6],
+        [22, 32, -30, 14, 7], [32, 32, -25, 9, 9], [16, 32, -27, 6, 5],
+        [-7, 35, -48, 13, 8], [3, 35, -46, 10, 5],
+        [30, 30, 10, 10, 7], [-32, 32, 14, 13, 8],
+      ].map(([x, y, z, w, d], index) => (
+        <mesh key={index} position={[x, y, z]}>
+          <boxGeometry args={[w, 1.1, d]} />
+          <meshStandardMaterial color={preset.stars ? "#55627c" : "#f4f3e9"} roughness={1} />
+        </mesh>
+      ))}
       {preset.stars && (
         <points>
           <bufferGeometry>

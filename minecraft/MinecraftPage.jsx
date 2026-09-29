@@ -234,7 +234,7 @@ export default function MinecraftPage() {
             </button>
           </div>
           <p className="mc-gesture-hint">
-            <span aria-hidden="true">↓</span> {mobile ? "Swipe up to follow the story" : "Scroll to follow the story · Move mouse to look"}
+            <span aria-hidden="true">↓</span> {mobile ? "Swipe up to follow the story" : mode === "explore" ? "W A S D to walk · Move mouse to look" : "Scroll to follow the story · Drag to look"}
           </p>
           <AmbientMusic />
           <span className="mc-sr-only" aria-live="polite">
