@@ -167,8 +167,13 @@ for i in range(24):
             detail(post_x-.25,y+2.62,z-.02,'spruce_slab',scale=(.5,.35,.55),type='bottom')
             detail(lamp_x-.09,y+1.94,z+.16,'iron_chain',scale=(.18,.55,.18),axis='y')
             lantern(lamp_x,y+1.1,z+.25,soul=(i%12==8),size=1.15)
-# Landing's centerline continues to the first step.
-for z in range(1,4): detail(-.5,-1,z,'smooth_quartz')
+# Inlay the centered strip into the landing instead of layering coplanar tops.
+# Its half-block offset crosses two grid blocks; retain only their outer halves.
+for z in range(1,4):
+    for x in (-1,0): del blocks[(x,-1,z)]
+    detail(-1,-1,z,'smooth_stone',scale=(.5,1,1))
+    detail(-.5,-1,z,'smooth_quartz')
+    detail(.5,-1,z,'smooth_stone',scale=(.5,1,1))
 
 # Broad-crowned dark oaks behind the gateway: thick trunks, branching limbs,
 # overlapping irregular leaf clusters, rather than conical spruce silhouettes.

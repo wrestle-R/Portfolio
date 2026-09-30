@@ -100,15 +100,6 @@ export default function DisplayBoard({
           ctx.font = "30px Inter, sans-serif";
           ctx.fillText(subtitle, w / 2, 392, 1110);
         }
-        if (kind !== "experience") {
-          ctx.strokeStyle = "#475248";
-          ctx.lineWidth = 2;
-          ctx.beginPath(); ctx.moveTo(90, 447); ctx.lineTo(1190, 447); ctx.stroke();
-          ctx.fillStyle = "#c9ae7c";
-          ctx.font = "29px Inter, sans-serif";
-          ctx.fillText("Read the story  ↗", w / 2, 518);
-        }
-
       }
       texture.needsUpdate = true;
       setMap(texture);
@@ -133,7 +124,7 @@ export default function DisplayBoard({
         picture.onerror = null;
       }
     };
-  }, [title, caption, image, logo, subtitle, entrance, kind]);
+  }, [title, caption, image, logo, subtitle, entrance]);
   return (
     <group position={position} rotation={rotation}>
       <mesh position={[0, 0, -0.06]} castShadow receiveShadow>

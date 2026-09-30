@@ -196,7 +196,8 @@ export default function HouseScene({
           onClick={() => openPanel(`project-${p.id}`)}
         />
       ))}
-      <group position={[5.63, 1.32, -15.5]}>
+      {/* Keep the final frame clear of the end pier (z = -27). */}
+      <group position={[5.63, 1.32, -15]}>
         <mesh position={[0, 0, -5]}>
           <boxGeometry args={[0.075, 0.12, 10]} />
           <meshBasicMaterial color="#d8b776" toneMapped={false} />
@@ -215,7 +216,7 @@ export default function HouseScene({
         <DisplayBoard
           controller={controller}
           key={i}
-          position={[5.7, 2.6, -15.5 - i * 5]}
+          position={[5.7, 2.6, -15 - i * 5]}
           rotation={[0, -Math.PI / 2, 0]}
           title={e.company}
           logo={e.logoDark}

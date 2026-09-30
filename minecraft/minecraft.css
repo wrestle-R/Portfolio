@@ -817,25 +817,25 @@
 .mc-skills > div { min-width: 0; }
 .mc-skills p { overflow-wrap: anywhere; }
 
-/* A warm field journal, with a dark timber header and readable paper pages. */
+/* Match the in-world boards: spruce-green panels, brass trim, square edges. */
 .mc-dialog {
-  --mc-paper: #f3eddf;
-  --mc-ink: #302b23;
-  --mc-muted: #726858;
-  --mc-line: #d9cfbc;
-  --mc-accent: #7b5930;
+  --mc-paper: #1d2926;
+  --mc-ink: #eee7d7;
+  --mc-muted: #b5bdaf;
+  --mc-line: #475248;
+  --mc-accent: #d5b87c;
   width: min(820px, calc(100vw - 40px));
   max-height: min(880px, calc(100dvh - 64px));
-  border: 1px solid #bbaa8d;
-  border-radius: 12px;
-  box-shadow: 0 24px 100px #0c140f80, 0 0 0 5px #e4d6b826;
+  border: 2px solid #716449;
+  border-radius: 0;
+  box-shadow: 0 24px 100px #0c140f80, 0 0 0 4px #292a25, inset 0 0 0 1px #b69a6226;
   scrollbar-width: thin;
-  scrollbar-color: #b9a787 #f3eddf;
+  scrollbar-color: #716449 #1d2926;
 }
 .mc-dialog::backdrop { background: #101a18b8; backdrop-filter: blur(7px); }
 .mc-panel-head {
   padding: 18px 28px;
-  background: #23312c;
+  background: #17211e;
   color: #f1e7d2;
   border-bottom: 3px solid #b69a62;
 }
@@ -847,34 +847,35 @@
 .mc-panel-head .mc-eyebrow { color: #d9c89f; font-size: 9px; letter-spacing: 1.3px; }
 .mc-journal-label { display: block; margin-top: 3px; font-size: 12px; color: #b9c0b5; }
 .mc-panel-head .mc-icon {
-  background: #ffffff08; color: #e4dccb; border: 1px solid #e4dccb30; border-radius: 6px;
+  flex-shrink: 0; margin-left: 12px;
+  background: #ffffff08; color: #e4dccb; border: 1px solid #e4dccb30; border-radius: 0;
   font-size: 25px !important; line-height: 1;
 }
 .mc-panel-head .mc-icon:hover { background: #ffffff18; }
 .mc-panel-body { padding: 36px 40px 40px; }
 .mc-panel-intro { padding-bottom: 26px; margin-bottom: 28px; border-bottom: 1px solid var(--mc-line); }
-.mc-panel-intro > .mc-eyebrow { color: #8d7046; margin-bottom: 13px; font-size: 9px; }
+.mc-panel-intro > .mc-eyebrow { color: #d5b87c; margin-bottom: 13px; font-size: 9px; }
 .mc-panel-body .mc-panel-intro h2 { font-size: clamp(23px, 3vw, 32px); line-height: 1.4; margin: 0 0 12px; letter-spacing: -1px; }
 .mc-panel-body .mc-panel-intro p { font-size: 14px; line-height: 1.7; max-width: 55ch; margin: 0; }
 .mc-panel-body h3 { font-size: 21px; letter-spacing: -.4px; }
 .mc-panel-body p { font-size: 15px; line-height: 1.85; }
 .mc-dialog .mc-skills { gap: 14px; margin-bottom: 36px; }
-.mc-tool-group { padding: 20px; background: #e9e1d1; border: 1px solid #d6c9b260; border-radius: 6px; min-width: 0; }
+.mc-tool-group { padding: 20px; background: #24332c; border: 1px solid #475248; border-radius: 0; min-width: 0; }
 .mc-tool-label { display: flex; align-items: baseline; gap: 10px; margin-bottom: 15px; }
-.mc-tool-label > span { font: 9px Monocraft, monospace; color: #9b845b; }
-.mc-tool-label h4 { margin: 0; color: #473b29; font-size: 12px; }
+.mc-tool-label > span { font: 9px Monocraft, monospace; color: #c9ae7c; }
+.mc-tool-label h4 { font-family: Monocraft, monospace; font-weight: 400; margin: 0; color: #eee7d7; font-size: 12px; }
 .mc-tool-items { list-style: none; padding: 0; margin: 0; display: flex; flex-wrap: wrap; gap: 6px; }
-.mc-tool-items li { font-size: 12px; line-height: 1.6; padding: 3px 8px; background: #faf6ec; color: #625744; border-radius: 3px; overflow-wrap: anywhere; max-width: 100%; }
-.mc-dialog .mc-tags span { background: #e9e1d1; border: 0; border-radius: 3px; padding: 5px 10px; }
+.mc-tool-items li { font-size: 12px; line-height: 1.6; padding: 3px 8px; background: #18231f; color: #cbd1c1; border-radius: 0; overflow-wrap: anywhere; max-width: 100%; }
+.mc-dialog .mc-tags span { background: #24332c; border: 0; border-radius: 0; padding: 5px 10px; }
 .mc-dialog .mc-links { gap: 10px; }
-.mc-dialog .mc-links a { padding: 10px 16px; background: #253a30; color: #f4ead6; border: 1px solid #253a30; border-radius: 5px; }
+.mc-dialog .mc-links a { padding: 10px 16px; background: #253a30; color: #f4ead6; border: 1px solid #253a30; border-radius: 0; }
 .mc-dialog .mc-links a:hover { background: #3c5141; }
-.mc-dialog .mc-links a + a { background: transparent; color: #4c604c; border-color: #b6bba8; }
-.mc-dialog .mc-project-detail > img { border: 5px solid #e2d8c5; border-radius: 6px; }
+.mc-dialog .mc-links a + a { background: transparent; color: #d5b87c; border-color: #716449; }
+.mc-dialog .mc-project-detail > img { border: 5px solid #475248; border-radius: 0; }
 .mc-dialog .mc-mail { padding-bottom: 20px; border-bottom: 1px solid var(--mc-line); }
-.mc-dialog .mc-timeline-node { border-width: 1px; background: #e9dec6; box-shadow: none; }
+.mc-dialog .mc-timeline-node { border-width: 1px; background: #24332c; box-shadow: none; }
 @media (max-width: 700px) {
-  .mc-dialog { width: calc(100vw - 24px); max-height: calc(100dvh - 28px); border-radius: 9px; }
+  .mc-dialog { width: calc(100vw - 24px); max-height: calc(100dvh - 28px); border-radius: 0; }
   .mc-panel-head { padding: 14px 18px; }
   .mc-panel-body { padding: 26px 20px; }
   .mc-panel-intro { margin-bottom: 22px; padding-bottom: 22px; }
@@ -883,6 +884,9 @@
   .mc-tool-group { padding: 18px; }
   .mc-dialog .mc-skills { grid-template-columns: 1fr; }
 }
+.mc-dialog .mc-mail { overflow-wrap: anywhere; }
+.mc-dialog a:focus-visible, .mc-dialog button:focus-visible { outline: 2px solid #d5b87c; outline-offset: 4px; }
+.mc-dialog .mc-links a:active { transform: translateY(1px); }
 .mc-explore-start {
   position: absolute; z-index: 18; top: 50%; left: 50%; transform: translate(-50%, -50%);
   width: min(440px, calc(100% - 48px)); padding: 32px; background: #f3eddf; color: #302b23;
