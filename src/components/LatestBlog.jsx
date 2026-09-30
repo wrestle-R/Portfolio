@@ -1,5 +1,5 @@
 import React from "react";
-import { buildSubdomainUrl } from "../lib/domain-utils";
+import { BLOG_URL } from "../lib/domain-utils";
 
 const latestBlogPost = {
   title: "Yhprum's Law",
@@ -10,8 +10,7 @@ const latestBlogPost = {
 };
 
 const LatestBlog = () => {
-  const blogBaseUrl = buildSubdomainUrl("blogs");
-  const blogPostUrl = `${blogBaseUrl}/blog/${latestBlogPost.slug}/`;
+  const blogPostUrl = `${BLOG_URL}/blog/${latestBlogPost.slug}/`;
 
   const publishedDate = new Date(latestBlogPost.publishedAt).toLocaleDateString(
     "en-US",

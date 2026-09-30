@@ -6,10 +6,19 @@ import NotFound from "./pages/NotFound";
 import SceneBoundary from "../minecraft/components/SceneBoundary";
 import { ThemeProvider } from "./context/ThemeContext";
 import { registerCopyAttribution } from "./lib/copyAttribution";
+import { BLOG_URL } from "./lib/domain-utils";
 
 const MinecraftPage = React.lazy(
   () => import("../minecraft/MinecraftPage.jsx"),
 );
+
+function BlogRedirect() {
+  React.useEffect(() => {
+    window.location.replace(BLOG_URL);
+  }, []);
+
+  return <p style={{ padding: 40 }}>Opening the <a href={BLOG_URL}>blog</a>…</p>;
+}
 
 function App() {
   React.useEffect(() => {
@@ -23,6 +32,7 @@ function App() {
           <Routes>
             <Route path="/" element={<Home />} />
             <Route path="/resume" element={<Resume />} />
+            <Route path="/blogs" element={<BlogRedirect />} />
             <Route
               path="/minecraft"
               element={

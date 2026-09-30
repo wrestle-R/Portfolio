@@ -1,4 +1,7 @@
 {
+  "redirects": [
+    { "source": "/blogs", "destination": "https://blogs.russel.is-a.dev", "permanent": false }
+  ],
   "rewrites": [
     { "source": "/(.*)", "destination": "/" }
   ]

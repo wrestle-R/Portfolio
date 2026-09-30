@@ -2,7 +2,7 @@ import React, { useState, useRef } from 'react';
 import { motion, useScroll, useMotionValueEvent, AnimatePresence } from 'framer-motion';
 import { Link } from 'react-router-dom';
 import { useTheme } from '../context/ThemeContext';
-import { buildSubdomainUrl } from '../lib/domain-utils';
+import { BLOG_URL, buildSubdomainUrl } from '../lib/domain-utils';
 
 // Simple utility function for classNames
 const cn = (...classes) => {
@@ -20,7 +20,7 @@ const NavbarComponent = () => {
   const { theme, toggleTheme } = useTheme();
   
   const navItems = [
-    { name: "Blogs", link: buildSubdomainUrl("blogs"), external: true },
+    { name: "Blogs", link: BLOG_URL, external: true },
     { name: "Runny", link: buildSubdomainUrl("runny"), external: true },
     { name: "Contact", link: "#contact" }
   ];

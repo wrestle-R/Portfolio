@@ -48,7 +48,8 @@ export default function PortfolioCharm({ type }) {
     shoe: '/charms/running-shoe.png',
     guitar: '/charms/guitar.png',
     laptop: '/charms/dell-laptop.png',
-    minecraft: '/charms/minecraft-wreslte.png',
+    minecraft: '/charms/minecraft-wrestle.png',
+    blog: '/charms/blog-notebook.png',
   };
 
   const labels = {
@@ -57,14 +58,19 @@ export default function PortfolioCharm({ type }) {
     guitar: 'My Cort AF500C guitar',
     laptop: 'Dell Inspiron 16 2-in-1 laptop specifications',
     minecraft: 'Enter Russel’s Minecraft world',
+    blog: 'Read Russel’s blog',
   };
 
   return (
     <aside className={`portfolio-charm portfolio-charm--${type}`} aria-label={labels[type]}>
-      {type === 'minecraft' ? (
+      {type === 'blog' ? (
+        <a href="/blogs" target="_blank" rel="noopener noreferrer" className="portfolio-charm__object" aria-label={labels[type]}>
+          <img src={images[type]} alt="" loading="lazy" />
+        </a>
+      ) : type === 'minecraft' ? (
         <Link to="/minecraft" className="portfolio-charm__object minecraft-charm__object" aria-label={labels[type]}>
           <img src={images[type]} alt="" loading="lazy" />
-          <span className="minecraft-gamertag" aria-hidden="true">wreslte</span>
+          <span className="minecraft-gamertag" aria-hidden="true">wrestle</span>
         </Link>
       ) : type === 'headphones' ? (
         <>
@@ -85,6 +91,7 @@ export default function PortfolioCharm({ type }) {
         {type === 'guitar' && <><span className="portfolio-charm__eyebrow">six strings, some downtime</span><strong>Cort AF500C</strong><span>acoustic guitar</span></>}
         {type === 'laptop' && <><span className="portfolio-charm__eyebrow">daily companion</span><strong>Dell Inspiron 16 2-in-1</strong><span>Intel i7-1360P · 13th Gen</span><span>12 cores · 16 threads</span><span>16GB RAM · 1TB storage</span><span>1920×1080 · Intel Iris Xe Graphics</span></>}
         {type === 'minecraft' && <><span className="portfolio-charm__eyebrow">another world, same builder</span><strong>Minecraft</strong><span>click to explore</span></>}
+        {type === 'blog' && <><span className="portfolio-charm__eyebrow">notes from the journey</span><strong>Read the blog</strong><span>thoughts, projects &amp; everything in between</span></>}
       </div>
     </aside>
   );

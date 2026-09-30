@@ -103,6 +103,7 @@
 
   .portfolio-charm--headphones { top: 55%; }
   .portfolio-charm--shoe { --charm-rotation: 8deg; left: auto; right: calc(50% - 650px); top: 49%; width: 185px; }
+  .portfolio-charm--blog { --charm-rotation: -7deg; top: 50%; width: 185px; }
   .portfolio-charm--guitar { --charm-rotation: -8deg; width: 132px; top: 46%; }
   .portfolio-charm--laptop { --charm-rotation: 9deg; left: auto; right: calc(50% - 650px); top: 46%; width: 185px; }
   .portfolio-charm--minecraft { --charm-rotation: 0deg; left: auto; right: calc(50% - 650px); top: 48%; width: 164px; }
@@ -131,24 +132,16 @@
   .minecraft-charm__object { --charm-rotation: 0deg; }
   .minecraft-gamertag {
     position: absolute;
-    top: -1%;
+    top: -8%;
     left: 50%;
-    padding: 3px 7px 4px;
-    border: 1px solid rgb(255 255 255 / .72);
-    background: rgb(18 22 29 / .82);
-    box-shadow: 2px 2px 0 rgb(0 0 0 / .38);
+    padding: 2px 5px 3px;
+    background: rgb(35 36 39 / .7);
     color: #fff;
-    font: 12px/1.1 Monocraft, monospace;
-    letter-spacing: .015em;
-    text-shadow: 1px 1px 0 #343a43;
+    font: 18px/1 Monocraft, monospace;
+    letter-spacing: 0;
+    text-shadow: 1px 1px 0 rgb(0 0 0 / .65);
     transform: translateX(-50%);
-    transition: box-shadow 180ms ease, color 180ms ease;
     white-space: nowrap;
-  }
-  .minecraft-charm__object:hover .minecraft-gamertag,
-  .minecraft-charm__object:focus-visible .minecraft-gamertag {
-    box-shadow: 2px 2px 0 #111, 0 0 14px rgb(81 184 255 / .5);
-    color: #e6f6ff;
   }
 
   .portfolio-charm__play {
