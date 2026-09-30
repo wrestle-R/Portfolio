@@ -15,7 +15,7 @@ import PortfolioBackground from '../components/PortfolioBackground';
 import PortfolioCharm from '../components/PortfolioCharm';
 
 const sections = [About, Github, LatestBlog, Techstack, Internship, Projects, Achievements, Contact, Footer];
-const sectionCharms = { 0: 'headphones', 1: 'shoe', 2: 'blog', 3: 'guitar', 5: 'laptop', 6: 'minecraft' };
+const sectionCharms = { 0: 'headphones', 1: 'shoe', 2: 'blog', 3: 'guitar', 4: 'football', 5: 'laptop', 6: 'minecraft', 7: 'hills' };
 
 const Home = () => {
   const entrance = useHomeEntrance();

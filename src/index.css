@@ -103,10 +103,12 @@
 
   .portfolio-charm--headphones { top: 55%; }
   .portfolio-charm--shoe { --charm-rotation: 8deg; left: auto; right: calc(50% - 650px); top: 49%; width: 185px; }
-  .portfolio-charm--blog { --charm-rotation: -7deg; top: 50%; width: 185px; }
+  .portfolio-charm--blog { --charm-rotation: -7deg; top: 50%; width: 165px; }
   .portfolio-charm--guitar { --charm-rotation: -8deg; width: 132px; top: 46%; }
+  .portfolio-charm--football { --charm-rotation: 10deg; left: auto; right: calc(50% - 620px); top: 47%; width: 112px; }
   .portfolio-charm--laptop { --charm-rotation: 9deg; left: auto; right: calc(50% - 650px); top: 46%; width: 185px; }
   .portfolio-charm--minecraft { --charm-rotation: 0deg; left: auto; right: calc(50% - 650px); top: 48%; width: 164px; }
+  .portfolio-charm--hills { --charm-rotation: -4deg; top: 48%; width: 180px; }
 
   .portfolio-charm__object {
     position: relative;
@@ -125,6 +127,7 @@
   button.portfolio-charm__object { cursor: pointer; }
   a.portfolio-charm__object { cursor: pointer; text-decoration: none; }
   .portfolio-charm__object img { display: block; width: 100%; height: auto; }
+  .portfolio-charm--blog .portfolio-charm__object img { animation: charm-book-float 5s ease-in-out infinite; }
   .portfolio-charm__object:hover,
   .portfolio-charm__object:focus-visible { transform: rotate(0) translateY(-6px) scale(1.06); filter: drop-shadow(0 19px 18px rgb(0 0 0 / .3)); }
   .portfolio-charm__object:focus-visible { outline: 2px solid oklch(var(--foreground)); outline-offset: 5px; border-radius: 8px; }
@@ -191,6 +194,11 @@
   .portfolio-charm--shoe .portfolio-charm__note strong { font-size: 18px; letter-spacing: -.025em; }
   .portfolio-charm--shoe .portfolio-charm__times { font-size: 13px; }
 
+  @keyframes charm-book-float {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(-4px); }
+  }
+
   @media (max-width: 1399px) {
     .portfolio-charm {
       position: relative;
@@ -226,6 +234,7 @@
   @media (prefers-reduced-motion: reduce) {
     .portfolio-charm__object,
     .portfolio-charm__note { transition: none; }
+    .portfolio-charm--blog .portfolio-charm__object img { animation: none; }
   }
 
   @media (max-width: 1599px), (hover: none), (pointer: coarse) {
