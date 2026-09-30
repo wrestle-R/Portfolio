@@ -15,7 +15,16 @@ import PortfolioBackground from '../components/PortfolioBackground';
 import PortfolioCharm from '../components/PortfolioCharm';
 
 const sections = [About, Github, LatestBlog, Techstack, Internship, Projects, Achievements, Contact, Footer];
-const sectionCharms = { 0: 'headphones', 1: 'shoe', 2: 'blog', 3: 'guitar', 4: 'football', 5: 'laptop', 6: 'minecraft', 7: 'hills' };
+const sectionCharms = {
+  0: ['headphones'],
+  1: ['shoe'],
+  2: ['blog'],
+  3: ['guitar', 'arch'],
+  4: ['football'],
+  5: ['laptop'],
+  6: ['minecraft'],
+  7: ['hills'],
+};
 
 const Home = () => {
   const entrance = useHomeEntrance();
@@ -29,7 +38,7 @@ const Home = () => {
         <SectionReveal key={index} enabled={entrance} index={index}>
           <div className="portfolio-charm-section">
             <Section />
-            {sectionCharms[index] && <PortfolioCharm type={sectionCharms[index]} />}
+            {(sectionCharms[index] ?? []).map((type) => <PortfolioCharm key={type} type={type} />)}
           </div>
         </SectionReveal>
       ))}

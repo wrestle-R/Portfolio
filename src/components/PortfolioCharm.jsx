@@ -126,6 +126,7 @@ export default function PortfolioCharm({ type }) {
     blog: '/charms/blog-notebook.png',
     football: '/charms/football.png',
     hills: '/charms/hill-station.png',
+    arch: '/charms/arch-linux-mark.svg',
   };
 
   const labels = {
@@ -137,6 +138,7 @@ export default function PortfolioCharm({ type }) {
     blog: 'Read Russel’s blog',
     football: 'Football: Football is LIFE',
     hills: 'I like Hill stations',
+    arch: 'Read my Arch Linux blog post',
   };
 
   return (
@@ -156,8 +158,8 @@ export default function PortfolioCharm({ type }) {
       }}
       onDragStart={(event) => event.preventDefault()}
     >
-      {type === 'blog' ? (
-        <a href="/blogs" target="_blank" rel="noopener noreferrer" className="portfolio-charm__object" aria-label={labels[type]}>
+      {type === 'blog' || type === 'arch' ? (
+        <a href={type === 'blog' ? '/blogs' : 'https://blogs.russel.is-a.dev/blog/linux-experience'} target="_blank" rel="noopener noreferrer" className="portfolio-charm__object" aria-label={labels[type]}>
           <img src={images[type]} alt="" loading="lazy" />
         </a>
       ) : type === 'minecraft' ? (
@@ -192,6 +194,7 @@ export default function PortfolioCharm({ type }) {
         {type === 'blog' && <><span className="portfolio-charm__eyebrow">notes from the journey</span><strong>Read the blog</strong><span>thoughts, projects &amp; everything in between</span></>}
         {type === 'football' && <><span className="portfolio-charm__eyebrow">football</span><strong>Kneed for speed</strong></>}
         {type === 'hills' && <><span className="portfolio-charm__eyebrow">fresh air &amp; winding roads</span><strong>I like Hill stations</strong></>}
+        {type === 'arch' && <><span className="portfolio-charm__eyebrow">i use arch btw</span><strong>The Linux Experience</strong><span>read my Arch Linux story</span></>}
         <span className="portfolio-charm__hint">drag to move</span>
       </div>
     </aside>

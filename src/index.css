@@ -105,6 +105,7 @@
   .portfolio-charm--shoe { --charm-rotation: 8deg; left: auto; right: calc(50% - 650px); top: 49%; width: 185px; }
   .portfolio-charm--blog { --charm-rotation: -7deg; top: 50%; width: 185px; }
   .portfolio-charm--guitar { --charm-rotation: -8deg; width: 132px; top: 46%; }
+  .portfolio-charm--arch { --charm-rotation: 7deg; left: auto; right: calc(50% - 640px); top: 48%; width: 132px; }
   .portfolio-charm--football { --charm-rotation: 10deg; left: auto; right: calc(50% - 620px); top: 47%; width: 112px; }
   .portfolio-charm--laptop { --charm-rotation: 9deg; left: auto; right: calc(50% - 650px); top: 46%; width: 185px; }
   .portfolio-charm--minecraft { --charm-rotation: 0deg; left: auto; right: calc(50% - 650px); top: 48%; width: 164px; }
