@@ -11,19 +11,26 @@ import Contact from '../components/Contact';
 import Footer from '../components/Footer';
 import SectionReveal from '../components/ui/section-reveal';
 import { useHomeEntrance } from '../lib/use-home-entrance';
+import PortfolioBackground from '../components/PortfolioBackground';
+import PortfolioCharm from '../components/PortfolioCharm';
 
 const sections = [About, Github, LatestBlog, Techstack, Internship, Projects, Achievements, Contact, Footer];
+const sectionCharms = { 0: 'headphones', 1: 'shoe', 3: 'guitar', 5: 'laptop' };
 
 const Home = () => {
   const entrance = useHomeEntrance();
   return (
-    <div className="min-h-screen">
+    <div className="portfolio-home min-h-screen">
+      <PortfolioBackground />
       <SectionReveal enabled={entrance} navigation>
         <NavbarComponent />
       </SectionReveal>
       {sections.map((Section, index) => (
         <SectionReveal key={index} enabled={entrance} index={index}>
-          <Section />
+          <div className="portfolio-charm-section">
+            <Section />
+            {sectionCharms[index] && <PortfolioCharm type={sectionCharms[index]} />}
+          </div>
         </SectionReveal>
       ))}
     </div>

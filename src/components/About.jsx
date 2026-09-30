@@ -56,7 +56,7 @@ const About = () => {
     <section
       className="relative flex w-full items-center justify-center px-4 pt-28"
       id="about"
-      style={{ backgroundColor: "oklch(var(--background))" }}
+      style={{ backgroundColor: "transparent" }}
     >
       <div className="relative z-10 mx-auto w-full max-w-4xl">
         <article 
