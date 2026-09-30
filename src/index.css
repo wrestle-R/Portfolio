@@ -4,6 +4,12 @@
   @import "@fontsource/inter";
   @import "tw-animate-css";
 
+  @font-face {
+    font-family: Monocraft;
+    src: url("../minecraft/assets/fonts/Monocraft.ttf") format("truetype");
+    font-display: swap;
+  }
+
   @custom-variant dark (&:is(.dark *)); /* Inter font */
 
   :root,
@@ -99,6 +105,7 @@
   .portfolio-charm--shoe { --charm-rotation: 8deg; left: auto; right: calc(50% - 650px); top: 49%; width: 185px; }
   .portfolio-charm--guitar { --charm-rotation: -8deg; width: 132px; top: 46%; }
   .portfolio-charm--laptop { --charm-rotation: 9deg; left: auto; right: calc(50% - 650px); top: 46%; width: 185px; }
+  .portfolio-charm--minecraft { --charm-rotation: 0deg; left: auto; right: calc(50% - 650px); top: 48%; width: 164px; }
 
   .portfolio-charm__object {
     position: relative;
@@ -115,10 +122,34 @@
   }
 
   button.portfolio-charm__object { cursor: pointer; }
+  a.portfolio-charm__object { cursor: pointer; text-decoration: none; }
   .portfolio-charm__object img { display: block; width: 100%; height: auto; }
   .portfolio-charm__object:hover,
   .portfolio-charm__object:focus-visible { transform: rotate(0) translateY(-6px) scale(1.06); filter: drop-shadow(0 19px 18px rgb(0 0 0 / .3)); }
   .portfolio-charm__object:focus-visible { outline: 2px solid oklch(var(--foreground)); outline-offset: 5px; border-radius: 8px; }
+
+  .minecraft-charm__object { --charm-rotation: 0deg; }
+  .minecraft-gamertag {
+    position: absolute;
+    top: -1%;
+    left: 50%;
+    padding: 3px 7px 4px;
+    border: 1px solid rgb(255 255 255 / .72);
+    background: rgb(18 22 29 / .82);
+    box-shadow: 2px 2px 0 rgb(0 0 0 / .38);
+    color: #fff;
+    font: 12px/1.1 Monocraft, monospace;
+    letter-spacing: .015em;
+    text-shadow: 1px 1px 0 #343a43;
+    transform: translateX(-50%);
+    transition: box-shadow 180ms ease, color 180ms ease;
+    white-space: nowrap;
+  }
+  .minecraft-charm__object:hover .minecraft-gamertag,
+  .minecraft-charm__object:focus-visible .minecraft-gamertag {
+    box-shadow: 2px 2px 0 #111, 0 0 14px rgb(81 184 255 / .5);
+    color: #e6f6ff;
+  }
 
   .portfolio-charm__play {
     position: absolute;
@@ -164,6 +195,8 @@
   .portfolio-charm__times { display: grid; gap: 4px; margin: 4px 0 0; font: 12px/1.4 monospace; font-variant-numeric: tabular-nums; }
   .portfolio-charm__times div { display: flex; justify-content: space-between; gap: 18px; }
   .portfolio-charm__times dd { margin: 0; color: oklch(var(--foreground)); }
+  .portfolio-charm--shoe .portfolio-charm__note strong { font-size: 18px; letter-spacing: -.025em; }
+  .portfolio-charm--shoe .portfolio-charm__times { font-size: 13px; }
 
   @media (max-width: 1399px) {
     .portfolio-charm {
@@ -200,6 +233,11 @@
   @media (prefers-reduced-motion: reduce) {
     .portfolio-charm__object,
     .portfolio-charm__note { transition: none; }
+  }
+
+  @media (max-width: 1599px), (hover: none), (pointer: coarse) {
+    .portfolio-background,
+    .portfolio-charm { display: none !important; }
   }
 
   /* Focus and reduced motion must never wait for the entrance timeline. */

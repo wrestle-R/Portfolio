@@ -1,5 +1,6 @@
 import { useEffect, useRef, useState } from 'react';
 import { Pause, Play } from 'lucide-react';
+import { Link } from 'react-router-dom';
 
 const runningTimes = [
   ['5k', '26:43'],
@@ -47,20 +48,27 @@ export default function PortfolioCharm({ type }) {
     shoe: '/charms/running-shoe.png',
     guitar: '/charms/guitar.png',
     laptop: '/charms/dell-laptop.png',
+    minecraft: '/charms/minecraft-wreslte.png',
   };
 
   const labels = {
-    headphones: playing ? 'Pause Unsweetened Lemonade on Nirvana 751 ANC' : 'Play Unsweetened Lemonade on Nirvana 751 ANC',
+    headphones: playing ? 'Pause music on Nirvana 751 ANC' : 'Play music on Nirvana 751 ANC',
     shoe: 'Running milestones',
     guitar: 'My Cort AF500C guitar',
     laptop: 'Dell Inspiron 16 2-in-1 laptop specifications',
+    minecraft: 'Enter Russel’s Minecraft world',
   };
 
   return (
     <aside className={`portfolio-charm portfolio-charm--${type}`} aria-label={labels[type]}>
-      {type === 'headphones' ? (
+      {type === 'minecraft' ? (
+        <Link to="/minecraft" className="portfolio-charm__object minecraft-charm__object" aria-label={labels[type]}>
+          <img src={images[type]} alt="" loading="lazy" />
+          <span className="minecraft-gamertag" aria-hidden="true">wreslte</span>
+        </Link>
+      ) : type === 'headphones' ? (
         <>
-          <audio ref={audioRef} preload="none" src="/unsweetened_lemonade.mp3" />
+          <audio ref={audioRef} preload="none" src="/unsweetened_lemonade-after-14s.mp3" />
           <button type="button" className="portfolio-charm__object" onClick={toggleAudio} aria-label={labels[type]} aria-pressed={playing}>
             <img src={images[type]} alt="Black over-ear headphones" loading="lazy" />
             <span className="portfolio-charm__play" aria-hidden="true">{playing ? <Pause size={15} fill="currentColor" /> : <Play size={15} fill="currentColor" />}</span>
@@ -72,10 +80,11 @@ export default function PortfolioCharm({ type }) {
         </div>
       )}
       <div className="portfolio-charm__note">
-        {type === 'headphones' && <><span className="portfolio-charm__eyebrow">Nirvana 751 ANC · unsweetened lemonade</span><strong>what is life without music</strong><span>{audioError ? 'Audio could not play. Try again.' : playing ? 'click to pause' : 'click the headphones to listen'}</span></>}
-        {type === 'shoe' && <><span className="portfolio-charm__eyebrow">running · personal records</span><strong>PR log</strong><dl className="portfolio-charm__times">{runningTimes.map(([distance, time]) => <div key={distance}><dt>{distance}</dt><dd>{time}</dd></div>)}</dl></>}
+        {type === 'headphones' && <><span className="portfolio-charm__eyebrow">Nirvana 751 ANC</span><strong>what is life without music</strong><span>{audioError ? 'Audio could not play. Try again.' : playing ? 'click to pause' : 'click the headphones to listen'}</span></>}
+        {type === 'shoe' && <><span className="portfolio-charm__eyebrow">running · personal records</span><strong>Personal bests</strong><dl className="portfolio-charm__times">{runningTimes.map(([distance, time]) => <div key={distance}><dt>{distance}</dt><dd>{time}</dd></div>)}</dl></>}
         {type === 'guitar' && <><span className="portfolio-charm__eyebrow">six strings, some downtime</span><strong>Cort AF500C</strong><span>acoustic guitar</span></>}
         {type === 'laptop' && <><span className="portfolio-charm__eyebrow">daily companion</span><strong>Dell Inspiron 16 2-in-1</strong><span>Intel i7-1360P · 13th Gen</span><span>12 cores · 16 threads</span><span>16GB RAM · 1TB storage</span><span>1920×1080 · Intel Iris Xe Graphics</span></>}
+        {type === 'minecraft' && <><span className="portfolio-charm__eyebrow">another world, same builder</span><strong>Minecraft</strong><span>click to explore</span></>}
       </div>
     </aside>
   );
