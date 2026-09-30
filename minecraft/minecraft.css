@@ -859,18 +859,35 @@
 .mc-panel-body .mc-panel-intro p { font-size: 14px; line-height: 1.7; max-width: 55ch; margin: 0; }
 .mc-panel-body h3 { font-size: 21px; letter-spacing: -.4px; }
 .mc-panel-body p { font-size: 15px; line-height: 1.85; }
-.mc-dialog .mc-skills { gap: 14px; margin-bottom: 36px; }
-.mc-tool-group { padding: 20px; background: #24332c; border: 1px solid #475248; border-radius: 0; min-width: 0; }
-.mc-tool-label { display: flex; align-items: baseline; gap: 10px; margin-bottom: 15px; }
-.mc-tool-label > span { font: 9px Monocraft, monospace; color: #c9ae7c; }
-.mc-tool-label h4 { font-family: Monocraft, monospace; font-weight: 400; margin: 0; color: #eee7d7; font-size: 12px; }
-.mc-tool-items { list-style: none; padding: 0; margin: 0; display: flex; flex-wrap: wrap; gap: 6px; }
-.mc-tool-items li { font-size: 12px; line-height: 1.6; padding: 3px 8px; background: #18231f; color: #cbd1c1; border-radius: 0; overflow-wrap: anywhere; max-width: 100%; }
+/* An inventory ledger: one clear row per discipline, without nested cards. */
+.mc-contact-content .mc-skills { grid-template-columns: 1fr; gap: 0; margin-bottom: 32px; }
+.mc-tool-group { display: grid; grid-template-columns: 190px minmax(0, 1fr); align-items: center; gap: 24px; padding: 22px 0; border-bottom: 1px solid var(--mc-line); min-width: 0; }
+.mc-tool-group:first-child { padding-top: 0; }
+.mc-tool-group:last-child { border-bottom: 0; padding-bottom: 0; }
+.mc-tool-label { display: flex; align-items: center; gap: 13px; }
+.mc-tool-symbol { display: grid; place-items: center; width: 38px; height: 38px; flex-shrink: 0; color: var(--mc-accent); border: 1px solid var(--mc-line); background: var(--mc-paper); box-shadow: 2px 2px 0 #0002; }
+.mc-tool-number { display: block; margin-bottom: 6px; font: 9px/1 Monocraft, monospace; color: var(--mc-muted); }
+.mc-tool-label h3 { margin: 0; color: var(--mc-ink); font: 12px/1.5 Monocraft, monospace; letter-spacing: 0; }
+.mc-tool-items { list-style: none; padding: 0; margin: 0; display: flex; flex-wrap: wrap; gap: 6px 16px; }
+.mc-tool-items li { display: inline-flex; align-items: baseline; gap: 7px; font-size: 13px; line-height: 1.8; color: var(--mc-ink); overflow-wrap: anywhere; max-width: 100%; }
+.mc-tool-items li::before { content: ""; width: 3px; height: 3px; flex-shrink: 0; align-self: center; background: var(--mc-accent); opacity: .6; }
+.mc-contact-invite { padding: 28px; background: color-mix(in srgb, var(--mc-accent) 7%, var(--mc-paper)); border: 1px solid var(--mc-line); border-top: 2px solid var(--mc-accent); }
+.mc-contact-invite > .mc-eyebrow { color: var(--mc-accent); font-size: 9px; letter-spacing: 1.5px; }
+.mc-contact-invite h3 { margin: 15px 0 10px; font-size: clamp(22px, 3vw, 28px); letter-spacing: -.8px; }
+.mc-contact-invite p { max-width: 48ch; margin-bottom: 22px; font-size: 14px; line-height: 1.8; }
+.mc-contact-invite .mc-contact-email { display: flex; align-items: center; justify-content: space-between; gap: 16px; padding: 14px 16px; background: var(--mc-accent); color: var(--mc-paper); font-size: 14px; font-weight: 600; transition: filter 150ms; }
+.mc-contact-email span { min-width: 0; overflow-wrap: anywhere; }
+.mc-contact-email svg { flex-shrink: 0; }
+.mc-contact-email:hover { filter: brightness(1.1); }
+.mc-contact-email:active { transform: translateY(1px); }
 .mc-dialog .mc-tags span { background: #24332c; border: 0; border-radius: 0; padding: 5px 10px; }
 .mc-dialog .mc-links { gap: 10px; }
 .mc-dialog .mc-links a { padding: 10px 16px; background: #253a30; color: #f4ead6; border: 1px solid #253a30; border-radius: 0; }
 .mc-dialog .mc-links a:hover { background: #3c5141; }
 .mc-dialog .mc-links a + a { background: transparent; color: #d5b87c; border-color: #716449; }
+.mc-contact-invite .mc-links { margin-top: 20px; gap: 24px; }
+.mc-contact-invite .mc-links a, .mc-contact-invite .mc-links a + a { padding: 0 0 3px; color: var(--mc-ink); background: transparent; border: 0; border-bottom: 1px solid transparent; font-size: 12px; }
+.mc-contact-invite .mc-links a:hover { background: transparent; border-bottom-color: var(--mc-accent); color: var(--mc-accent); }
 .mc-dialog .mc-project-detail > img { border: 5px solid #475248; border-radius: 0; }
 .mc-dialog .mc-mail { padding-bottom: 20px; border-bottom: 1px solid var(--mc-line); }
 .mc-dialog .mc-timeline-node { border-width: 1px; background: #24332c; box-shadow: none; }
@@ -881,7 +898,13 @@
   .mc-panel-intro { margin-bottom: 22px; padding-bottom: 22px; }
   .mc-journal-label { font-size: 10px; }
   .mc-panel-head .mc-eyebrow { font-size: 8px; }
-  .mc-tool-group { padding: 18px; }
+  .mc-tool-group { grid-template-columns: 1fr; gap: 14px; padding: 22px 0; }
+  .mc-tool-label { gap: 11px; }
+  .mc-tool-label > div { display: flex; align-items: baseline; gap: 10px; }
+  .mc-tool-number { margin: 0; }
+  .mc-tool-symbol { width: 30px; height: 30px; }
+  .mc-contact-invite { padding: 22px 18px; }
+  .mc-contact-invite .mc-contact-email { padding: 13px 12px; font-size: 12px; }
   .mc-dialog .mc-skills { grid-template-columns: 1fr; }
 }
 .mc-dialog .mc-mail { overflow-wrap: anywhere; }
