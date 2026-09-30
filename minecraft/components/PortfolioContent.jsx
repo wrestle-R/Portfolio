@@ -1,5 +1,5 @@
 import portfolio, { preview } from "../data/content";
-import { Code2, PanelsTopLeft, Server, Database, Cloud, Wrench, ArrowUpRight } from "lucide-react";
+import { Code2, PanelsTopLeft, Server, Database, Cloud, Wrench } from "lucide-react";
 
 const toolIcons = { Languages: Code2, Frontend: PanelsTopLeft, Backend: Server, Databases: Database, "Cloud & Infra": Cloud, "Dev Tools": Wrench };
 export function Project({ project, theme }) {
@@ -94,27 +94,23 @@ export default function PortfolioContent({ section, theme }) {
           })}
         </div>
         <section className="mc-contact-invite" aria-labelledby="mc-contact-title">
-          <span className="mc-eyebrow">NEXT UP / YOUR IDEA</span>
-          <h3 id="mc-contact-title">Let’s build something.</h3>
-          <p>
-            Have an idea, a project, or something interesting to talk about? I’d
-            love to hear it.
-          </p>
-          <a className="mc-contact-email" href={`mailto:${portfolio.identity.email}`}>
-            <span>{portfolio.identity.email}</span><ArrowUpRight size={20} aria-hidden="true" />
-          </a>
-          <div className="mc-links">
-            <a href={portfolio.identity.github} target="_blank" rel="noreferrer">
-              GitHub ↗
+          <div className="mc-contact-copy">
+            <span className="mc-eyebrow">NEXT UP / YOUR IDEA</span>
+            <h3 id="mc-contact-title">Let’s build something.</h3>
+            <p>
+              Have an idea, a project, or something interesting to talk about? I’d
+              love to hear it.
+            </p>
+          </div>
+          <div className="mc-contact-actions">
+            <a className="mc-contact-email" href={`mailto:${portfolio.identity.email}`}>
+              <span>{portfolio.identity.email}</span>
             </a>
-            <a
-              href={portfolio.identity.linkedin}
-              target="_blank"
-              rel="noreferrer"
-            >
-              LinkedIn ↗
-            </a>
-            <a href="/resume">Résumé ↗</a>
+            <div className="mc-links">
+              <a href={portfolio.identity.github} target="_blank" rel="noreferrer">GitHub</a>
+              <a href={portfolio.identity.linkedin} target="_blank" rel="noreferrer">LinkedIn</a>
+              <a href="/resume">Résumé</a>
+            </div>
           </div>
         </section>
       </div>

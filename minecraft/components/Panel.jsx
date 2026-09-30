@@ -31,7 +31,7 @@ export default function Panel({ section, theme, onClose }) {
   return (
     <dialog
       ref={ref}
-      className="mc-dialog"
+      className={`mc-dialog${section === "contact" ? " mc-workbench" : ""}`}
       onCancel={(e) => {
         e.preventDefault();
         onClose();

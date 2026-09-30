@@ -872,7 +872,7 @@
 .mc-tool-items li { display: inline-flex; align-items: baseline; gap: 7px; font-size: 13px; line-height: 1.8; color: var(--mc-ink); overflow-wrap: anywhere; max-width: 100%; }
 .mc-tool-items li::before { content: ""; width: 3px; height: 3px; flex-shrink: 0; align-self: center; background: var(--mc-accent); opacity: .6; }
 .mc-contact-invite { padding: 28px; background: color-mix(in srgb, var(--mc-accent) 7%, var(--mc-paper)); border: 1px solid var(--mc-line); border-top: 2px solid var(--mc-accent); }
-.mc-contact-invite > .mc-eyebrow { color: var(--mc-accent); font-size: 9px; letter-spacing: 1.5px; }
+.mc-contact-copy > .mc-eyebrow { color: var(--mc-accent); font-size: 9px; letter-spacing: 1.5px; }
 .mc-contact-invite h3 { margin: 15px 0 10px; font-size: clamp(22px, 3vw, 28px); letter-spacing: -.8px; }
 .mc-contact-invite p { max-width: 48ch; margin-bottom: 22px; font-size: 14px; line-height: 1.8; }
 .mc-contact-invite .mc-contact-email { display: flex; align-items: center; justify-content: space-between; gap: 16px; padding: 14px 16px; background: var(--mc-accent); color: var(--mc-paper); font-size: 14px; font-weight: 600; transition: filter 150ms; }
@@ -910,6 +910,64 @@
 .mc-dialog .mc-mail { overflow-wrap: anywhere; }
 .mc-dialog a:focus-visible, .mc-dialog button:focus-visible { outline: 2px solid #d5b87c; outline-offset: 4px; }
 .mc-dialog .mc-links a:active { transform: translateY(1px); }
+/* Keep the complete workbench together at ordinary desktop and phone sizes. */
+.mc-workbench { width: min(1040px, calc(100vw - 40px)); max-height: calc(100dvh - 32px); }
+.mc-workbench .mc-panel-head { padding: 12px 24px; border-bottom-width: 2px; }
+.mc-workbench .mc-journal-mark { width: 32px; height: 34px; font-size: 20px; }
+.mc-workbench .mc-panel-body { padding: 22px 28px 24px; }
+.mc-workbench .mc-panel-intro { padding-bottom: 16px; margin-bottom: 20px; }
+.mc-workbench .mc-panel-intro > .mc-eyebrow { margin-bottom: 8px; }
+.mc-workbench .mc-panel-intro h2 { font-size: 28px; margin-bottom: 6px; }
+.mc-workbench .mc-panel-intro p { max-width: none; font-size: 13px; line-height: 1.6; }
+.mc-workbench .mc-skills { grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 22px 28px; margin-bottom: 24px; }
+.mc-workbench .mc-tool-group { display: block; padding: 0; border: 0; }
+.mc-workbench .mc-tool-label { gap: 9px; margin-bottom: 10px; }
+.mc-workbench .mc-tool-symbol { width: 28px; height: 28px; box-shadow: none; }
+.mc-workbench .mc-tool-label > div { display: flex; align-items: baseline; gap: 8px; }
+.mc-workbench .mc-tool-number { margin: 0; font-size: 8px; color: var(--mc-accent); }
+.mc-workbench .mc-tool-label h3 { font-size: 11px; }
+.mc-workbench .mc-tool-items { gap: 2px 12px; }
+.mc-workbench .mc-tool-items li { font-size: 12px; line-height: 1.8; gap: 6px; }
+.mc-workbench .mc-contact-invite { display: grid; grid-template-columns: 1fr 1fr; align-items: center; gap: 24px; padding: 18px 20px; }
+.mc-workbench .mc-contact-copy > .mc-eyebrow { font-size: 8px; letter-spacing: 1px; }
+.mc-workbench .mc-contact-invite h3 { margin: 7px 0 5px; font-size: 22px; }
+.mc-workbench .mc-contact-invite p { margin: 0; font-size: 12px; line-height: 1.6; }
+.mc-workbench .mc-contact-email { justify-content: center; padding: 11px 12px; font-size: 13px; }
+.mc-workbench .mc-contact-invite .mc-links { justify-content: center; gap: 24px; margin-top: 12px; }
+.mc-workbench .mc-contact-invite .mc-links a { padding: 4px 0; }
+@media (max-width: 700px) {
+  .mc-workbench { width: calc(100vw - 20px); max-width: none; max-height: calc(100dvh - 20px); }
+  .mc-workbench .mc-panel-head { padding: 10px 14px; }
+  .mc-workbench .mc-panel-body { padding: 16px; }
+  .mc-workbench .mc-panel-intro { padding-bottom: 12px; margin-bottom: 16px; }
+  .mc-workbench .mc-panel-intro h2 { font-size: 23px; }
+  .mc-workbench .mc-panel-intro p { font-size: 12px; line-height: 1.5; }
+  .mc-workbench .mc-skills { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 18px 16px; margin-bottom: 18px; }
+  .mc-workbench .mc-tool-label { gap: 6px; margin-bottom: 6px; }
+  .mc-workbench .mc-tool-symbol { width: 22px; height: 22px; border: 0; }
+  .mc-workbench .mc-tool-symbol svg { width: 16px; height: 16px; }
+  .mc-workbench .mc-tool-label > div { gap: 5px; }
+  .mc-workbench .mc-tool-label h3 { font-size: 10px; }
+  .mc-workbench .mc-tool-items { gap: 1px 9px; }
+  .mc-workbench .mc-tool-items li { font-size: 11px; line-height: 1.65; gap: 4px; }
+  .mc-workbench .mc-contact-invite { grid-template-columns: 1fr; gap: 12px; padding: 12px 14px; }
+  .mc-workbench .mc-contact-invite h3 { font-size: 20px; }
+  .mc-workbench .mc-contact-email { padding: 9px 10px; font-size: 12px; }
+  .mc-workbench .mc-contact-invite .mc-links { margin-top: 6px; }
+}
+@media (max-width: 700px) and (max-height: 740px) {
+  .mc-workbench .mc-panel-head { padding-block: 6px; }
+  .mc-workbench .mc-panel-body { padding: 12px 14px; }
+  .mc-workbench .mc-panel-intro { padding-bottom: 8px; margin-bottom: 10px; }
+  .mc-workbench .mc-panel-intro > .mc-eyebrow { margin-bottom: 4px; }
+  .mc-workbench .mc-panel-intro h2 { font-size: 21px; margin-bottom: 4px; }
+  .mc-workbench .mc-skills { gap: 8px 14px; margin-bottom: 10px; }
+  .mc-workbench .mc-tool-label { margin-bottom: 4px; }
+  .mc-workbench .mc-tool-items { gap: 0 8px; }
+  .mc-workbench .mc-tool-items li { line-height: 1.5; }
+  .mc-workbench .mc-contact-invite { padding: 10px 12px; gap: 8px; }
+  .mc-workbench .mc-contact-invite h3 { margin-top: 4px; }
+}
 .mc-explore-start {
   position: absolute; z-index: 18; top: 50%; left: 50%; transform: translate(-50%, -50%);
   width: min(440px, calc(100% - 48px)); padding: 32px; background: #f3eddf; color: #302b23;
