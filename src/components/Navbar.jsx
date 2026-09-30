@@ -1,13 +1,8 @@
 import React, { useState, useRef } from 'react';
-import { motion, useScroll, useMotionValueEvent, AnimatePresence } from 'framer-motion';
+import { motion as Motion, useScroll, useMotionValueEvent, AnimatePresence } from 'framer-motion';
 import { Link } from 'react-router-dom';
 import { useTheme } from '../context/ThemeContext';
 import { BLOG_URL, buildSubdomainUrl } from '../lib/domain-utils';
-
-// Simple utility function for classNames
-const cn = (...classes) => {
-  return classes.filter(Boolean).join(" ");
-};
 
 const NavbarComponent = () => {
   const ref = useRef(null);
@@ -41,17 +36,17 @@ const NavbarComponent = () => {
     setMobileMenuOpen(false);
   };
 
-  const handleThemeToggle = (event) => {
-    toggleTheme(event?.currentTarget || null);
+  const handleThemeToggle = () => {
+    toggleTheme();
   };
 
   return (
-    <motion.div
+    <Motion.div
       ref={ref}
       className="fixed inset-x-0 top-0 z-40 max-w-6xl mx-auto mb-16 md:mb-0"
     >
       {/* Desktop Navbar */}
-      <motion.div
+      <Motion.div
         animate={{
           backdropFilter: visible ? "blur(16px)" : "none",
           border: visible ? "1px solid rgba(255, 255, 255, 0.1)" : "none",
@@ -73,7 +68,7 @@ const NavbarComponent = () => {
         className="relative z-[60] mx-auto hidden w-full max-w-6xl flex-row items-center justify-between rounded-full px-8 py-3 md:flex"
       >
         <div className="flex w-full items-center justify-between">
-          <motion.h1
+          <Motion.h1
             animate={{
               scale: visible ? 0.85 : 1,
             }}
@@ -86,9 +81,9 @@ const NavbarComponent = () => {
             className="text-lg font-bold tracking-wider"
           >
             {visible ? "RDP" : "RDP"}
-          </motion.h1>
+          </Motion.h1>
 
-          <motion.nav
+          <Motion.nav
             animate={{
               opacity: 1,
               scale: visible ? 0.9 : 1,
@@ -103,11 +98,11 @@ const NavbarComponent = () => {
             {navItems.map((item, idx) => (
               <NavItem key={idx} item={item} onNavigate={scrollToSection} />
             ))}
-          </motion.nav>
+          </Motion.nav>
 
           <div className="flex items-center space-x-3">
             {/* Theme Toggle Button */}
-            <motion.button
+            <Motion.button
               onClick={handleThemeToggle}
               whileHover={{ scale: 1.05 }}
               whileTap={{ scale: 0.95 }}
@@ -135,9 +130,9 @@ const NavbarComponent = () => {
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z" />
                 </svg>
               )}
-            </motion.button>
+            </Motion.button>
 
-            <motion.div
+            <Motion.div
               whileHover={{ scale: 1.05 }}
               whileTap={{ scale: 0.95 }}
               transition={{
@@ -159,13 +154,13 @@ const NavbarComponent = () => {
               >
                 Resume
               </Link>
-            </motion.div>
+            </Motion.div>
           </div>
         </div>
-      </motion.div>
+      </Motion.div>
 
       {/* Mobile navbar */}
-      <motion.div
+      <Motion.div
         animate={{
           backdropFilter: visible ? "blur(16px)" : "none",
           border: visible ? "1px solid rgba(255, 255, 255, 0.1)" : "none",
@@ -181,7 +176,7 @@ const NavbarComponent = () => {
         }}
         className="md:hidden flex items-center justify-between px-6 py-3 mt-4 mx-6 rounded-full"
       >
-        <motion.h1
+        <Motion.h1
           animate={{
             scale: visible ? 0.85 : 1,
           }}
@@ -194,11 +189,11 @@ const NavbarComponent = () => {
           className="text-lg font-extrabold tracking-wider"
         >
           {visible ? "RDP" : "RDP"}
-        </motion.h1>
+        </Motion.h1>
 
         <div className="flex items-center space-x-2">
           {/* Theme Toggle Button for Mobile */}
-          <motion.button
+          <Motion.button
             onClick={handleThemeToggle}
             whileHover={{ scale: 1.1 }}
             whileTap={{ scale: 0.9 }}
@@ -223,9 +218,9 @@ const NavbarComponent = () => {
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z" />
               </svg>
             )}
-          </motion.button>
+          </Motion.button>
 
-          <motion.button
+          <Motion.button
             onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
             className="text-xl p-1"
             style={{ color: 'oklch(var(--foreground))' }}
@@ -246,14 +241,14 @@ const NavbarComponent = () => {
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 6h16M4 12h16M4 18h16" />
               </svg>
             )}
-          </motion.button>
+          </Motion.button>
         </div>
-      </motion.div>
+      </Motion.div>
 
       {/* Mobile Menu */}
       <AnimatePresence>
         {mobileMenuOpen && (
-          <motion.div
+          <Motion.div
             initial={{ opacity: 0, y: -10 }}
             animate={{ opacity: 1, y: 0 }}
             exit={{ opacity: 0, y: -10 }}
@@ -272,7 +267,7 @@ const NavbarComponent = () => {
               }}
             >
               {navItems.map((item, idx) => (
-                <motion.a
+                <Motion.a
                   key={idx}
                   href={item.link}
                   onClick={(e) => {
@@ -296,10 +291,10 @@ const NavbarComponent = () => {
                   }}
                 >
                   {item.name}
-                </motion.a>
+                </Motion.a>
               ))}
 
-              <motion.div
+              <Motion.div
                 whileHover={{ scale: 1.02 }}
                 whileTap={{ scale: 0.98 }}
                 transition={{ type: "spring", stiffness: 500, damping: 25 }}
@@ -315,19 +310,19 @@ const NavbarComponent = () => {
                 >
                   Resume
                 </Link>
-              </motion.div>
+              </Motion.div>
             </div>
-          </motion.div>
+          </Motion.div>
         )}
       </AnimatePresence>
-    </motion.div>
+    </Motion.div>
   );
 };
 
 // Navigation Item with hover effect
 const NavItem = ({ item, onNavigate }) => {
   return (
-    <motion.a
+    <Motion.a
       href={item.link}
       onClick={(e) => {
         if (!item.external) {
@@ -349,7 +344,7 @@ const NavItem = ({ item, onNavigate }) => {
       }}
     >
       <span className="relative z-10">{item.name}</span>
-      <motion.span 
+      <Motion.span
         className="absolute inset-0 rounded-full"
         style={{ backgroundColor: 'oklch(var(--muted))' }}
         initial={{ scale: 0.8, opacity: 0 }}
@@ -363,7 +358,7 @@ const NavItem = ({ item, onNavigate }) => {
           damping: 25,
         }}
       />
-    </motion.a>
+    </Motion.a>
   );
 };
 

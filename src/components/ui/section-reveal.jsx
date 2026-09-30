@@ -38,7 +38,7 @@ export default function SectionReveal({ children, enabled, index = 0, navigation
   return (
     <Motion.div
       ref={ref}
-      className={`section-reveal${navigation ? ' relative z-40' : ''}`}
+      className={`section-reveal${navigation ? ' section-reveal--navigation' : ''}`}
       data-entrance={enabled ? 'animated' : 'instant'}
       initial={enabled ? { opacity: 0, ...(navigation ? {} : { y: 32, scale: 0.985, filter: 'blur(7px)' }) } : false}
       animate={controls}

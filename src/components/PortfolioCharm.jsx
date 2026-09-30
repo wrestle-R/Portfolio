@@ -9,7 +9,9 @@ const runningTimes = [
   ['21km', '2:08:21'],
 ];
 
-const charmPositionKey = (type) => `portfolio-charm-position:${type}`;
+const charmPositionKey = (type) => type === 'minecraft'
+  ? 'portfolio-charm-position:minecraft:hero'
+  : `portfolio-charm-position:${type}`;
 
 function savedPosition(type) {
   try {
@@ -192,7 +194,7 @@ export default function PortfolioCharm({ type }) {
         {type === 'laptop' && <><span className="portfolio-charm__eyebrow">daily companion</span><strong>Dell Inspiron 16 2-in-1</strong><span>Intel i7-1360P · 13th Gen</span><span>12 cores · 16 threads</span><span>16GB RAM · 1TB storage</span><span>1920×1080 · Intel Iris Xe Graphics</span></>}
         {type === 'minecraft' && <><span className="portfolio-charm__eyebrow">another world, same builder</span><strong>Minecraft</strong><span>click to explore</span></>}
         {type === 'blog' && <><span className="portfolio-charm__eyebrow">notes from the journey</span><strong>Read the blog</strong><span>thoughts, projects &amp; everything in between</span></>}
-        {type === 'football' && <><span className="portfolio-charm__eyebrow">football</span><strong>Kneed for speed</strong></>}
+        {type === 'football' && <><span className="portfolio-charm__eyebrow">football</span><strong>FOOTBALL IS LIFE</strong></>}
         {type === 'hills' && <><span className="portfolio-charm__eyebrow">fresh air &amp; winding roads</span><strong>I like Hill stations</strong></>}
         {type === 'arch' && <><span className="portfolio-charm__eyebrow">i use arch btw</span><strong>The Linux Experience</strong><span>read my Arch Linux story</span></>}
         <span className="portfolio-charm__hint">drag to move</span>

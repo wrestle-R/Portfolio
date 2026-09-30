@@ -54,6 +54,10 @@
     z-index: 1;
   }
 
+  .portfolio-home > .section-reveal--navigation {
+    z-index: 40;
+  }
+
   .portfolio-background {
     position: fixed;
     inset: 0;
@@ -129,7 +133,18 @@
   button.portfolio-charm__object,
   a.portfolio-charm__object { text-decoration: none; }
   .portfolio-charm__object:active { cursor: grabbing; }
-  .portfolio-charm__object img { display: block; width: 100%; height: auto; }
+  .portfolio-charm__object img {
+    display: block;
+    width: 100%;
+    height: auto;
+    filter:
+      drop-shadow(1px 0 0 white)
+      drop-shadow(-1px 0 0 white)
+      drop-shadow(0 1px 0 white)
+      drop-shadow(0 -1px 0 white)
+      drop-shadow(1px 1px 0 white)
+      drop-shadow(-1px -1px 0 white);
+  }
   .portfolio-charm__object:hover,
   .portfolio-charm__object:focus-visible { transform: rotate(0) translateY(-6px) scale(1.06); filter: drop-shadow(0 19px 18px rgb(0 0 0 / .3)); }
   .portfolio-charm__object:focus-visible { outline: 2px solid oklch(var(--foreground)); outline-offset: 5px; border-radius: 8px; }
@@ -327,54 +342,6 @@
       animation: none !important;
     }
     [data-entrance='animated'] .hero-intro::after { display: none; }
-  }
-
-  .theme-transition::view-transition-old(root),
-  .theme-transition::view-transition-new(root) {
-    animation: none;
-    mix-blend-mode: normal;
-  }
-
-  .theme-transition::view-transition-group(root) {
-    animation: none;
-  }
-
-  .theme-transition::view-transition-image-pair(root) {
-    isolation: auto;
-  }
-
-  .theme-transition::view-transition-old(root) {
-    z-index: 1;
-  }
-
-  .theme-transition::view-transition-new(root) {
-    z-index: 2;
-    clip-path: circle(0px at var(--theme-transition-x) var(--theme-transition-y));
-    animation: theme-curtain-reveal 960ms cubic-bezier(0.55, 0, 0.8, 1) both;
-  }
-
-  .theme-transition[data-theme-reveal='contract']::view-transition-old(root) {
-    z-index: 2;
-    animation: theme-curtain-reveal 960ms cubic-bezier(0.55, 0, 0.8, 1) reverse both;
-  }
-
-  .theme-transition[data-theme-reveal='contract']::view-transition-new(root) {
-    z-index: 1;
-    clip-path: none;
-    animation: none;
-  }
-
-  @keyframes theme-curtain-reveal {
-    from {
-      clip-path: circle(0px at var(--theme-transition-x) var(--theme-transition-y));
-    }
-    to {
-      clip-path: circle(var(--theme-transition-radius) at var(--theme-transition-x) var(--theme-transition-y));
-    }
-  }
-
-  .theme-transition * {
-    transition: none !important;
   }
 
   * {

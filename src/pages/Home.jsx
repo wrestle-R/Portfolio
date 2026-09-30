@@ -16,13 +16,12 @@ import PortfolioCharm from '../components/PortfolioCharm';
 
 const sections = [About, Github, LatestBlog, Techstack, Internship, Projects, Achievements, Contact, Footer];
 const sectionCharms = {
-  0: ['headphones'],
+  0: ['headphones', 'minecraft'],
   1: ['shoe'],
   2: ['blog'],
   3: ['guitar', 'arch'],
   4: ['football'],
   5: ['laptop'],
-  6: ['minecraft'],
   7: ['hills'],
 };
 
@@ -35,7 +34,7 @@ const Home = () => {
         <NavbarComponent />
       </SectionReveal>
       {sections.map((Section, index) => (
-        <SectionReveal key={index} enabled={entrance} index={index}>
+        <SectionReveal key={index} enabled={entrance && index === 0} index={index}>
           <div className="portfolio-charm-section">
             <Section />
             {(sectionCharms[index] ?? []).map((type) => <PortfolioCharm key={type} type={type} />)}
