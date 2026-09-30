@@ -48,7 +48,7 @@ const Resume = () => {
           <div className="flex items-center gap-2">
             <button
               type="button"
-              onClick={toggleTheme}
+              onClick={(event) => toggleTheme(event.currentTarget)}
               className="inline-flex h-9 w-9 items-center justify-center rounded-full transition-opacity hover:opacity-80"
               style={{ backgroundColor: "oklch(var(--muted))", color: "oklch(var(--foreground))" }}
               aria-label="Toggle theme"

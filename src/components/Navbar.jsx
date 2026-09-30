@@ -36,8 +36,8 @@ const NavbarComponent = () => {
     setMobileMenuOpen(false);
   };
 
-  const handleThemeToggle = () => {
-    toggleTheme();
+  const handleThemeToggle = (event) => {
+    toggleTheme(event.currentTarget);
   };
 
   return (

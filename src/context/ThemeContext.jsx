@@ -1,4 +1,5 @@
-import React, { createContext, useCallback, useContext, useEffect, useState } from 'react';
+import React, { createContext, useCallback, useContext, useEffect, useRef, useState } from 'react';
+import { flushSync } from 'react-dom';
 import { ROOT_DOMAIN } from '../lib/domain-utils';
 
 const ThemeContext = createContext();
@@ -60,6 +61,7 @@ export const useTheme = () => {
 
 export const ThemeProvider = ({ children }) => {
   const [theme, setTheme] = useState(getPreferredTheme);
+  const nextRevealDirection = useRef('expand');
 
   const applyTheme = useCallback((nextTheme) => {
     setTheme(nextTheme);
@@ -68,16 +70,63 @@ export const ThemeProvider = ({ children }) => {
     try { writeThemeCookie(nextTheme); } catch { /* Optional persistence. */ }
   }, []);
 
+  const animateThemeTransition = useCallback((sourceEl, nextTheme) => {
+    const root = document.documentElement;
+    if (root.classList.contains('theme-transition')) return;
+
+    const supportsViewTransition = typeof document.startViewTransition === 'function';
+
+    if (!supportsViewTransition || !sourceEl || window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+      applyTheme(nextTheme);
+      return;
+    }
+
+    const rect = sourceEl.getBoundingClientRect();
+    const x = rect.left + rect.width / 2;
+    const y = rect.top + rect.height / 2;
+    const maxX = Math.max(x, window.innerWidth - x);
+    const maxY = Math.max(y, window.innerHeight - y);
+    const endRadius = Math.hypot(maxX, maxY);
+
+    // Prepare the first-frame mask before either theme snapshot is captured.
+    root.style.setProperty('--theme-transition-x', `${x}px`);
+    root.style.setProperty('--theme-transition-y', `${y}px`);
+    root.style.setProperty('--theme-transition-radius', `${endRadius}px`);
+    root.dataset.themeReveal = nextRevealDirection.current;
+    root.classList.add('theme-transition');
+
+    const cleanup = () => {
+      root.classList.remove('theme-transition');
+      delete root.dataset.themeReveal;
+      root.style.removeProperty('--theme-transition-x');
+      root.style.removeProperty('--theme-transition-y');
+      root.style.removeProperty('--theme-transition-radius');
+    };
+
+    try {
+      const transition = document.startViewTransition(() => {
+        flushSync(() => applyTheme(nextTheme));
+      });
+      transition.finished.then(cleanup, cleanup);
+      transition.ready.then(() => {
+        nextRevealDirection.current = nextRevealDirection.current === 'expand' ? 'contract' : 'expand';
+      }, () => { /* A skipped transition still applies the theme. */ });
+    } catch {
+      cleanup();
+      applyTheme(nextTheme);
+    }
+  }, [applyTheme]);
+
   useEffect(() => {
     const initialTheme = getPreferredTheme();
     applyTheme(initialTheme);
   }, [applyTheme]);
 
-  const toggleTheme = useCallback(() => {
+  const toggleTheme = useCallback((sourceEl = null) => {
     const currentTheme = document.documentElement.getAttribute('data-theme') || theme;
     const newTheme = currentTheme === 'light' ? 'dark' : 'light';
-    applyTheme(newTheme);
-  }, [applyTheme, theme]);
+    animateThemeTransition(sourceEl, newTheme);
+  }, [animateThemeTransition, theme]);
 
   useEffect(() => {
     const handleKeyDown = (event) => {
