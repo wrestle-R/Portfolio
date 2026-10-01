@@ -54,6 +54,10 @@ function drawMap(){
   for(let z=0;z<D;z++){
    const c=at(x,z),active=x===selected.x&&z===selected.z;
    out+=`<rect class="map-cell" data-x="${x}" data-z="${z}" x="${l+z*s}" y="${t+x*s}" width="${s}" height="${s}" fill="${c?C[c.key].color:'#172019'}" ${active?'style="stroke:#fff0b1;stroke-width:2.5"':''}><title>X=${x}, Y=${y}, Z=${z} · ${c?esc(C[c.key].id):'air'}</title></rect>`;
+   if(c&&C[c.key].id.includes('_stairs[')){
+    const facing=C[c.key].id.match(/facing=(\w+)/)[1],arrow={east:'↓',west:'↑',south:'→',north:'←'}[facing];
+    out+=`<text x="${l+z*s+s/2}" y="${t+x*s+s*.79}" text-anchor="middle" font-size="9" font-family="system-ui" font-weight="700" fill="${C[c.key].name==='Stone Brick Stairs'?'#18251b':'#fff0d2'}" pointer-events="none">${arrow}</text>`;
+   }
   }
  }
  out+=`<text x="${l+D*s/2}" y="${t+W*s+16}" text-anchor="middle" class="map-caption">WEST · X=0 AT TOP  ↓  EAST · X=56 AT BOTTOM</text>`;

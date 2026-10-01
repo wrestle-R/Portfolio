@@ -1,0 +1,26 @@
+{
+  "source": "grand-librarian-castle-40.html",
+  "sourceSha256": "12af4aa906d27d47438df671968535543c1d88ac5af2e4ef798b576004d449b4",
+  "placedBlockSpaces": 28367,
+  "librarians": 40,
+  "images": [
+    {
+      "file": "01-exterior.png",
+      "width": 1920,
+      "height": 1200,
+      "sha256": "ac7e249d3324b94157460522f9919e4d9dae13c881ce4a11e51106ab1a817372"
+    },
+    {
+      "file": "02-gatehouse.png",
+      "width": 1920,
+      "height": 1200,
+      "sha256": "0b107454d13c63002efeb82a00e0e4acf7cf37ff18e09c62dcddd0674f80fd50"
+    },
+    {
+      "file": "03-great-hall.png",
+      "width": 1920,
+      "height": 1200,
+      "sha256": "742d859d590f632d463088617c02ceae6465b5a4f0d0cd2299d7461e16da64e2"
+    }
+  ]
+}

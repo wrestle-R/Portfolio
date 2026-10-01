@@ -34,7 +34,7 @@ window.GRAND_CASTLE_DATA = (() => {
     material(`sign${side}`,`dark_oak_wall_sign[facing=${dir}]`,'Dark Oak Sign','#e5ba79');
   }
   const layers=Array.from({length:H},()=>Array(W*D).fill(null));
-  const at=(x,y,z)=>layers[y]?.[z*W+x]||null;
+  const at=(x,y,z)=>x<0||x>=W||z<0||z>=D?null:layers[y]?.[z*W+x]||null;
   const put=(x,y,z,key,why)=>{
     if(x<0||x>=W||y<0||y>=H||z<0||z>=D||!C[key])throw Error(`Invalid block ${x},${y},${z}: ${key}`);
     layers[y][z*W+x]={key,why};
@@ -213,6 +213,24 @@ window.GRAND_CASTLE_DATA = (() => {
     put(x,4,z+2,'bricks','Garden lamp pedestal');put(x,5,z+2,'lamp','Garden walkway lantern');
   }
   for(const x of [22,34]){put(x,4,10,'bricks','Entrance lamp pedestal');put(x,5,10,'lamp','Entrance lantern');}
+
+  // Resolve automatic stair corners using the installed game's StairBlock rules.
+  const directions={east:[1,0],west:[-1,0],south:[0,1],north:[0,-1]};
+  const opposite={east:'west',west:'east',south:'north',north:'south'},ccw={east:'north',north:'west',west:'south',south:'east'};
+  const stair=c=>{const m=c&&C[c.key].id.match(/_stairs\[facing=(\w+),half=(\w+)/);return m?{facing:m[1],half:m[2]}:null};
+  for(let y=0;y<H;y++)for(let z=0;z<D;z++)for(let x=0;x<W;x++){
+    const c=at(x,y,z),s=stair(c);if(!s)continue;
+    const near=dir=>{const [dx,dz]=directions[dir];return stair(at(x+dx,y,z+dz))};
+    const canTurn=dir=>{const other=near(dir);return !other||other.facing!==s.facing||other.half!==s.half};
+    const perpendicular=other=>other&&other.half===s.half&&directions[other.facing][0]!==directions[s.facing][0]&&directions[other.facing][1]!==directions[s.facing][1];
+    const ahead=near(s.facing),behind=near(opposite[s.facing]);let shape='straight';
+    if(perpendicular(ahead)&&canTurn(opposite[ahead.facing]))shape=ahead.facing===ccw[s.facing]?'outer_left':'outer_right';
+    else if(perpendicular(behind)&&canTurn(behind.facing))shape=behind.facing===ccw[s.facing]?'inner_left':'inner_right';
+    if(shape!=='straight'){
+      const key=`${c.key}_${shape}`;if(!C[key])C[key]={...C[c.key],id:C[c.key].id.replace('shape=straight',`shape=${shape}`)};
+      c.key=key;
+    }
+  }
 
   // Validate the playable trading hall, its count and the stair headroom.
   if(booths.length!==40)throw Error('The castle must contain exactly 40 booths');
