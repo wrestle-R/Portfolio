@@ -1,0 +1,25 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>Stonewatch · Exact blueprint renders</title>
+  <style>
+    *{box-sizing:border-box}body{margin:0;background:#b5d2e2;color:#14271d;font-family:system-ui,sans-serif;overflow:hidden}canvas{display:block;width:100vw;height:100vh}.caption{position:absolute;left:32px;top:28px;background:#fffdf0ef;padding:19px 24px;max-width:min(540px,calc(100vw - 64px));border-left:4px solid #506440;pointer-events:none}.eyebrow{font-size:12px;letter-spacing:.14em;text-transform:uppercase;margin-bottom:7px;color:#536047}h1{font-size:28px;line-height:1.1;letter-spacing:-.035em;margin:0 0 9px}.note{font-size:14px;line-height:1.5;max-width:440px}.foot{position:absolute;bottom:22px;left:32px;font-size:12px;color:#273a2e;background:#fffdf0df;padding:10px 14px;pointer-events:none}nav{position:absolute;right:24px;bottom:24px;display:flex;gap:6px;flex-wrap:wrap;max-width:70vw;justify-content:flex-end}nav a{color:#14271d;text-decoration:none;background:#fffdf0e8;padding:10px 13px;border:1px solid #859682;font-size:12px}nav a[aria-current]{background:#273a2e;color:#fff}body.capture nav{display:none}.loading{position:absolute;inset:0;display:grid;place-items:center;background:#e9edde;z-index:3}.loading.hidden{display:none}@media(max-width:650px){.caption{left:16px;top:16px;padding:14px 17px;max-width:calc(100vw - 32px)}h1{font-size:22px}.note{font-size:12px}.eyebrow{font-size:10px}.foot{left:16px;bottom:90px;max-width:calc(100vw - 32px);font-size:10px}nav{left:16px;right:16px;bottom:16px;max-width:none;justify-content:flex-start}nav a{padding:8px}}
+  </style>
+</head>
+<body>
+  <div class="loading" id="loading">Rendering the tutorial’s block map…</div>
+  <section class="caption"><div class="eyebrow">Stonewatch Library · 40 librarians</div><h1 id="title"></h1><div class="note" id="note"></div></section>
+  <div class="foot" id="foot">Tutorial coordinates · Minecraft 26.3 textures · illustrative lighting</div>
+  <nav aria-label="Render views">
+    <a href="?view=exterior" data-view="exterior">Exterior</a>
+    <a href="?view=cutaway" data-view="cutaway">Cutaway</a>
+    <a href="?view=upper" data-view="upper">Upper aisle</a>
+    <a href="?view=ground" data-view="ground">Ground aisle</a>
+    <a href="?view=booth" data-view="booth">Booth</a>
+    <a href="../../librarian-castle-40.html">Tutorial ↗</a>
+  </nav>
+  <script type="module" src="render.js"></script>
+</body>
+</html>

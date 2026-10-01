@@ -1,0 +1,356 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Stonewatch Library · 40-librarian castle build</title>
+  <style>
+    :root{color-scheme:dark;--bg:#101816;--panel:#192521;--panel2:#21312a;--line:#3b5248;--ink:#f3f0e5;--muted:#b7c9bf;--gold:#e9be79;--blue:#9fc5ee}
+    *{box-sizing:border-box}html{scroll-behavior:smooth}body{margin:0;background:var(--bg);color:var(--ink);font:15px/1.5 system-ui,-apple-system,"Segoe UI",sans-serif}
+    button,input{font:inherit}button{cursor:pointer}button:focus-visible,input:focus-visible,a:focus-visible{outline:3px solid var(--gold);outline-offset:3px}
+    .shell{max-width:1500px;margin:auto;padding:22px}.hero{display:grid;grid-template-columns:minmax(330px,.8fr) minmax(0,1.2fr);gap:18px}.card,.photo{background:var(--panel);border:1px solid var(--line);border-radius:15px;overflow:hidden}.intro{padding:32px}.eyebrow{color:var(--gold);font-size:.76rem;font-weight:800;letter-spacing:.16em;text-transform:uppercase}h1{font:700 clamp(2.7rem,6vw,5rem)/.98 Georgia,serif;letter-spacing:-.045em;margin:12px 0 18px}h2{font:700 1.65rem/1.1 Georgia,serif;margin:7px 0 12px}h3{font-size:1rem;margin:0 0 8px}p{margin:0 0 13px;color:var(--muted)}.lead{font-size:1.08rem;color:var(--ink)}.photo{position:relative;min-height:420px}.photo img{display:block;width:100%;height:100%;object-fit:cover}.photo figcaption{position:absolute;bottom:0;left:0;right:0;padding:25px 20px 15px;background:linear-gradient(transparent,#101816ed);font-size:.9rem;color:#fff}
+    .stats{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin:24px 0}.stat{border-top:1px solid var(--line);padding-top:10px}.stat strong{display:block;font-size:1.4rem;color:var(--gold)}.stat span{font-size:.77rem;color:var(--muted)}.callout{padding:13px 16px;border-left:3px solid var(--gold);background:#283026;color:#eee4cb;border-radius:0 9px 9px 0}.nav{display:flex;gap:9px;flex-wrap:wrap;margin-top:22px}.nav a,.button{display:inline-flex;align-items:center;justify-content:center;min-height:40px;padding:9px 13px;border:1px solid var(--line);border-radius:8px;background:var(--panel2);color:var(--ink);text-decoration:none;font-weight:650}.button.primary,.nav a:first-child{background:var(--gold);color:#17211a;border-color:var(--gold)}.button:disabled{opacity:.4;cursor:not-allowed}
+    .section{margin-top:18px}.section-head{padding:22px 24px 0}.section-body{padding:16px 24px 24px}.grid{display:grid;grid-template-columns:minmax(0,1.3fr) minmax(330px,.7fr);gap:18px}.stack{display:grid;gap:18px}.reference-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px}.reference-grid figure{margin:0;background:var(--panel2);border:1px solid var(--line);border-radius:10px;overflow:hidden}.reference-grid img{display:block;width:100%;height:205px;object-fit:cover}.reference-grid figcaption{padding:9px 11px;font-size:.83rem;color:var(--muted)}.badge{display:inline-block;padding:3px 8px;border-radius:5px;background:#33483b;color:#e9dfbc;font-size:.75rem;font-weight:750;letter-spacing:.04em}
+    .controls{display:flex;align-items:center;gap:8px;flex-wrap:wrap;margin:16px 0}.layer-label{min-width:82px;text-align:center;font-weight:800;color:var(--gold);font-size:1.1rem}.slider{width:100%;accent-color:var(--gold)}.tabs{display:flex;gap:8px;margin:16px 0}.tabs button[aria-pressed="true"]{background:var(--gold);color:#17211a;border-color:var(--gold)}.map-scroll{overflow:auto;background:#101a16;border:1px solid var(--line);border-radius:10px;padding:14px;max-height:720px}.map-scroll svg{display:block;min-width:580px;max-width:820px;width:100%;height:auto;margin:auto}.cell{stroke:#101816;stroke-width:.7}.cell:hover{stroke:#fff4c7;stroke-width:2}.axis{fill:#91a89c;font:11px ui-monospace,monospace}.map-title{fill:#e5c589;font:700 12px system-ui;letter-spacing:.08em}.legend{display:flex;flex-wrap:wrap;gap:8px 12px;margin:12px 0}.legend span{font-size:.76rem;color:var(--muted);white-space:nowrap}.legend i{display:inline-block;width:11px;height:11px;margin-right:5px;border-radius:2px;vertical-align:-1px}.inspector{min-height:65px;padding:11px 13px;background:#26352d;border-radius:8px;color:var(--ink);font-size:.86rem}.inspector code{color:var(--gold);overflow-wrap:anywhere}
+    .floor-key{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:14px}.floor-key span{border:1px solid var(--line);padding:5px 8px;border-radius:6px;font-size:.75rem}.floor-map{overflow:auto;border:1px solid var(--line);border-radius:9px;background:#101a16;padding:9px}.floor-map svg{display:block;width:100%;min-width:400px;max-width:680px;height:auto;margin:auto}.stall-list{max-height:350px;overflow:auto;border:1px solid var(--line);border-radius:9px}.stall-row{display:grid;grid-template-columns:32px 1fr auto;gap:9px;padding:8px 10px;border-bottom:1px solid #30453a;font-size:.82rem}.stall-row b{color:var(--gold)}.stall-row small{color:var(--muted)}
+    .table-scroll{overflow:auto;max-height:510px;border:1px solid var(--line);border-radius:9px}table{border-collapse:collapse;width:100%;font-size:.8rem}th,td{padding:9px 10px;text-align:left;border-bottom:1px solid #30453a;vertical-align:top}th{position:sticky;top:0;background:#2e4337;color:#f5d298;z-index:1}td{color:#dce8dc}td code{color:#f3d69f;font-size:.74rem;overflow-wrap:anywhere}.num{text-align:right;white-space:nowrap}.note-list{padding-left:20px;color:var(--muted)}.note-list li{margin:8px 0}details{border:1px solid var(--line);border-radius:9px;padding:11px 14px;margin-top:12px}summary{cursor:pointer;font-weight:750;color:var(--ink)}.footer{padding:20px 4px;color:var(--muted);font-size:.83rem}.footer a{color:var(--blue)}
+    #layers>.card{align-self:start}#layers .section-head{padding:16px 18px 0}#layers .section-head h2{margin:4px 0 6px}#layers .section-head p{margin-bottom:0}#layers .section-body{padding:10px 18px 8px}#layers .controls{margin:10px 0}#layers .legend{margin:7px 0}#layers .map-scroll{overflow:hidden;max-height:none;padding:8px}#layers .map-scroll svg{display:block;width:100%;min-width:0;max-width:100%;height:auto;max-height:min(48dvh,calc(100dvh - 360px))}#layers .map-orientation{font-size:.77rem;margin:3px 0 7px}#layers .inspector-row{display:flex;align-items:stretch;gap:8px;flex-wrap:wrap;margin-top:8px}#layers .inspector{flex:1 1 240px;min-height:52px}#layers .coordinate-pick{display:flex;align-items:center;gap:8px;padding:8px 10px;border:1px solid var(--line);border-radius:8px;color:var(--muted);font-size:.8rem}#layers .coordinate-pick label{display:flex;align-items:center;gap:5px}#layers .coordinate-pick input{width:52px;min-height:34px;padding:3px 5px;border:1px solid var(--line);border-radius:5px;background:var(--bg);color:var(--ink)}
+    #layers .layer-heading{display:flex;align-items:center;justify-content:space-between;gap:10px;margin:4px 0 6px}#layers .layer-heading h2{margin:0}#layer-fullscreen{min-height:34px;padding:6px 10px;font-size:.8rem;white-space:nowrap}
+    #layer-panel:fullscreen,#layer-panel.layer-fullscreen-fallback{width:100vw;height:100dvh;max-width:none;max-height:none;display:flex;flex-direction:column;overflow:hidden;border-radius:0;margin:0;background:var(--panel)}#layer-panel:fullscreen::backdrop{background:var(--bg)}#layer-panel.layer-fullscreen-fallback{position:fixed;inset:0;z-index:1000}html.layer-focus{overflow:hidden}
+    #layer-panel:is(:fullscreen,.layer-fullscreen-fallback) .section-head{flex:none;padding:12px 18px 0}#layer-panel:is(:fullscreen,.layer-fullscreen-fallback) .section-body{flex:1;min-height:0;display:flex;flex-direction:column;padding:8px 18px 12px}#layer-panel:is(:fullscreen,.layer-fullscreen-fallback) .controls,#layer-panel:is(:fullscreen,.layer-fullscreen-fallback) .slider,#layer-panel:is(:fullscreen,.layer-fullscreen-fallback) .legend,#layer-panel:is(:fullscreen,.layer-fullscreen-fallback) .map-orientation,#layer-panel:is(:fullscreen,.layer-fullscreen-fallback) .inspector-row{flex:none}#layer-panel:is(:fullscreen,.layer-fullscreen-fallback) .map-scroll{flex:1;min-height:0;display:grid;place-items:center}#layer-panel:is(:fullscreen,.layer-fullscreen-fallback) .map-scroll svg{width:100%;height:100%;max-width:100%;max-height:100%}
+    @media(max-width:1050px){.hero,.grid{grid-template-columns:1fr}.photo{min-height:360px}}@media(max-width:650px){.shell{padding:10px}.intro,.section-head,.section-body{padding:18px}.hero{gap:10px}.stats{gap:5px}.stat strong{font-size:1.1rem}.reference-grid{grid-template-columns:1fr}.reference-grid img{height:250px}.photo{min-height:290px}.grid,.stack{gap:10px}}
+    @media(max-width:650px){#layers .inspector-row{display:grid;grid-template-columns:minmax(0,1fr) 76px}#layers .inspector{min-width:0;padding:8px 10px;font-size:.78rem;line-height:1.3}#layers .coordinate-pick{flex-direction:column;align-items:stretch;gap:3px;padding:5px}#layers .coordinate-pick label{justify-content:space-between;gap:2px}#layers .coordinate-pick input{width:46px;min-height:28px;padding:2px}}
+  </style>
+</head>
+<body>
+<main class="shell">
+  <header class="hero">
+    <div class="card intro">
+      <div class="eyebrow">Minecraft Java 26.3 · follow-along blueprint</div>
+      <h1>Stonewatch<br>Library</h1>
+      <p class="lead">A two-floor castle trading hall for exactly <strong>40 librarians</strong>: 20 per floor, ten booths down each side of a central aisle.</p>
+      <div class="stats"><div class="stat"><strong>40</strong><span>librarians, no spare booths</span></div><div class="stat"><strong>29 × 59</strong><span>block footprint</span></div><div class="stat"><strong>Y 0–25</strong><span>26 exact build layers</span></div></div>
+      <div class="callout">The cutaway is an appearance reference. The maps below define the real booth backs, lecterns, signs, service corridors and medieval stair route. Build from the coordinates, not from the illustration.</div>
+      <nav class="nav"><a href="#layers">Start the layers</a><a href="#plans">See both floors</a><a href="#materials">Material counts</a></nav>
+    </div>
+    <figure class="photo"><img src="concepts/librarian-hall-two-floor-cutaway.png" alt="Concept cutaway of a two-floor stone castle hall with rows of librarian booths and a dark wood roof"><figcaption><span class="badge">APPEARANCE REFERENCE</span> Two broad trading floors beneath the dark oak roof. Exact booth count and structure are shown below.</figcaption></figure>
+  </header>
+
+  <section class="card section" id="plans">
+    <div class="section-head"><div class="eyebrow">Build plan · the part the image leaves out</div><h2>One complete hall, two working floors</h2><p>Entrance faces north at Z=0. X increases east, Z increases south, and Y increases upward. Local Y=0 is your ground floor. Add your world origin to each coordinate.</p></div>
+    <div class="section-body grid">
+      <div>
+        <div class="tabs"><button class="button" id="floor-down" type="button" aria-pressed="true">Ground floor · 01–20</button><button class="button" id="floor-up" type="button" aria-pressed="false">Upper floor · 21–40</button></div>
+        <div class="floor-key"><span style="background:#a5aba2;color:#17211a">Smooth stone floor / service path</span><span style="background:#9d603a">Dark oak booth</span><span style="background:#d2ac70;color:#17211a">Lectern</span><span style="background:#96c8cf;color:#17211a">Glass front</span><span style="background:#e9be79;color:#17211a">Stairs / landing</span></div>
+        <div class="floor-map"><svg id="floor-map" role="img" aria-label="Top-down plan of the selected librarian floor"></svg></div>
+        <p style="margin-top:12px">The center aisle is X=13–15. Rear service corridors are X=5–7 and X=21–23. Each booth has a rear door and a one-block lectern inside its pen. Both service corridors join the central aisle at Z=49.</p>
+      </div>
+      <div>
+        <h3 id="stall-heading">Ground floor · 20 named booths</h3>
+        <p>Labels are the highest enchantment levels in the local Java 26.3 normal-trade list. Write the name and level on each booth sign after you confirm its villager's trade.</p>
+        <div class="stall-list" id="stall-list"></div>
+        <details open><summary>How the booth actually works</summary><ol class="note-list"><li>Villager stands inside the 5 × 3 booth. Lectern is one block in front of it, reachable for restocking.</li><li>The aisle-facing center is glass, with a sign above. The rear door opens into the service corridor so you can reroll or replace one villager without opening the public aisle.</li><li>Build the stone and wood shell first. For each booth, leave its rear door gap open, place its lectern, guide in one unemployed adult villager, and close the two-block door. Confirm the desired book, trade once to lock it, then write the name and level on the sign. Set up one booth at a time so villagers link to the intended lectern.</li><li>Ground-floor stairs start at X=13–15, Z=50 and reach the upper landing at Z=56. The upper return gallery at X=18–20 leads back to the second-floor aisle.</li></ol></details>
+      </div>
+    </div>
+  </section>
+
+  <section class="card section"><div class="section-head"><div class="eyebrow">Three appearance views</div><h2>Read the images as inspiration</h2><p>The third close-up suggests the booth finish. The plans above specify the complete rear access and the exact 40-booth count.</p></div><div class="section-body reference-grid">
+    <figure><img src="concepts/librarian-hall-main-aisle.png" alt="Appearance view down a long librarian aisle"><figcaption>Main aisle · spacing, light and trim</figcaption></figure>
+    <figure><img src="concepts/librarian-hall-two-floor-cutaway.png" alt="Cutaway appearance view of two trading floors"><figcaption>Cutaway · two floors and taller exterior</figcaption></figure>
+    <figure><img src="concepts/librarian-hall-stall-detail.png" alt="Close-up appearance view of librarian booths, lecterns and rear doors"><figcaption>Booth close-up · finish only; use the plan for the complete booth</figcaption></figure>
+  </div></section>
+
+  <div class="grid section" id="layers">
+    <section class="card" id="layer-panel"><div class="section-head"><div class="eyebrow">One horizontal slice at a time</div><div class="layer-heading"><h2>Layer <span id="layer-title">Y=0</span></h2><button class="button" id="layer-fullscreen" type="button" aria-pressed="false" aria-label="Open layer in full screen">Full screen</button></div><p id="layer-note"></p></div><div class="section-body">
+      <div class="controls"><button class="button" id="prev" type="button">← Previous</button><span class="layer-label" id="layer-label">Y 00</span><button class="button primary" id="next" type="button">Next →</button><button class="button" id="download" type="button">Download all coordinates · CSV</button></div>
+      <input class="slider" id="layer-slider" type="range" min="0" max="25" value="0" aria-label="Choose Y layer"><div class="legend" id="legend"></div>
+      <p class="map-orientation">Full slice, fitted to your screen: Z runs left to right; X runs top to bottom.</p>
+      <div class="map-scroll"><svg id="layer-map" role="img" aria-label="Exact top-down block map of the selected layer, with Z left to right and X top to bottom"></svg></div>
+      <div class="inspector-row"><div class="inspector" id="inspector" aria-live="polite">Select a cell to inspect its coordinates.</div><div class="coordinate-pick"><label for="inspect-x">X <input id="inspect-x" type="number" inputmode="numeric" min="0" max="28" value="14"></label><label for="inspect-z">Z <input id="inspect-z" type="number" inputmode="numeric" min="0" max="58" value="0"></label></div></div>
+    </div></section>
+    <div class="stack">
+      <section class="card"><div class="section-head"><div class="eyebrow">What each layer contains</div><h2 id="layer-count">0 placed spaces</h2><p id="layer-summary"></p></div><div class="section-body"><div class="table-scroll"><table><thead><tr><th>Block item</th><th class="num">This layer</th></tr></thead><tbody id="layer-materials"></tbody></table></div></div></section>
+      <section class="card" id="materials"><div class="section-head"><div class="eyebrow">Gathering list</div><h2>All placed items</h2><p>Counts come from the coordinate model. One door item creates its two listed block halves. Bring some extra stone and wood for temporary scaffolding.</p></div><div class="section-body"><div class="table-scroll"><table><thead><tr><th>Vanilla item</th><th class="num">Items</th><th class="num">Stacks + extra</th></tr></thead><tbody id="materials-list"></tbody></table></div></div></section>
+    </div>
+  </div>
+
+  <section class="card section"><div class="section-head"><div class="eyebrow">Exact instructions for the selected Y</div><h2>Placement rows · <span id="placements-heading">Y=0</span></h2><p>Each row is an uninterrupted X range at one Z coordinate. The CSV gives every single X, Y, Z and vanilla block ID. Finish deferred doors, lecterns and labels during villager setup.</p></div><div class="section-body"><div class="table-scroll"><table><thead><tr><th>Z</th><th>X</th><th>Block ID and state</th><th>Purpose</th><th class="num">Qty</th></tr></thead><tbody id="placements"></tbody></table></div></div></section>
+  <p class="footer">Designed for Minecraft Java Edition 26.3, normal villager trades. The 40 names and maximum levels were read from the installed 26.3 game data; actual offered books still depend on villager rolls. Decorative concept art can contain shapes that do not match vanilla block placement, so use the maps and CSV as the building instructions. The build is generated and checked for coordinate collisions, but has not been assembled inside a Minecraft world.</p>
+</main>
+<script>
+"use strict";
+const W=29,D=59,H=26;
+const C={
+ smooth:{id:"minecraft:smooth_stone",name:"Smooth Stone",color:"#aab3ab"},
+ bricks:{id:"minecraft:stone_bricks",name:"Stone Bricks",color:"#87968c"},
+ deep:{id:"minecraft:cobbled_deepslate",name:"Cobbled Deepslate",color:"#545d60"},
+ plank:{id:"minecraft:dark_oak_planks",name:"Dark Oak Planks",color:"#7d4b30"},
+ log:{id:"minecraft:dark_oak_log[axis=y]",name:"Dark Oak Log",color:"#5c3a26"},
+ eastRoof:{id:"minecraft:dark_oak_stairs[facing=east,half=bottom,shape=straight]",name:"Dark Oak Stairs",color:"#915c36"},
+ westRoof:{id:"minecraft:dark_oak_stairs[facing=west,half=bottom,shape=straight]",name:"Dark Oak Stairs",color:"#915c36"},
+ southStep:{id:"minecraft:stone_brick_stairs[facing=south,half=bottom,shape=straight]",name:"Stone Brick Stairs",color:"#e9be79"},
+ slab:{id:"minecraft:dark_oak_slab[type=bottom]",name:"Dark Oak Slab",color:"#aa7047"},
+ pane:{id:"minecraft:glass_pane",name:"Glass Pane",color:"#96c8cf"},
+ lecternEast:{id:"minecraft:lectern[facing=east]",name:"Lectern",color:"#d2ac70"},
+ lecternWest:{id:"minecraft:lectern[facing=west]",name:"Lectern",color:"#d2ac70"},
+ doorWestLow:{id:"minecraft:dark_oak_door[facing=west,half=lower,hinge=left,open=false]",name:"Dark Oak Door",color:"#c38b51"},
+ doorWestHigh:{id:"minecraft:dark_oak_door[facing=west,half=upper,hinge=left,open=false]",name:"Dark Oak Door",color:"#c38b51"},
+ doorEastLow:{id:"minecraft:dark_oak_door[facing=east,half=lower,hinge=right,open=false]",name:"Dark Oak Door",color:"#c38b51"},
+ doorEastHigh:{id:"minecraft:dark_oak_door[facing=east,half=upper,hinge=right,open=false]",name:"Dark Oak Door",color:"#c38b51"},
+ signEast:{id:"minecraft:dark_oak_wall_sign[facing=east]",name:"Dark Oak Sign",color:"#efc780"},
+ signWest:{id:"minecraft:dark_oak_wall_sign[facing=west]",name:"Dark Oak Sign",color:"#efc780"},
+ fence:{id:"minecraft:dark_oak_fence",name:"Dark Oak Fence",color:"#ab7850"},
+ lantern:{id:"minecraft:lantern[hanging=true]",name:"Lantern",color:"#f2c46c"},
+ blue:{id:"minecraft:blue_wool",name:"Blue Wool",color:"#3f62a2"},
+ white:{id:"minecraft:white_wool",name:"White Wool",color:"#e7e4d9"}
+};
+const layers=Array.from({length:H},()=>Array(W*D).fill(null));
+const at=(x,y,z)=>layers[y]?.[z*W+x]??null;
+function put(x,y,z,key,why){
+ if(x<0||x>=W||y<0||y>=H||z<0||z>=D||!C[key])throw Error(`Invalid block ${x},${y},${z} ${key}`);
+ const old=at(x,y,z);if(old){if(old.key===key)return;throw Error(`Collision ${x},${y},${z}: ${old.key} / ${key}`)}
+ layers[y][z*W+x]={key,why};
+}
+function fill(x1,x2,y,z1,z2,key,why){for(let z=z1;z<=z2;z++)for(let x=x1;x<=x2;x++)put(x,y,z,key,why)}
+const enchantments=[
+ ["Protection",4],["Fire Protection",4],["Feather Falling",4],["Blast Protection",4],["Projectile Protection",4],
+ ["Respiration",3],["Aqua Affinity",1],["Thorns",3],["Depth Strider",3],["Sharpness",5],
+ ["Smite",5],["Bane of Arthropods",5],["Knockback",2],["Fire Aspect",2],["Looting",3],
+ ["Sweeping Edge",3],["Efficiency",5],["Silk Touch",1],["Unbreaking",3],["Fortune",3],
+ ["Power",5],["Punch",2],["Flame",1],["Infinity",1],["Luck of the Sea",3],
+ ["Lure",3],["Loyalty",3],["Impaling",5],["Riptide",3],["Channeling",1],
+ ["Multishot",1],["Quick Charge",3],["Piercing",4],["Density",5],["Breach",4],
+ ["Lunge",3],["Curse of Binding",1],["Curse of Vanishing",1],["Frost Walker",2],["Mending",1]
+];
+const booths=[];
+
+// The complete stone foundation and a wood strip in each central aisle.
+fill(0,28,0,0,6,"smooth","Front towers and gate foundation");
+fill(4,24,0,7,58,"smooth","Hall and stair-annex foundation");
+
+// Two hollow front towers, a five-block entrance and an upper balcony.
+for(const [a,b] of [[0,6],[22,28]]){
+ for(let y=1;y<=14;y++)for(let z=0;z<=6;z++)for(let x=a;x<=b;x++){
+  if(x!==a&&x!==b&&z!==0&&z!==6)continue;
+  if(z===6&&x===a+3&&y<=2)continue;
+  let key="smooth";
+  if([1,8].includes(y)&&(x===a||x===b)&&(z===0||z===6))key="deep";
+  if([3,4,10,11].includes(y)&&z===0&&x===a+3)key="pane";
+  if(x===a+2&&(z===0||z===6)&&[12,13].includes(y))key=y===12?"blue":"white";
+  put(x,y,z,key,"Front tower wall / window");
+ }
+ fill(a+1,b-1,14,1,5,"plank","Tower roof deck");
+ for(let z=0;z<=6;z++)for(let x=a;x<=b;x++)if(x===a||x===b||z===0||z===6)put(x,15,z,(x+z)%2?"bricks":"deep","Tower battlement");
+}
+for(let y=1;y<=6;y++)for(let z=0;z<=6;z++)for(let x=7;x<=21;x++){
+ if(y<=4&&x>=12&&x<=16)continue;
+ put(x,y,z,"smooth","Gatehouse and gate arch");
+}
+fill(7,21,7,0,6,"smooth","Walkable upper balcony");
+for(let z=0;z<=6;z++)for(let x=7;x<=21;x++)if(z===0||x===7||x===21)put(x,8,z,"bricks","Balcony parapet");
+for(let x=7;x<=21;x+=2)put(x,9,0,"bricks","Balcony crenellation");
+
+// Hall walls: two visible window bands, open lower gate and upper balcony door.
+for(let y=1;y<=13;y++)for(let z=7;z<=58;z++)for(const x of [4,24]){
+ const win=[3,4,10,11].includes(y)&&z>=10&&z<=46&&(z-10)%8===0;
+ put(x,y,z,win?"pane":"smooth","Outer hall wall / window");
+}
+for(let y=1;y<=13;y++)for(const z of [7,58])for(let x=5;x<=23;x++){
+ if(z===7&&x>=13&&x<=15&&((y>=1&&y<=4)||(y>=8&&y<=10)))continue;
+ if(z===58&&[11,14,17].includes(x)&&[3,4,10,11].includes(y)){put(x,y,z,"pane","Rear window");continue}
+ if(z===7&&[9,19].includes(x)&&[10,11].includes(y)){put(x,y,z,"pane","Upper front window");continue}
+ put(x,y,z,"smooth",z===7?"Front hall facade":"Rear hall facade");
+}
+
+// Upper trading floor and the stair return gallery. Keep the ascending stairwell open.
+fill(5,23,7,8,49,"plank","Second-floor deck");
+fill(13,20,7,56,57,"plank","Upper stair landing");
+fill(18,20,7,50,55,"plank","Upper return gallery");
+for(let z=50;z<=55;z++){
+ const y=z-49; // z=50 is stair Y=1; z=55 is stair Y=6.
+ for(let x=13;x<=15;x++){
+  for(let support=1;support<y;support++)put(x,support,z,"smooth","Stone stair support");
+  put(x,y,z,"southStep","Medieval stair flight to upper landing");
+ }
+ for(const x of [12,16])put(x,y+1,z,"fence","Stair side rail");
+ for(const x of [17,21])put(x,8,z,"fence","Upper return-gallery rail");
+}
+for(let z=7;z<=49;z++)for(let x=13;x<=15;x++){
+ if(z===7)continue; // clear floor-level threshold at the balcony door
+ if(at(x,0,z)?.key==="smooth")layers[0][z*W+x]={key:"plank",why:"Ground-floor center aisle"};
+}
+
+// Exactly ten booths per side on each of two floors: 4 × 10 × 1 villager.
+for(const floor of [0,1]){
+ const base=floor*7;
+ for(let row=0;row<10;row++){
+  const z=10+4*row;
+  for(const side of ["left","right"]){
+   const left=side==="left",rear=left?8:20,front=left?12:16;
+   const xMin=left?8:16,xMax=left?12:20,job=left?11:17,standing=left?10:18;
+   const id=floor*20+row*2+(left?1:2);
+   booths.push({id,floor,side,z,rear,front,job,standing,label:enchantments[id-1]});
+   // Continuous dividers above and below the booth, then a 2-high rear door and glazed front.
+   for(const dividerZ of [z-2,z+2])for(let y=base+1;y<=base+2;y++)for(let x=xMin;x<=xMax;x++)put(x,y,dividerZ,(x===rear||x===front)?"bricks":"plank","Booth side divider");
+   for(const edgeZ of [z-1,z+1])for(let y=base+1;y<=base+2;y++){
+    put(rear,y,edgeZ,"bricks","Rear booth frame");
+    put(front,y,edgeZ,"bricks","Aisle booth pillar");
+   }
+   put(rear,base+1,z,left?"doorWestLow":"doorEastLow","Rear service door: place during villager setup");
+   put(rear,base+2,z,left?"doorWestHigh":"doorEastHigh","Rear service door top");
+   put(front,base+1,z,"pane","Glazed trade opening");
+   put(front,base+2,z,"pane","Glazed trade opening");
+   put(job,base+1,z,left?"lecternEast":"lecternWest","One librarian lectern: place during villager setup");
+   put(job,base+3,z,"plank","Sign backing / timber lintel");
+   put(front,base+3,z,left?"signEast":"signWest","Write the confirmed enchantment and level");
+  }
+ }
+}
+
+// Hall ceiling lamps: lower ones hang from the upper floor; upper ones hang from beams.
+for(const z of [8,16,24,32,40,48]){
+ put(14,6,z,"lantern","Ground-floor hanging lantern");
+ fill(12,16,13,z,z,"log","Upper-floor lantern crossbeam");
+ put(14,12,z,"lantern","Upper-floor hanging lantern");
+}
+
+// Steep dark oak roof: exact stair row at every X, with masonry gables at each end.
+const roofY=x=>14+Math.min(x-3,25-x);
+for(const z of [7,58])for(let x=4;x<=24;x++)for(let y=14;y<roofY(x);y++){
+ if(at(x,y,z))continue;
+ const upperWindow=x===14&&[18,19,20].includes(y);
+ put(x,y,z,upperWindow?"pane":"bricks","Castle roof gable / high window");
+}
+for(let x=3;x<=25;x++)for(let z=7;z<=58;z++){
+ const y=roofY(x),key=x===14?"slab":x<14?"eastRoof":"westRoof";
+ put(x,y,z,key,x===14?"Dark oak roof ridge":"Dark oak pitched roof");
+}
+// Validate the plan's most important movement and villager spaces.
+if(booths.length!==40||enchantments.length!==40)throw Error("Expected exactly 40 librarians");
+for(const b of booths){
+ const y=b.floor*7+1;
+ if(at(b.standing,y,b.z)||at(b.standing,y+1,b.z))throw Error(`Blocked villager ${b.id}`);
+ if(at(b.job,y,b.z)?.key!==(b.side==="left"?"lecternEast":"lecternWest"))throw Error(`Missing lectern ${b.id}`);
+ if(at(b.rear,y,b.z)?.key!==(b.side==="left"?"doorWestLow":"doorEastLow"))throw Error(`Missing rear door ${b.id}`);
+ if(at(b.front,y,b.z)?.key!=="pane")throw Error(`Missing glass ${b.id}`);
+}
+for(const floor of [0,1])for(let z=8;z<=49;z++)for(let x=13;x<=15;x++)for(let y=floor*7+1;y<=floor*7+3;y++)if(at(x,y,z))throw Error(`Blocked aisle ${x},${y},${z}`);
+for(let i=0;i<6;i++)if(at(14,i+1,50+i)?.key!=="southStep")throw Error(`Stair step ${i+1} missing`);
+window.LIBRARIAN_CASTLE_DATA={width:W,depth:D,height:H,layers,catalog:C,booths,enchantments};
+
+const $=id=>document.getElementById(id);
+const esc=s=>String(s).replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;","\"":"&quot;","'":"&#39;"}[c]));
+let currentY=0,currentFloor=0,selected={x:14,z:0};
+const roman=n=>["I","II","III","IV","V"][n-1]||String(n);
+const label=b=>`${b.label[0]} ${roman(b.label[1])}`;
+const notes=[
+ "Foundation: mark X=0–28 and Z=0–58. The gate faces north at Z=0.",
+ "Ground-floor booth frames, glass trade fronts, rear service doors and lecterns begin here. Defer doors and lecterns until you are ready to move villagers.",
+ "Finish the two-block-high ground-floor booth walls and both halves of every rear door.",
+ "Add the named booth signs at Y=3, backed by dark oak planks. Add first-band wall windows.",
+ "Close the lower front entry above its four-block opening; keep the public aisle clear.",
+ "Complete outer walls. The ground floor remains open to the upper deck.",
+ "Hang lower-floor lanterns from the Y=7 deck after the deck exists.",
+ "Build the full second-floor deck, gate balcony and upper stair landing. Keep the Z=50–55 stair flight open.",
+ "Upper-floor booth frames and first wall band begin. The return gallery connects the stairs to the upper aisle.",
+ "Finish upper booth frames and rear-door tops. The upper balcony parapet is also on this layer.",
+ "Write the upper booth signs after each trade is locked; finish second-band windows.",
+ "Raise the facade, towers and exterior walls around the upper trading floor.",
+ "Hang upper-floor lanterns only after their Y=13 dark oak crossbeams are in place.",
+ "Build crossbeams and the top of the tall outer wall.",
+ "Cap both towers and start the roof gables; the upper trading floor stays clear beneath.",
+ "Add tower battlements and the first pitched dark oak roof rows.",
+ "Continue the stair-shaped dark oak roof and front/rear stone gables.",
+ "Continue the roof one block inward on both sides.",
+ "Continue the roof; the gable high windows appear near the peak.",
+ "Continue the roof and keep the centerline clear for the ridge.",
+ "Continue the roof and high gable glazing.",
+ "Continue the roof toward X=14.",
+ "Continue the roof toward X=14.",
+ "Continue the roof toward X=14.",
+ "Place the last two sloped roof rows beside the ridge.",
+ "Finish the X=14 dark oak slab ridge from Z=7 to Z=58."
+];
+function totals(cells){const map=new Map();for(const c of cells)if(c){const n=C[c.key].name;map.set(n,(map.get(n)||0)+1)}return [...map].sort((a,b)=>b[1]-a[1])}
+function renderMaterials(){const t=totals(layers.flat());$("materials-list").innerHTML=t.map(([n,spaces])=>{const q=n==="Dark Oak Door"?spaces/2:spaces;return `<tr><td>${esc(n)}</td><td class="num">${q}</td><td class="num">${Math.floor(q/64)} + ${q%64}</td></tr>`}).join("")}
+function renderFloor(){
+ const down=currentFloor===0;$("floor-down").setAttribute("aria-pressed",down);$("floor-up").setAttribute("aria-pressed",!down);
+ $("stall-heading").textContent=down?"Ground floor · librarians 01–20":"Upper floor · librarians 21–40";
+ $("stall-list").innerHTML=booths.filter(b=>b.floor===currentFloor).map(b=>`<div class="stall-row"><b>${String(b.id).padStart(2,"0")}</b><span>${esc(label(b))}<br><small>${b.side==="left"?"West":"East"} booth · Z=${b.z}</small></span><small>lectern X=${b.job}<br>door X=${b.rear}</small></div>`).join("");
+ const svg=$("floor-map"),s=12,l=31,t=34,x0=4,x1=24,z0=7,z1=58,base=currentFloor*7;
+ svg.setAttribute("viewBox",`0 0 ${l+(x1-x0+1)*s+12} ${t+(z1-z0+1)*s+24}`);
+ let out=`<text x="${l+10*s}" y="18" text-anchor="middle" class="map-title">NORTH · FRONT · Z=7</text>`;
+ for(let x=x0;x<=x1;x+=2)out+=`<text x="${l+(x-x0)*s+s/2}" y="${t-5}" text-anchor="middle" class="axis">${x}</text>`;
+ for(let z=z0;z<=z1;z++){
+  if(z%4===0||z===z0||z===z1)out+=`<text x="${l-6}" y="${t+(z-z0)*s+s*.75}" text-anchor="end" class="axis">${z}</text>`;
+  for(let x=x0;x<=x1;x++){
+   const top=at(x,base+1,z),floor=at(x,base,z),cell=top||floor;
+   let color=cell?C[cell.key].color:"#17241e";
+   if(!top&&x>=13&&x<=15&&z<=49)color="#b5aa8d";
+   if(!top&&(x>=5&&x<=7||x>=21&&x<=23)&&z<=49)color="#7c9286";
+   if(currentFloor===1&&x>=18&&x<=20&&z>=50&&z<=56)color="#e9be79";
+   if(currentFloor===0&&x>=13&&x<=15&&z>=50&&z<=55)color="#e9be79";
+   out+=`<rect x="${l+(x-x0)*s}" y="${t+(z-z0)*s}" width="${s}" height="${s}" fill="${color}" stroke="#102018" stroke-width=".6"><title>X=${x}, Z=${z}: ${top?C[top.key].name:floor?C[floor.key].name:"Air"}</title></rect>`;
+  }
+ }
+ for(const b of booths.filter(b=>b.floor===currentFloor))out+=`<text x="${l+(b.standing-x0)*s+s/2}" y="${t+(b.z-z0)*s+s*.78}" text-anchor="middle" font-size="7" font-weight="900" fill="#fff7d6">${b.id}</text>`;
+ out+=`<text x="${l+10*s}" y="${t+(z1-z0+1)*s+18}" text-anchor="middle" class="map-title">SOUTH · STAIRS / BACK · Z=58</text>`;
+ svg.innerHTML=out;
+}
+function renderMap(){
+ const svg=$("layer-map"),s=13,l=35,t=36;
+ svg.setAttribute("viewBox",`0 0 ${l+D*s+12} ${t+W*s+22}`);
+ let out=`<text x="${l+D*s/2}" y="18" text-anchor="middle" class="map-title">NORTH · Z=0  →  Z=58 · SOUTH</text>`;
+ for(let z=0;z<D;z+=4)out+=`<text x="${l+z*s+s/2}" y="${t-6}" text-anchor="middle" class="axis">${z}</text>`;
+ for(let x=0;x<W;x++){
+  if(x%2===0||x===W-1)out+=`<text x="${l-7}" y="${t+x*s+s*.75}" text-anchor="end" class="axis">${x}</text>`;
+  for(let z=0;z<D;z++){
+   const c=at(x,currentY,z),color=c?C[c.key].color:"#19251f",sel=x===selected.x&&z===selected.z;
+   out+=`<rect class="cell" data-x="${x}" data-z="${z}" x="${l+z*s}" y="${t+x*s}" width="${s}" height="${s}" fill="${color}" ${sel?'stroke="#fff3bd" stroke-width="2"':""}><title>X=${x}, Y=${currentY}, Z=${z} · ${c?C[c.key].id:"air"}</title></rect>`;
+  }
+ }
+ out+=`<text x="${l+D*s/2}" y="${t+W*s+17}" text-anchor="middle" class="map-title">X=0 WEST AT TOP  ↓  X=28 EAST AT BOTTOM</text>`;
+ svg.innerHTML=out;
+ svg.querySelectorAll("rect").forEach(el=>el.addEventListener("click",()=>{selected={x:+el.dataset.x,z:+el.dataset.z};renderInspector();renderMap()}));
+}
+function renderInspector(){const c=at(selected.x,currentY,selected.z);$("inspect-x").value=selected.x;$("inspect-z").value=selected.z;$("inspector").innerHTML=`<strong>X=${selected.x}, Y=${currentY}, Z=${selected.z}</strong><br>${c?`${esc(C[c.key].name)} · ${esc(c.why)}<br><code>${esc(C[c.key].id)}</code>`:"Air · keep this block space empty"}`}
+function renderPlacements(){
+ const rows=[];for(let z=0;z<D;z++)for(let x=0;x<W;){const c=at(x,currentY,z);if(!c){x++;continue}let end=x;while(end+1<W){const n=at(end+1,currentY,z);if(!n||n.key!==c.key||n.why!==c.why)break;end++}rows.push(`<tr><td>${z}</td><td>${x===end?x:`${x}–${end}`}</td><td><code>${esc(C[c.key].id)}</code></td><td>${esc(c.why)}</td><td class="num">${end-x+1}</td></tr>`);x=end+1}
+ $("placements").innerHTML=rows.join("");$("placements-heading").textContent=`Y=${currentY}`;
+}
+function renderLayer(){
+ $("layer-title").textContent=`Y=${currentY}`;$("layer-label").textContent=`Y ${String(currentY).padStart(2,"0")}`;$("layer-slider").value=currentY;
+ $("prev").disabled=currentY===0;$("next").disabled=currentY===H-1;
+ $("layer-note").textContent=notes[currentY];const cells=layers[currentY],t=totals(cells),qty=cells.filter(Boolean).length;
+ $("layer-count").textContent=`${qty.toLocaleString()} placed block spaces`;
+ $("layer-summary").textContent=`Layer Y=${currentY}. ${t.length} material types. The map and table show its finished state.`;
+ $("layer-materials").innerHTML=t.map(([n,q])=>`<tr><td>${esc(n)}</td><td class="num">${q}</td></tr>`).join("");
+ const keys=[...new Set(cells.filter(Boolean).map(c=>c.key))];$("legend").innerHTML=keys.map(k=>`<span><i style="background:${C[k].color}"></i>${esc(C[k].name)}</span>`).join("");
+ renderMap();renderInspector();renderPlacements();
+}
+$("floor-down").addEventListener("click",()=>{currentFloor=0;renderFloor()});
+$("floor-up").addEventListener("click",()=>{currentFloor=1;renderFloor()});
+$("prev").addEventListener("click",()=>{currentY=Math.max(0,currentY-1);renderLayer()});
+$("next").addEventListener("click",()=>{currentY=Math.min(H-1,currentY+1);renderLayer()});
+$("layer-slider").addEventListener("input",e=>{currentY=+e.target.value;renderLayer()});
+for(const [id,max,key] of [["inspect-x",W-1,"x"],["inspect-z",D-1,"z"]])$(id).addEventListener("change",e=>{const n=Number(e.target.value);if(Number.isInteger(n)){selected[key]=Math.max(0,Math.min(max,n))}renderInspector();renderMap()});
+const layerPanel=$("layer-panel"),fullscreenButton=$("layer-fullscreen");
+function syncFullscreenButton(){const active=document.fullscreenElement===layerPanel||layerPanel.classList.contains("layer-fullscreen-fallback");fullscreenButton.textContent=active?"Exit full screen":"Full screen";fullscreenButton.setAttribute("aria-pressed",String(active));fullscreenButton.setAttribute("aria-label",active?"Exit layer full screen":"Open layer in full screen")}
+function closeFullscreenFallback(){layerPanel.classList.remove("layer-fullscreen-fallback");document.documentElement.classList.remove("layer-focus");syncFullscreenButton()}
+fullscreenButton.addEventListener("click",async()=>{
+ if(document.fullscreenElement===layerPanel){await document.exitFullscreen();return}
+ if(layerPanel.classList.contains("layer-fullscreen-fallback")){closeFullscreenFallback();return}
+ try{if(!layerPanel.requestFullscreen)throw Error("Fullscreen API unavailable");await layerPanel.requestFullscreen()}
+ catch{layerPanel.classList.add("layer-fullscreen-fallback");document.documentElement.classList.add("layer-focus");syncFullscreenButton()}
+});
+document.addEventListener("fullscreenchange",syncFullscreenButton);
+document.addEventListener("keydown",e=>{if(e.key==="Escape"&&layerPanel.classList.contains("layer-fullscreen-fallback"))closeFullscreenFallback()});
+$("download").addEventListener("click",()=>{
+ const lines=["x,y,z,block_id,purpose"];
+ for(let y=0;y<H;y++)for(let z=0;z<D;z++)for(let x=0;x<W;x++){const c=at(x,y,z);if(c)lines.push([x,y,z,C[c.key].id,c.why].map(v=>`"${String(v).replaceAll('"','""')}"`).join(","))}
+ const url=URL.createObjectURL(new Blob([lines.join("\n")],{type:"text/csv;charset=utf-8"}));const a=document.createElement("a");a.href=url;a.download="stonewatch-library-40-blocks.csv";a.click();setTimeout(()=>URL.revokeObjectURL(url),1000);
+});
+renderFloor();renderMaterials();renderLayer();
+</script>
+</body>
+</html>
