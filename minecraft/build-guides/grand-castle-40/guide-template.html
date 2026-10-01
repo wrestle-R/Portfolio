@@ -1,0 +1,108 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Asterfall Castle · 40-librarian build guide</title>
+<style>
+:root{color-scheme:light;--paper:#f4f2eb;--ink:#22291f;--muted:#676f62;--line:#d4d7cd;--accent:#516444;--map:#172019;--mapline:#29352b;--focus:#b1853c}*{box-sizing:border-box}html{scroll-behavior:smooth}body{margin:0;background:var(--paper);color:var(--ink);font:14px/1.45 system-ui,-apple-system,"Segoe UI",sans-serif}button,input,select{font:inherit}button{cursor:pointer}button:disabled{opacity:.35;cursor:default}button,input,select{border:1px solid var(--line);border-radius:5px;background:#fffef8;color:var(--ink)}button{min-height:36px;padding:6px 13px;font-weight:600}button:hover:not(:disabled){border-color:var(--accent)}button:focus-visible,input:focus-visible,select:focus-visible{outline:3px solid var(--focus);outline-offset:3px}main{max-width:1450px;margin:auto;padding:22px 28px 48px}h1{font-size:clamp(22px,3vw,34px);line-height:1.1;letter-spacing:-.045em;margin:0}h2{font-size:22px;letter-spacing:-.025em;margin:0 0 12px}p{margin:0;color:var(--muted)}.page-heading{display:flex;align-items:center;justify-content:space-between;gap:14px;margin-bottom:18px}.dimensions{font-size:12px;white-space:nowrap}.builder{height:calc(100dvh - 105px);min-height:500px;max-height:980px;background:#fffef8;border:1px solid var(--line);padding:16px;display:flex;flex-direction:column;gap:10px}.builder-top{display:flex;justify-content:space-between;align-items:center;gap:12px;flex:none}.layer-title{font-size:21px;font-weight:700;letter-spacing:-.035em;line-height:1.1}.layer-title small{font-size:12px;font-weight:400;letter-spacing:0;color:var(--muted);margin-left:10px}.primary{background:var(--ink);color:#fffef8;border-color:var(--ink)}#layer-note{font-size:13px;line-height:1.35;max-width:1000px;min-height:18px}.controls{display:grid;grid-template-columns:auto auto auto minmax(70px,1fr);align-items:center;gap:8px;flex:none}.controls select{min-height:36px;padding:5px 10px;font-variant-numeric:tabular-nums}input[type=range]{width:100%;accent-color:var(--accent);height:20px;border:0;background:transparent}.legend{display:flex;flex-wrap:wrap;gap:4px 13px;flex:none;min-height:15px}.legend span{font-size:10px;color:var(--muted);display:inline-flex;align-items:center;gap:5px;white-space:nowrap}.legend i{width:10px;height:10px;display:inline-block;border:1px solid #27342933}.map-frame{flex:1;min-height:0;background:var(--map);display:grid;place-items:center;overflow:hidden}.map-frame svg{width:100%;height:100%;display:block;touch-action:manipulation}.map-cell{stroke:var(--mapline);stroke-width:.65}.map-cell:hover{stroke:#ffe1a1;stroke-width:2}.map-axis{fill:#9daa96;font:10px ui-monospace,monospace}.map-caption{fill:#e2d4a4;font:600 10px system-ui;letter-spacing:.08em}.inspect{display:grid;grid-template-columns:minmax(0,1fr) auto;gap:12px;align-items:center;flex:none;font-size:12px}.inspect strong{font-variant-numeric:tabular-nums}.inspect code{color:var(--muted);font-size:11px;overflow-wrap:anywhere}.coordinates{display:flex;gap:8px}.coordinates label{display:flex;align-items:center;gap:5px;color:var(--muted)}.coordinates input{width:54px;padding:5px;min-height:32px}.preview-section{margin-top:44px}.preview-heading{display:flex;justify-content:space-between;align-items:center;gap:16px;flex-wrap:wrap}.preview-heading h2{margin:0}.preview-tabs{display:flex;gap:6px}.preview-tabs button[aria-pressed=true]{background:var(--ink);color:var(--paper);border-color:var(--ink)}figure{margin:14px 0 0}figure img{display:block;width:100%;height:auto;aspect-ratio:8/5;object-fit:contain;background:#b9d9eb}figcaption{margin-top:9px;font-size:12px;color:var(--muted)}.materials{margin-top:42px;border-top:1px solid var(--line);padding-top:25px}.materials p{font-size:12px;margin-bottom:18px}table{border-collapse:collapse;width:100%;font-size:13px}th{text-align:left;font-size:11px;color:var(--muted);font-weight:600;padding:0 8px 10px}td{padding:8px;border-bottom:1px solid #dedfd655}tbody tr:nth-child(odd){background:#e9eae144}.num{text-align:right;font-variant-numeric:tabular-nums}.material-name{display:flex;align-items:center;gap:10px}.material-name i{width:13px;height:13px;border:1px solid #26342a22}.builder:fullscreen,.builder.focus-mode{width:100vw;height:100dvh;min-height:0;max-height:none;background:var(--paper);padding:14px 18px;border:0}.builder.focus-mode{position:fixed;inset:0;z-index:1000}html.focus-lock{overflow:hidden}.builder:fullscreen::backdrop{background:var(--paper)}.builder:fullscreen .map-frame,.builder.focus-mode .map-frame{flex:1;min-height:0}noscript{display:block;padding:25px;color:#943e29}@media(max-width:650px){main{padding:14px 10px 28px}.page-heading{align-items:start;gap:6px;flex-direction:column;margin-bottom:12px}.dimensions{font-size:11px}.builder{height:calc(100dvh - 92px);min-height:0;padding:10px;gap:7px}.layer-title{font-size:19px}.layer-title small{font-size:10px;margin-left:6px}#fullscreen{padding:5px 9px;font-size:11px;min-height:32px}#layer-note{font-size:11px;min-height:30px}.controls{grid-template-columns:auto auto auto;gap:6px}.controls button,.controls select{font-size:12px;padding:5px 9px;min-height:32px}.controls input{grid-column:1/-1;height:14px}.legend{gap:3px 9px}.legend span{font-size:9px;gap:4px}.legend i{width:8px;height:8px}.inspect{gap:5px;font-size:10px;grid-template-columns:minmax(0,1fr) 72px}.inspect code{font-size:9px}.coordinates{flex-direction:column;gap:3px}.coordinates label{justify-content:space-between;gap:3px}.coordinates input{width:48px;min-height:25px;padding:2px 4px;font-size:11px}.preview-section{margin-top:30px}.preview-heading{gap:9px}h2{font-size:20px}.preview-tabs button{font-size:11px;padding:5px 9px;min-height:32px}figcaption{font-size:11px}table{font-size:12px}th,td{padding-left:5px;padding-right:5px}.builder:fullscreen,.builder.focus-mode{padding:10px}.materials{margin-top:30px}}@media(max-height:550px) and (min-width:651px){.builder{min-height:0;height:calc(100dvh - 80px)}.page-heading{margin-bottom:10px}main{padding-top:14px}.builder{gap:6px;padding:10px}#layer-note{font-size:11px}.legend span{font-size:9px}}
+</style>
+</head>
+<body>
+<main>
+  <div class="page-heading"><h1>Asterfall Castle</h1><p class="dimensions">40 librarians · 57 × 79 blocks · Y=0–49</p></div>
+  <section class="builder" id="builder" aria-label="Layer by layer castle builder">
+    <div class="builder-top"><div class="layer-title">Layer <span id="current-y">Y=0</span><small id="layer-count"></small></div><button id="fullscreen" type="button" aria-pressed="false">Full screen</button></div>
+    <p id="layer-note"></p>
+    <div class="controls"><button id="previous" type="button">← Previous</button><select id="layer-select" aria-label="Choose a build layer"></select><button class="primary" id="next" type="button">Next →</button><input id="layer-slider" type="range" min="0" max="49" value="0" aria-label="Choose a build layer"></div>
+    <div class="legend" id="legend" aria-label="Materials in this layer"></div>
+    <div class="map-frame"><svg id="block-map" role="img" aria-label="Exact top-down map. Z runs left to right and X runs top to bottom."></svg></div>
+    <div class="inspect"><div id="inspector" aria-live="polite"></div><div class="coordinates"><label for="pick-x">X <input id="pick-x" type="number" inputmode="numeric" min="0" max="56" value="28"></label><label for="pick-z">Z <input id="pick-z" type="number" inputmode="numeric" min="0" max="78" value="4"></label></div></div>
+  </section>
+
+  <section class="preview-section" aria-labelledby="preview-title">
+    <div class="preview-heading"><h2 id="preview-title">The finished castle</h2><div class="preview-tabs" aria-label="Castle preview"><button type="button" data-preview="exterior" aria-pressed="true">Exterior</button><button type="button" data-preview="front" aria-pressed="false">Gatehouse</button><button type="button" data-preview="upper" aria-pressed="false">Great hall</button></div></div>
+    <figure><img id="preview-image" src="grand-castle-40/renders/01-exterior.png" alt="Complete castle with four pointed octagonal towers, flags, dormers, tall arched windows and a stone gate balcony" width="1920" height="1200" loading="lazy"><figcaption id="preview-caption">Rendered from this guide’s block map. Terrain, lighting and villager poses are illustrative.</figcaption></figure>
+  </section>
+
+  <section class="materials" aria-labelledby="materials-title"><h2 id="materials-title">Items for the complete build</h2><p id="total-note"></p><table><thead><tr><th>Item</th><th class="num">Quantity</th><th class="num">Stacks + extra</th></tr></thead><tbody id="item-list"></tbody></table></section>
+  <noscript>Enable JavaScript to use the layer map and calculate the complete item list.</noscript>
+</main>
+<script>
+__CASTLE_MODEL__
+</script>
+<script>
+(() => {
+const data=window.GRAND_CASTLE_DATA,{width:W,depth:D,height:H,layers,catalog:C}=data;
+const $=id=>document.getElementById(id),esc=s=>String(s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+let y=0,selected={x:28,z:4};
+try{const saved=Number(localStorage.getItem('asterfall:layer'));if(Number.isInteger(saved)&&saved>=0&&saved<H)y=saved}catch{}
+const at=(x,z)=>layers[y][z*W+x];
+$('layer-select').innerHTML=Array.from({length:H},(_,i)=>`<option value="${i}">Y=${i}</option>`).join('');
+function inspect(){
+ const c=at(selected.x,selected.z);$('pick-x').value=selected.x;$('pick-z').value=selected.z;
+ $('inspector').innerHTML=`<strong>X=${selected.x} · Y=${y} · Z=${selected.z}</strong> — ${c?esc(C[c.key].name):'Air · leave this space empty'}<br><code>${c?esc(C[c.key].id):'No block on this layer'}</code>`;
+ if(c)$('inspector').title=c.why;else $('inspector').removeAttribute('title');
+}
+function drawMap(){
+ const svg=$('block-map'),s=12,l=26,t=33;
+ svg.setAttribute('viewBox',`0 0 ${l+D*s+12} ${t+W*s+22}`);
+ let out=`<text x="${l+D*s/2}" y="13" text-anchor="middle" class="map-caption">NORTH · Z=0  →  SOUTH · Z=78</text>`;
+ for(let z=0;z<D;z+=4)out+=`<text x="${l+z*s+s/2}" y="${t-6}" text-anchor="middle" class="map-axis">${z}</text>`;
+ for(let x=0;x<W;x++){
+  if(x%4===0)out+=`<text x="${l-6}" y="${t+x*s+s*.75}" text-anchor="end" class="map-axis">${x}</text>`;
+  for(let z=0;z<D;z++){
+   const c=at(x,z),active=x===selected.x&&z===selected.z;
+   out+=`<rect class="map-cell" data-x="${x}" data-z="${z}" x="${l+z*s}" y="${t+x*s}" width="${s}" height="${s}" fill="${c?C[c.key].color:'#172019'}" ${active?'style="stroke:#fff0b1;stroke-width:2.5"':''}><title>X=${x}, Y=${y}, Z=${z} · ${c?esc(C[c.key].id):'air'}</title></rect>`;
+  }
+ }
+ out+=`<text x="${l+D*s/2}" y="${t+W*s+16}" text-anchor="middle" class="map-caption">WEST · X=0 AT TOP  ↓  EAST · X=56 AT BOTTOM</text>`;
+ svg.innerHTML=out;
+}
+function render(){
+ const cells=layers[y].filter(Boolean),keys=[...new Set(cells.map(c=>c.key))],materials=new Map();
+ for(const key of keys){const m=C[key];if(!materials.has(m.name))materials.set(m.name,m.color);}
+ $('current-y').textContent=`Y=${y}`;$('layer-count').textContent=`${cells.length.toLocaleString()} blocks`;
+ $('layer-note').textContent=data.notes[y];$('previous').disabled=y===0;$('next').disabled=y===H-1;
+ $('layer-select').value=y;$('layer-slider').value=y;
+ $('legend').innerHTML=[...materials].map(([name,color])=>`<span><i style="background:${color}"></i>${esc(name)}</span>`).join('');
+ inspect();drawMap();try{localStorage.setItem('asterfall:layer',String(y))}catch{}
+}
+const go=n=>{y=Math.max(0,Math.min(H-1,n));render()};
+$('previous').addEventListener('click',()=>go(y-1));$('next').addEventListener('click',()=>go(y+1));
+$('layer-select').addEventListener('change',e=>go(Number(e.target.value)));$('layer-slider').addEventListener('input',e=>go(Number(e.target.value)));
+$('block-map').addEventListener('click',e=>{const cell=e.target.closest('[data-x]');if(cell){selected={x:Number(cell.dataset.x),z:Number(cell.dataset.z)};inspect();drawMap()}});
+for(const [id,key,max]of [['pick-x','x',W-1],['pick-z','z',D-1]])$(id).addEventListener('change',e=>{const n=Number(e.target.value);if(Number.isInteger(n))selected[key]=Math.max(0,Math.min(max,n));inspect();drawMap()});
+const panel=$('builder'),full=$('fullscreen');
+function syncFull(){const active=document.fullscreenElement===panel||panel.classList.contains('focus-mode');full.textContent=active?'Exit full screen':'Full screen';full.setAttribute('aria-pressed',String(active));}
+function closeFallback(){panel.classList.remove('focus-mode');document.documentElement.classList.remove('focus-lock');syncFull()}
+full.addEventListener('click',async()=>{
+ if(document.fullscreenElement===panel){await document.exitFullscreen();return}
+ if(panel.classList.contains('focus-mode')){closeFallback();return}
+ try{if(!panel.requestFullscreen)throw Error('No Fullscreen API');await panel.requestFullscreen()}catch{panel.classList.add('focus-mode');document.documentElement.classList.add('focus-lock');syncFull()}
+});
+document.addEventListener('fullscreenchange',syncFull);
+document.addEventListener('keydown',e=>{
+ if(e.key==='Escape')closeFallback();
+ if(['INPUT','SELECT','TEXTAREA'].includes(e.target.tagName))return;
+ if((document.fullscreenElement===panel||panel.classList.contains('focus-mode'))&&['ArrowLeft','ArrowRight'].includes(e.key)){e.preventDefault();go(y+(e.key==='ArrowRight'?1:-1))}
+});
+const previews={
+ exterior:['01-exterior.png','Complete castle with four pointed octagonal towers, flags, dormers, tall arched windows and a stone gate balcony','Rendered from this guide’s block map. Terrain, lighting and villager poses are illustrative.'],
+ front:['02-gatehouse.png','Front view of the castle gate, wide entrance stairs, stone balcony and two tall front spires','The finished north gate. The stairs lead to the raised terrace and the open passage beneath the balcony.'],
+ upper:['03-great-hall.png','Interior of the upper hall with arched librarian counters, bookshelves, planters and hanging lanterns','Twenty booths per floor: ten per side. The gap above each lectern stays open for trading. Move in one librarian per booth, lock its trade, then label its sign.']
+};
+document.querySelectorAll('[data-preview]').forEach(button=>button.addEventListener('click',()=>{
+ const [file,alt,caption]=previews[button.dataset.preview];$('preview-image').src=`grand-castle-40/renders/${file}`;$('preview-image').alt=alt;$('preview-caption').textContent=caption;
+ document.querySelectorAll('[data-preview]').forEach(b=>b.setAttribute('aria-pressed',String(b===button)));
+}));
+const totals=new Map(),colors=new Map();let spaces=0;
+for(const layer of layers)for(const c of layer)if(c){const m=C[c.key];totals.set(m.name,(totals.get(m.name)||0)+1);colors.set(m.name,m.color);spaces++;}
+const rows=[...totals].map(([name,count])=>[name,name==='Dark Oak Door'?count/2:count]).sort((a,b)=>b[1]-a[1]);
+$('item-list').innerHTML=rows.map(([name,count])=>`<tr><td><span class="material-name"><i style="background:${colors.get(name)}"></i>${esc(name)}</span></td><td class="num">${count.toLocaleString()}</td><td class="num">${Math.floor(count/64)} + ${count%64}</td></tr>`).join('');
+$('total-note').textContent=`${spaces.toLocaleString()} placed block spaces, including the terrace and decoration. Door quantities count items, not halves. Use player-placed leaves. The coordinate model is checked; the build has not been tested inside Minecraft.`;
+window.ASTERFALL_UI={go,getLayer:()=>y};render();
+})();
+</script>
+</body>
+</html>
