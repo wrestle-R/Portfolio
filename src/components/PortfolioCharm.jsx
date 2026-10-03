@@ -24,6 +24,7 @@ function savedPosition(type) {
 }
 
 export default function PortfolioCharm({ type }) {
+  const charmRef = useRef(null);
   const audioRef = useRef(null);
   const dragRef = useRef(null);
   const positionRef = useRef(null);
@@ -33,9 +34,45 @@ export default function PortfolioCharm({ type }) {
   const [playing, setPlaying] = useState(false);
   const [audioError, setAudioError] = useState(false);
 
+  useEffect(() => {
+    const charm = charmRef.current;
+    let frame;
+    const constrainPosition = () => {
+      cancelAnimationFrame(frame);
+      frame = requestAnimationFrame(() => {
+        if (!window.matchMedia('(min-width: 1400px)').matches) return;
+        const bounds = charm.getBoundingClientRect();
+        const section = charm.parentElement.getBoundingClientRect();
+        const current = positionRef.current;
+        // Keep saved offsets inside the resized viewport and their own section.
+        // Section bounds allow stickers further down the page to remain scrollable.
+        const margin = 32;
+        const baseLeft = bounds.left - current.x;
+        const baseTop = bounds.top - current.y;
+        const next = {
+          x: Math.round(Math.max(margin - baseLeft, Math.min(current.x, window.innerWidth - margin - bounds.width - baseLeft))),
+          y: Math.round(Math.max(section.top + margin - baseTop, Math.min(current.y, section.bottom - margin - bounds.height - baseTop))),
+        };
+        if (next.x === current.x && next.y === current.y) return;
+        positionRef.current = next;
+        setPosition(next);
+      });
+    };
+    const observer = new ResizeObserver(constrainPosition);
+    observer.observe(charm);
+    observer.observe(charm.parentElement);
+    window.addEventListener('resize', constrainPosition);
+    constrainPosition();
+    return () => {
+      cancelAnimationFrame(frame);
+      observer.disconnect();
+      window.removeEventListener('resize', constrainPosition);
+    };
+  }, []);
+
   const startDrag = (event) => {
     if (event.button !== 0 || !event.target.closest('.portfolio-charm__object')) return;
-    if (!window.matchMedia('(min-width: 1600px) and (hover: hover) and (pointer: fine)').matches) return;
+    if (!window.matchMedia('(min-width: 1400px) and (hover: hover) and (pointer: fine)').matches) return;
     const bounds = event.currentTarget.getBoundingClientRect();
     dragRef.current = {
       pointerId: event.pointerId,
@@ -145,6 +182,7 @@ export default function PortfolioCharm({ type }) {
 
   return (
     <aside
+      ref={charmRef}
       className={`portfolio-charm portfolio-charm--${type}`}
       aria-label={labels[type]}
       style={{ '--charm-drag-x': `${position.x}px`, '--charm-drag-y': `${position.y}px` }}

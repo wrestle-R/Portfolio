@@ -266,9 +266,16 @@
     .portfolio-charm__note { transition: none; }
   }
 
-  @media (max-width: 1599px), (hover: none), (pointer: coarse) {
+  @media (max-width: 767px) {
     .portfolio-background,
     .portfolio-charm { display: none !important; }
+  }
+
+  @media (max-width: 1399px), (hover: none), (pointer: coarse) {
+    .portfolio-charm__hint,
+    .portfolio-charm__reset { display: none; }
+    .portfolio-charm__object,
+    .portfolio-charm__object:active { cursor: pointer; }
   }
 
   /* Focus and reduced motion must never wait for the entrance timeline. */
