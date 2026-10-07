@@ -1,6 +1,5 @@
 import { useEffect, useRef, useState } from 'react';
 import { Pause, Play, RotateCcw } from 'lucide-react';
-import { Link } from 'react-router-dom';
 
 const runningTimes = [
   ['5k', '26:43'],
@@ -203,10 +202,10 @@ export default function PortfolioCharm({ type }) {
           <img src={images[type]} alt="" loading="lazy" />
         </a>
       ) : type === 'minecraft' ? (
-        <Link to="/minecraft" className="portfolio-charm__object minecraft-charm__object" aria-label={labels[type]}>
+        <a href="https://mineccraft-portfolio.vercel.app/minecraft" target="_blank" rel="noopener noreferrer" className="portfolio-charm__object minecraft-charm__object" aria-label={labels[type]}>
           <img src={images[type]} alt="" loading="lazy" />
           <span className="minecraft-gamertag" aria-hidden="true">wrestle</span>
-        </Link>
+        </a>
       ) : type === 'headphones' ? (
         <>
           <audio ref={audioRef} preload="none" src="/unsweetened_lemonade-after-14s.mp3" />
