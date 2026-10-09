@@ -167,19 +167,6 @@
   .portfolio-charm__reset:focus-visible { outline: 2px solid oklch(var(--foreground)); outline-offset: 2px; }
 
   .minecraft-charm__object { --charm-rotation: 0deg; }
-  .minecraft-gamertag {
-    position: absolute;
-    top: -8%;
-    left: 50%;
-    padding: 2px 5px 3px;
-    background: rgb(35 36 39 / .7);
-    color: #fff;
-    font: 18px/1 Monocraft, monospace;
-    letter-spacing: 0;
-    text-shadow: 1px 1px 0 rgb(0 0 0 / .65);
-    transform: translateX(-50%);
-    white-space: nowrap;
-  }
 
   .portfolio-charm__play {
     position: absolute;
@@ -223,11 +210,6 @@
   .portfolio-charm__note strong { color: oklch(var(--foreground)); font-size: 14px; font-weight: 600; }
   .portfolio-charm__eyebrow { font: 10px/1.3 monospace; letter-spacing: .04em; text-transform: uppercase; }
   .portfolio-charm__hint { margin-top: 3px; font: 10px/1.2 monospace; opacity: .7; }
-  .portfolio-charm__times { display: grid; gap: 4px; margin: 4px 0 0; font: 12px/1.4 monospace; font-variant-numeric: tabular-nums; }
-  .portfolio-charm__times div { display: flex; justify-content: space-between; gap: 18px; }
-  .portfolio-charm__times dd { margin: 0; color: oklch(var(--foreground)); }
-  .portfolio-charm--shoe .portfolio-charm__note strong { font-size: 18px; letter-spacing: -.025em; }
-  .portfolio-charm--shoe .portfolio-charm__times { font-size: 13px; }
 
   @media (max-width: 1399px) {
     .portfolio-charm {
@@ -247,8 +229,6 @@
     .portfolio-charm__object { width: 118px; flex: 0 0 118px; }
     .portfolio-charm--guitar .portfolio-charm__object { width: 74px; flex-basis: 74px; }
     .portfolio-charm__note { top: 50%; left: 134px; transform: translateY(-45%); }
-    .portfolio-charm--shoe .portfolio-charm__note,
-    .portfolio-charm--laptop .portfolio-charm__note { right: 134px; left: auto; }
     .portfolio-charm:hover .portfolio-charm__note,
     .portfolio-charm:focus-within .portfolio-charm__note { transform: translateY(-50%); }
   }
@@ -257,8 +237,6 @@
     .portfolio-charm__object { width: 90px; flex-basis: 90px; }
     .portfolio-charm--guitar .portfolio-charm__object { width: 65px; flex-basis: 65px; }
     .portfolio-charm__note { left: 104px; min-width: 0; width: 194px; }
-    .portfolio-charm--shoe .portfolio-charm__note,
-    .portfolio-charm--laptop .portfolio-charm__note { right: 104px; }
   }
 
   @media (prefers-reduced-motion: reduce) {

@@ -1,13 +1,6 @@
 import { useEffect, useRef, useState } from 'react';
 import { Pause, Play, RotateCcw } from 'lucide-react';
 
-const runningTimes = [
-  ['5k', '26:43'],
-  ['10k', '56:24'],
-  ['15k', '1:30:03'],
-  ['21km', '2:08:21'],
-];
-
 const charmPositionKey = (type) => type === 'minecraft'
   ? 'portfolio-charm-position:minecraft:hero'
   : `portfolio-charm-position:${type}`;
@@ -202,9 +195,8 @@ export default function PortfolioCharm({ type }) {
           <img src={images[type]} alt="" loading="lazy" />
         </a>
       ) : type === 'minecraft' ? (
-        <a href="https://mineccraft-portfolio.vercel.app/minecraft" target="_blank" rel="noopener noreferrer" className="portfolio-charm__object minecraft-charm__object" aria-label={labels[type]}>
+        <a href="https://minecraft.russel.is-a.dev" target="_blank" rel="noopener noreferrer" className="portfolio-charm__object minecraft-charm__object" aria-label={labels[type]}>
           <img src={images[type]} alt="" loading="lazy" />
-          <span className="minecraft-gamertag" aria-hidden="true">wrestle</span>
         </a>
       ) : type === 'headphones' ? (
         <>
@@ -224,18 +216,14 @@ export default function PortfolioCharm({ type }) {
           <RotateCcw size={14} aria-hidden="true" />
         </button>
       )}
-      <div className="portfolio-charm__note">
-        {type === 'headphones' && <><span className="portfolio-charm__eyebrow">Nirvana 751 ANC</span><strong>what is life without music</strong><span>{audioError ? 'Audio could not play. Try again.' : playing ? 'click to pause' : 'click the headphones to listen'}</span></>}
-        {type === 'shoe' && <><span className="portfolio-charm__eyebrow">running · personal records</span><strong>Personal bests</strong><dl className="portfolio-charm__times">{runningTimes.map(([distance, time]) => <div key={distance}><dt>{distance}</dt><dd>{time}</dd></div>)}</dl></>}
-        {type === 'guitar' && <><span className="portfolio-charm__eyebrow">six strings, some downtime</span><strong>Cort AF500C</strong><span>acoustic guitar</span></>}
-        {type === 'laptop' && <><span className="portfolio-charm__eyebrow">daily companion</span><strong>Dell Inspiron 16 2-in-1</strong><span>Intel i7-1360P · 13th Gen</span><span>12 cores · 16 threads</span><span>16GB RAM · 1TB storage</span><span>1920×1080 · Intel Iris Xe Graphics</span></>}
-        {type === 'minecraft' && <><span className="portfolio-charm__eyebrow">another world, same builder</span><strong>Minecraft</strong><span>click to explore</span></>}
-        {type === 'blog' && <><span className="portfolio-charm__eyebrow">notes from the journey</span><strong>Read the blog</strong><span>thoughts, projects &amp; everything in between</span></>}
-        {type === 'football' && <><span className="portfolio-charm__eyebrow">football</span><strong>FOOTBALL IS LIFE</strong></>}
-        {type === 'hills' && <><span className="portfolio-charm__eyebrow">fresh air &amp; winding roads</span><strong>I like Hill stations</strong></>}
-        {type === 'arch' && <><span className="portfolio-charm__eyebrow">i use arch btw</span><strong>The Linux Experience</strong><span>read my Arch Linux story</span></>}
-        <span className="portfolio-charm__hint">drag to move</span>
-      </div>
+      {type === 'headphones' && (
+        <div className="portfolio-charm__note">
+          <span className="portfolio-charm__eyebrow">Nirvana 751 ANC</span>
+          <strong>what is life without music</strong>
+          <span>{audioError ? 'Audio could not play. Try again.' : playing ? 'click to pause' : 'click the headphones to listen'}</span>
+          <span className="portfolio-charm__hint">drag to move</span>
+        </div>
+      )}
     </aside>
   );
 }
