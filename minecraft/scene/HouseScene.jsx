@@ -221,6 +221,7 @@ export default function HouseScene({
           title={e.company}
           logo={e.logoDark}
           subtitle={e.role}
+          tech={e.tech}
           kind="experience"
           caption={`0${i + 1} / ${e.period}`}
           onClick={() => openPanel(e.id)}

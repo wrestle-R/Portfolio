@@ -1,5 +1,69 @@
 import { useEffect, useState } from "react";
 import { CanvasTexture, SRGBColorSpace, LinearMipmapLinearFilter } from "three";
+const EMPTY_TECH = [];
+
+function paintBlock(ctx, x, y, size, top, left, right) {
+  const face = (points, color) => {
+    ctx.fillStyle = color;
+    ctx.beginPath();
+    points.forEach(([px, py], index) => index ? ctx.lineTo(px, py) : ctx.moveTo(px, py));
+    ctx.closePath();
+    ctx.fill();
+  };
+  face([[x, y], [x + size, y + size / 2], [x, y + size], [x - size, y + size / 2]], top);
+  face([[x - size, y + size / 2], [x, y + size], [x, y + size * 2], [x - size, y + size * 1.5]], left);
+  face([[x, y + size], [x + size, y + size / 2], [x + size, y + size * 1.5], [x, y + size * 2]], right);
+}
+
+function paintPosterArt(ctx, experience) {
+  ctx.fillStyle = "#24382f";
+  ctx.fillRect(898, 132, 306, 336);
+  ctx.strokeStyle = "#d4b77a18";
+  ctx.lineWidth = 1;
+  for (let x = 910; x < 1204; x += 24) {
+    for (let y = 144; y < 468; y += 24) ctx.strokeRect(x, y, 24, 24);
+  }
+  // Block-built silhouettes keep the illustration native to the house.
+  if (experience) {
+    ctx.strokeStyle = "#be9b5c";
+    ctx.lineWidth = 8;
+    ctx.beginPath();
+    ctx.moveTo(953, 364); ctx.lineTo(953, 320); ctx.lineTo(1050, 320);
+    ctx.lineTo(1050, 240); ctx.lineTo(1150, 240); ctx.lineTo(1150, 364);
+    ctx.stroke();
+    paintBlock(ctx, 1050, 170, 67, "#e4c88b", "#9a7847", "#c19a5c");
+    paintBlock(ctx, 953, 341, 36, "#a8c5aa", "#527b65", "#70987b");
+    paintBlock(ctx, 1150, 341, 36, "#a8c5aa", "#527b65", "#70987b");
+    ctx.fillStyle = "#fff0c2";
+    ctx.fillRect(1041, 201, 18, 18);
+  } else {
+    paintBlock(ctx, 1050, 216, 108, "#dcbe83", "#765337", "#a27a4b");
+    // The three-by-three crafting grid follows the top face's perspective.
+    ctx.strokeStyle = "#765337";
+    ctx.lineWidth = 5;
+    for (const offset of [1 / 3, 2 / 3]) {
+      ctx.beginPath();
+      ctx.moveTo(1050 - 108 * offset, 216 + 54 * offset);
+      ctx.lineTo(1158 - 108 * offset, 270 + 54 * offset);
+      ctx.moveTo(1050 + 108 * offset, 216 + 54 * offset);
+      ctx.lineTo(942 + 108 * offset, 270 + 54 * offset);
+      ctx.stroke();
+    }
+    ctx.fillStyle = "#d1ad70";
+    ctx.fillRect(969, 323, 16, 63);
+    ctx.fillRect(993, 339, 16, 63);
+    ctx.fillStyle = "#513d29";
+    ctx.fillRect(1093, 327, 40, 40);
+    ctx.fillStyle = "#dfc38a";
+    ctx.fillRect(1016, 158, 12, 12);
+    ctx.fillRect(1104, 181, 16, 16);
+    ctx.fillRect(1147, 141, 8, 8);
+  }
+  ctx.textAlign = "center";
+  ctx.fillStyle = "#c7b48b";
+  ctx.font = "18px Monocraft, monospace";
+  ctx.fillText(experience ? "REAL-WORLD BUILDS" : "ONE BLOCK AT A TIME", 1050, 451);
+}
 
 export default function DisplayBoard({
   position,
@@ -9,6 +73,7 @@ export default function DisplayBoard({
   image,
   logo,
   subtitle,
+  tech = EMPTY_TECH,
   onClick,
   controller,
   kind = "journal",
@@ -84,7 +149,10 @@ export default function DisplayBoard({
         ctx.font = "42px Monocraft, monospace";
         ctx.fillText("↗", 1200, 906);
       } else {
-        // A brass-inlaid noticeboard, with a clear reading order and action rail.
+        const experience = kind === "experience";
+        // Treat the wall signs as illustrated posters, readable from the tour path.
+        ctx.fillStyle = "#d6bb7e08";
+        for (let y = 0; y < h; y += 6) ctx.fillRect(0, y, w, 1);
         ctx.strokeStyle = "#75674b";
         ctx.lineWidth = 2;
         ctx.strokeRect(28, 28, w - 56, h - 56);
@@ -94,37 +162,52 @@ export default function DisplayBoard({
         for (const x of [28, w - 40]) {
           for (const y of [28, h - 40]) ctx.fillRect(x, y, 12, 12);
         }
+        paintPosterArt(ctx, experience);
         ctx.textAlign = "left";
         ctx.fillStyle = "#c9ae7c";
-        ctx.font = "24px Monocraft, monospace";
-        ctx.fillText(caption.toUpperCase(), 76, 102, 1128);
-        ctx.fillStyle = "#3a4b40";
-        ctx.fillRect(76, 135, 1128, 2);
-        if (logo && picture) {
-          const scale = Math.min(350 / picture.width, 86 / picture.height);
-          ctx.drawImage(picture, 76, 180 + (86 - picture.height * scale) / 2, picture.width * scale, picture.height * scale);
-        }
-        ctx.fillStyle = "#eee7d7";
-        ctx.font = logo ? "600 64px Inter, sans-serif" : "72px Monocraft, monospace";
-        ctx.fillText(title, 76, logo ? 350 : 286, 1128);
-        if (subtitle) {
-          ctx.fillStyle = "#b5bdaf";
-          ctx.font = "30px Inter, sans-serif";
-          ctx.fillText(subtitle, 76, 407, 1128);
-        } else {
-          ctx.fillStyle = "#b5bdaf";
-          ctx.font = "30px Inter, sans-serif";
-          ctx.fillText("Your next idea belongs here.", 76, 359, 1128);
-        }
-        ctx.fillStyle = "#24362e";
-        ctx.fillRect(40, 476, w - 80, 84);
+        ctx.font = "30px Monocraft, monospace";
+        ctx.fillText(experience ? caption.toUpperCase() : "HAVE AN IDEA?", 76, 101, 1128);
         ctx.fillStyle = "#c9ae7c";
-        ctx.fillRect(40, 476, w - 80, 2);
-        ctx.font = "24px Monocraft, monospace";
-        ctx.fillText(logo ? "READ THE FIELD NOTES" : "TOOLS, PROJECTS & A HELLO", 76, 529, 1010);
+        ctx.fillRect(76, 126, 72, 5);
+        if (experience) {
+          if (picture) {
+            const scale = Math.min(340 / picture.width, 76 / picture.height);
+            ctx.drawImage(picture, 76, 158 + (76 - picture.height * scale) / 2, picture.width * scale, picture.height * scale);
+          }
+          ctx.fillStyle = "#f2ead8";
+          ctx.font = "600 76px Inter, sans-serif";
+          if (ctx.measureText(title).width > 760) {
+            const words = title.split(" ");
+            ctx.fillText(words.slice(0, -1).join(" "), 76, 315, 760);
+            ctx.fillText(words.at(-1), 76, 394, 760);
+          } else {
+            ctx.fillText(title, 76, 330, 760);
+          }
+          ctx.fillStyle = "#c7d0c0";
+          ctx.font = "30px Inter, sans-serif";
+          ctx.fillText(subtitle || "", 76, 449, 760);
+        } else {
+          ctx.fillStyle = "#f2ead8";
+          ctx.font = "112px Monocraft, monospace";
+          ctx.fillText("LET’S", 72, 259);
+          ctx.fillStyle = "#e0c184";
+          ctx.fillText("BUILD.", 72, 385);
+          ctx.fillStyle = "#c7d0c0";
+          ctx.font = "30px Inter, sans-serif";
+          ctx.fillText("Good things start with a hello.", 76, 449, 760);
+        }
+        ctx.fillStyle = "#e0c184";
+        ctx.fillRect(40, 490, w - 80, 70);
+        ctx.fillStyle = "#29382d";
+        ctx.font = "26px Monocraft, monospace";
+        ctx.fillText(experience ? "EXPLORE EXPERIENCE" : "OPEN THE WORKBENCH", 76, 535, 750);
         ctx.textAlign = "right";
         ctx.font = "36px Monocraft, monospace";
-        ctx.fillText("↗", 1202, 532);
+        ctx.fillText("↗", 1185, 538);
+        if (experience && tech.length) {
+          ctx.font = "18px Inter, sans-serif";
+          ctx.fillText(tech.slice(0, 3).join(" / "), 1125, 535, 440);
+        }
       }
       texture.needsUpdate = true;
       setMap(texture);
@@ -149,7 +232,7 @@ export default function DisplayBoard({
         picture.onerror = null;
       }
     };
-  }, [title, caption, image, logo, subtitle, entrance]);
+  }, [title, caption, image, logo, subtitle, tech, kind, entrance]);
   return (
     <group position={position} rotation={rotation}>
       <mesh position={[0, 0, -0.06]} castShadow receiveShadow>
