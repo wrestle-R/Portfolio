@@ -37,7 +37,7 @@ export default function DisplayBoard({
       if (cancelled) return;
       const w = 1280,
         h = canvas.height / 2;
-      ctx.fillStyle = entrance ? "#e8d9b5" : image ? "#1d2926" : "#e8dfcc";
+      ctx.fillStyle = entrance ? "#e8d9b5" : image || kind === "experience" ? "#1d2926" : "#e8dfcc";
       ctx.fillRect(0, 0, w, h);
       // Understated inlay; all text remains inside a generous safe area.
       ctx.strokeStyle = "#716449";
@@ -89,12 +89,12 @@ export default function DisplayBoard({
         ctx.drawImage(picture, 0, 0, w, h);
       } else {
         const experience = kind === "experience";
-        // Quiet parchment posters with one inset rule and generous breathing room.
-        ctx.strokeStyle = "#b7a585";
+        // Keep the minimal layout; experience uses the original spruce-green palette.
+        ctx.strokeStyle = experience ? "#75674b" : "#b7a585";
         ctx.lineWidth = 2;
         ctx.strokeRect(28, 28, w - 56, h - 56);
         ctx.textAlign = "left";
-        ctx.fillStyle = "#796442";
+        ctx.fillStyle = experience ? "#c9ae7c" : "#796442";
         ctx.font = "30px Monocraft, monospace";
         ctx.fillText(experience ? caption.toUpperCase() : "HAVE AN IDEA?", 76, 101, 1128);
         if (experience) {
@@ -102,10 +102,10 @@ export default function DisplayBoard({
             const scale = Math.min(360 / picture.width, 90 / picture.height);
             ctx.drawImage(picture, 76, 158 + (76 - picture.height * scale) / 2, picture.width * scale, picture.height * scale);
           }
-          ctx.fillStyle = "#332d24";
+          ctx.fillStyle = "#eee7d7";
           ctx.font = "600 80px Inter, sans-serif";
           ctx.fillText(title, 76, 330, 1128);
-          ctx.fillStyle = "#6e6556";
+          ctx.fillStyle = "#b5bdaf";
           ctx.font = "34px Inter, sans-serif";
           ctx.fillText(subtitle || "", 76, 395, 1128);
         } else {
@@ -116,9 +116,9 @@ export default function DisplayBoard({
           ctx.font = "34px Inter, sans-serif";
           ctx.fillText("Good things start with a hello.", 76, 370, 1128);
         }
-        ctx.fillStyle = "#b7a585";
+        ctx.fillStyle = experience ? "#475248" : "#b7a585";
         ctx.fillRect(76, 476, 1128, 2);
-        ctx.fillStyle = "#796442";
+        ctx.fillStyle = experience ? "#c9ae7c" : "#796442";
         ctx.font = "26px Monocraft, monospace";
         ctx.fillText(experience ? "EXPLORE EXPERIENCE" : "OPEN THE WORKBENCH", 76, 535, 750);
         ctx.textAlign = "right";

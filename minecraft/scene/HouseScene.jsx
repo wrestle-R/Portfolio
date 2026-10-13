@@ -219,7 +219,7 @@ export default function HouseScene({
           position={[5.7, 2.6, -15 - i * 5]}
           rotation={[0, -Math.PI / 2, 0]}
           title={e.company}
-          logo={e.logo}
+          logo={e.logoDark}
           subtitle={e.role}
           kind="experience"
           caption={`0${i + 1} / ${e.period}`}
