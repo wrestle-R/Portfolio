@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import { CanvasTexture, SRGBColorSpace, LinearMipmapLinearFilter } from "three";
+import contactPoster from "../assets/textures/contact-snow-ink.png";
 
 export default function DisplayBoard({
   position,
@@ -16,6 +17,7 @@ export default function DisplayBoard({
   const [map, setMap] = useState(null);
   const [hovered, setHovered] = useState(false);
   const entrance = kind === "entrance";
+  const contact = kind === "contact";
   const width = entrance ? 5.5 : image ? 3.05 : 3.5;
   const height = entrance ? 1.75 : image ? 2.35 : 1.65;
   useEffect(() => {
@@ -83,6 +85,8 @@ export default function DisplayBoard({
         ctx.fillStyle = "#c9ae7c";
         ctx.font = "42px Monocraft, monospace";
         ctx.fillText("↗", 1200, 906);
+      } else if (contact && picture) {
+        ctx.drawImage(picture, 0, 0, w, h);
       } else {
         const experience = kind === "experience";
         // Quiet parchment posters with one inset rule and generous breathing room.
@@ -125,11 +129,11 @@ export default function DisplayBoard({
       setMap(texture);
     }
     let picture;
-    if (image || logo) {
+    if (image || logo || contact) {
       picture = new Image();
       picture.onload = () => paint(picture);
       picture.onerror = () => paint();
-      picture.src = image || logo;
+      picture.src = image || logo || contactPoster;
     }
     paint();
     Promise.all([document.fonts.load("32px Monocraft"), document.fonts.load("600 58px Inter")]).then(
@@ -144,7 +148,7 @@ export default function DisplayBoard({
         picture.onerror = null;
       }
     };
-  }, [title, caption, image, logo, subtitle, kind, entrance]);
+  }, [title, caption, image, logo, subtitle, kind, entrance, contact]);
   return (
     <group position={position} rotation={rotation}>
       <mesh position={[0, 0, -0.06]} castShadow receiveShadow>

@@ -229,6 +229,7 @@ export default function HouseScene({
       <DisplayBoard
         controller={controller}
         position={[0, 2.5, -28.96]}
+        kind="contact"
         title="LET’S BUILD."
         caption="Every good project starts with hello."
         onClick={() => openPanel("contact")}
