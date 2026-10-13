@@ -981,6 +981,58 @@
 .mc-crosshair { position: absolute; z-index: 16; top: 50%; left: 50%; transform: translate(-50%, -50%); pointer-events: none; color: white; font: 26px/1 monospace; text-shadow: 0 1px 2px #000; }
 .mc-pointer-locked .mc-journey, .mc-pointer-locked .mc-back, .mc-pointer-locked .mc-chapter-caption, .mc-pointer-locked .mc-explore-toggle, .mc-pointer-locked .mc-music { visibility: hidden; }
 .mc-company-logo { display: block; max-width: 200px; max-height: 58px; object-fit: contain; object-position: left center; margin-bottom: 22px; }
+.mc-welcome-panel,
+.mc-field-panel {
+  background: radial-gradient(ellipse at top right, #b99b6210, transparent 65%), #1d2926;
+  border: 3px solid #8c744d;
+  box-shadow: 0 28px 100px #0c140fa6, 0 0 0 4px #302b21, 0 0 0 6px #635439;
+}
+.mc-welcome-panel .mc-panel-head,
+.mc-field-panel .mc-panel-head { border-bottom: 1px solid #8c744d; }
+.mc-profile-banner {
+  display: flex; align-items: center; gap: 26px; padding: 0 0 30px;
+}
+.mc-profile-monogram {
+  display: grid; align-content: center; justify-items: center; flex-shrink: 0;
+  width: 106px; height: 112px; color: #e3c58a; background: #283c30;
+  border: 2px solid #8c744d; box-shadow: 6px 6px 0 #111c17;
+  font: 48px/1.15 Monocraft, monospace;
+}
+.mc-profile-monogram span { font-size: 15px; letter-spacing: 7px; padding-left: 7px; }
+.mc-profile-banner .mc-eyebrow { color: var(--mc-accent); font-size: 8px; }
+.mc-profile-banner h3 { margin: 10px 0; font: 24px/1.4 Monocraft, monospace; }
+.mc-profile-caption { color: var(--mc-muted); font-size: 12px; }
+.mc-about-inventory { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); border-block: 1px solid var(--mc-line); margin: 28px 0; padding-block: 20px; }
+.mc-about-inventory > div { padding-inline: 18px; border-right: 1px solid var(--mc-line); }
+.mc-about-inventory > div:first-child { padding-left: 0; }
+.mc-about-inventory > div:last-child { border: 0; }
+.mc-about-inventory span { color: var(--mc-accent); font: 30px/1.4 Monocraft, monospace; }
+.mc-about-inventory p { margin: 7px 0 0; font-size: 11px; line-height: 1.5; }
+.mc-experience-heading { display: grid; grid-template-columns: 130px minmax(0, 1fr); gap: 22px; align-items: center; margin-bottom: 26px; }
+.mc-experience-logo { display: grid; place-items: center; padding: 16px 12px; min-height: 92px; background: #17211e; border: 1px solid #75674b; box-shadow: 4px 4px 0 #101b16; }
+.mc-experience-logo .mc-company-logo { width: 100%; max-height: 56px; margin: 0; object-position: center; }
+.mc-experience-heading .mc-eyebrow { color: var(--mc-accent); font-size: 9px; letter-spacing: .5px; }
+.mc-experience-heading h3 { margin: 8px 0; overflow-wrap: anywhere; }
+.mc-experience-heading .mc-role { margin: 0; font-size: 13px; line-height: 1.6; }
+.mc-ledger-label { margin: 24px 0 14px; font: 9px/1.6 Monocraft, monospace; letter-spacing: 1px; color: var(--mc-accent); }
+.mc-experiences .mc-contributions { list-style: none; padding: 0; }
+.mc-experiences .mc-contributions li { position: relative; padding: 0 0 15px 22px; margin-bottom: 15px; border-bottom: 1px solid var(--mc-line); font-size: 14px; }
+.mc-contributions li::before { content: ""; position: absolute; left: 0; top: 10px; width: 6px; height: 6px; background: var(--mc-accent); box-shadow: 2px 2px 0 #736246; }
+.mc-field-panel .mc-experiences { margin-bottom: 0; }
+.mc-field-panel .mc-timeline-node { border: 1px solid #8c744d; box-shadow: 3px 3px 0 #111c17; }
+@media (max-width: 700px) {
+  .mc-profile-banner { gap: 18px; padding-bottom: 24px; }
+  .mc-profile-monogram { width: 72px; height: 88px; font-size: 34px; }
+  .mc-profile-banner h3 { font-size: 17px; }
+  .mc-profile-banner .mc-eyebrow { font-size: 7px; }
+  .mc-profile-caption { font-size: 10px; }
+  .mc-about-inventory > div { padding-inline: 10px; }
+  .mc-about-inventory span { font-size: 24px; }
+  .mc-about-inventory p { font-size: 10px; }
+  .mc-experience-heading { grid-template-columns: 1fr; gap: 18px; }
+  .mc-experience-logo { width: 136px; min-height: 72px; }
+  .mc-field-panel .mc-experience-step { padding-left: 42px; }
+}
 .mc-experience-step:not(:last-child)::after {
   content: "↓";
   position: absolute;

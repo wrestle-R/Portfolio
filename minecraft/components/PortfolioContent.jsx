@@ -56,15 +56,20 @@ export default function PortfolioContent({ section, theme }) {
                 0{portfolio.experiences.indexOf(e) + 1}
               </span>
               <article>
-                <img className="mc-company-logo" src={e.logo} alt={`${e.company} logo`} />
-                <span className="mc-eyebrow">{e.period}</span>
-                <h3>{e.company}</h3>
-                <p className="mc-role">{e.role} · Intern</p>
-                <ul>
+                <div className="mc-experience-heading">
+                  <div className="mc-experience-logo"><img className="mc-company-logo" src={e.logoDark} alt={`${e.company} logo`} /></div>
+                  <div><span className="mc-eyebrow">{e.period}</span>
+                    <h3>{e.company}</h3>
+                    <p className="mc-role">{e.role} · Intern</p>
+                  </div>
+                </div>
+                <h4 className="mc-ledger-label">WHAT I WORKED ON</h4>
+                <ul className="mc-contributions">
                   {e.achievements.map((a) => (
                     <li key={a}>{a}</li>
                   ))}
                 </ul>
+                <h4 className="mc-ledger-label">ON THE WORKBENCH</h4>
                 <div className="mc-tags">
                   {e.tech.map((t) => (
                     <span key={t}>{t}</span>
@@ -153,13 +158,22 @@ export default function PortfolioContent({ section, theme }) {
       </div>
     );
   return (
-    <>
+    <div className="mc-about-content">
+      <div className="mc-profile-banner">
+        <div className="mc-profile-monogram" aria-hidden="true">R<span>DP</span></div>
+        <div><span className="mc-eyebrow">ENGINEER / BUILDER / EXPLORER</span><h3>From a first idea<br />to the last block.</h3><span className="mc-profile-caption">Full-stack development · AI / ML · IoT</span></div>
+      </div>
       <p className="mc-lead">{portfolio.identity.bio}</p>
       <p>
         I’m a fourth-year computer engineering student working across full-stack
         development, AI / ML, and IoT. I like taking an idea all the way to
         something people can use.
       </p>
+      <div className="mc-about-inventory" aria-label="Inside this portfolio">
+        <div><span>{String(portfolio.projects.length).padStart(2, "0")}</span><p>Selected builds</p></div>
+        <div><span>{String(portfolio.experiences.length).padStart(2, "0")}</span><p>Experience chapters</p></div>
+        <div><span>∞</span><p>Things to learn</p></div>
+      </div>
       <div className="mc-about-note">
         <span>AWAY FROM THE KEYBOARD</span>
         <p>Football. Running. And a few too many blocks.</p>
@@ -168,6 +182,6 @@ export default function PortfolioContent({ section, theme }) {
         This little house is inspired by my Minecraft world. Follow the purple
         path to see what I’ve been working on.
       </p>
-    </>
+    </div>
   );
 }

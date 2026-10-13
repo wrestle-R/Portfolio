@@ -84,22 +84,47 @@ export default function DisplayBoard({
         ctx.font = "42px Monocraft, monospace";
         ctx.fillText("↗", 1200, 906);
       } else {
-        ctx.textAlign = "center";
-        if (logo && picture) {
-          const scale = Math.min(450 / picture.width, 100 / picture.height);
-          ctx.drawImage(picture, (w - picture.width * scale) / 2, 64, picture.width * scale, picture.height * scale);
+        // A brass-inlaid noticeboard, with a clear reading order and action rail.
+        ctx.strokeStyle = "#75674b";
+        ctx.lineWidth = 2;
+        ctx.strokeRect(28, 28, w - 56, h - 56);
+        ctx.strokeStyle = "#34453c";
+        ctx.strokeRect(38, 38, w - 76, h - 76);
+        ctx.fillStyle = "#d5b87c";
+        for (const x of [28, w - 40]) {
+          for (const y of [28, h - 40]) ctx.fillRect(x, y, 12, 12);
         }
+        ctx.textAlign = "left";
         ctx.fillStyle = "#c9ae7c";
-        ctx.font = "26px Monocraft, monospace";
-        ctx.fillText(caption.toUpperCase(), w / 2, logo ? 225 : 135, 1100);
+        ctx.font = "24px Monocraft, monospace";
+        ctx.fillText(caption.toUpperCase(), 76, 102, 1128);
+        ctx.fillStyle = "#3a4b40";
+        ctx.fillRect(76, 135, 1128, 2);
+        if (logo && picture) {
+          const scale = Math.min(350 / picture.width, 86 / picture.height);
+          ctx.drawImage(picture, 76, 180 + (86 - picture.height * scale) / 2, picture.width * scale, picture.height * scale);
+        }
         ctx.fillStyle = "#eee7d7";
-        ctx.font = "600 57px Inter, sans-serif";
-        ctx.fillText(title, w / 2, logo ? 325 : 306, 1110);
+        ctx.font = logo ? "600 64px Inter, sans-serif" : "72px Monocraft, monospace";
+        ctx.fillText(title, 76, logo ? 350 : 286, 1128);
         if (subtitle) {
           ctx.fillStyle = "#b5bdaf";
           ctx.font = "30px Inter, sans-serif";
-          ctx.fillText(subtitle, w / 2, 392, 1110);
+          ctx.fillText(subtitle, 76, 407, 1128);
+        } else {
+          ctx.fillStyle = "#b5bdaf";
+          ctx.font = "30px Inter, sans-serif";
+          ctx.fillText("Your next idea belongs here.", 76, 359, 1128);
         }
+        ctx.fillStyle = "#24362e";
+        ctx.fillRect(40, 476, w - 80, 84);
+        ctx.fillStyle = "#c9ae7c";
+        ctx.fillRect(40, 476, w - 80, 2);
+        ctx.font = "24px Monocraft, monospace";
+        ctx.fillText(logo ? "READ THE FIELD NOTES" : "TOOLS, PROJECTS & A HELLO", 76, 529, 1010);
+        ctx.textAlign = "right";
+        ctx.font = "36px Monocraft, monospace";
+        ctx.fillText("↗", 1202, 532);
       }
       texture.needsUpdate = true;
       setMap(texture);
@@ -140,13 +165,13 @@ export default function DisplayBoard({
         <mesh key={i} position={[x, y, 0.065]} castShadow>
           <boxGeometry args={[w, h, 0.12]} />
           <meshStandardMaterial
-            color={entrance ? "#937244" : hovered ? "#6c7666" : "#3a4138"}
+            color={entrance ? "#937244" : hovered ? "#b99b62" : "#716044"}
             roughness={0.65}
             metalness={0.05}
           />
         </mesh>
       ))}
-      {entrance && [-1, 1].flatMap((x) =>
+      {[-1, 1].flatMap((x) =>
         [-1, 1].map((y) => (
           <mesh
             key={`${x}-${y}`}

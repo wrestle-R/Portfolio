@@ -15,6 +15,7 @@ dist-ssr
 
 # Local Minecraft portfolio handoff and reference inputs
 /docs/
+/local-docs/
 
 # Editor directories and files
 .vscode/*

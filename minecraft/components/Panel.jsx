@@ -31,7 +31,7 @@ export default function Panel({ section, theme, onClose }) {
   return (
     <dialog
       ref={ref}
-      className={`mc-dialog${section === "contact" ? " mc-workbench" : ""}`}
+      className={`mc-dialog${section === "contact" ? " mc-workbench" : ""}${section === "about" ? " mc-welcome-panel" : ""}${experience || section === "experience" ? " mc-field-panel" : ""}`}
       onCancel={(e) => {
         e.preventDefault();
         onClose();
@@ -46,7 +46,7 @@ export default function Panel({ section, theme, onClose }) {
     >
       <div className="mc-panel-head">
         <div className="mc-journal-brand"><span className="mc-journal-mark" aria-hidden="true">R</span>
-          <div><span className="mc-eyebrow">RUSSEL DANIEL PAUL</span><span className="mc-journal-label">Notes from the workshop</span></div>
+          <div><span className="mc-eyebrow">RUSSEL DANIEL PAUL</span><span className="mc-journal-label">{experience || section === "experience" ? "The experience ledger" : section === "about" ? "Welcome to the workshop" : "Notes from the workshop"}</span></div>
         </div>
         <button
           className="mc-icon"
