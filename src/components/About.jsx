@@ -1,7 +1,8 @@
 import React, { useState, useEffect } from "react";
+import PortfolioCharm from "./PortfolioCharm";
 
 const shortBio =
-  "Fourth-year engineering student who enjoys building real products, breaking things, and fixing them fast.";
+  "Fourth year computer engineering student. I build web apps and IoT dashboards.";
 
 const socialLinks = [
   {
@@ -54,7 +55,7 @@ function LiveAge() {
 const About = () => {
   return (
     <section
-      className="relative flex w-full items-center justify-center px-4 pt-28"
+      className="relative flex w-full items-center justify-center px-4 pt-6"
       id="about"
       style={{ backgroundColor: "transparent" }}
     >
@@ -77,6 +78,10 @@ const About = () => {
                 <span>Fourth year in computer engineering</span>
                 <span>Football | Running</span>
               </div>
+            </div>
+
+            <div className="hero-headphone-slot">
+              <PortfolioCharm type="headphones" placement="hero" />
             </div>
 
             <div className="hero-copy space-y-2 font-mono text-sm">
@@ -103,10 +108,10 @@ const About = () => {
                   <span style={{ color: "oklch(var(--muted-foreground))" }}>$</span> cat blogs.txt --reason
                 </p>
                 <p className="pl-4 leading-relaxed" style={{ color: "oklch(var(--muted-foreground))" }}>
-                  writing to remember, think clearly, and leave proof of how I learn and build.
+                  I write down things I don't want to forget.
                 </p>
                 <p className="pl-4 leading-relaxed" style={{ color: "oklch(var(--muted-foreground))" }}>
-                  Leave something useful for others (and your future self)
+                  The blog has my running updates, Linux setup, and a few longer personal posts.
                 </p>
               </div>
               <p>

@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
-import { motion } from 'framer-motion';
+import { motion as Motion } from 'framer-motion';
+import StickerNavigation from '../components/StickerNavigation';
 
 const NotFound = () => {
   const quotes = [
@@ -21,9 +22,10 @@ const NotFound = () => {
       className="min-h-screen flex items-center justify-center px-4 relative overflow-hidden"
       style={{ backgroundColor: 'oklch(var(--background))' }}
     >
+      <StickerNavigation compact />
       {/* Decorative background elements */}
       <div className="absolute inset-0 overflow-hidden pointer-events-none">
-        <motion.div
+        <Motion.div
           animate={{
             scale: [1, 1.1, 1],
             opacity: [0.02, 0.03, 0.02],
@@ -40,7 +42,7 @@ const NotFound = () => {
 
       <div className="text-center max-w-lg relative z-10">
         {/* 404 Number with enhanced animation and styling */}
-        <motion.div
+        <Motion.div
           initial={{ scale: 0.5, opacity: 0, y: -20 }}
           animate={{ scale: 1, opacity: 1, y: 0 }}
           transition={{
@@ -59,10 +61,10 @@ const NotFound = () => {
           >
             404
           </h1>
-        </motion.div>
+        </Motion.div>
         
         {/* Page Not Found with better spacing */}
-        <motion.h2
+        <Motion.h2
           initial={{ y: 20, opacity: 0 }}
           animate={{ y: 0, opacity: 1 }}
           transition={{ delay: 0.25 }}
@@ -70,10 +72,10 @@ const NotFound = () => {
           style={{ color: 'oklch(var(--foreground))' }}
         >
           Page Not Found
-        </motion.h2>
+        </Motion.h2>
         
         {/* Quote with elegant card design */}
-        <motion.div
+        <Motion.div
           initial={{ y: 30, opacity: 0 }}
           animate={{ y: 0, opacity: 1 }}
           transition={{ delay: 0.35 }}
@@ -94,32 +96,26 @@ const NotFound = () => {
             className="text-sm"
             style={{ color: 'oklch(var(--muted-foreground))' }}
           >
-            — {randomQuote.author}
+            {randomQuote.author}
           </p>
-        </motion.div>
+        </Motion.div>
         
         {/* Navigation Button with enhanced styling */}
-        <motion.div
+        <Motion.div
           initial={{ y: 20, opacity: 0 }}
           animate={{ y: 0, opacity: 1 }}
           transition={{ delay: 0.45 }}
         >
-          <motion.div
+          <Motion.div
             whileHover={{ scale: 1.05 }}
             whileTap={{ scale: 0.95 }}
           >
-            <Link 
-              to="/" 
-              className="px-6 py-2.5 rounded-full font-medium inline-block text-sm tracking-wide"
-              style={{
-                backgroundColor: 'oklch(var(--primary))',
-                color: 'oklch(var(--primary-foreground))'
-              }}
-            >
-              Take Me Home
+            <Link to="/" className="sticker-link mx-auto">
+              <img src="/charms/home.svg" alt="" width="94" height="80" draggable="false" />
+              <span className="sticker-link__label">Take me home</span>
             </Link>
-          </motion.div>
-        </motion.div>
+          </Motion.div>
+        </Motion.div>
       </div>
     </div>
   );

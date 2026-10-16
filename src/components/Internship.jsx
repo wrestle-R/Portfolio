@@ -7,11 +7,11 @@ import "./Internship.css"
 const experiences = [
   {
     company: "Technode",
-    role: "Full Stack Engineer — IoT Solutions",
-    period: "Sept 2025 – May 2026",
+    role: "Full Stack Engineer, IoT Solutions",
+    period: "Sept 2025 to May 2026",
     achievements: [
-      "Redesigned and modernized the company’s landing page and primary website, improving visual consistency and the user experience across key customer-facing pages.",
-      "Maintained and enhanced an IoT dashboard built with React and Java for real-time device monitoring, analytics, and management, improving functionality, performance, and usability.",
+      "Rebuilt Technode's landing page and main website.",
+      "Maintained a React and Java dashboard for monitoring and managing IoT devices.",
     ],
     tech: ["React", "Java", "JavaScript", "IoT"],
     darkModeImage: "/Techstack/technode_logo.png",
@@ -19,11 +19,11 @@ const experiences = [
   },
   {
     company: "NetstellarIOT Solutions",
-    role: "Full Stack Developer — IoT Platforms",
-    period: "June 2026 – August 2026",
+    role: "Full Stack Developer, IoT Platforms",
+    period: "June 2026 to August 2026",
     achievements: [
-      "Optimized the data ingestion pipeline by introducing a queue-based processing system.",
-      "Increased ingestion throughput from 1,600 to 10,000 requests per minute—a 6.25× improvement.",
+      "Added queues to process incoming device data.",
+      "Raised ingestion throughput from 1,600 to 10,000 requests per minute (6.25 times the previous rate).",
     ],
     tech: ["Queues", "IoT"],
     darkModeImage: "/Techstack/netstellar-iot-dark.svg",
@@ -31,10 +31,10 @@ const experiences = [
   },
   {
     company: "Technode",
-    role: "Full Stack Engineer — IoT Solutions",
-    period: "Sept 2026 – Present",
+    role: "Full Stack Engineer, IoT Solutions",
+    period: "Sept 2026 to present",
     achievements: [
-      "Developed and deployed a separate MQTT-based IoT dashboard using Next.js and Docker on a Hostinger VPS, enabling scalable real-time device communication, monitoring, and management.",
+      "Built and deployed an MQTT dashboard with Next.js and Docker on a Hostinger VPS.",
     ],
     tech: ["Next.js", "Docker", "MQTT", "VPS", "Hostinger"],
     darkModeImage: "/Techstack/technode_logo.png",
@@ -64,6 +64,7 @@ export default function Internship() {
         <header className="experience-header">
           <BriefcaseBusiness aria-hidden="true" strokeWidth={1.6} />
           <h2 id="experience-heading">Professional Experience</h2>
+          <span className="mobile-sticker-slot" data-mobile-sticker-slot="resume" aria-hidden="true" />
         </header>
 
         <ol className="experience-timeline">

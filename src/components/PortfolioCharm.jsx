@@ -1,13 +1,15 @@
 import { useEffect, useRef, useState } from 'react';
 import { Pause, Play, RotateCcw } from 'lucide-react';
 
-const charmPositionKey = (type) => type === 'minecraft'
+const charmPositionKey = (type, placement) => placement === 'hero'
+  ? `portfolio-charm-position:${type}:intro`
+  : type === 'minecraft'
   ? 'portfolio-charm-position:minecraft:hero'
   : `portfolio-charm-position:${type}`;
 
-function savedPosition(type) {
+function savedPosition(type, placement) {
   try {
-    const position = JSON.parse(localStorage.getItem(charmPositionKey(type)));
+    const position = JSON.parse(localStorage.getItem(charmPositionKey(type, placement)));
     if (Number.isFinite(position?.x) && Number.isFinite(position?.y)) return position;
   } catch {
     // Private browsing or an invalid saved value should leave the charm in place.
@@ -15,13 +17,13 @@ function savedPosition(type) {
   return { x: 0, y: 0 };
 }
 
-export default function PortfolioCharm({ type }) {
+export default function PortfolioCharm({ type, placement }) {
   const charmRef = useRef(null);
   const audioRef = useRef(null);
   const dragRef = useRef(null);
   const positionRef = useRef(null);
   const suppressClickRef = useRef(false);
-  const [position, setPosition] = useState(() => savedPosition(type));
+  const [position, setPosition] = useState(() => savedPosition(type, placement));
   if (positionRef.current === null) positionRef.current = position;
   const [playing, setPlaying] = useState(false);
   const [audioError, setAudioError] = useState(false);
@@ -38,11 +40,12 @@ export default function PortfolioCharm({ type }) {
         const current = positionRef.current;
         // Keep saved offsets inside the resized viewport and their own section.
         // Section bounds allow stickers further down the page to remain scrollable.
-        const margin = 32;
+        const embedded = placement === 'hero';
+        const margin = embedded || charm.parentElement.classList.contains('portfolio-charm-strip') ? 0 : 32;
         const baseLeft = bounds.left - current.x;
         const baseTop = bounds.top - current.y;
         const next = {
-          x: Math.round(Math.max(margin - baseLeft, Math.min(current.x, window.innerWidth - margin - bounds.width - baseLeft))),
+          x: Math.round(Math.max((embedded ? section.left : margin) - baseLeft, Math.min(current.x, (embedded ? section.right : window.innerWidth - margin) - bounds.width - baseLeft))),
           y: Math.round(Math.max(section.top + margin - baseTop, Math.min(current.y, section.bottom - margin - bounds.height - baseTop))),
         };
         if (next.x === current.x && next.y === current.y) return;
@@ -60,7 +63,7 @@ export default function PortfolioCharm({ type }) {
       observer.disconnect();
       window.removeEventListener('resize', constrainPosition);
     };
-  }, []);
+  }, [placement]);
 
   const startDrag = (event) => {
     if (event.button !== 0 || !event.target.closest('.portfolio-charm__object')) return;
@@ -72,6 +75,7 @@ export default function PortfolioCharm({ type }) {
       y: event.clientY,
       position: positionRef.current,
       bounds,
+      slot: placement === 'hero' ? event.currentTarget.parentElement.getBoundingClientRect() : null,
       moving: false,
     };
   };
@@ -88,8 +92,9 @@ export default function PortfolioCharm({ type }) {
     }
     event.preventDefault();
     const margin = 32;
-    const boundedX = Math.max(Math.min(0, margin - drag.bounds.left), Math.min(dx, Math.max(0, window.innerWidth - margin - drag.bounds.right)));
-    const boundedY = Math.max(Math.min(0, margin - drag.bounds.top), Math.min(dy, Math.max(0, window.innerHeight - margin - drag.bounds.bottom)));
+    const limits = drag.slot || { left: margin, top: margin, right: window.innerWidth - margin, bottom: window.innerHeight - margin };
+    const boundedX = Math.max(Math.min(0, limits.left - drag.bounds.left), Math.min(dx, Math.max(0, limits.right - drag.bounds.right)));
+    const boundedY = Math.max(Math.min(0, limits.top - drag.bounds.top), Math.min(dy, Math.max(0, limits.bottom - drag.bounds.bottom)));
     const next = { x: Math.round(drag.position.x + boundedX), y: Math.round(drag.position.y + boundedY) };
     positionRef.current = next;
     setPosition(next);
@@ -103,7 +108,7 @@ export default function PortfolioCharm({ type }) {
     suppressClickRef.current = true;
     window.setTimeout(() => { suppressClickRef.current = false; }, 0);
     try {
-      localStorage.setItem(charmPositionKey(type), JSON.stringify(positionRef.current));
+      localStorage.setItem(charmPositionKey(type, placement), JSON.stringify(positionRef.current));
     } catch {
       // The charm remains movable when storage is unavailable.
     }
@@ -116,7 +121,7 @@ export default function PortfolioCharm({ type }) {
     const origin = { x: 0, y: 0 };
     positionRef.current = origin;
     setPosition(origin);
-    try { localStorage.removeItem(charmPositionKey(type)); } catch { /* Storage may be unavailable. */ }
+    try { localStorage.removeItem(charmPositionKey(type, placement)); } catch { /* Storage may be unavailable. */ }
   };
 
   useEffect(() => {
@@ -149,14 +154,14 @@ export default function PortfolioCharm({ type }) {
   };
 
   const images = {
-    headphones: '/charms/headphones.png',
-    shoe: '/charms/running-shoe.png',
-    guitar: '/charms/guitar.png',
-    laptop: '/charms/dell-laptop.png',
-    minecraft: '/charms/minecraft-wrestle.png',
-    blog: '/charms/blog-notebook.png',
-    football: '/charms/football.png',
-    hills: '/charms/hill-station.png',
+    headphones: '/charms/headphones.webp',
+    shoe: '/charms/running-shoe.webp',
+    guitar: '/charms/guitar.webp',
+    laptop: '/charms/dell-laptop.webp',
+    minecraft: '/charms/minecraft-wrestle.webp',
+    blog: '/charms/blog-notebook.webp',
+    football: '/charms/football.webp',
+    hills: '/charms/hill-station.webp',
     arch: '/charms/arch-linux-mark.svg',
   };
 
@@ -175,7 +180,7 @@ export default function PortfolioCharm({ type }) {
   return (
     <aside
       ref={charmRef}
-      className={`portfolio-charm portfolio-charm--${type}`}
+      className={`portfolio-charm portfolio-charm--${type}${placement === 'hero' ? ' portfolio-charm--embedded' : ''}`}
       aria-label={labels[type]}
       style={{ '--charm-drag-x': `${position.x}px`, '--charm-drag-y': `${position.y}px` }}
       onPointerDown={startDrag}
@@ -220,7 +225,7 @@ export default function PortfolioCharm({ type }) {
         <div className="portfolio-charm__note">
           <span className="portfolio-charm__eyebrow">Nirvana 751 ANC</span>
           <strong>what is life without music</strong>
-          <span>{audioError ? 'Audio could not play. Try again.' : playing ? 'click to pause' : 'click the headphones to listen'}</span>
+          <span role="status">{audioError ? 'Audio could not play. Try again.' : playing ? 'click to pause' : 'click the headphones to listen'}</span>
           <span className="portfolio-charm__hint">drag to move</span>
         </div>
       )}

@@ -125,7 +125,7 @@ export const ThemeProvider = ({ children }) => {
   const toggleTheme = useCallback((sourceEl = null) => {
     const currentTheme = document.documentElement.getAttribute('data-theme') || theme;
     const newTheme = currentTheme === 'light' ? 'dark' : 'light';
-    animateThemeTransition(sourceEl, newTheme);
+    animateThemeTransition(sourceEl || document.querySelector('[data-theme-switch]'), newTheme);
   }, [animateThemeTransition, theme]);
 
   useEffect(() => {

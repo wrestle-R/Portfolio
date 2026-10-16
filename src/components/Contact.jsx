@@ -50,14 +50,15 @@ const Contact = () => {
           </div>
 
           <div className="grid gap-6 md:grid-cols-5">
-            <div className="md:col-span-2">
-              <h3 className="mb-2 text-xl font-semibold" style={{ color: "oklch(var(--foreground))" }}>Let's Connect!</h3>
+            <div className="md:col-span-2 flow-root">
+              <span className="mobile-sticker-slot mobile-sticker-slot--float" data-mobile-sticker-slot="constellation" aria-hidden="true" />
+              <h3 className="mb-2 text-xl font-semibold" style={{ color: "oklch(var(--foreground))" }}>Have something in mind?</h3>
               <p className="text-sm leading-relaxed" style={{ color: "oklch(var(--muted-foreground))" }}>
-                Have an idea, project, or just want to chat? I'd love to hear from you and explore how we can work together to bring your vision to life.
+                If you have a project, a question about something I've built, or just want to say hi, send me a message.
               </p>
               <div className="mt-4 space-y-2 text-sm" style={{ color: "oklch(var(--muted-foreground))" }}>
-                <p>Quick responses</p>
-                <p>Open to collaborations & projects</p>
+                <p>russeldanielpaul@gmail.com</p>
+                <p>GitHub: wrestle-R</p>
               </div>
             </div>
 
@@ -92,7 +93,7 @@ const Contact = () => {
                   rows={4}
                   className="w-full resize-none rounded-lg border px-3 py-2 text-sm"
                   style={{ backgroundColor: "oklch(var(--background) / 0.8)", borderColor: "oklch(var(--border))", color: "oklch(var(--foreground))" }}
-                  placeholder="Tell me about your project, idea, or just say hello..."
+                  placeholder="What did you have in mind?"
                 />
 
                 <button

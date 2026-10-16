@@ -1,8 +1,7 @@
 import React, { useState } from "react";
-import { ArrowLeft, Download, ExternalLink, FileImage, FileText, Mail, Moon, Sun } from "lucide-react";
-import { Link } from "react-router-dom";
+import { Download, ExternalLink, FileImage, FileText } from "lucide-react";
 import Footer from "../components/Footer";
-import { useTheme } from "../context/ThemeContext";
+import StickerNavigation from "../components/StickerNavigation";
 
 const resumePdf = "/Resume/Resume.pdf";
 const resumeImage = "/Resume/Resume.jpg";
@@ -15,7 +14,6 @@ const resumeFacts = [
 
 const Resume = () => {
   const [imageFailed, setImageFailed] = useState(false);
-  const { theme, toggleTheme } = useTheme();
 
   const downloadResume = (format) => {
     const link = document.createElement("a");
@@ -28,47 +26,10 @@ const Resume = () => {
 
   return (
     <div className="min-h-screen" style={{ backgroundColor: "oklch(var(--background))" }}>
-      <header className="fixed inset-x-0 top-0 z-40 mx-auto w-full max-w-6xl px-4 pt-4 md:pt-5">
-        <nav
-          className="mx-auto flex max-w-4xl items-center justify-between rounded-full border px-4 py-3 backdrop-blur-xl md:px-5"
-          style={{
-            backgroundColor: "oklch(var(--background) / 0.78)",
-            borderColor: "oklch(var(--border))",
-          }}
-        >
-          <Link
-            to="/"
-            className="inline-flex items-center gap-2 rounded-full px-2 py-1 text-sm font-semibold tracking-wide transition-opacity hover:opacity-70"
-            style={{ color: "oklch(var(--foreground))" }}
-          >
-            <ArrowLeft className="h-4 w-4" aria-hidden="true" />
-            <span>RDP</span>
-          </Link>
+      <StickerNavigation />
+      <div className="sticker-spot" data-sticker-spot="intro" aria-hidden="true" />
 
-          <div className="flex items-center gap-2">
-            <button
-              type="button"
-              onClick={(event) => toggleTheme(event.currentTarget)}
-              className="inline-flex h-9 w-9 items-center justify-center rounded-full transition-opacity hover:opacity-80"
-              style={{ backgroundColor: "oklch(var(--muted))", color: "oklch(var(--foreground))" }}
-              aria-label="Toggle theme"
-            >
-              {theme === "dark" ? <Sun className="h-4 w-4" /> : <Moon className="h-4 w-4" />}
-            </button>
-            <a
-              href="mailto:russeldanielpaul@gmail.com"
-              className="inline-flex h-9 w-9 items-center justify-center rounded-full transition-opacity hover:opacity-80 md:w-auto md:px-4 md:text-sm md:font-medium"
-              style={{ backgroundColor: "oklch(var(--primary))", color: "oklch(var(--primary-foreground))" }}
-              aria-label="Email Russel Daniel Paul"
-            >
-              <Mail className="h-4 w-4" aria-hidden="true" />
-              <span className="hidden md:ml-2 md:inline">Contact</span>
-            </a>
-          </div>
-        </nav>
-      </header>
-
-      <main className="relative z-10 px-4 pb-12 pt-28 md:pb-16">
+      <main className="relative z-10 px-4 pb-12 pt-6 md:pb-16">
         <div className="mx-auto w-full max-w-4xl space-y-8">
           <section>
             <article
@@ -134,6 +95,7 @@ const Resume = () => {
             </article>
           </section>
 
+          <div className="sticker-spot" data-sticker-spot="middle" aria-hidden="true" />
           <section>
             <article
               className="overflow-hidden rounded-xl border transition-colors duration-300 ease-in-out hover:bg-muted/50"
@@ -185,6 +147,7 @@ const Resume = () => {
         </div>
       </main>
 
+      <div className="sticker-spot" data-sticker-spot="outro" aria-hidden="true" />
       <Footer />
     </div>
   );

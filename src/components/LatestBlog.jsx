@@ -35,13 +35,14 @@ const LatestBlog = () => {
           }}
         >
           <article className="flex flex-col gap-4">
-            <div className="flex items-start justify-between gap-3 flex-wrap">
+            <div className="mobile-blog-heading flex items-start justify-between gap-3 flex-wrap">
               <h2
                 className="text-2xl font-bold leading-tight"
                 style={{ color: "oklch(var(--foreground))" }}
               >
                 Latest Blog: <span className="font-semibold">{latestBlogPost.title}</span>
               </h2>
+              <span className="mobile-sticker-slot" data-mobile-sticker-slot="blog" aria-hidden="true" />
               <span
                 className="text-xs md:text-sm font-mono border px-3 py-1.5 rounded-full"
                 style={{
