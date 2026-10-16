@@ -1,7 +1,7 @@
 {
   "identity": {
     "name": "Russel Daniel Paul",
-    "bio": "Fourth-year engineering student who enjoys building real products, breaking things, and fixing them fast.",
+    "bio": "Fourth year computer engineering student. I build web apps and IoT dashboards.",
     "email": "russeldanielpaul@gmail.com",
     "github": "https://github.com/wrestle-R",
     "linkedin": "https://linkedin.com/in/russel-daniel-970b8a303"
@@ -27,7 +27,7 @@
     {
       "id": 2,
       "name": "Varte",
-      "description": "Secure environment-variable management system with web UI and CLI support through the npm package varte.",
+      "description": "Web app and CLI for syncing environment files with their GitHub repositories.",
       "url": "https://vathavaran-variables.vercel.app/",
       "github": "https://github.com/wrestle-R/Vathavaran-Variables",
       "tech": [
@@ -42,7 +42,7 @@
     {
       "id": 3,
       "name": "Bible Wordle",
-      "description": "Biblical twist on Wordle with scripture-based words.",
+      "description": "Wordle with words from the Bible.",
       "url": "https://biblical-wordle.vercel.app/",
       "github": "https://github.com/wrestle-R/Bible-Wordle",
       "tech": [
@@ -56,7 +56,7 @@
     {
       "id": 4,
       "name": "ASOIAF",
-      "description": "Interactive Map of Ice and Fire exploring the realms and character journeys of Game of Thrones, House of the Dragon, and A Knight of the Seven Kingdoms. Browse characters and trace their stories and movements season by season.",
+      "description": "A map of Westeros and Essos, with character locations and storylines from Game of Thrones, House of the Dragon, and A Knight of the Seven Kingdoms.",
       "url": "https://asoiaf-rdp.vercel.app/",
       "github": "https://github.com/wrestle-R/ASOIAF",
       "tech": [
@@ -71,7 +71,7 @@
     {
       "id": 5,
       "name": "HyprTrack",
-      "description": "Standalone desktop app for tracking local Hyprland activity on Arch Linux. An event-driven Python collector records application usage in SQLite, while the dashboard provides focus insights, application rankings, and grouped activity sessions with all data kept on your machine.",
+      "description": "An app for tracking which programs I use on Hyprland. A Python collector writes activity to SQLite, and the dashboard shows app usage and sessions. The data stays on my machine.",
       "url": "https://github.com/wrestle-R/HyprTrack/releases/latest",
       "primaryLabel": "Download App",
       "github": "https://github.com/wrestle-R/HyprTrack",
@@ -90,11 +90,11 @@
   "experiences": [
     {
       "company": "Technode",
-      "role": "Full Stack Engineer — IoT Solutions",
-      "period": "Sept 2025 – May 2026",
+      "role": "Full Stack Engineer, IoT Solutions",
+      "period": "Sept 2025 to May 2026",
       "achievements": [
-        "Redesigned and modernized the company’s landing page and primary website, improving visual consistency and the user experience across key customer-facing pages.",
-        "Maintained and enhanced an IoT dashboard built with React and Java for real-time device monitoring, analytics, and management, improving functionality, performance, and usability."
+        "Rebuilt Technode's landing page and main website.",
+        "Maintained a React and Java dashboard for monitoring and managing IoT devices."
       ],
       "tech": [
         "React",
@@ -108,11 +108,11 @@
     },
     {
       "company": "NetstellarIOT Solutions",
-      "role": "Full Stack Developer — IoT Platforms",
-      "period": "June 2026 – August 2026",
+      "role": "Full Stack Developer, IoT Platforms",
+      "period": "June 2026 to August 2026",
       "achievements": [
-        "Optimized the data ingestion pipeline by introducing a queue-based processing system.",
-        "Increased ingestion throughput from 1,600 to 10,000 requests per minute—a 6.25× improvement."
+        "Added queues to process incoming device data.",
+        "Raised ingestion throughput from 1,600 to 10,000 requests per minute (6.25 times the previous rate)."
       ],
       "tech": [
         "Queues",
@@ -124,10 +124,10 @@
     },
     {
       "company": "Technode",
-      "role": "Full Stack Engineer — IoT Solutions",
-      "period": "Sept 2026 – Present",
+      "role": "Full Stack Engineer, IoT Solutions",
+      "period": "Sept 2026 to present",
       "achievements": [
-        "Developed and deployed a separate MQTT-based IoT dashboard using Next.js and Docker on a Hostinger VPS, enabling scalable real-time device communication, monitoring, and management."
+        "Built and deployed an MQTT dashboard with Next.js and Docker on a Hostinger VPS."
       ],
       "tech": [
         "Next.js",

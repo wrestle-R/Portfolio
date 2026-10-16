@@ -57,7 +57,7 @@ const projectsData = [
     id: 4,
     name: "Varte",
     description:
-      "Secure environment-variable management system with web UI and CLI support through the npm package varte.",
+      "Web app and CLI for syncing environment files with their GitHub repositories.",
     url: "https://vathavaran-variables.vercel.app/",
     github: "https://github.com/wrestle-R/Vathavaran-Variables",
     tech: ["React", "Node.js", "Firebase", "Cloudflare Workers"],
@@ -78,7 +78,7 @@ const projectsData = [
   {
     id: 6,
     name: "Bible Wordle",
-    description: "Biblical twist on Wordle with scripture-based words.",
+    description: "Wordle with words from the Bible.",
     url: "https://biblical-wordle.vercel.app/",
     github: "https://github.com/wrestle-R/Bible-Wordle",
     tech: ["React", "JavaScript", "CSS"],
@@ -105,7 +105,7 @@ const projectsData = [
     id: 2,
     name: "Varte",
     description:
-      "Secure environment-variable management system with web UI and CLI support through the npm package varte.",
+      "Web app and CLI for syncing environment files with their GitHub repositories.",
     url: "https://vathavaran-variables.vercel.app/",
     github: "https://github.com/wrestle-R/Vathavaran-Variables",
     tech: ["React", "Node.js", "Firebase", "Cloudflare Workers"],
@@ -115,7 +115,7 @@ const projectsData = [
   {
     id: 3,
     name: "Bible Wordle",
-    description: "Biblical twist on Wordle with scripture-based words.",
+    description: "Wordle with words from the Bible.",
     url: "https://biblical-wordle.vercel.app/",
     github: "https://github.com/wrestle-R/Bible-Wordle",
     tech: ["React", "JavaScript", "CSS"],
@@ -126,7 +126,7 @@ const projectsData = [
     id: 4,
     name: "ASOIAF",
     description:
-      "Interactive Map of Ice and Fire exploring the realms and character journeys of Game of Thrones, House of the Dragon, and A Knight of the Seven Kingdoms. Browse characters and trace their stories and movements season by season.",
+      "A map of Westeros and Essos, with character locations and storylines from Game of Thrones, House of the Dragon, and A Knight of the Seven Kingdoms.",
     url: "https://asoiaf-rdp.vercel.app/",
     github: "https://github.com/wrestle-R/ASOIAF",
     tech: ["React", "JavaScript", "Tailwind CSS", "Vite"],
@@ -137,7 +137,7 @@ const projectsData = [
     id: 5,
     name: "HyprTrack",
     description:
-      "Standalone desktop app for tracking local Hyprland activity on Arch Linux. An event-driven Python collector records application usage in SQLite, while the dashboard provides focus insights, application rankings, and grouped activity sessions with all data kept on your machine.",
+      "An app for tracking which programs I use on Hyprland. A Python collector writes activity to SQLite, and the dashboard shows app usage and sessions. The data stays on my machine.",
     url: "https://github.com/wrestle-R/HyprTrack/releases/latest",
     primaryLabel: "Download App",
     github: "https://github.com/wrestle-R/HyprTrack",
