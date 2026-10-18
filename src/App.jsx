@@ -1,6 +1,7 @@
 import React from "react";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import Home from "./pages/Home";
+import RouteMetadata from "./components/RouteMetadata";
 import Resume from "./pages/Resume";
 import NotFound from "./pages/NotFound";
 import SceneBoundary from "../minecraft/components/SceneBoundary";
@@ -28,6 +29,7 @@ function App() {
   return (
     <ThemeProvider>
       <Router>
+        <RouteMetadata />
         <div className="App">
           <Routes>
             <Route path="/" element={<Home />} />

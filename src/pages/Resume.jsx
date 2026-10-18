@@ -6,12 +6,6 @@ import StickerNavigation from "../components/StickerNavigation";
 const resumePdf = "/Resume/Resume.pdf";
 const resumeImage = "/Resume/Resume.jpg";
 
-const resumeFacts = [
-  "fourth-year computer engineering student",
-  "mern | next | ai/ml | iot",
-  "projects, internships, and build notes",
-];
-
 const Resume = () => {
   const [imageFailed, setImageFailed] = useState(false);
 
@@ -27,16 +21,15 @@ const Resume = () => {
   return (
     <div className="min-h-screen" style={{ backgroundColor: "oklch(var(--background))" }}>
       <StickerNavigation />
-      <div className="sticker-spot" data-sticker-spot="intro" aria-hidden="true" />
 
       <main className="relative z-10 px-4 pb-12 pt-6 md:pb-16">
         <div className="mx-auto w-full max-w-4xl space-y-8">
           <section>
             <article
-              className="rounded-xl border p-5 transition-colors duration-300 ease-in-out hover:bg-muted/50 md:p-6"
+              className="resume-title-card rounded-xl border p-5 transition-colors duration-300 ease-in-out hover:bg-muted/50 md:p-6"
               style={{ backgroundColor: "oklch(var(--background))", borderColor: "oklch(var(--border))" }}
             >
-              <div className="flex flex-col gap-5 md:flex-row md:items-start md:justify-between">
+              <div className="flex flex-col items-center gap-5">
                 <div className="font-mono text-sm">
                   {/* <p>
                     <span style={{ color: "oklch(var(--muted-foreground))" }}>$</span> open resume.pdf
@@ -48,21 +41,9 @@ const Resume = () => {
                     A clean copy of my current resume, kept here for quick viewing, downloading, and sharing.
                   </p> */}
                 </div>
-
-                <div className="flex flex-wrap gap-2 md:justify-end">
-                  {resumeFacts.map((fact) => (
-                    <span
-                      key={fact}
-                      className="rounded-full border px-3 py-1.5 text-xs font-mono"
-                      style={{ borderColor: "oklch(var(--border))", color: "oklch(var(--muted-foreground))" }}
-                    >
-                      {fact}
-                    </span>
-                  ))}
-                </div>
               </div>
 
-              <div className="mt-5 flex flex-wrap gap-2">
+              <div className="resume-actions mt-5 flex flex-wrap gap-2">
                 <button
                   type="button"
                   onClick={() => downloadResume("pdf")}
@@ -95,7 +76,6 @@ const Resume = () => {
             </article>
           </section>
 
-          <div className="sticker-spot" data-sticker-spot="middle" aria-hidden="true" />
           <section>
             <article
               className="overflow-hidden rounded-xl border transition-colors duration-300 ease-in-out hover:bg-muted/50"
@@ -135,6 +115,8 @@ const Resume = () => {
                   ) : (
                     <img
                       src={resumeImage}
+                      width="1275"
+                      height="1650"
                       alt="Russel Daniel Paul Resume"
                       className="h-auto w-full"
                       onError={() => setImageFailed(true)}
@@ -147,7 +129,6 @@ const Resume = () => {
         </div>
       </main>
 
-      <div className="sticker-spot" data-sticker-spot="outro" aria-hidden="true" />
       <Footer />
     </div>
   );

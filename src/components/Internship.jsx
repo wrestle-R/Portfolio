@@ -64,7 +64,6 @@ export default function Internship() {
         <header className="experience-header">
           <BriefcaseBusiness aria-hidden="true" strokeWidth={1.6} />
           <h2 id="experience-heading">Professional Experience</h2>
-          <span className="mobile-sticker-slot" data-mobile-sticker-slot="resume" aria-hidden="true" />
         </header>
 
         <ol className="experience-timeline">

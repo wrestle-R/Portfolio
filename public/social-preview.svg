@@ -1,0 +1,9 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="630" viewBox="0 0 1200 630">
+  <rect width="1200" height="630" fill="#0e0e0e"/>
+  <rect x="32" y="32" width="1136" height="566" rx="18" fill="none" stroke="#303030"/>
+  <text x="80" y="125" fill="#999" font-family="monospace" font-size="21">$ whoami</text>
+  <text x="80" y="285" fill="#f4f4f2" font-family="Arial,sans-serif" font-size="76" font-weight="700" letter-spacing="-3">Russel Daniel Paul</text>
+  <text x="83" y="356" fill="#a8a8a8" font-family="Arial,sans-serif" font-size="28">Web apps. IoT dashboards. Things I've built.</text>
+  <path d="M80 455H1120" stroke="#303030"/>
+  <text x="82" y="525" fill="#999" font-family="monospace" font-size="23">russeldanielpaul.is-a.dev</text>
+</svg>

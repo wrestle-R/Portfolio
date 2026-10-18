@@ -51,7 +51,6 @@ const Contact = () => {
 
           <div className="grid gap-6 md:grid-cols-5">
             <div className="md:col-span-2 flow-root">
-              <span className="mobile-sticker-slot mobile-sticker-slot--float" data-mobile-sticker-slot="constellation" aria-hidden="true" />
               <h3 className="mb-2 text-xl font-semibold" style={{ color: "oklch(var(--foreground))" }}>Have something in mind?</h3>
               <p className="text-sm leading-relaxed" style={{ color: "oklch(var(--muted-foreground))" }}>
                 If you have a project, a question about something I've built, or just want to say hi, send me a message.

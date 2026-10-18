@@ -112,8 +112,6 @@ export default function MinecraftPage() {
     setPanel(null);
   };
   useEffect(() => {
-    const title = document.title;
-    document.title = "A little world · Russel Daniel Paul";
     const previous = [
       document.body.style.overflow,
       document.documentElement.style.overflow,
@@ -121,7 +119,6 @@ export default function MinecraftPage() {
     document.body.style.overflow = "hidden";
     document.documentElement.style.overflow = "hidden";
     return () => {
-      document.title = title;
       document.body.style.overflow = previous[0];
       document.documentElement.style.overflow = previous[1];
     };

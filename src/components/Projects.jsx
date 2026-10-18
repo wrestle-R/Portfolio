@@ -163,13 +163,16 @@ export default function Projects() {
           className="relative w-full overflow-hidden rounded-xl border p-5 md:p-6 transition-colors duration-300 ease-in-out hover:bg-muted/50"
           style={{ backgroundColor: "oklch(var(--background))", borderColor: "oklch(var(--border))" }}
         >
-          <div className="mb-5 flex items-start justify-between gap-3 border-b pb-3" style={{ borderColor: "oklch(var(--border))" }}>
+          <div className="projects-heading mb-5 flex items-start justify-between gap-3 border-b pb-3" style={{ borderColor: "oklch(var(--border))" }}>
+            <div>
             <h2 className="text-2xl font-bold" style={{ color: "oklch(var(--foreground))" }}>
               Projects
             </h2>
             <span className="rounded-full border px-3 py-1.5 text-xs font-mono" style={{ borderColor: "oklch(var(--border))", color: "oklch(var(--muted-foreground))" }}>
               {projectsData.length} featured
             </span>
+            </div>
+            <span className="mobile-sticker-slot" data-mobile-sticker-slot="constellation" aria-hidden="true" />
           </div>
 
           <div className="mb-5 grid grid-cols-3 gap-2 pb-1 md:grid-cols-5">

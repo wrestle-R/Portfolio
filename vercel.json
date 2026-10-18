@@ -1,8 +1,23 @@
 {
   "redirects": [
-    { "source": "/blogs", "destination": "https://blogs.russel.is-a.dev", "permanent": false }
+    {
+      "source": "/blogs",
+      "destination": "https://blogs.russel.is-a.dev",
+      "permanent": false
+    }
   ],
   "rewrites": [
-    { "source": "/(.*)", "destination": "/" }
+    {
+      "source": "/resume",
+      "destination": "/resume/index.html"
+    },
+    {
+      "source": "/minecraft",
+      "destination": "/minecraft/index.html"
+    },
+    {
+      "source": "/(.*)",
+      "destination": "/"
+    }
   ]
 }

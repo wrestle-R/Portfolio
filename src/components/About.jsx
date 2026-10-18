@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from "react";
-import PortfolioCharm from "./PortfolioCharm";
 
 const shortBio =
   "Fourth year computer engineering student. I build web apps and IoT dashboards.";
@@ -80,17 +79,16 @@ const About = () => {
               </div>
             </div>
 
-            <div className="hero-headphone-slot">
-              <PortfolioCharm type="headphones" placement="hero" />
-            </div>
+            <div className="hero-headphone-slot" data-mobile-sticker-slot="headphones" aria-hidden="true" />
+            <div className="hero-running-slot" data-mobile-sticker-slot="runny" aria-hidden="true" />
 
             <div className="hero-copy space-y-2 font-mono text-sm">
               <p>
                 <span style={{ color: "oklch(var(--muted-foreground))" }}>$</span> whoami
               </p>
-              <p className="pl-4" style={{ color: "oklch(var(--muted-foreground))" }}>
+              <h1 className="pl-4 font-normal text-sm" style={{ color: "oklch(var(--muted-foreground))", fontFamily: "inherit" }}>
                 Russel Daniel Paul
-              </p>
+              </h1>
               <p>
                 <span style={{ color: "oklch(var(--muted-foreground))" }}>$</span> stack --current
               </p>

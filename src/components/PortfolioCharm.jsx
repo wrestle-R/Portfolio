@@ -17,7 +17,7 @@ function savedPosition(type, placement) {
   return { x: 0, y: 0 };
 }
 
-export default function PortfolioCharm({ type, placement }) {
+export default function PortfolioCharm({ type, placement, managed = false }) {
   const charmRef = useRef(null);
   const audioRef = useRef(null);
   const dragRef = useRef(null);
@@ -29,6 +29,7 @@ export default function PortfolioCharm({ type, placement }) {
   const [audioError, setAudioError] = useState(false);
 
   useEffect(() => {
+    if (managed) return undefined;
     const charm = charmRef.current;
     let frame;
     const constrainPosition = () => {
@@ -63,9 +64,10 @@ export default function PortfolioCharm({ type, placement }) {
       observer.disconnect();
       window.removeEventListener('resize', constrainPosition);
     };
-  }, [placement]);
+  }, [placement, managed]);
 
   const startDrag = (event) => {
+    if (managed) return;
     if (event.button !== 0 || !event.target.closest('.portfolio-charm__object')) return;
     if (!window.matchMedia('(min-width: 1400px) and (hover: hover) and (pointer: fine)').matches) return;
     const bounds = event.currentTarget.getBoundingClientRect();
@@ -216,7 +218,7 @@ export default function PortfolioCharm({ type, placement }) {
           <img src={images[type]} alt="" loading="lazy" />
         </div>
       )}
-      {(position.x !== 0 || position.y !== 0) && (
+      {!managed && (position.x !== 0 || position.y !== 0) && (
         <button type="button" className="portfolio-charm__reset" onClick={resetPosition} aria-label={`Reset ${type} charm position`} title="Reset position">
           <RotateCcw size={14} aria-hidden="true" />
         </button>

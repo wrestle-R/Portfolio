@@ -20,17 +20,14 @@ const Home = () => {
     <div className="portfolio-home min-h-screen">
       <PortfolioBackground />
       <StickerNavigation />
-      <div className="sticker-spot" data-sticker-spot="intro" aria-hidden="true" />
       <main id="main-content">
       {sections.map((Section, index) => (
         <SectionReveal key={index} enabled={entrance && index === 0} index={index}>
           <div className="portfolio-charm-section">
             <Section />
-            {index === 0 && <div className="sticker-spot" data-sticker-spot="middle" aria-hidden="true" />}
           </div>
         </SectionReveal>
       ))}
-      <div className="sticker-spot" data-sticker-spot="outro" aria-hidden="true" />
       </main>
     </div>
   );

@@ -31,6 +31,7 @@ function getSelectedText(event) {
 
 export function registerCopyAttribution() {
   const handleCopy = (event) => {
+    if (window.location.pathname.replace(/\/+$/, "") === "/resume") return;
     const selectedText = getSelectedText(event).trim();
 
     if (!selectedText || !event.clipboardData) {

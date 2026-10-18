@@ -1,173 +1,239 @@
-// Keep pointer movement separate from activation, so moving a link never opens it.
+// Stickers follow named content corners; moving one never activates its link.
 export function initStickerNavigation(root) {
   const controller = new AbortController();
   const { signal } = controller;
-  const desktop = window.matchMedia('(min-width: 1200px) and (hover: hover) and (pointer: fine)');
+  const items = [...root.querySelectorAll('[data-sticker-id]'), ...document.querySelectorAll('[data-sticker-inline]')];
+  const isBlog = root.dataset.stickerNavigation === 'blog';
+  const compact = root.classList.contains('sticker-navigation--compact');
   const reset = root.querySelector('[data-sticker-reset]');
-  const items = [...root.querySelectorAll('[data-sticker-id]')];
-  const backToTop = root.querySelector('[data-back-to-top]');
-  const prefix = `sticker-navigation:top-returns:${root.dataset.stickerNavigation}:`;
-  let drag = null;
-  let suppressClick = false;
-  let frame = 0;
+  const resetItem = root.querySelector('[data-sticker-id="reset"]');
+  const back = root.querySelector('[data-back-to-top]');
+  const slots = new Map([...document.querySelectorAll('[data-mobile-sticker-slot]')].map((el) => [el.dataset.mobileStickerSlot, el]));
+  const prefix = `sticker-navigation:uniform-v4:${root.dataset.stickerNavigation}:${location.pathname}:`;
   const positions = new Map();
-  const listen = (el, type, fn) => el.addEventListener(type, fn, { signal });
-  if (backToTop) {
-    const updateBackToTop = () => { backToTop.hidden = window.scrollY < 450; };
-    listen(window, 'scroll', updateBackToTop);
-    listen(backToTop, 'click', () => {
-      const home = root.querySelector('[data-sticker-id="home"] a');
-      const target = home?.getClientRects().length ? home : document.querySelector('main');
-      if (target && !target.hasAttribute('tabindex')) target.setAttribute('tabindex', '-1');
-      target?.focus({ preventScroll: true });
-      window.scrollTo({ top: 0, behavior: matchMedia('(prefers-reduced-motion: reduce)').matches ? 'instant' : 'smooth' });
-    });
-    updateBackToTop();
-  }
-  const apply = (item, position) => {
-    positions.set(item, position);
-    item.style.setProperty('--sticker-x', `${position.x}px`);
-    item.style.setProperty('--sticker-y', `${position.y}px`);
+  let drag;
+  let hold;
+  let frame;
+  let suppressUntil = 0;
+  let suppressedItem;
+  const listen = (el, event, handler, options = {}) => el?.addEventListener(event, handler, { ...options, signal });
+  const mode = () => innerWidth >= 1200 ? 'wide' : 'small';
+  const storageKey = (item) => `${prefix}${mode()}:${item.dataset.stickerId}`;
+  const apply = (item, pos) => {
+    positions.set(item, pos);
+    item.style.setProperty('--sticker-x', `${pos.x}px`);
+    item.style.setProperty('--sticker-y', `${pos.y}px`);
+  };
+  const load = (item) => {
+    let pos = { x: 0, y: 0 };
+    try {
+      const saved = JSON.parse(localStorage.getItem(storageKey(item)));
+      if (Number.isFinite(saved?.x) && Number.isFinite(saved?.y)) pos = saved;
+    } catch { /* Storage is optional. */ }
+    apply(item, pos);
   };
   const save = (item) => {
-    try { localStorage.setItem(prefix + item.dataset.stickerId, JSON.stringify(positions.get(item))); } catch { /* Storage is optional. */ }
+    try { localStorage.setItem(storageKey(item), JSON.stringify(positions.get(item))); } catch { /* Storage is optional. */ }
   };
-  const constrain = (item, position) => {
-    if (item.dataset.stickerId === 'theme' || (position.x === 0 && position.y === 0)) return { x: 0, y: 0 };
-    const current = positions.get(item);
+  const constrain = (item, pos) => {
     const box = item.getBoundingClientRect();
-    const left = box.left - current.x;
-    const top = box.top - current.y;
-    const fixed = root.classList.contains('sticker-navigation--compact');
-    const baseY = top + (fixed ? 0 : scrollY);
-    const limitY = fixed ? innerHeight : document.documentElement.scrollHeight;
+    const current = positions.get(item);
+    const x = box.left - current.x;
+    const y = box.top + (compact || item.hasAttribute('data-sticker-fixed') ? 0 : scrollY) - current.y;
+    const fixed = compact || item.hasAttribute('data-sticker-fixed');
+    const height = fixed ? innerHeight : document.documentElement.scrollHeight;
     return {
-      x: Math.round(Math.max(12 - left, Math.min(position.x, innerWidth - 12 - box.width - left))),
-      y: Math.round(Math.max(12 - baseY, Math.min(position.y, limitY - 12 - box.height - baseY))),
+      x: Math.round(Math.max(8 - x, Math.min(pos.x, innerWidth - 8 - box.width - x))),
+      y: Math.round(Math.max(8 - y, Math.min(pos.y, height - 8 - box.height - y))),
     };
+  };
+  const finish = (cancelled = false) => {
+    clearTimeout(hold);
+    if (!drag) return;
+    const { item, moving, startPosition } = drag;
+    if (cancelled) apply(item, startPosition);
+    if (moving) {
+      suppressUntil = performance.now() + 450;
+      suppressedItem = item;
+      if (!cancelled) save(item);
+    }
+    delete item.dataset.dragging;
+    drag = undefined;
+    resetItem.hidden = !items.some((el) => positions.get(el)?.x || positions.get(el)?.y);
+  };
+  const move = (x, y) => {
+    if (!drag) return;
+    const dx = x - drag.x;
+    const dy = y - drag.y;
+    if (!drag.moving && Math.hypot(dx, dy) < 7) return;
+    drag.moving = true;
+    drag.item.dataset.dragging = 'true';
+    apply(drag.item, constrain(drag.item, { x: drag.startPosition.x + dx, y: drag.startPosition.y + dy }));
   };
   items.forEach((item) => {
-    let position = { x: 0, y: 0 };
-    try {
-      const saved = JSON.parse(localStorage.getItem(prefix + item.dataset.stickerId));
-      if (Number.isFinite(saved?.x) && Number.isFinite(saved?.y)) position = saved;
-    } catch { /* Invalid saved positions use the original layout. */ }
-    apply(item, position);
-    listen(item, 'pointerdown', (event) => {
-      if (!desktop.matches || item.dataset.stickerId === 'theme' || event.button !== 0) return;
-      drag = { item, id: event.pointerId, startX: event.clientX, startY: event.clientY, position: positions.get(item), moving: false };
-    });
-    listen(item, 'pointermove', (event) => {
-      if (!drag || drag.item !== item || drag.id !== event.pointerId) return;
-      const dx = event.clientX - drag.startX;
-      const dy = event.clientY - drag.startY;
-      if (!drag.moving && Math.hypot(dx, dy) < 7) return;
-      drag.moving = true;
-      item.setPointerCapture(event.pointerId);
-      item.dataset.dragging = 'true';
-      event.preventDefault();
-      apply(item, constrain(item, { x: drag.position.x + dx, y: drag.position.y + dy }));
-    });
-    const finish = (event) => {
-      if (!drag || drag.item !== item || drag.id !== event.pointerId) return;
-      const moved = drag.moving;
-      drag = null;
-      delete item.dataset.dragging;
-      if (item.hasPointerCapture(event.pointerId)) item.releasePointerCapture(event.pointerId);
-      if (moved) {
-        suppressClick = true;
-        setTimeout(() => { suppressClick = false; }, 0);
-        save(item);
-      }
+    load(item);
+    if (item.dataset.stickerId === 'theme') return;
+    const start = (x, y, touch) => {
+      finish();
+      drag = { item, x, y, startPosition: positions.get(item), moving: false, armed: !touch };
+      if (touch) hold = setTimeout(() => { if (drag?.item === item) { drag.armed = true; item.dataset.dragging = 'true'; } }, 280);
     };
-    listen(item, 'pointerup', finish);
-    listen(item, 'pointercancel', finish);
-    listen(item, 'dragstart', (event) => event.preventDefault());
-  });
-  const stages = {
-    home: 'intro', blog: 'middle', writing: 'middle', music: 'middle',
-    portfolio: 'intro', resume: 'intro', runny: 'middle', projects: 'middle',
-    about: 'outro', contact: 'outro', constellation: 'middle',
-    guitar: 'interests', football: 'interests', hills: 'interests', arch: 'interests',
-    minecraft: root.dataset.stickerNavigation === 'blog' ? 'interests' : 'outro',
-  };
-  root.addEventListener('click', (event) => {
-    if (!suppressClick) return;
-    event.preventDefault();
-    event.stopPropagation();
-  }, { capture: true, signal });
-  listen(reset, 'click', () => {
-    items.forEach((item) => {
-      apply(item, { x: 0, y: 0 });
-      try { localStorage.removeItem(prefix + item.dataset.stickerId); } catch { /* Storage is optional. */ }
+    listen(item, 'pointerdown', (event) => {
+      if (event.pointerType === 'touch' || event.button !== 0) return;
+      start(event.clientX, event.clientY, false);
     });
-  });
-  const mobileSlots = new Map([...document.querySelectorAll('[data-mobile-sticker-slot]')].map((slot) => [slot.dataset.mobileStickerSlot, slot]));
-  const returnHeading = document.querySelector('main h1') || document.querySelector('main nav[aria-label="breadcrumb"]');
-  if (!mobileSlots.has('home') && returnHeading && location.pathname !== '/') {
-    returnHeading.setAttribute('data-mobile-home-anchor', '');
-    mobileSlots.set('home', returnHeading);
-  }
-  const positionItems = () => {
-    const rootTop = root.getBoundingClientRect().top;
-    const wide = innerWidth >= 1200 && !root.classList.contains('sticker-navigation--compact');
-    const main = document.querySelector('main');
-    const leftIds = ['home', 'blog', 'writing', 'constellation', 'guitar', 'hills', 'minecraft', 'about'];
-    const left = items.filter((item) => leftIds.includes(item.dataset.stickerId));
-    const right = items.filter((item) => !left.includes(item) && item.dataset.stickerId !== 'theme');
-    items.forEach((item) => {
-      const topIds = root.dataset.stickerNavigation === 'blog'
-        ? (location.pathname === '/' ? ['portfolio', 'minecraft'] : ['portfolio', 'home', 'minecraft']) : [];
-      if (topIds.includes(item.dataset.stickerId)) {
-        item.dataset.mobileHidden = 'false';
-        item.dataset.topSticker = String(topIds.indexOf(item.dataset.stickerId));
+    listen(window, 'pointermove', (event) => {
+      if (event.pointerType === 'touch' || drag?.item !== item) return;
+      move(event.clientX, event.clientY);
+      if (drag?.moving) event.preventDefault();
+    });
+    listen(window, 'pointerup', (event) => { if (event.pointerType !== 'touch' && drag?.item === item) finish(); });
+    listen(window, 'pointercancel', () => { if (drag?.item === item) finish(true); });
+    listen(item, 'touchstart', (event) => {
+      if (event.touches.length !== 1) return;
+      start(event.touches[0].clientX, event.touches[0].clientY, true);
+    }, { passive: true });
+    listen(item, 'touchmove', (event) => {
+      if (drag?.item !== item) return;
+      const touch = event.touches[0];
+      if (!drag.armed) {
+        if (Math.hypot(touch.clientX - drag.x, touch.clientY - drag.y) > 7) finish(true);
         return;
       }
-      const slot = mobileSlots.get(item.dataset.stickerId);
-      item.dataset.mobileHidden = String(!slot && item.dataset.stickerId !== 'theme');
-      if (!wide && !root.classList.contains('sticker-navigation--compact')) {
-        if (slot) {
-          const box = slot.getBoundingClientRect();
-          item.style.setProperty('--mobile-slot-x', `${box.right - 78 - root.getBoundingClientRect().left}px`);
-          item.style.setProperty('--mobile-slot-y', `${box.top - rootTop}px`);
+      event.preventDefault();
+      move(touch.clientX, touch.clientY);
+    }, { passive: false });
+    listen(item, 'touchend', () => { if (drag?.item === item) finish(); });
+    listen(item, 'touchcancel', () => { if (drag?.item === item) finish(true); });
+    listen(item, 'contextmenu', (event) => { if (drag?.armed) event.preventDefault(); });
+    listen(item, 'dragstart', (event) => event.preventDefault());
+    listen(item, 'keydown', (event) => {
+      if (event.key === 'Escape') { apply(item, { x: 0, y: 0 }); save(item); resetItem.hidden = !items.some((el) => positions.get(el)?.x || positions.get(el)?.y); return; }
+      if (!event.altKey || !['ArrowLeft', 'ArrowRight', 'ArrowUp', 'ArrowDown'].includes(event.key)) return;
+      event.preventDefault();
+      const current = positions.get(item);
+      apply(item, constrain(item, { x: current.x + (event.key === 'ArrowLeft' ? -12 : event.key === 'ArrowRight' ? 12 : 0), y: current.y + (event.key === 'ArrowUp' ? -12 : event.key === 'ArrowDown' ? 12 : 0) }));
+      save(item);
+      resetItem.hidden = false;
+    });
+  });
+  listen(document, 'click', (event) => {
+    if (performance.now() >= suppressUntil || event.target.closest('[data-sticker-id]') !== suppressedItem) return;
+    event.preventDefault(); event.stopPropagation();
+  }, { capture: true });
+  listen(reset, 'click', () => {
+    suppressUntil = 0;
+    suppressedItem = undefined;
+    items.forEach((item) => { apply(item, { x: 0, y: 0 }); try { localStorage.removeItem(storageKey(item)); } catch { /* Storage is optional. */ } });
+    resetItem.hidden = true;
+  });
+  const returnHeading = isBlog ? document.querySelector('main h1') || document.querySelector('main nav[aria-label="breadcrumb"]') : null;
+  if (returnHeading) returnHeading.setAttribute('data-return-home-heading', '');
+  const positionItems = () => {
+    const origin = root.getBoundingClientRect();
+    const wide = innerWidth >= 1200;
+    const home = location.pathname === '/';
+    const main = document.querySelector('main');
+    const intro = document.querySelector('.hero-intro')?.getBoundingClientRect();
+    const content = document.querySelector('.endurance-panel, .about-page, .spotify-page, main .col-start-2') || main;
+    const contentBox = content?.getBoundingClientRect();
+    const mainBox = main?.getBoundingClientRect();
+    const itemWidth = (item) => Number.parseFloat(getComputedStyle(item).getPropertyValue('--sticker-size')) || 78;
+    const put = (item, x, y) => {
+      item.dataset.mobileHidden = 'false';
+      item.style.setProperty('--sticker-base-x', `${Math.round(x - origin.left)}px`);
+      item.style.setProperty('--sticker-base-y', `${Math.round(y - origin.top)}px`);
+    };
+    const eligible = (item) => {
+      const id = item.dataset.stickerId;
+      if (['theme','home','reset','subscribe'].includes(id)) return false;
+      const target = item.querySelector('a')?.getAttribute('href');
+      if (target === location.pathname) return false;
+      if (home) return true;
+      if (location.pathname === '/about') return ['music','minecraft','constellation','runny','songbook','arch','wallpapers'].includes(id);
+      if (location.pathname === '/spotify') return ['minecraft','songbook','constellation','posts','movies','wallpapers'].includes(id);
+      if (location.pathname.startsWith('/blog/')) return ['minecraft','posts','songbook','constellation','arch','wallpapers'].includes(id);
+      return ['minecraft','posts','songbook','wallpapers'].includes(id);
+    };
+    const article = isBlog && Boolean(document.querySelector('article.prose'));
+    const sidebarVisible = (id) => {
+      const sidebar = document.getElementById(id);
+      return wide && sidebar && getComputedStyle(sidebar).display !== 'none';
+    };
+    const tocVisible = sidebarVisible('toc-sidebar-container');
+    const subpostsVisible = sidebarVisible('subposts-sidebar-container');
+    const leftOrder = ['music','songbook','posts','arch','movies'];
+    const leftItems = tocVisible ? [] : items.filter(eligible).filter((item) => leftOrder.includes(item.dataset.stickerId)).sort((a,b) => leftOrder.indexOf(a.dataset.stickerId) - leftOrder.indexOf(b.dataset.stickerId));
+    const rightOrder = ['minecraft','about','constellation','runny','wallpapers', ...(tocVisible ? leftOrder : [])];
+    const rightItems = subpostsVisible ? [] : items.filter(eligible).filter((item) => rightOrder.includes(item.dataset.stickerId)).sort((a,b) => rightOrder.indexOf(a.dataset.stickerId) - rightOrder.indexOf(b.dataset.stickerId));
+    const leftStart = home ? 20 : 240;
+    const leftLimit = Math.max(1, Math.floor(((mainBox?.height || 0) - leftStart - 40) / 230));
+    const rightLimit = Math.max(1, Math.floor(((mainBox?.height || 0) - 60) / 230));
+    const shownLeft = leftItems.slice(0,leftLimit);
+    const shownRight = rightItems.slice(0,rightLimit);
+    items.forEach((item) => {
+      const id = item.dataset.stickerId;
+      item.dataset.mobileHidden = 'true';
+      if (id === 'theme' || id === 'reset' || item.hasAttribute('data-sticker-inline')) { item.dataset.mobileHidden = 'false'; return; }
+      if (compact) { if (id === 'home') put(item, 16, 16); return; }
+      if (isBlog) {
+        if (id === 'home' && !home && returnHeading && contentBox) {
+          const box = returnHeading.getBoundingClientRect();
+          put(item, wide && !article ? Math.max(12,contentBox.left - 100) : box.right - itemWidth(item), box.top);
+          return;
         }
-        delete item.dataset.stickerEdge;
-      } else if (wide && main && item.dataset.stickerId !== 'theme') {
-        const side = left.includes(item) ? left : right;
-        const rank = side.indexOf(item);
-        const available = Math.max(480, main.getBoundingClientRect().height - 150);
-        const fraction = (rank + (side === left ? 0 : 0.35)) / Math.max(1, side.length - 0.5);
-        item.style.setProperty('--sticker-spot-top', `${main.getBoundingClientRect().top - rootTop + available * fraction}px`);
-        item.style.setProperty('--loose-y', '0px');
-        item.dataset.stickerEdge = side === left ? 'left' : 'right';
-      } else {
-        const spot = document.querySelector(`[data-sticker-spot="${stages[item.dataset.stickerId]}"]`);
-        if (spot) item.style.setProperty('--sticker-spot-top', `${spot.getBoundingClientRect().top - rootTop}px`);
-        item.style.removeProperty('--loose-y');
-        delete item.dataset.stickerEdge;
+        // Both article sidebars own their gutters. Keep only the top character there.
+        if (id === 'minecraft' && subpostsVisible && contentBox) { put(item, Math.min(innerWidth - itemWidth(item) - 12, contentBox.right + 24), 8 - scrollY); return; }
+        if (id === 'minecraft' && !wide) { put(item, Math.max(146,innerWidth/2 - 39), 8 - scrollY); return; }
+        if (wide && contentBox && mainBox) {
+          const side = shownLeft.includes(item) ? shownLeft : shownRight.includes(item) ? shownRight : null;
+          if (side) {
+            const left = side === shownLeft;
+            const start = left ? leftStart : 20;
+            const step = Math.max(230, (mainBox.height - start - 220) / Math.max(1,side.length - 1));
+            put(item, left ? Math.max(12,contentBox.left - itemWidth(item) - 24) : Math.min(innerWidth - itemWidth(item) - 12,contentBox.right + 24), contentBox.top + start + side.indexOf(item) * step);
+          }
+          return;
+        }
+      } else if (wide && home) {
+        const original = { headphones: ['#about', 'left', .55, 168], minecraft: ['#about', 'right', .48, 164], runny: ['#github', 'right', .49, 185], blog: ['#latest-blog', 'left', .5, 185], guitar: ['#tech', 'left', .46, 132], arch: ['#tech', 'right', .48, 132], football: ['#internship', 'right', .47, 112], hills: ['#contact', 'left', .48, 180], constellation: ['#tech', 'left', .84, 160] };
+        if (id === 'resume' && intro) { put(item, intro.right + 16, 10 - scrollY); return; }
+        if (id === 'home' && intro) { put(item, Math.max(16, innerWidth / 2 - 650) + 40, intro.top + 4); return; }
+        const target = original[id];
+        const box = target && document.querySelector(target[0])?.closest('.portfolio-charm-section')?.getBoundingClientRect();
+        if (box) {
+          const edge = Math.max(16, innerWidth / 2 - 650);
+          put(item, target[1] === 'left' ? edge : innerWidth - edge - target[3], box.top + box.height * target[2] - target[3] * .4);
+        }
+        return;
+      }
+      if (!isBlog && id === 'resume' && home) { put(item, 20, 10 - scrollY); return; }
+      if (!isBlog && id === 'home' && !home) { put(item, innerWidth/2 - itemWidth(item)/2, 10 - scrollY); return; }
+      const slot = slots.get(id);
+      if (slot && !(isBlog && id === 'about' && location.pathname === '/about')) {
+        const box = slot.getBoundingClientRect();
+        if (box.width && box.height) put(item, box.left + (box.width - itemWidth(item))/2, box.top);
       }
     });
+    items.forEach((item) => { if (item.dataset.mobileHidden !== 'true' && (positions.get(item)?.x || positions.get(item)?.y)) apply(item, constrain(item, positions.get(item))); });
+    resetItem.hidden = !items.some((item) => positions.get(item)?.x || positions.get(item)?.y);
   };
-  const resize = () => {
-    cancelAnimationFrame(frame);
-    frame = requestAnimationFrame(() => {
-      positionItems();
-      if (desktop.matches) items.forEach((item) => apply(item, constrain(item, positions.get(item))));
-    });
-  };
-  listen(window, 'resize', resize);
-  const sizes = new ResizeObserver(() => {
-    positionItems();
-    if (desktop.matches) items.forEach((item) => apply(item, constrain(item, positions.get(item))));
+  const schedule = () => { cancelAnimationFrame(frame); frame = requestAnimationFrame(positionItems); };
+  let previousMode = mode();
+  listen(window, 'resize', () => {
+    if (mode() !== previousMode) { previousMode = mode(); items.forEach(load); }
+    schedule();
   });
-  document.querySelectorAll('[data-sticker-spot]').forEach((spot) => sizes.observe(spot));
-  sizes.observe(document.body);
-  mobileSlots.forEach((slot) => sizes.observe(slot));
-  resize();
-  return () => {
-    controller.abort();
-    returnHeading?.removeAttribute('data-mobile-home-anchor');
-    sizes.disconnect();
-    cancelAnimationFrame(frame);
-  };
+  const observer = new ResizeObserver(schedule);
+  observer.observe(document.body);
+  slots.forEach((slot) => observer.observe(slot));
+  const updateBack = () => { if (back) back.hidden = scrollY < 450; };
+  listen(window, 'scroll', updateBack, { passive: true });
+  listen(back, 'click', () => {
+    const main = document.querySelector('main');
+    main?.setAttribute('tabindex', '-1'); main?.focus({ preventScroll: true });
+    scrollTo({ top: 0, behavior: matchMedia('(prefers-reduced-motion: reduce)').matches ? 'instant' : 'smooth' });
+  });
+  updateBack(); positionItems();
+  return () => { finish(true); controller.abort(); returnHeading?.removeAttribute('data-return-home-heading'); observer.disconnect(); cancelAnimationFrame(frame); };
 }
