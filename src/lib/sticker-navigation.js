@@ -75,6 +75,8 @@ export function initStickerNavigation(root) {
     if (item.dataset.stickerId === 'theme') return;
     const start = (x, y, touch) => {
       finish();
+      suppressUntil = 0;
+      suppressedItem = undefined;
       drag = { item, x, y, startPosition: positions.get(item), moving: false, armed: !touch };
       if (touch) hold = setTimeout(() => { if (drag?.item === item) { drag.armed = true; item.dataset.dragging = 'true'; } }, 280);
     };
@@ -108,6 +110,7 @@ export function initStickerNavigation(root) {
     listen(item, 'contextmenu', (event) => { if (drag?.armed) event.preventDefault(); });
     listen(item, 'dragstart', (event) => event.preventDefault());
     listen(item, 'keydown', (event) => {
+      if (!drag && ['Enter', ' '].includes(event.key)) { suppressUntil = 0; suppressedItem = undefined; }
       if (event.key === 'Escape') { apply(item, { x: 0, y: 0 }); save(item); resetItem.hidden = !items.some((el) => positions.get(el)?.x || positions.get(el)?.y); return; }
       if (!event.altKey || !['ArrowLeft', 'ArrowRight', 'ArrowUp', 'ArrowDown'].includes(event.key)) return;
       event.preventDefault();
@@ -146,7 +149,7 @@ export function initStickerNavigation(root) {
     };
     const eligible = (item) => {
       const id = item.dataset.stickerId;
-      if (['theme','home','spotify-back','reset','subscribe'].includes(id)) return false;
+      if (item.hasAttribute('data-sticker-inline') || ['theme','home','spotify-back','reset'].includes(id)) return false;
       const target = item.querySelector('a')?.getAttribute('href');
       if (target === location.pathname) return false;
       if (home) return true;
@@ -201,7 +204,11 @@ export function initStickerNavigation(root) {
         }
       } else if (wide && home) {
         const original = { headphones: ['#about', 'left', .55, 168], minecraft: ['#about', 'right', .48, 164], runny: ['#github', 'right', .49, 185], blog: ['#latest-blog', 'left', .5, 185], guitar: ['#tech', 'left', .46, 132], arch: ['#tech', 'right', .48, 132], football: ['#internship', 'right', .47, 112], hills: ['#contact', 'left', .48, 180], constellation: ['#tech', 'left', .84, 160] };
-        if (id === 'resume' && intro) { put(item, intro.right + 16, 10 - scrollY); return; }
+        if (id === 'resume' && intro) {
+          const themeWidth = root.querySelector('[data-sticker-id="theme"]')?.getBoundingClientRect().width || 64;
+          put(item, Math.min(intro.right + 16, innerWidth - itemWidth(item) - themeWidth - 24), 10 - scrollY);
+          return;
+        }
         if (id === 'home' && intro) { put(item, Math.max(16, innerWidth / 2 - 650) + 40, intro.top + 4); return; }
         const target = original[id];
         const box = target && document.querySelector(target[0])?.closest('.portfolio-charm-section')?.getBoundingClientRect();

@@ -1,0 +1,10 @@
+.contact-send-sticker { position: relative; justify-self: end; width: 106px; transform: translate(var(--sticker-x,0px),var(--sticker-y,0px)); user-select: none; -webkit-user-select: none; -webkit-touch-callout: none; }
+.send-message-sticker { position: relative; display: grid; justify-items: center; align-content: center; gap: 3px; width: 106px; min-height: 62px; padding: 7px 5px 8px; border: 1px solid #d8d2c5; border-radius: 5px 8px 5px 4px; outline: 3px solid #fffdf6; background: #fffdf6; color: #30382f; box-shadow: 0 2px 0 #b9b09c80,0 4px 7px #0002; font: 600 12px/1.3 ui-sans-serif,system-ui,sans-serif; transform: rotate(-5deg); transition: transform 180ms ease,box-shadow 180ms ease; cursor: grab; }
+.send-message-sticker__icon { width: 28px; height: 24px; pointer-events: none; }
+.send-message-sticker::after { content: ''; position: absolute; right: -1px; bottom: -1px; width: 10px; height: 10px; border-radius: 0 0 4px 0; background: linear-gradient(135deg,#c9c1ae 0 45%,#f0eadc 50%); clip-path: polygon(100% 0,100% 100%,0 100%); pointer-events: none; }
+.send-message-sticker:hover { transform: rotate(-1deg) translateY(-2px); box-shadow: 0 2px 0 #b9b09c80,0 6px 10px #0002; }
+.send-message-sticker:active { transform: rotate(0) scale(.96); }
+.send-message-sticker:focus-visible { outline: 2px solid oklch(var(--foreground)); outline-offset: 6px; }
+.send-message-sticker:disabled { opacity: .65; cursor: wait; }
+[data-dragging='true'] .send-message-sticker { transform: rotate(0); cursor: grabbing; }
+@media (prefers-reduced-motion:reduce) { .send-message-sticker { transition: none; } }

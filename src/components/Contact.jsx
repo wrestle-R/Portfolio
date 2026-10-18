@@ -2,6 +2,7 @@
 
 import React, { useState } from "react"
 import emailjs from "@emailjs/browser"
+import "./contact-sticker.css"
 
 const Contact = () => {
   const [formData, setFormData] = useState({ name: "", email: "", message: "" })
@@ -44,74 +45,82 @@ const Contact = () => {
   return (
     <section className="relative z-10 w-full px-4 pt-8 md:pt-10" id="contact" style={{ backgroundColor: "transparent" }}>
       <div className="mx-auto w-full max-w-4xl">
-        <article className="w-full overflow-hidden rounded-xl border p-5 md:p-6 transition-colors duration-300 ease-in-out hover:bg-muted/50" style={{ backgroundColor: "oklch(var(--background))", borderColor: "oklch(var(--border))" }}>
-          <div className="mb-5 border-b pb-3" style={{ borderColor: "oklch(var(--border))" }}>
-            <h2 className="text-2xl font-bold" style={{ color: "oklch(var(--foreground))" }}>Contact</h2>
+        <article className="w-full rounded-xl border p-4 md:p-5 transition-colors duration-300 ease-in-out hover:bg-muted/50" style={{ backgroundColor: "oklch(var(--background))", borderColor: "oklch(var(--border))" }}>
+          <div className="mb-3 border-b pb-2" style={{ borderColor: "oklch(var(--border))" }}>
+            <h2 className="text-xl font-bold" style={{ color: "oklch(var(--foreground))" }}>Contact</h2>
           </div>
 
-          <div className="grid gap-6 md:grid-cols-5">
-            <div className="md:col-span-2 flow-root">
-              <h3 className="mb-2 text-xl font-semibold" style={{ color: "oklch(var(--foreground))" }}>Have something in mind?</h3>
-              <p className="text-sm leading-relaxed" style={{ color: "oklch(var(--muted-foreground))" }}>
-                If you have a project, a question about something I've built, or just want to say hi, send me a message.
-              </p>
-              <div className="mt-4 space-y-2 text-sm" style={{ color: "oklch(var(--muted-foreground))" }}>
-                <p>russeldanielpaul@gmail.com</p>
-                <p>GitHub: wrestle-R</p>
+          <div className="grid items-start gap-4 md:grid-cols-5 md:gap-6">
+            <div className="md:col-span-2 text-sm leading-relaxed" style={{ color: "oklch(var(--muted-foreground))" }}>
+              <p>Have something in mind?</p>
+              <div className="mt-2 flex flex-wrap gap-x-4 gap-y-1 md:flex-col">
+                <a className="break-all underline-offset-4 hover:underline" href="mailto:russeldanielpaul@gmail.com">russeldanielpaul@gmail.com</a>
+                <a className="underline-offset-4 hover:underline" href="https://github.com/wrestle-R">GitHub: wrestle-R</a>
               </div>
             </div>
 
-            <div className="md:col-span-3">
-              <h4 className="mb-3 text-lg font-semibold" style={{ color: "oklch(var(--foreground))" }}>Send me a message</h4>
-              <form onSubmit={handleSubmit} className="space-y-3">
-                <input
-                  type="text"
-                  name="name"
-                  value={formData.name}
-                  onChange={handleInputChange}
-                  required
-                  className="w-full rounded-lg border px-3 py-2 text-sm"
-                  style={{ backgroundColor: "oklch(var(--background) / 0.8)", borderColor: "oklch(var(--border))", color: "oklch(var(--foreground))" }}
-                  placeholder="Your name"
-                />
-                <input
-                  type="email"
-                  name="email"
-                  value={formData.email}
-                  onChange={handleInputChange}
-                  required
-                  className="w-full rounded-lg border px-3 py-2 text-sm"
-                  style={{ backgroundColor: "oklch(var(--background) / 0.8)", borderColor: "oklch(var(--border))", color: "oklch(var(--foreground))" }}
-                  placeholder="your.email@example.com"
-                />
-                <textarea
-                  name="message"
-                  value={formData.message}
-                  onChange={handleInputChange}
-                  required
-                  rows={4}
-                  className="w-full resize-none rounded-lg border px-3 py-2 text-sm"
-                  style={{ backgroundColor: "oklch(var(--background) / 0.8)", borderColor: "oklch(var(--border))", color: "oklch(var(--foreground))" }}
-                  placeholder="What did you have in mind?"
-                />
-
+            <form id="contact-form" onSubmit={handleSubmit} className="grid gap-2 md:col-span-3" aria-label="Send me a message">
+              <div className="grid gap-2 min-[480px]:grid-cols-2">
+                <div>
+                  <label className="sr-only" htmlFor="contact-name">Your name</label>
+                  <input
+                    id="contact-name"
+                    type="text"
+                    name="name"
+                    autoComplete="name"
+                    value={formData.name}
+                    onChange={handleInputChange}
+                    required
+                    className="h-11 w-full rounded-lg border px-3 py-2 text-base sm:text-sm"
+                    style={{ backgroundColor: "oklch(var(--background) / 0.8)", borderColor: "oklch(var(--border))", color: "oklch(var(--foreground))" }}
+                    placeholder="Your name"
+                  />
+                </div>
+                <div>
+                  <label className="sr-only" htmlFor="contact-email">Email address</label>
+                  <input
+                    id="contact-email"
+                    type="email"
+                    name="email"
+                    autoComplete="email"
+                    value={formData.email}
+                    onChange={handleInputChange}
+                    required
+                    className="h-11 w-full rounded-lg border px-3 py-2 text-base sm:text-sm"
+                    style={{ backgroundColor: "oklch(var(--background) / 0.8)", borderColor: "oklch(var(--border))", color: "oklch(var(--foreground))" }}
+                    placeholder="your@email.com"
+                  />
+                </div>
+              </div>
+              <label className="sr-only" htmlFor="contact-message">Your message</label>
+              <textarea
+                id="contact-message"
+                name="message"
+                value={formData.message}
+                onChange={handleInputChange}
+                required
+                rows={2}
+                className="min-h-[72px] w-full resize-y rounded-lg border px-3 py-2 text-base sm:text-sm"
+                style={{ backgroundColor: "oklch(var(--background) / 0.8)", borderColor: "oklch(var(--border))", color: "oklch(var(--foreground))" }}
+                placeholder="What did you have in mind?"
+              />
+              <div className="sticker-inline contact-send-sticker" data-sticker-inline data-sticker-id="send-message">
                 <button
                   type="submit"
+                  form="contact-form"
                   disabled={isSubmitting}
-                  className="w-full rounded-lg px-5 py-2.5 text-sm font-medium transition-opacity hover:opacity-90 disabled:opacity-50"
-                  style={{ backgroundColor: "oklch(var(--primary))", color: "oklch(var(--primary-foreground))" }}
+                  className="send-message-sticker"
+                  aria-label="Send message"
+                  aria-describedby="contact-send-help"
+                  aria-busy={isSubmitting}
                 >
-                  {isSubmitting ? "Sending..." : "Send Message"}
+                  <svg className="send-message-sticker__icon" viewBox="0 0 32 26" fill="none" aria-hidden="true"><path d="m3 11 26-8-8 21-6-9-12-4Z" fill="#e1e8d7" stroke="currentColor" strokeWidth="1.5" strokeLinejoin="round"/><path d="m15 15 14-12M15 15l-1 6 4-3" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/></svg>
+                  <span>{isSubmitting ? "Sending..." : "Send message"}</span>
                 </button>
-
-                {submitStatus === "success" && (
-                  <p className="text-sm font-medium" style={{ color: "oklch(var(--foreground))" }}>Message sent successfully!</p>
-                )}
-                {submitStatus === "error" && (
-                  <p className="text-sm font-medium" style={{ color: "oklch(var(--destructive))" }}>Failed to send message.</p>
-                )}
-              </form>
-            </div>
+              </div>
+              <span className="sr-only" id="contact-send-help">Press and hold to move this sticker on a phone. Tap or press Enter to send your message.</span>
+              {submitStatus && <p role="status" className="text-sm" style={{ color: submitStatus === "error" ? "oklch(var(--destructive))" : "oklch(var(--foreground))" }}>{submitStatus === "success" ? "Message sent." : "Couldn't send your message. Please try again."}</p>}
+            </form>
           </div>
         </article>
       </div>

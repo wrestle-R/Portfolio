@@ -5,6 +5,7 @@ import { BLOG_URL, buildSubdomainUrl } from '../lib/domain-utils';
 import { initStickerNavigation } from '../lib/sticker-navigation';
 import '../sticker-navigation.css';
 import PortfolioCharm from './PortfolioCharm';
+import CloudThemeIcon from './CloudThemeIcon';
 
 /*
  * TODO(portfolio): finish the designer's visual review of the restored sticker layout.
@@ -15,7 +16,7 @@ import PortfolioCharm from './PortfolioCharm';
  * [x] Preserve the headphone song and play/pause behavior, including suppression after dragging.
  * [x] Keep mouse dragging, phone hold-to-drag, ordinary swipe scrolling and keyboard positioning.
  * [x] Remove the Home house sticker; keep the simpler green Constellation planet and its link.
- * [x] Keep the tactile switch top-right and preserve the original circular theme animation.
+ * [x] Keep the cloud sticker at the document top-right with a smooth, reversible page-edge theme reveal.
  * [x] Remove the theme switch from Minecraft; retain its current scene theme.
  * [x] Restore cream cutout edges and larger object artwork without visible captions.
  * [x] Use a movable Reset icon sticker and a plain up arrow.
@@ -46,7 +47,7 @@ export default function StickerNavigation({ compact = false }) {
     { id: 'football', order: 12, label: 'Football stories', href: `${BLOG_URL}/blog/barclays-fantasy-league`, image: 'football.webp' },
     { id: 'hills', order: 13, label: 'Munnar trip', href: `${BLOG_URL}/blog/munnar-trip`, image: 'hill-station.webp' },
     { id: 'theme', order: 8, label: theme === 'dark' ? 'Turn the lights on' : 'Turn the lights off' },
-    { id: 'constellation', order: 9, label: 'Constellation', href: 'https://russels-constellation.vercel.app/', image: 'spotify-planet-natural.webp' },
+    { id: 'constellation', order: 9, label: 'Constellation', href: 'https://russels-constellation.vercel.app/', image: 'spotify-planet-polished.webp' },
   ].filter((item) => !(pathname.replace(/\/+$/, '') === '/resume' && ['blog','guitar','arch','football','hills'].includes(item.id)))
     .filter((item) => !compact || item.id === 'theme');
   return (
@@ -56,7 +57,7 @@ export default function StickerNavigation({ compact = false }) {
           const content = item.id === 'theme' ? null : <><img src={`/charms/${item.image}`} alt="" draggable="false" width="94" height="80" /></>;
           return (
             <div key={item.id} className="sticker-navigation__item" data-sticker-id={item.id} data-mobile-hidden={item.id !== 'theme'} data-sticker-order={item.order} data-sticker-side={item.order <= 4 ? 'left' : 'right'} style={{ '--sticker-row': (item.order - 1) % 4, '--sticker-angle': `${[-5, 6, -7, 4, 5, -5, 3, -6, -9][(item.order - 1) % 9]}deg` }}>
-              {item.id === 'headphones' ? <PortfolioCharm type="headphones" managed /> : item.id === 'theme' ? <button type="button" className="theme-switch" data-theme-switch role="switch" aria-checked={theme === 'light'} onClick={(event) => toggleTheme(event.currentTarget)} aria-label="Lights" title={item.label}><span className="theme-switch__plate" aria-hidden="true"><span className="theme-switch__socket"><span className="theme-switch__rocker"><span className="theme-switch__light"></span></span></span></span></button> : item.href.startsWith('http') ? <a className="sticker-link" href={item.href} aria-label={item.label} title={item.label}>{content}</a> : <Link className="sticker-link" aria-label={item.label} title={item.label} to={item.href} aria-current={item.current ? 'page' : undefined} onClick={() => {
+              {item.id === 'headphones' ? <PortfolioCharm type="headphones" managed /> : item.id === 'theme' ? <button type="button" className="theme-switch" data-theme-switch role="switch" aria-checked={theme === 'light'} onClick={(event) => toggleTheme(event.currentTarget)} aria-label="Light mode" title={item.label}><CloudThemeIcon /></button> : item.href.startsWith('http') ? <a className="sticker-link" href={item.href} aria-label={item.label} title={item.label}>{content}</a> : <Link className="sticker-link" aria-label={item.label} title={item.label} to={item.href} aria-current={item.current ? 'page' : undefined} onClick={() => {
                 const hash = item.href.split('#')[1];
                 if (hash) requestAnimationFrame(() => document.getElementById(hash)?.scrollIntoView({ behavior: matchMedia('(prefers-reduced-motion: reduce)').matches ? 'instant' : 'smooth' }));
                 else window.scrollTo({ top: 0, behavior: 'instant' });

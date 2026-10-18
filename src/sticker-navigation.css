@@ -14,7 +14,7 @@
 @media (hover: hover) { .sticker-link:hover { transform: rotate(0) translateY(-3px); } }
 [data-sticker-id][data-dragging='true'] { z-index: 80; }
 [data-sticker-id][data-dragging='true'] .sticker-link { cursor: grabbing; transform: rotate(0) scale(1.04); filter: drop-shadow(0 6px 6px #0003); }
-.sticker-navigation .sticker-navigation__item[data-sticker-id='theme'] { position: fixed; top: max(12px, env(safe-area-inset-top)); right: max(12px, env(safe-area-inset-right)); left: auto; width: 52px; height: 60px; transform: none; z-index: 90; }
+.sticker-navigation .sticker-navigation__item[data-sticker-id='theme'] { position: absolute; top: max(12px, env(safe-area-inset-top)); right: max(12px, env(safe-area-inset-right)); left: auto; width: 64px; height: 56px; transform: none; z-index: 90; }
 .sticker-navigation .sticker-navigation__reset-item { position: fixed; top: auto; bottom: calc(12px + env(safe-area-inset-bottom)); left: 12px; width: 88px; height: 78px; z-index: 85; }
 .reset-sticker { display: grid; place-items: center; gap: 2px; width: 88px; min-height: 74px; padding: 7px 9px; border: 2px solid #fffdf6; border-radius: 5px 10px 6px 4px; background: #fffdf6; color: #30382f; box-shadow: 0 3px 0 #0002, 0 5px 10px #0002; font: 600 12px/1.2 ui-sans-serif, system-ui, sans-serif; transform: rotate(-5deg); cursor: grab; }
 .reset-sticker svg { width: 25px; height: 25px; }
@@ -24,7 +24,7 @@
 .back-to-top[hidden], .back-to-top::before, .back-to-top::after { display: none; }
 .mobile-sticker-slot { display: block; flex: 0 0 86px; width: 86px; height: 114px; pointer-events: none; }
 .mobile-sticker-slot--float { float: right; margin: 0 0 8px 14px; }
-.sticker-navigation--compact { position: fixed; }
+.sticker-navigation--compact { position: absolute; }
 @media (min-width: 1200px) {
   .sticker-navigation__item { --sticker-size: 188px; }
   .sticker-navigation__item[data-sticker-id='resume'] { --sticker-size: 126px; }
@@ -89,7 +89,7 @@
 .resume-title-card .resume-actions { justify-content: center; }
 
 @media (max-width: 1199px) {
-  .sticker-navigation .sticker-navigation__item[data-sticker-id='theme'] { position: absolute; height: 44px; }
+  .sticker-navigation .sticker-navigation__item[data-sticker-id='theme'] { position: absolute; height: 52px; }
   .sticker-navigation--compact { position: absolute; }
 }
 

@@ -61,7 +61,7 @@ export const useTheme = () => {
 
 export const ThemeProvider = ({ children }) => {
   const [theme, setTheme] = useState(getPreferredTheme);
-  const nextRevealDirection = useRef('expand');
+  const nextTurnDirection = useRef('forward');
 
   const applyTheme = useCallback((nextTheme) => {
     setTheme(nextTheme);
@@ -81,26 +81,12 @@ export const ThemeProvider = ({ children }) => {
       return;
     }
 
-    const rect = sourceEl.getBoundingClientRect();
-    const x = rect.left + rect.width / 2;
-    const y = rect.top + rect.height / 2;
-    const maxX = Math.max(x, window.innerWidth - x);
-    const maxY = Math.max(y, window.innerHeight - y);
-    const endRadius = Math.hypot(maxX, maxY);
-
-    // Prepare the first-frame mask before either theme snapshot is captured.
-    root.style.setProperty('--theme-transition-x', `${x}px`);
-    root.style.setProperty('--theme-transition-y', `${y}px`);
-    root.style.setProperty('--theme-transition-radius', `${endRadius}px`);
-    root.dataset.themeReveal = nextRevealDirection.current;
+    root.dataset.themeTurn = nextTurnDirection.current;
     root.classList.add('theme-transition');
 
     const cleanup = () => {
       root.classList.remove('theme-transition');
-      delete root.dataset.themeReveal;
-      root.style.removeProperty('--theme-transition-x');
-      root.style.removeProperty('--theme-transition-y');
-      root.style.removeProperty('--theme-transition-radius');
+      delete root.dataset.themeTurn;
     };
 
     try {
@@ -109,7 +95,7 @@ export const ThemeProvider = ({ children }) => {
       });
       transition.finished.then(cleanup, cleanup);
       transition.ready.then(() => {
-        nextRevealDirection.current = nextRevealDirection.current === 'expand' ? 'contract' : 'expand';
+        nextTurnDirection.current = nextTurnDirection.current === 'forward' ? 'backward' : 'forward';
       }, () => { /* A skipped transition still applies the theme. */ });
     } catch {
       cleanup();

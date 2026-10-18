@@ -2,7 +2,7 @@ export const SITE_URL = 'https://russeldanielpaul.is-a.dev';
 export const SOCIAL_IMAGE = `${SITE_URL}/social-preview.png`;
 export const PAGE_SEO = {
   '/': {
-    title: 'Russel Daniel Paul | Web Developer & IoT Projects',
+    title: 'Russel Daniel Paul | Full Stack Developer',
     description: 'Web apps, IoT dashboards and projects by Russel Daniel Paul. See my work with React and Next.js, work experience, and personal writing.',
   },
   '/resume': {
