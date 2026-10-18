@@ -14,8 +14,10 @@ import PortfolioCharm from './PortfolioCharm';
  * [x] Keep Resume near the top and use fewer, smaller contextual stickers on phones.
  * [x] Preserve the headphone song and play/pause behavior, including suppression after dragging.
  * [x] Keep mouse dragging, phone hold-to-drag, ordinary swipe scrolling and keyboard positioning.
- * [x] Use a small house icon and the simpler green Constellation planet with its external link.
+ * [x] Remove the Home house sticker; keep the simpler green Constellation planet and its link.
  * [x] Keep the tactile switch top-right and preserve the original circular theme animation.
+ * [x] Remove the theme switch from Minecraft; retain its current scene theme.
+ * [x] Restore cream cutout edges and larger object artwork without visible captions.
  * [x] Use a movable Reset icon sticker and a plain up arrow.
  * [x] Remove the Projects laptop sticker while retaining project content and Multi Codex.
  * [x] Center Resume; remove its Blog references, generic badges and copy attribution.
@@ -34,7 +36,6 @@ export default function StickerNavigation({ compact = false }) {
     return () => cancelAnimationFrame(frame);
   }, [pathname, hash]);
   const items = [
-    { id: 'home', order: 1, label: pathname === '/' ? 'Home' : 'Back to portfolio', href: '/', image: 'home.svg', current: pathname === '/' },
     { id: 'blog', order: 2, label: 'Blog', href: BLOG_URL, image: 'blog-notebook.webp' },
     { id: 'runny', order: 3, label: 'Runny', href: buildSubdomainUrl('runny'), image: 'running-shoe.webp' },
     { id: 'resume', order: 4, label: 'Resume', href: '/resume', image: 'resume-paper.webp', current: pathname === '/resume' },
@@ -47,7 +48,7 @@ export default function StickerNavigation({ compact = false }) {
     { id: 'theme', order: 8, label: theme === 'dark' ? 'Turn the lights on' : 'Turn the lights off' },
     { id: 'constellation', order: 9, label: 'Constellation', href: 'https://russels-constellation.vercel.app/', image: 'spotify-planet-natural.webp' },
   ].filter((item) => !(pathname.replace(/\/+$/, '') === '/resume' && ['blog','guitar','arch','football','hills'].includes(item.id)))
-    .filter((item) => !compact || item.id === 'home' || item.id === 'theme');
+    .filter((item) => !compact || item.id === 'theme');
   return (
     <nav ref={ref} className={`sticker-navigation portfolio-sticker-navigation${compact ? ' sticker-navigation--compact' : ''}`} data-sticker-navigation={compact ? 'portfolio-return' : 'portfolio'} aria-description="Drag stickers to move them. On a phone, press and hold first. With a keyboard, use Alt and arrow keys." data-sticker-count={items.length} aria-label="Explore Russel’s portfolio">
       <div className="sticker-navigation__list" data-sticker-list id="portfolio-sticker-links">

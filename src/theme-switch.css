@@ -114,3 +114,22 @@
 @media (prefers-reduced-motion:reduce) {
   .theme-switch *,.theme-switch *::before,.theme-switch *::after { transition:none !important; }
 }
+
+/* A smaller horizontal slide switch for phones; desktop keeps its rocker. */
+@media (max-width: 1199px) {
+  .theme-switch { width: 52px; height: 44px; border-radius: 8px; }
+  .theme-switch__plate { width: 50px; height: 34px; border-radius: 7px; border-color: #c4beb2; background: linear-gradient(145deg,#f5f1e8,#d8d2c7); box-shadow: inset 0 1px 0 #fff,0 2px 2px #0003,0 4px 8px #0001; }
+  .theme-switch__plate::before, .theme-switch__plate::after { display: none; }
+  .theme-switch__socket { inset: 5px; border-radius: 4px; border-color: #a9a394; background: #a2ab91; box-shadow: inset 0 1px 3px #0004; perspective: none; }
+  .theme-switch__rocker { inset: 1px auto 1px 1px; width: 20px; border-radius: 3px; border-color: #bfb8aa; background: linear-gradient(110deg,#fffdf7,#ded8cc); transform: translateX(15px); box-shadow: 0 1px 2px #0004,inset 1px 0 0 #fff; }
+  .theme-switch__rocker::before { top: 4px; left: 6px; width: 1px; height: 9px; background: #c6c0b3; box-shadow: 3px 0 #c6c0b3,6px 0 #c6c0b3; }
+  .theme-switch__rocker::after { display: none; }
+  .theme-switch__light { top: auto; bottom: 2px; left: 8px; width: 3px; height: 2px; background: #758968; box-shadow: none; }
+  [data-theme='dark'] .theme-switch__plate { border-color: #505253; background: linear-gradient(145deg,#414344,#27292a); box-shadow: inset 0 1px 0 #ffffff18,0 2px 3px #0008; }
+  [data-theme='dark'] .theme-switch__socket { background: #161819; border-color: #151718; box-shadow: inset 0 1px 3px #000a; }
+  [data-theme='dark'] .theme-switch__rocker { transform: translateX(0); border-color: #77766f; background: linear-gradient(110deg,#aaa69b,#77746b); box-shadow: 0 1px 2px #0008,inset 1px 0 0 #ffffff30; }
+  [data-theme='dark'] .theme-switch__rocker::before { background: #65645c; box-shadow: 3px 0 #65645c,6px 0 #65645c; }
+  [data-theme='dark'] .theme-switch__light { background: #434a40; box-shadow: none; }
+  .theme-switch:hover .theme-switch__plate { transform: none; }
+  .theme-switch:active .theme-switch__plate { transform: translateY(1px); }
+}

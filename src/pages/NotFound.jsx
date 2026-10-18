@@ -110,9 +110,8 @@ const NotFound = () => {
             whileHover={{ scale: 1.05 }}
             whileTap={{ scale: 0.95 }}
           >
-            <Link to="/" className="sticker-link mx-auto">
-              <img src="/charms/home.svg" alt="" width="94" height="80" draggable="false" />
-              <span className="sticker-link__label">Take me home</span>
+            <Link to="/" className="inline-flex min-h-11 items-center rounded-md border px-4 py-2 text-sm font-medium hover:bg-muted">
+              Take me home
             </Link>
           </Motion.div>
         </Motion.div>

@@ -8,7 +8,7 @@ export function initStickerNavigation(root) {
   const reset = root.querySelector('[data-sticker-reset]');
   const resetItem = root.querySelector('[data-sticker-id="reset"]');
   const back = root.querySelector('[data-back-to-top]');
-  const slots = new Map([...document.querySelectorAll('[data-mobile-sticker-slot]')].map((el) => [el.dataset.mobileStickerSlot, el]));
+  const slots = [...document.querySelectorAll('[data-mobile-sticker-slot]')];
   const prefix = `sticker-navigation:uniform-v4:${root.dataset.stickerNavigation}:${location.pathname}:`;
   const positions = new Map();
   let drag;
@@ -18,7 +18,7 @@ export function initStickerNavigation(root) {
   let suppressedItem;
   const listen = (el, event, handler, options = {}) => el?.addEventListener(event, handler, { ...options, signal });
   const mode = () => innerWidth >= 1200 ? 'wide' : 'small';
-  const storageKey = (item) => `${prefix}${mode()}:${item.dataset.stickerId}`;
+  const storageKey = (item) => `${mode() === 'wide' ? prefix : prefix.replace('uniform-v4', 'mobile-gaps-v1')}${mode()}:${item.dataset.stickerId}`;
   const apply = (item, pos) => {
     positions.set(item, pos);
     item.style.setProperty('--sticker-x', `${pos.x}px`);
@@ -127,15 +127,15 @@ export function initStickerNavigation(root) {
     items.forEach((item) => { apply(item, { x: 0, y: 0 }); try { localStorage.removeItem(storageKey(item)); } catch { /* Storage is optional. */ } });
     resetItem.hidden = true;
   });
-  const returnHeading = isBlog ? document.querySelector('main h1') || document.querySelector('main nav[aria-label="breadcrumb"]') : null;
-  if (returnHeading) returnHeading.setAttribute('data-return-home-heading', '');
+  const returnHeading = isBlog ? document.querySelector('main [data-return-navigation]') || document.querySelector('main h1') || document.querySelector('main nav[aria-label="breadcrumb"]') : null;
+  if (returnHeading && !returnHeading.hasAttribute('data-return-navigation')) returnHeading.setAttribute('data-return-home-heading', '');
   const positionItems = () => {
     const origin = root.getBoundingClientRect();
     const wide = innerWidth >= 1200;
     const home = location.pathname === '/';
     const main = document.querySelector('main');
     const intro = document.querySelector('.hero-intro')?.getBoundingClientRect();
-    const content = document.querySelector('.endurance-panel, .about-page, .spotify-page, main .col-start-2') || main;
+    const content = document.querySelector('.endurance-panel, .about-page, .spotify-page, .songs-page, main .col-start-2') || main;
     const contentBox = content?.getBoundingClientRect();
     const mainBox = main?.getBoundingClientRect();
     const itemWidth = (item) => Number.parseFloat(getComputedStyle(item).getPropertyValue('--sticker-size')) || 78;
@@ -146,7 +146,7 @@ export function initStickerNavigation(root) {
     };
     const eligible = (item) => {
       const id = item.dataset.stickerId;
-      if (['theme','home','reset','subscribe'].includes(id)) return false;
+      if (['theme','home','spotify-back','reset','subscribe'].includes(id)) return false;
       const target = item.querySelector('a')?.getAttribute('href');
       if (target === location.pathname) return false;
       if (home) return true;
@@ -155,7 +155,6 @@ export function initStickerNavigation(root) {
       if (location.pathname.startsWith('/blog/')) return ['minecraft','posts','songbook','constellation','arch','wallpapers'].includes(id);
       return ['minecraft','posts','songbook','wallpapers'].includes(id);
     };
-    const article = isBlog && Boolean(document.querySelector('article.prose'));
     const sidebarVisible = (id) => {
       const sidebar = document.getElementById(id);
       return wide && sidebar && getComputedStyle(sidebar).display !== 'none';
@@ -179,11 +178,16 @@ export function initStickerNavigation(root) {
       if (isBlog) {
         if (id === 'home' && !home && returnHeading && contentBox) {
           const box = returnHeading.getBoundingClientRect();
-          put(item, wide && !article ? Math.max(12,contentBox.left - 100) : box.right - itemWidth(item), box.top);
+          put(item, box.left + 4, box.top);
+          return;
+        }
+        if (id === 'spotify-back' && returnHeading?.hasAttribute('data-return-navigation')) {
+          const box = returnHeading.getBoundingClientRect();
+          put(item, box.left + 88, box.top);
           return;
         }
         // Both article sidebars own their gutters. Keep only the top character there.
-        if (id === 'minecraft' && subpostsVisible && contentBox) { put(item, Math.min(innerWidth - itemWidth(item) - 12, contentBox.right + 24), 8 - scrollY); return; }
+        if (id === 'minecraft' && subpostsVisible && contentBox) { put(item, Math.min(innerWidth - itemWidth(item) - 24, contentBox.right + 24), 8 - scrollY); return; }
         if (id === 'minecraft' && !wide) { put(item, Math.max(146,innerWidth/2 - 39), 8 - scrollY); return; }
         if (wide && contentBox && mainBox) {
           const side = shownLeft.includes(item) ? shownLeft : shownRight.includes(item) ? shownRight : null;
@@ -191,7 +195,7 @@ export function initStickerNavigation(root) {
             const left = side === shownLeft;
             const start = left ? leftStart : 20;
             const step = Math.max(230, (mainBox.height - start - 220) / Math.max(1,side.length - 1));
-            put(item, left ? Math.max(12,contentBox.left - itemWidth(item) - 24) : Math.min(innerWidth - itemWidth(item) - 12,contentBox.right + 24), contentBox.top + start + side.indexOf(item) * step);
+            put(item, left ? Math.max(24,contentBox.left - itemWidth(item) - 24) : Math.min(innerWidth - itemWidth(item) - 24,contentBox.right + 24), contentBox.top + start + side.indexOf(item) * step);
           }
           return;
         }
@@ -203,13 +207,13 @@ export function initStickerNavigation(root) {
         const box = target && document.querySelector(target[0])?.closest('.portfolio-charm-section')?.getBoundingClientRect();
         if (box) {
           const edge = Math.max(16, innerWidth / 2 - 650);
-          put(item, target[1] === 'left' ? edge : innerWidth - edge - target[3], box.top + box.height * target[2] - target[3] * .4);
+          put(item, target[1] === 'left' ? edge : innerWidth - edge - itemWidth(item), box.top + box.height * target[2] - itemWidth(item) * .4);
         }
         return;
       }
       if (!isBlog && id === 'resume' && home) { put(item, 20, 10 - scrollY); return; }
-      if (!isBlog && id === 'home' && !home) { put(item, innerWidth/2 - itemWidth(item)/2, 10 - scrollY); return; }
-      const slot = slots.get(id);
+      if (!isBlog && id === 'home' && !home) { put(item, wide ? innerWidth/2 - itemWidth(item)/2 : 16, 10 - scrollY); return; }
+      const slot = slots.find((el) => el.dataset.mobileStickerSlot === id && el.getBoundingClientRect().width && el.getBoundingClientRect().height);
       if (slot && !(isBlog && id === 'about' && location.pathname === '/about')) {
         const box = slot.getBoundingClientRect();
         if (box.width && box.height) put(item, box.left + (box.width - itemWidth(item))/2, box.top);
@@ -219,6 +223,7 @@ export function initStickerNavigation(root) {
     resetItem.hidden = !items.some((item) => positions.get(item)?.x || positions.get(item)?.y);
   };
   const schedule = () => { cancelAnimationFrame(frame); frame = requestAnimationFrame(positionItems); };
+  listen(document, 'click', (event) => { if (event.target.closest('[data-tab]')) schedule(); });
   let previousMode = mode();
   listen(window, 'resize', () => {
     if (mode() !== previousMode) { previousMode = mode(); items.forEach(load); }
@@ -226,7 +231,11 @@ export function initStickerNavigation(root) {
   });
   const observer = new ResizeObserver(schedule);
   observer.observe(document.body);
-  slots.forEach((slot) => observer.observe(slot));
+  slots.forEach((slot) => {
+    observer.observe(slot);
+    const card = slot.closest('[data-blog-view-card]');
+    if (card) observer.observe(card);
+  });
   const updateBack = () => { if (back) back.hidden = scrollY < 450; };
   listen(window, 'scroll', updateBack, { passive: true });
   listen(back, 'click', () => {

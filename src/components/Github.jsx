@@ -60,8 +60,8 @@ const Github = () => {
           className="rounded-xl border p-5 md:p-6 w-full flex flex-col items-center relative overflow-hidden transition-colors duration-300 ease-in-out hover:bg-muted/50" 
           style={{ backgroundColor: "oklch(var(--background))", borderColor: "oklch(var(--border))" }}
         >
-            <div className="grid w-full grid-cols-2 items-center gap-3 mb-4 md:mb-6 sm:grid-cols-[auto_1fr_auto]">
-              <h2 className="col-span-2 text-2xl font-bold sm:col-span-1" style={{ color: 'oklch(var(--foreground))' }}>
+            <div className="grid w-full grid-cols-1 min-[440px]:grid-cols-2 items-center gap-3 mb-4 md:mb-6 sm:grid-cols-[auto_1fr_auto]">
+              <h2 className="col-span-1 min-[440px]:col-span-2 text-2xl font-bold sm:col-span-1" style={{ color: 'oklch(var(--foreground))' }}>
                 GitHub
               </h2>
               <div className="min-h-9 flex items-center">
@@ -71,7 +71,7 @@ const Github = () => {
                   </Motion.span>
                 ) : loading ? <span aria-hidden="true" className="github-loading-placeholder animate-pulse h-8 w-36 rounded-full" style={{ backgroundColor: 'oklch(var(--muted))' }} /> : null}
               </div>
-              <div className="min-h-9 flex items-center justify-end">
+              <div className="min-h-9 flex items-center justify-start min-[440px]:justify-end">
                 {ready ? (
                   <Motion.span initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={transition} className="whitespace-nowrap text-xs md:text-sm font-mono border px-3 py-1.5 rounded-full" style={{ borderColor: 'oklch(var(--border))', color: 'oklch(var(--muted-foreground))' }}>
                     {averageMonthlyContributions.toLocaleString()} avg/month

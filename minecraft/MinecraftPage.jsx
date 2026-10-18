@@ -16,7 +16,6 @@ import AmbientMusic from "./components/AmbientMusic";
 import SceneBoundary from "./components/SceneBoundary";
 import LoadingScreen from "./components/LoadingScreen";
 import "./minecraft.css";
-import StickerNavigation from "../src/components/StickerNavigation";
 const HouseScene = lazy(() => import("./scene/HouseScene"));
 
 export default function MinecraftPage() {
@@ -165,7 +164,6 @@ export default function MinecraftPage() {
       className={`mc-root ${staticView ? "mc-is-static" : ""} ${locked ? "mc-pointer-locked" : ""}`}
       data-minecraft-theme={theme}
     >
-      <StickerNavigation compact />
       <h1 className="mc-sr-only">Russel Daniel Paul’s Minecraft portfolio</h1>
       <a
         className="mc-reader-shortcut"
