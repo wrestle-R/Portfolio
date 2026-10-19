@@ -1,4 +1,4 @@
-import React, { createContext, useCallback, useContext, useEffect, useRef, useState } from 'react';
+import React, { createContext, useCallback, useContext, useEffect, useLayoutEffect, useRef, useState } from 'react';
 import { flushSync } from 'react-dom';
 import { ROOT_DOMAIN } from '../lib/domain-utils';
 
@@ -60,7 +60,8 @@ export const useTheme = () => {
 };
 
 export const ThemeProvider = ({ children }) => {
-  const [theme, setTheme] = useState(getPreferredTheme);
+  // Match the static HTML first; apply the saved palette before the browser paints.
+  const [theme, setTheme] = useState('light');
   const nextTurnDirection = useRef('forward');
 
   const applyTheme = useCallback((nextTheme) => {
@@ -103,7 +104,7 @@ export const ThemeProvider = ({ children }) => {
     }
   }, [applyTheme]);
 
-  useEffect(() => {
+  useLayoutEffect(() => {
     const initialTheme = getPreferredTheme();
     applyTheme(initialTheme);
   }, [applyTheme]);

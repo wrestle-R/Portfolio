@@ -48,7 +48,7 @@ function LiveAge() {
     return () => clearInterval(interval);
   }, []);
 
-  return <span className="live-age inline-block whitespace-nowrap tabular-nums tracking-tight" aria-label={`Age: ${Math.floor(Number(age))} years`}>{age}</span>;
+  return <span suppressHydrationWarning className="live-age inline-block whitespace-nowrap tabular-nums tracking-tight" aria-label={`Age: ${Math.floor(Number(age))} years`}>{age}</span>;
 }
 
 const About = () => {
@@ -89,6 +89,7 @@ const About = () => {
               <h1 className="pl-4 font-normal text-sm" style={{ color: "oklch(var(--muted-foreground))", fontFamily: "inherit" }}>
                 Russel Daniel Paul
               </h1>
+              <p className="pl-4" style={{ color: "oklch(var(--muted-foreground))" }}>Full Stack Developer</p>
               <p>
                 <span style={{ color: "oklch(var(--muted-foreground))" }}>$</span> stack --current
               </p>

@@ -1,8 +1,11 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useState, useSyncExternalStore } from 'react';
 import { useReducedMotion } from 'framer-motion';
 
 const SESSION_KEY = 'portfolio:entrance:v2';
 let completedInMemory = false;
+const subscribe = () => () => {};
+const serverEntrance = () => false;
+const shouldEnter = () => !hasCompletedEntrance() && !window.location.hash && !window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
 function hasCompletedEntrance() {
   if (completedInMemory) return true;
@@ -15,12 +18,8 @@ function hasCompletedEntrance() {
 
 export function useHomeEntrance() {
   const reducedMotion = useReducedMotion();
-  const [firstVisit] = useState(() =>
-    !hasCompletedEntrance() &&
-    !window.location.hash &&
-    !window.matchMedia('(prefers-reduced-motion: reduce)').matches
-  );
-  const [hasAnchor, setHasAnchor] = useState(() => Boolean(window.location.hash));
+  const firstVisit = useSyncExternalStore(subscribe, shouldEnter, serverEntrance);
+  const [hasAnchor, setHasAnchor] = useState(false);
 
   useEffect(() => {
     const complete = () => {

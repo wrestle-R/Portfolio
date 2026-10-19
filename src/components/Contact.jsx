@@ -3,8 +3,10 @@
 import React, { useState } from "react"
 import emailjs from "@emailjs/browser"
 import "./contact-sticker.css"
+import { useHydrated } from "../lib/use-hydrated"
 
 const Contact = () => {
+  const interactive = useHydrated()
   const [formData, setFormData] = useState({ name: "", email: "", message: "" })
   const [isSubmitting, setIsSubmitting] = useState(false)
   const [submitStatus, setSubmitStatus] = useState("")
@@ -108,7 +110,7 @@ const Contact = () => {
                 <button
                   type="submit"
                   form="contact-form"
-                  disabled={isSubmitting}
+                  disabled={!interactive || isSubmitting}
                   className="send-message-sticker"
                   aria-label="Send message"
                   aria-describedby="contact-send-help"
@@ -119,6 +121,7 @@ const Contact = () => {
                 </button>
               </div>
               <span className="sr-only" id="contact-send-help">Press and hold to move this sticker on a phone. Tap or press Enter to send your message.</span>
+              <noscript><p className="text-sm">You can reach me at <a href="mailto:russeldanielpaul@gmail.com" className="underline">russeldanielpaul@gmail.com</a>.</p></noscript>
               {submitStatus && <p role="status" className="text-sm" style={{ color: submitStatus === "error" ? "oklch(var(--destructive))" : "oklch(var(--foreground))" }}>{submitStatus === "success" ? "Message sent." : "Couldn't send your message. Please try again."}</p>}
             </form>
           </div>

@@ -21,14 +21,13 @@ function BlogRedirect() {
   return <p style={{ padding: 40 }}>Opening the <a href={BLOG_URL}>blog</a>…</p>;
 }
 
-function App() {
+export function AppContent() {
   React.useEffect(() => {
     return registerCopyAttribution();
   }, []);
 
   return (
-    <ThemeProvider>
-      <Router>
+    <>
         <RouteMetadata />
         <div className="App">
           <Routes>
@@ -62,9 +61,12 @@ function App() {
             <Route path="*" element={<NotFound />} />
           </Routes>
         </div>
-      </Router>
-    </ThemeProvider>
+    </>
   );
+}
+
+function App() {
+  return <ThemeProvider><Router><AppContent /></Router></ThemeProvider>;
 }
 
 export default App;

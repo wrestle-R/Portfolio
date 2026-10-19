@@ -1,5 +1,72 @@
 {
+  "trailingSlash": false,
   "redirects": [
+    {
+      "source": "/:path*",
+      "has": [
+        {
+          "type": "host",
+          "value": "russel.is-a.dev"
+        }
+      ],
+      "destination": "https://russeldanielpaul.is-a.dev/:path*",
+      "permanent": true
+    },
+    {
+      "source": "/:path*",
+      "has": [
+        {
+          "type": "host",
+          "value": "portfolio-omega-gules-hrdtv5292h.vercel.app"
+        }
+      ],
+      "destination": "https://russeldanielpaul.is-a.dev/:path*",
+      "permanent": true
+    },
+    {
+      "source": "/:path*",
+      "has": [
+        {
+          "type": "host",
+          "value": "russeldanielpaul.is-cool.dev"
+        }
+      ],
+      "destination": "https://russeldanielpaul.is-a.dev/:path*",
+      "permanent": true
+    },
+    {
+      "source": "/:path*",
+      "has": [
+        {
+          "type": "host",
+          "value": "russel.is-cool.dev"
+        }
+      ],
+      "destination": "https://russeldanielpaul.is-a.dev/:path*",
+      "permanent": true
+    },
+    {
+      "source": "/:path*",
+      "has": [
+        {
+          "type": "host",
+          "value": "www.russeldanielpaul.tech"
+        }
+      ],
+      "destination": "https://russeldanielpaul.is-a.dev/:path*",
+      "permanent": true
+    },
+    {
+      "source": "/:path*",
+      "has": [
+        {
+          "type": "host",
+          "value": "russeldanielpaul.tech"
+        }
+      ],
+      "destination": "https://russeldanielpaul.is-a.dev/:path*",
+      "permanent": true
+    },
     {
       "source": "/blogs",
       "destination": "https://blogs.russel.is-a.dev",
@@ -14,10 +81,6 @@
     {
       "source": "/minecraft",
       "destination": "/minecraft/index.html"
-    },
-    {
-      "source": "/(.*)",
-      "destination": "/"
     }
   ]
 }

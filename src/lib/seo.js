@@ -3,7 +3,7 @@ export const SOCIAL_IMAGE = `${SITE_URL}/social-preview.png`;
 export const PAGE_SEO = {
   '/': {
     title: 'Russel Daniel Paul | Full Stack Developer',
-    description: 'Web apps, IoT dashboards and projects by Russel Daniel Paul. See my work with React and Next.js, work experience, and personal writing.',
+    description: 'Russel Daniel Paul, full stack developer. I build web apps with React, Next.js and Node.js. Explore my projects, work experience and resume.',
   },
   '/resume': {
     title: 'Resume | Russel Daniel Paul',
@@ -25,7 +25,7 @@ export function getPageSeo(pathname) {
 
 export function pageSchema(page) {
   if (!page.canonical) return null;
-  const person = { '@type': 'Person', '@id': `${SITE_URL}/#person`, name: 'Russel Daniel Paul', url: `${SITE_URL}/`, sameAs: ['https://github.com/wrestle-R', 'https://linkedin.com/in/russel-daniel-970b8a303'] };
+  const person = { '@type': 'Person', '@id': `${SITE_URL}/#person`, name: 'Russel Daniel Paul', alternateName: 'Russell Daniel Paul', jobTitle: 'Full Stack Developer', url: `${SITE_URL}/`, sameAs: ['https://github.com/wrestle-R', 'https://linkedin.com/in/russel-daniel-970b8a303'] };
   return {
     '@context': 'https://schema.org',
     '@graph': [person, { '@type': 'WebSite', '@id': `${SITE_URL}/#website`, url: `${SITE_URL}/`, name: 'Russel Daniel Paul', author: { '@id': person['@id'] } }, {

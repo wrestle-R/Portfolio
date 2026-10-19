@@ -25,9 +25,10 @@ export function seoPlugin() {
     configurePreviewServer(server) {
       server.middlewares.use(async (req, res, next) => {
         const pathname = req.url?.split('?')[0].replace(/\/+$/, '') || '/';
-        if (pathname === '/' || !PAGE_SEO[pathname]) return next();
+        if (pathname === '/' || (!PAGE_SEO[pathname] && path.extname(pathname))) return next();
         try {
-          const filename = path.resolve(server.config.root, server.config.build.outDir, pathname.slice(1), 'index.html');
+          const filename = path.resolve(server.config.root, server.config.build.outDir, PAGE_SEO[pathname] ? `${pathname.slice(1)}/index.html` : '404.html');
+          res.statusCode = PAGE_SEO[pathname] ? 200 : 404;
           res.setHeader('Content-Type', 'text/html; charset=utf-8');
           res.end(await readFile(filename, 'utf8'));
         } catch (error) { next(error); }
