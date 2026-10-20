@@ -6,13 +6,15 @@ import { getGitHubContributions } from '../lib/github-api';
 const Github = () => {
   const [result, setResult] = useState({ status: 'loading', contributions: [] });
   const reducedMotion = useReducedMotion();
-  const { status, contributions } = result;
+  const { status, contributions, kind } = result;
+  const events = kind === 'events';
   const loading = status === 'loading';
   const ready = status === 'ready';
   const username = 'wrestle-R';
 
   useEffect(() => {
     let settled = false;
+    const controller = new AbortController();
     const finish = (nextResult) => {
       if (settled) return;
       settled = true;
@@ -21,19 +23,21 @@ const Github = () => {
     };
     // A stalled external service must also leave the loading state.
     const timeout = window.setTimeout(() => {
+      controller.abort();
       finish({ status: 'unavailable', contributions: [] });
-    }, 12000);
+    }, 15000);
 
-    getGitHubContributions(username).then((data) => {
+    getGitHubContributions(username, { signal: controller.signal }).then(({ contributions: data, kind }) => {
       const valid = Array.isArray(data) && data.length > 0 && data.every((day) =>
         day && Number.isFinite(day.count) && day.count >= 0 &&
         typeof day.date === 'string' && Number.isFinite(Date.parse(day.date))
       );
-      finish({ status: valid ? 'ready' : 'unavailable', contributions: valid ? data : [] });
+      finish({ status: valid ? 'ready' : 'unavailable', contributions: valid ? data : [], kind });
     }).catch(() => finish({ status: 'unavailable', contributions: [] }));
 
     return () => {
       settled = true;
+      controller.abort();
       window.clearTimeout(timeout);
     };
   }, []);
@@ -67,14 +71,14 @@ const Github = () => {
               <div className="min-h-9 flex items-center">
                 {ready ? (
                   <Motion.span initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={transition} className="whitespace-nowrap text-xs md:text-sm font-mono border px-3 py-1.5 rounded-full" style={{ borderColor: 'oklch(var(--border))', color: 'oklch(var(--muted-foreground))' }}>
-                    {totalContributions.toLocaleString()} contributions
+                    {totalContributions.toLocaleString()} {events ? 'public events' : 'contributions'}
                   </Motion.span>
                 ) : loading ? <span aria-hidden="true" className="github-loading-placeholder animate-pulse h-8 w-36 rounded-full" style={{ backgroundColor: 'oklch(var(--muted))' }} /> : null}
               </div>
               <div className="min-h-9 flex items-center justify-start min-[440px]:justify-end">
                 {ready ? (
                   <Motion.span initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={transition} className="whitespace-nowrap text-xs md:text-sm font-mono border px-3 py-1.5 rounded-full" style={{ borderColor: 'oklch(var(--border))', color: 'oklch(var(--muted-foreground))' }}>
-                    {averageMonthlyContributions.toLocaleString()} avg/month
+                    {events ? 'Recent activity' : `${averageMonthlyContributions.toLocaleString()} avg/month`}
                   </Motion.span>
                 ) : loading ? <span aria-hidden="true" className="github-loading-placeholder animate-pulse h-8 w-28 rounded-full" style={{ backgroundColor: 'oklch(var(--muted))' }} /> : null}
               </div>
@@ -96,7 +100,7 @@ const Github = () => {
                   {loading ? (
                     <div className="w-full" aria-hidden="true"><ContributionGraphSkeleton /></div>
                   ) : ready ? (
-                    <ContributionGraph contributions={contributions} />
+                    <ContributionGraph contributions={contributions} activityLabel={events ? 'public events' : 'contributions'} />
                   ) : (
                     <div className="text-center text-sm px-4" style={{ color: 'oklch(var(--muted-foreground))' }}>
                       <p>GitHub activity is temporarily unavailable.</p>
@@ -107,11 +111,12 @@ const Github = () => {
               </AnimatePresence>
             </div>
 
+            {ready && events && <p className="mt-3 text-xs text-center" style={{ color: 'oklch(var(--muted-foreground))' }}>Latest {totalContributions} public events returned by GitHub · <a href={`https://github.com/${username}`} target="_blank" rel="noopener noreferrer" className="underline underline-offset-4">View profile</a></p>}
             <div className="mt-4 flex flex-row items-center justify-between w-full text-xs font-mono md:min-h-8" style={{ color: "oklch(var(--muted-foreground))" }}>
               <div className="flex items-center">
                 {ready ? (
                   <Motion.span initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={transition} className="hidden md:inline-flex border px-3 py-1 rounded-full" style={{ borderColor: "oklch(var(--border))", color: "oklch(var(--muted-foreground))" }}>
-                    {currentMonthContributions} this month
+                    {currentMonthContributions} {events ? 'events this month' : 'this month'}
                   </Motion.span>
                 ) : loading ? <span aria-hidden="true" className="github-loading-placeholder hidden md:block animate-pulse h-7 w-28 rounded-full" style={{ backgroundColor: 'oklch(var(--muted))' }} /> : null}
               </div>

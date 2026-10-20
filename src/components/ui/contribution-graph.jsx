@@ -1,14 +1,15 @@
   import { useState, useEffect } from 'react';
-import { motion } from 'framer-motion';
+import { motion as Motion } from 'framer-motion';
 import { useTheme } from '../../context/ThemeContext';
 
-export const ContributionGraph = ({ contributions }) => {
+export const ContributionGraph = ({ contributions, activityLabel = 'contributions' }) => {
   const { theme } = useTheme();
 
-  const [isMobile, setIsMobile] = useState(false);
+  const [viewportWidth, setViewportWidth] = useState(1440);
+  const isMobile = viewportWidth < 768;
 
   useEffect(() => {
-    const checkMobile = () => setIsMobile(window.innerWidth < 768);
+    const checkMobile = () => setViewportWidth(window.innerWidth);
     checkMobile();
     window.addEventListener('resize', checkMobile);
     return () => window.removeEventListener('resize', checkMobile);
@@ -54,26 +55,29 @@ export const ContributionGraph = ({ contributions }) => {
 
   const weeks = [];
   let currentWeek = [];
-  
+  const firstDay = new Date(`${contributions[0].date}T00:00:00Z`).getUTCDay();
+  for (let i = 0; i < firstDay; i++) currentWeek.push(null);
   contributions.forEach((day, index) => {
     currentWeek.push(day);
     if (currentWeek.length === 7 || index === contributions.length - 1) {
-      weeks.push([...currentWeek]);
+      weeks.push(currentWeek);
       currentWeek = [];
     }
   });
 
-  const visibleWeeks = isMobile ? weeks.slice(-15) : weeks.slice(-39); // Show roughly 9 months on desktop and 3.5 months on mobile
+  const weekLimit = Math.max(1, Math.min(isMobile ? 15 : 39, Math.floor((Math.min(viewportWidth - 32, 896) - 76) / 20)));
+  const visibleWeeks = weeks.slice(-weekLimit);
 
   // Calculate month labels based on visible weeks
   const monthLabels = [];
   let currentMonth = -1;
   visibleWeeks.forEach((week, index) => {
-    if (week.length > 0 && week[0].date) {
-      const date = new Date(week[0].date);
-      const month = date.getMonth();
+    const first = week.find(Boolean);
+    if (first) {
+      const date = new Date(`${first.date}T00:00:00Z`);
+      const month = date.getUTCMonth();
       if (month !== currentMonth) {
-        monthLabels.push({ label: date.toLocaleString('default', { month: 'short' }), index });
+        if (!monthLabels.length || index - monthLabels[monthLabels.length - 1].index >= 2) monthLabels.push({ label: date.toLocaleString('default', { month: 'short' }), index });
         currentMonth = month;
       }
     }
@@ -83,7 +87,7 @@ export const ContributionGraph = ({ contributions }) => {
     <div className="flex flex-col items-center justify-center w-full pb-0 pt-0 group/graph">
       <div className="flex flex-col gap-2 min-w-max">
         {/* Months header */}
-        <div className="flex relative h-5 text-[10px] md:text-xs text-muted-foreground mr-2 ml-10">
+        <div className="flex relative h-5 text-[10px] md:text-xs text-muted-foreground mr-2 ml-1">
           {monthLabels.map((m, i) => (
             <div 
               key={i} 
@@ -101,6 +105,7 @@ export const ContributionGraph = ({ contributions }) => {
             {visibleWeeks.map((week, weekIndex) => (
               <div key={weekIndex} className="flex flex-col gap-1">
                 {week.map((day, dayIndex) => {
+                  if (!day) return <div key={`empty-${dayIndex}`} className="w-4 h-4" />;
                   const level = getContributionLevel(day.count);
                   const isLeftEdge = weekIndex < 4;
                   const isRightEdge = weekIndex >= visibleWeeks.length - 4;
@@ -117,23 +122,23 @@ export const ContributionGraph = ({ contributions }) => {
                     : 'left-1/2 -translate-x-1/2';
                   
                   // Map day counts to formatted text
-                  const countText = day.count === 0 ? 'No contributions' : 
-                                    day.count === 1 ? '1 contribution' : 
-                                    `${day.count} contributions`;
+                  const countText = day.count === 0 ? `No ${activityLabel}` :
+                                    `${day.count} ${day.count === 1 ? activityLabel.replace(/s$/, '') : activityLabel}`;
 
                   let dateStr = '';
                   if (day.date) {
-                    const d = new Date(day.date);
-                    dateStr = d.toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' });
+                    const d = new Date(`${day.date}T00:00:00Z`);
+                    dateStr = d.toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric', timeZone: 'UTC' });
                   }
 
                   return (
-                    <motion.div
+                    <Motion.div
                       key={`${weekIndex}-${dayIndex}`}
                       whileHover={isMobile ? undefined : { scale: 1.28, zIndex: 40 }}
                       className="group relative"
                     >
                       <div
+                        title={`${countText} on ${dateStr}`}
                         className={`w-4 h-4 rounded-[4px] transition-all duration-200 ${isMobile ? 'cursor-default' : 'cursor-pointer'}`}
                         style={{ 
                           backgroundColor: getColor(level),
@@ -165,7 +170,7 @@ export const ContributionGraph = ({ contributions }) => {
                           </div>
                         </>
                       )}
-                    </motion.div>
+                    </Motion.div>
                   );
                 })}
               </div>
@@ -182,7 +187,7 @@ export const ContributionGraphSkeleton = () => {
     <div className="flex flex-col items-center justify-center w-full github-loading-placeholder animate-pulse pb-0 pt-0">
       <div className="flex flex-col gap-2 min-w-max">
         {/* Months header skeleton */}
-        <div className="flex relative h-5 mr-2 ml-10">
+        <div className="flex relative h-5 mr-2 ml-1">
           <div className="w-full h-full rounded bg-muted/50" />
         </div>
         
