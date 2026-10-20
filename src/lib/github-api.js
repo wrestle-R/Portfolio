@@ -26,32 +26,8 @@ export async function getGitHubContributions(username, { signal } = {}) {
     }
   }
 
-  // GitHub sometimes reports an empty contribution calendar while public events
-  // remain available. Events are a different metric, labelled as such in the UI.
-  try {
-    const events = await request(`https://api.github.com/users/${login}/events/public?per_page=100`, signal);
-    if (!Array.isArray(events)) throw new Error('Invalid public activity');
-    const counts = new Map();
-    const seen = new Set();
-    for (const event of events) {
-      if (!event.id || seen.has(event.id) || !Number.isFinite(Date.parse(event.created_at))) continue;
-      seen.add(event.id);
-      const date = event.created_at.slice(0, 10);
-      counts.set(date, (counts.get(date) || 0) + 1);
-    }
-    if (counts.size) {
-      const today = new Date();
-      const start = new Date(`${[...counts.keys()].sort()[0]}T00:00:00Z`);
-      const days = [];
-      for (let day = start; day.toISOString().slice(0, 10) <= today.toISOString().slice(0, 10); day.setUTCDate(day.getUTCDate() + 1)) {
-        const date = day.toISOString().slice(0, 10);
-        days.push({ date, count: counts.get(date) || 0 });
-      }
-      return { contributions: days, kind: 'events' };
-    }
-  } catch (error) {
-    if (signal?.aborted) throw error;
-  }
-  if (contributions) return { contributions, kind: 'contributions' };
-  throw new Error('GitHub activity is unavailable');
+  // An Events API page is a capped sample, not contribution history. Never
+  // expand it into a yearly calendar or treat unreturned dates as zero activity.
+  if (contributions) return { contributions, kind: 'empty' };
+  throw new Error('GitHub contribution history is unavailable');
 }

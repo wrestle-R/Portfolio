@@ -6,8 +6,7 @@ import { getGitHubContributions } from '../lib/github-api';
 const Github = () => {
   const [result, setResult] = useState({ status: 'loading', contributions: [] });
   const reducedMotion = useReducedMotion();
-  const { status, contributions, kind } = result;
-  const events = kind === 'events';
+  const { status, contributions } = result;
   const loading = status === 'loading';
   const ready = status === 'ready';
   const username = 'wrestle-R';
@@ -32,7 +31,7 @@ const Github = () => {
         day && Number.isFinite(day.count) && day.count >= 0 &&
         typeof day.date === 'string' && Number.isFinite(Date.parse(day.date))
       );
-      finish({ status: valid ? 'ready' : 'unavailable', contributions: valid ? data : [], kind });
+      finish({ status: valid && kind !== 'empty' ? 'ready' : kind === 'empty' ? 'empty' : 'unavailable', contributions: valid && kind !== 'empty' ? data : [] });
     }).catch(() => finish({ status: 'unavailable', contributions: [] }));
 
     return () => {
@@ -71,21 +70,21 @@ const Github = () => {
               <div className="min-h-9 flex items-center">
                 {ready ? (
                   <Motion.span initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={transition} className="whitespace-nowrap text-xs md:text-sm font-mono border px-3 py-1.5 rounded-full" style={{ borderColor: 'oklch(var(--border))', color: 'oklch(var(--muted-foreground))' }}>
-                    {totalContributions.toLocaleString()} {events ? 'public events' : 'contributions'}
+                    {totalContributions.toLocaleString()} contributions
                   </Motion.span>
                 ) : loading ? <span aria-hidden="true" className="github-loading-placeholder animate-pulse h-8 w-36 rounded-full" style={{ backgroundColor: 'oklch(var(--muted))' }} /> : null}
               </div>
               <div className="min-h-9 flex items-center justify-start min-[440px]:justify-end">
                 {ready ? (
                   <Motion.span initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={transition} className="whitespace-nowrap text-xs md:text-sm font-mono border px-3 py-1.5 rounded-full" style={{ borderColor: 'oklch(var(--border))', color: 'oklch(var(--muted-foreground))' }}>
-                    {events ? 'Recent activity' : `${averageMonthlyContributions.toLocaleString()} avg/month`}
+                    {averageMonthlyContributions.toLocaleString()} avg/month
                   </Motion.span>
                 ) : loading ? <span aria-hidden="true" className="github-loading-placeholder animate-pulse h-8 w-28 rounded-full" style={{ backgroundColor: 'oklch(var(--muted))' }} /> : null}
               </div>
             </div>
 
             <p className="sr-only" role="status">
-              {loading ? 'Loading GitHub activity.' : ready ? 'GitHub activity loaded.' : 'GitHub activity is temporarily unavailable.'}
+              {loading ? 'Loading GitHub activity.' : ready ? 'GitHub activity loaded.' : 'GitHub contribution history is unavailable.'}
             </p>
             <div className="grid w-full min-h-[176px] overflow-x-hidden overflow-y-visible pb-1 pt-1" aria-busy={loading}>
               <AnimatePresence initial={false}>
@@ -100,27 +99,26 @@ const Github = () => {
                   {loading ? (
                     <div className="w-full" aria-hidden="true"><ContributionGraphSkeleton /></div>
                   ) : ready ? (
-                    <ContributionGraph contributions={contributions} activityLabel={events ? 'public events' : 'contributions'} />
+                    <ContributionGraph contributions={contributions} />
                   ) : (
                     <div className="text-center text-sm px-4" style={{ color: 'oklch(var(--muted-foreground))' }}>
-                      <p>GitHub activity is temporarily unavailable.</p>
-                      <a href={`https://github.com/${username}`} target="_blank" rel="noopener noreferrer" className="inline-block mt-2 underline underline-offset-4">View activity on GitHub</a>
+                      <p>{status === 'empty' ? 'GitHub is not returning contribution history right now.' : 'GitHub contribution history is temporarily unavailable.'}</p>
+                      <a href={`https://github.com/${username}`} target="_blank" rel="noopener noreferrer" className="inline-block mt-2 underline underline-offset-4">View GitHub profile</a>
                     </div>
                   )}
                 </Motion.div>
               </AnimatePresence>
             </div>
 
-            {ready && events && <p className="mt-3 text-xs text-center" style={{ color: 'oklch(var(--muted-foreground))' }}>Latest {totalContributions} public events returned by GitHub · <a href={`https://github.com/${username}`} target="_blank" rel="noopener noreferrer" className="underline underline-offset-4">View profile</a></p>}
             <div className="mt-4 flex flex-row items-center justify-between w-full text-xs font-mono md:min-h-8" style={{ color: "oklch(var(--muted-foreground))" }}>
               <div className="flex items-center">
                 {ready ? (
                   <Motion.span initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={transition} className="hidden md:inline-flex border px-3 py-1 rounded-full" style={{ borderColor: "oklch(var(--border))", color: "oklch(var(--muted-foreground))" }}>
-                    {currentMonthContributions} {events ? 'events this month' : 'this month'}
+                    {currentMonthContributions} this month
                   </Motion.span>
                 ) : loading ? <span aria-hidden="true" className="github-loading-placeholder hidden md:block animate-pulse h-7 w-28 rounded-full" style={{ backgroundColor: 'oklch(var(--muted))' }} /> : null}
               </div>
-              <div className="hidden md:flex items-center justify-end gap-2">
+              <div className={`${ready ? 'hidden md:flex' : 'hidden'} items-center justify-end gap-2`}>
                 <span>Less</span>
                 <div className="flex gap-1 mx-1">
                   <div className="w-3 h-3 rounded-[3px]" style={{ backgroundColor: 'oklch(var(--muted))' }}></div>
