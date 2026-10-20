@@ -47,7 +47,7 @@ export default function StickerNavigation({ compact = false }) {
     { id: 'football', order: 12, label: 'Football stories', href: `${BLOG_URL}/blog/barclays-fantasy-league`, image: 'football.webp' },
     { id: 'hills', order: 13, label: 'Munnar trip', href: `${BLOG_URL}/blog/munnar-trip`, image: 'hill-station.webp' },
     { id: 'theme', order: 8, label: theme === 'dark' ? 'Turn the lights on' : 'Turn the lights off' },
-    { id: 'constellation', order: 9, label: 'Constellation', href: 'https://russels-constellation.vercel.app/', image: 'spotify-planet-polished.webp' },
+    { id: 'constellation', order: 9, label: 'Constellation', href: 'https://spotify.russel.is-a.dev/', image: 'spotify-planet-polished.webp' },
   ].filter((item) => !(pathname.replace(/\/+$/, '') === '/resume' && ['blog','guitar','arch','football','hills'].includes(item.id)))
     .filter((item) => !compact || item.id === 'theme');
   return (
