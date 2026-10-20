@@ -1,106 +1,57 @@
-// Fetch GitHub contributions data with primary API and fallback
-export async function getGitHubContributions(username) {
-  const token = import.meta.env.VITE_GITHUB_API;
+// Public endpoints only: VITE_* values are bundled into visitors' browsers.
+const request = async (url, signal) => {
+  const response = await fetch(url, { signal: signal ? AbortSignal.any([signal, AbortSignal.timeout(4000)]) : AbortSignal.timeout(4000) });
+  if (!response.ok) throw new Error(`GitHub activity request failed (${response.status})`);
+  return response.json();
+};
 
-  let primaryContributions = [];
-  let fallbackContributions = [];
-
-  // Try primary GraphQL API first
-  if (token) {
+export async function getGitHubContributions(username, { signal } = {}) {
+  const login = encodeURIComponent(username);
+  let contributions;
+  // Sequential fallbacks: stop as soon as one source has real contributions.
+  // All-zero calendars are retained, but checked against the second source.
+  for (const url of [
+    '/api/github-contributions',
+    `https://github-contributions-api.jogruber.de/v4/${login}?y=last`,
+  ]) {
     try {
-      primaryContributions = await getGitHubContributionsGraphQL(username, token);
-      console.log('Primary API Contributions:', primaryContributions);
+      const data = await request(url, signal);
+      if (!Array.isArray(data.contributions) || !data.contributions.length || !data.contributions.every(day =>
+        /^\d{4}-\d{2}-\d{2}$/.test(day.date) && Number.isFinite(Date.parse(day.date)) && Number.isInteger(day.count) && day.count >= 0
+      )) throw new Error('Invalid contribution calendar');
+      contributions = data.contributions.map(({ date, count }) => ({ date, count })).sort((a, b) => a.date.localeCompare(b.date));
+      if (contributions.some(day => day.count > 0)) return { contributions, kind: 'contributions' };
     } catch (error) {
-      console.error('Primary API failed:', error);
+      if (signal?.aborted) throw error;
     }
   }
 
-  // Fetch from fallback API
+  // GitHub sometimes reports an empty contribution calendar while public events
+  // remain available. Events are a different metric, labelled as such in the UI.
   try {
-    const response = await fetch(
-      `https://github-contributions-api.jogruber.de/v4/${username}?y=last`
-    );
-
-    if (!response.ok) {
-      throw new Error('Failed to fetch GitHub contributions from fallback API');
+    const events = await request(`https://api.github.com/users/${login}/events/public?per_page=100`, signal);
+    if (!Array.isArray(events)) throw new Error('Invalid public activity');
+    const counts = new Map();
+    const seen = new Set();
+    for (const event of events) {
+      if (!event.id || seen.has(event.id) || !Number.isFinite(Date.parse(event.created_at))) continue;
+      seen.add(event.id);
+      const date = event.created_at.slice(0, 10);
+      counts.set(date, (counts.get(date) || 0) + 1);
     }
-
-    const data = await response.json();
-
-    // Transform the data to our expected format
-    fallbackContributions = data.contributions.map(contribution => ({
-      date: contribution.date,
-      count: contribution.count,
-      level: contribution.level,
-    }));
-
-    console.log('Fallback API Contributions:', fallbackContributions);
-  } catch (error) {
-    console.error('Error fetching GitHub contributions from fallback API:', error);
-  }
-
-  // Return the primary contributions if available, otherwise fallback contributions
-  return primaryContributions.length > 0 ? primaryContributions : fallbackContributions;
-}
-
-// Alternative: Fetch contributions using GitHub GraphQL API (requires token)
-export async function getGitHubContributionsGraphQL(username, token) {
-  const query = `
-    query($username: String!) {
-      user(login: $username) {
-        contributionsCollection {
-          contributionCalendar {
-            totalContributions
-            weeks {
-              contributionDays {
-                contributionCount
-                date
-                contributionLevel
-              }
-            }
-          }
-        }
+    if (counts.size) {
+      const today = new Date();
+      const start = new Date(`${[...counts.keys()].sort()[0]}T00:00:00Z`);
+      const days = [];
+      for (let day = start; day.toISOString().slice(0, 10) <= today.toISOString().slice(0, 10); day.setUTCDate(day.getUTCDate() + 1)) {
+        const date = day.toISOString().slice(0, 10);
+        days.push({ date, count: counts.get(date) || 0 });
       }
+      return { contributions: days, kind: 'events' };
     }
-  `;
-
-  try {
-    const response = await fetch('https://api.github.com/graphql', {
-      method: 'POST',
-      headers: {
-        'Authorization': `Bearer ${token}`,
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify({
-        query,
-        variables: { username },
-      }),
-    });
-
-    if (!response.ok) {
-      throw new Error(`GitHub GraphQL API error: ${response.status}`);
-    }
-
-    const data = await response.json();
-
-    if (data.errors) {
-      throw new Error(`GraphQL errors: ${JSON.stringify(data.errors)}`);
-    }
-
-    const weeks = data.data.user.contributionsCollection.contributionCalendar.weeks;
-
-    // Flatten the weeks into a single array of contributions
-    const contributions = weeks.flatMap(week =>
-      week.contributionDays.map(day => ({
-        date: day.date,
-        count: day.contributionCount,
-        level: day.contributionLevel,
-      }))
-    );
-
-    return contributions;
   } catch (error) {
-    console.error('Error fetching GitHub contributions from GraphQL:', error);
-    throw error;
+    if (signal?.aborted) throw error;
   }
+  if (contributions) return { contributions, kind: 'contributions' };
+  throw new Error('GitHub activity is unavailable');
 }
