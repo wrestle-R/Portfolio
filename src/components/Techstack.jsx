@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { motion } from 'framer-motion';
+import { motion as Motion } from 'framer-motion';
 import { techData } from './tech/TechData';
 import { useTheme } from '../context/ThemeContext';
 
@@ -65,7 +65,7 @@ const Techstack = () => {
   return (
     <section className="relative w-full overflow-hidden px-4 pt-8 md:pt-10" id="tech">
       <div className="relative z-10 mx-auto w-full max-w-4xl">
-        <article
+        <article data-portfolio-panel
           className="relative w-full min-h-[560px] overflow-hidden rounded-xl border p-5 md:min-h-[620px] md:p-6 transition-colors duration-300 ease-in-out hover:bg-muted/50"
           style={{
             backgroundColor: 'oklch(var(--background))',
@@ -83,7 +83,7 @@ const Techstack = () => {
 
           <div className="relative mt-5 grid grid-cols-1 gap-4 md:mt-6 md:grid-cols-2">
             {techData.map((category, idx) => (
-              <motion.article
+              <Motion.article
                 key={category.category}
                 custom={idx}
                 variants={cardVariants}
@@ -121,7 +121,7 @@ const Techstack = () => {
 
                 <div className="flex flex-wrap gap-2">
                   {category.items.map((item) => (
-                    <motion.div
+                    <Motion.div
                       key={item.name}
                       whileHover={{ y: -1 }}
                       whileTap={{ scale: 0.98 }}
@@ -142,10 +142,10 @@ const Techstack = () => {
                       <TechIcon item={item} theme={theme} />
                       </span>
                       <span className="relative z-10 whitespace-nowrap font-medium">{item.name}</span>
-                    </motion.div>
+                    </Motion.div>
                   ))}
                 </div>
-              </motion.article>
+              </Motion.article>
             ))}
           </div>
         </article>

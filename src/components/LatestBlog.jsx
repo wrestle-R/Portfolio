@@ -25,6 +25,7 @@ const LatestBlog = () => {
     >
       <div className="max-w-4xl mx-auto relative z-10 w-full">
         <a
+          data-portfolio-panel
           href={blogPostUrl}
           target="_blank"
           rel="noopener noreferrer"

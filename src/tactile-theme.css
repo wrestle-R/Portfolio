@@ -1,0 +1,111 @@
+/* Same paper/graphite palette as the Blog. Existing Portfolio consumers use
+   OKLCH channels, so keep that contract while sharing the material colors. */
+:root, :root[data-theme="light"] {
+  --background: 0.958261 0.011099 89.7230;
+  --foreground: 0.304126 0.010586 99.2333;
+  --primary: 0.448560 0.043183 151.7630;
+  --primary-foreground: 0.993928 0.008183 91.4805;
+  --muted: 0.922008 0.015338 90.2408;
+  --muted-foreground: 0.508705 0.017105 98.5183;
+  --border: 0.854377 0.021104 91.6074;
+  --ring: 0.521022 0.047078 147.9690;
+  --destructive: 0.528386 0.158644 26.0084;
+}
+:root[data-theme="dark"] {
+  --background: 0.248722 0.006295 134.9536;
+  --foreground: 0.936883 0.016548 91.5560;
+  --primary: 0.819055 0.051663 129.7259;
+  --primary-foreground: 0.283885 0.024149 142.5246;
+  --muted: 0.296042 0.011427 128.8981;
+  --muted-foreground: 0.765151 0.019548 110.1705;
+  --border: 0.394058 0.020339 122.3344;
+  --ring: 0.819055 0.051663 129.7259;
+  --destructive: 0.744424 0.123029 25.2936;
+}
+
+:root {
+  color-scheme: light;
+  --sk-surface: #faf8f1;
+  --sk-surface-raised: #fdfbf6;
+  --sk-well: #efebe0;
+  --sk-edge: #d4cfc0;
+  --sk-highlight: #ffffffc7;
+  --sk-base: #e4dfd1;
+  --sk-shadow: #3b322312;
+  --sk-paper-shadow: inset 0 1px 0 var(--sk-highlight), 0 2px 0 var(--sk-base), 0 3px 0 var(--sk-edge), 0 8px 16px -8px var(--sk-shadow);
+  --contribution-0: #e9e5da;
+  --contribution-1: #c7d2be;
+  --contribution-2: #9eb591;
+  --contribution-3: #718b63;
+  --contribution-4: #435c49;
+}
+:root[data-theme='dark'] {
+  color-scheme: dark;
+  --sk-surface: #292c26;
+  --sk-surface-raised: #30332c;
+  --sk-well: #252820;
+  --sk-edge: #44483c;
+  --sk-highlight: #ffffff12;
+  --sk-base: #191c17;
+  --sk-shadow: #00000055;
+  --contribution-0: #30342c;
+  --contribution-1: #4a5d40;
+  --contribution-2: #6b855a;
+  --contribution-3: #90aa7c;
+  --contribution-4: #b9cba8;
+}
+@theme inline {
+  --color-background: oklch(var(--background));
+  --color-foreground: oklch(var(--foreground));
+  --color-primary: oklch(var(--primary));
+  --color-primary-foreground: oklch(var(--primary-foreground));
+  --color-muted: oklch(var(--muted));
+  --color-muted-foreground: oklch(var(--muted-foreground));
+  --color-destructive: oklch(var(--destructive));
+  --color-border: oklch(var(--border));
+  --color-ring: oklch(var(--ring));
+}
+::selection { background: oklch(var(--primary) / .22); color: oklch(var(--foreground)); }
+:focus-visible { outline: 2px solid oklch(var(--ring)); outline-offset: 4px; }
+.portfolio-skip-link { position: fixed; top: 12px; left: 12px; z-index: 100; padding: 12px 18px; border: 1px solid var(--sk-edge); border-radius: 6px; background: var(--sk-surface); color: oklch(var(--foreground)); transform: translateY(-160%); }
+.portfolio-skip-link:focus { transform: none; }
+.portfolio-background { background: none; }
+.portfolio-background::before {
+  background-image: linear-gradient(color-mix(in srgb, var(--sk-edge) 24%, transparent) 1px, transparent 1px), linear-gradient(90deg, color-mix(in srgb, var(--sk-edge) 24%, transparent) 1px, transparent 1px);
+  background-size: 32px 32px;
+  mask-image: none;
+}
+.portfolio-background::after { display: none; }
+[data-portfolio-panel], .experience-panel, .portfolio-resume article, .portfolio-home footer > div > div {
+  background-image: linear-gradient(145deg, var(--sk-surface-raised), var(--sk-surface));
+  box-shadow: var(--sk-paper-shadow);
+}
+[data-portfolio-panel] { transition: border-color 180ms ease; }
+.portfolio-home h2 { font-size: clamp(20px, 2.3vw, 24px); font-weight: 650; letter-spacing: -.025em; }
+.portfolio-home p { text-wrap: pretty; }
+.hero-socials > a, .portfolio-resume .resume-actions > :is(a, button) {
+  min-height: 44px;
+  border-color: var(--sk-edge);
+  background-image: linear-gradient(145deg, var(--sk-surface-raised), var(--sk-surface));
+  box-shadow: inset 0 1px 0 var(--sk-highlight), 0 2px 0 var(--sk-base), 0 3px 0 var(--sk-edge);
+}
+.portfolio-resume .resume-actions > :first-child { background-image: none; }
+.hero-socials > a:hover { animation: none; }
+.portfolio-home :where(input, textarea) {
+  background-image: linear-gradient(var(--sk-well), var(--sk-well));
+  box-shadow: inset 0 2px 4px var(--sk-shadow), 0 1px 0 var(--sk-highlight);
+}
+.portfolio-home #projects button { min-height: 44px; }
+.portfolio-home #projects button:active { translate: 0 1px; }
+.experience-intern { background: oklch(var(--primary) / .1); border-color: oklch(var(--primary) / .25); color: oklch(var(--primary)); }
+.contact-message-row { display: grid; grid-template-columns: minmax(0, 1fr) 106px; align-items: center; gap: 16px; }
+.contact-message-row textarea { min-height: 68px; }
+.contact-message-row .contact-send-sticker { align-self: center; }
+@media (max-width: 479px) {
+  .contact-message-row { grid-template-columns: minmax(0, 1fr) 84px; gap: 12px; }
+  .contact-message-row .contact-send-sticker, .contact-message-row .send-message-sticker { width: 84px; }
+  .contact-message-row textarea { font-size: 16px; min-height: 92px; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .portfolio-home *, .portfolio-home *::before { animation-duration: .01ms !important; transition-duration: .01ms !important; }
+}

@@ -1,9 +1,7 @@
   import { useState, useEffect } from 'react';
 import { motion as Motion } from 'framer-motion';
-import { useTheme } from '../../context/ThemeContext';
 
 export const ContributionGraph = ({ contributions, activityLabel = 'contributions' }) => {
-  const { theme } = useTheme();
 
   const [viewportWidth, setViewportWidth] = useState(1440);
   const isMobile = viewportWidth < 768;
@@ -33,25 +31,7 @@ export const ContributionGraph = ({ contributions, activityLabel = 'contribution
     return 4;
   };
 
-  const getColor = (level) => {
-    const darkColors = [
-      'oklch(0.25 0.01 0)',
-      'oklch(0.35 0.02 0)',
-      'oklch(0.45 0.03 0)',
-      'oklch(0.55 0.04 0)',
-      'oklch(0.65 0.05 0)',
-    ];
-
-    const lightColors = [
-      'oklch(0.95 0.01 0)',
-      'oklch(0.85 0.02 0)',
-      'oklch(0.75 0.03 0)',
-      'oklch(0.65 0.04 0)',
-      'oklch(0.55 0.05 0)',
-    ];
-
-    return theme === 'dark' ? darkColors[level] : lightColors[level];
-  };
+  const getColor = (level) => `var(--contribution-${level})`;
 
   const weeks = [];
   let currentWeek = [];

@@ -19,7 +19,7 @@ const Resume = () => {
   };
 
   return (
-    <div className="min-h-screen" style={{ backgroundColor: "oklch(var(--background))" }}>
+    <div className="portfolio-resume min-h-screen" style={{ backgroundColor: "oklch(var(--background))" }}>
       <StickerNavigation />
 
       <main className="relative z-10 px-4 pb-12 pt-6 md:pb-16">

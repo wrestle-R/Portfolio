@@ -47,7 +47,7 @@ const Contact = () => {
   return (
     <section className="relative z-10 w-full px-4 pt-8 md:pt-10" id="contact" style={{ backgroundColor: "transparent" }}>
       <div className="mx-auto w-full max-w-4xl">
-        <article className="w-full rounded-xl border p-4 md:p-5 transition-colors duration-300 ease-in-out hover:bg-muted/50" style={{ backgroundColor: "oklch(var(--background))", borderColor: "oklch(var(--border))" }}>
+        <article data-portfolio-panel className="w-full rounded-xl border p-4 md:p-5 transition-colors duration-300 ease-in-out hover:bg-muted/50" style={{ backgroundColor: "oklch(var(--background))", borderColor: "oklch(var(--border))" }}>
           <div className="mb-3 border-b pb-2" style={{ borderColor: "oklch(var(--border))" }}>
             <h2 className="text-xl font-bold" style={{ color: "oklch(var(--foreground))" }}>Contact</h2>
           </div>
@@ -94,6 +94,7 @@ const Contact = () => {
                   />
                 </div>
               </div>
+              <div className="contact-message-row">
               <label className="sr-only" htmlFor="contact-message">Your message</label>
               <textarea
                 id="contact-message"
@@ -119,6 +120,7 @@ const Contact = () => {
                   <svg className="send-message-sticker__icon" viewBox="0 0 32 26" fill="none" aria-hidden="true"><path d="m3 11 26-8-8 21-6-9-12-4Z" fill="#e1e8d7" stroke="currentColor" strokeWidth="1.5" strokeLinejoin="round"/><path d="m15 15 14-12M15 15l-1 6 4-3" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/></svg>
                   <span>{isSubmitting ? "Sending..." : "Send message"}</span>
                 </button>
+              </div>
               </div>
               <span className="sr-only" id="contact-send-help">Press and hold to move this sticker on a phone. Tap or press Enter to send your message.</span>
               <noscript><p className="text-sm">You can reach me at <a href="mailto:russeldanielpaul@gmail.com" className="underline">russeldanielpaul@gmail.com</a>.</p></noscript>

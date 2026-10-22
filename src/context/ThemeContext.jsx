@@ -62,7 +62,7 @@ export const useTheme = () => {
 export const ThemeProvider = ({ children }) => {
   // Match the static HTML first; apply the saved palette before the browser paints.
   const [theme, setTheme] = useState('light');
-  const nextTurnDirection = useRef('forward');
+  const nextRevealDirection = useRef('expand');
 
   const applyTheme = useCallback((nextTheme) => {
     setTheme(nextTheme);
@@ -82,12 +82,26 @@ export const ThemeProvider = ({ children }) => {
       return;
     }
 
-    root.dataset.themeTurn = nextTurnDirection.current;
+    const rect = sourceEl.getBoundingClientRect();
+    const x = rect.left + rect.width / 2;
+    const y = rect.top + rect.height / 2;
+    const maxX = Math.max(x, window.innerWidth - x);
+    const maxY = Math.max(y, window.innerHeight - y);
+    const endRadius = Math.hypot(maxX, maxY);
+
+    // Prepare the first-frame mask before either theme snapshot is captured.
+    root.style.setProperty('--theme-transition-x', `${x}px`);
+    root.style.setProperty('--theme-transition-y', `${y}px`);
+    root.style.setProperty('--theme-transition-radius', `${endRadius}px`);
+    root.dataset.themeReveal = nextRevealDirection.current;
     root.classList.add('theme-transition');
 
     const cleanup = () => {
       root.classList.remove('theme-transition');
-      delete root.dataset.themeTurn;
+      delete root.dataset.themeReveal;
+      root.style.removeProperty('--theme-transition-x');
+      root.style.removeProperty('--theme-transition-y');
+      root.style.removeProperty('--theme-transition-radius');
     };
 
     try {
@@ -96,7 +110,7 @@ export const ThemeProvider = ({ children }) => {
       });
       transition.finished.then(cleanup, cleanup);
       transition.ready.then(() => {
-        nextTurnDirection.current = nextTurnDirection.current === 'forward' ? 'backward' : 'forward';
+        nextRevealDirection.current = nextRevealDirection.current === 'expand' ? 'contract' : 'expand';
       }, () => { /* A skipped transition still applies the theme. */ });
     } catch {
       cleanup();

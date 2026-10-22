@@ -21,34 +21,29 @@
 .sticker-navigation .theme-switch:focus-visible { outline: 2px solid var(--sticker-foreground); outline-offset: 3px; border-radius: 14px; }
 @media (max-width:1199px) { .sticker-navigation .sticker-navigation__item[data-sticker-id='theme'],.theme-switch { height: 52px; } .theme-cloud { width: 60px; height: 48px; } }
 
-/* A soft page-edge sweep keeps the content still while the new palette unfolds. */
+/* Original alternating circle reveal, centered on the cloud control. */
 .theme-transition::view-transition-group(root) { animation: none; }
-.theme-transition::view-transition-image-pair(root) { isolation: isolate; }
+.theme-transition::view-transition-image-pair(root) { isolation: auto; }
 .theme-transition::view-transition-old(root),
 .theme-transition::view-transition-new(root) { animation: none; mix-blend-mode: normal; }
 .theme-transition::view-transition-old(root) { z-index: 1; }
 .theme-transition::view-transition-new(root) {
   z-index: 2;
-  mask-image: linear-gradient(100deg, transparent 47%, #000 53%);
-  mask-size: 240% 100%;
-  mask-repeat: no-repeat;
-  animation: theme-page-turn 720ms cubic-bezier(.4,0,.2,1) both;
+  clip-path: circle(0px at var(--theme-transition-x) var(--theme-transition-y));
+  animation: theme-curtain-reveal 960ms cubic-bezier(.55,0,.8,1) both;
 }
-.theme-transition[data-theme-turn='backward']::view-transition-old(root) {
+.theme-transition[data-theme-reveal='contract']::view-transition-old(root) {
   z-index: 2;
-  mask-image: linear-gradient(100deg, transparent 47%, #000 53%);
-  mask-size: 240% 100%;
-  mask-repeat: no-repeat;
-  animation: theme-page-turn 720ms cubic-bezier(.4,0,.2,1) reverse both;
+  animation: theme-curtain-reveal 960ms cubic-bezier(.55,0,.8,1) reverse both;
 }
-.theme-transition[data-theme-turn='backward']::view-transition-new(root) {
+.theme-transition[data-theme-reveal='contract']::view-transition-new(root) {
   z-index: 1;
-  mask-image: none;
+  clip-path: none;
   animation: none;
 }
-@keyframes theme-page-turn {
-  from { mask-position: 0% 0; }
-  to { mask-position: 100% 0; }
+@keyframes theme-curtain-reveal {
+  from { clip-path: circle(0px at var(--theme-transition-x) var(--theme-transition-y)); }
+  to { clip-path: circle(var(--theme-transition-radius) at var(--theme-transition-x) var(--theme-transition-y)); }
 }
 
 /* Freeze live styles for clean captures; gently dissolve the cloud between states. */

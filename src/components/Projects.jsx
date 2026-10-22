@@ -159,7 +159,7 @@ export default function Projects() {
   return (
     <section className="relative z-10 w-full px-4 pt-8 md:pt-10" id="projects" style={{ backgroundColor: "transparent" }}>
       <div className="relative z-10 mx-auto w-full max-w-4xl">
-        <article
+        <article data-portfolio-panel
           className="relative w-full overflow-hidden rounded-xl border p-5 md:p-6 transition-colors duration-300 ease-in-out hover:bg-muted/50"
           style={{ backgroundColor: "oklch(var(--background))", borderColor: "oklch(var(--border))" }}
         >

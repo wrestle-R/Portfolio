@@ -16,7 +16,7 @@ import CloudThemeIcon from './CloudThemeIcon';
  * [x] Preserve the headphone song and play/pause behavior, including suppression after dragging.
  * [x] Keep mouse dragging, phone hold-to-drag, ordinary swipe scrolling and keyboard positioning.
  * [x] Remove the Home house sticker; keep the simpler green Constellation planet and its link.
- * [x] Keep the cloud sticker at the document top-right with a smooth, reversible page-edge theme reveal.
+ * [x] Keep the cloud sticker at the document top-right with a original alternating circle reveal.
  * [x] Remove the theme switch from Minecraft; retain its current scene theme.
  * [x] Restore cream cutout edges and larger object artwork without visible captions.
  * [x] Use a movable Reset icon sticker and a plain up arrow.
@@ -44,7 +44,7 @@ export default function StickerNavigation({ compact = false }) {
     { id: 'headphones', order: 7, label: 'Play music' },
     { id: 'guitar', order: 10, label: 'Songbook', href: `${BLOG_URL}/songs`, image: 'guitar.webp' },
     { id: 'arch', order: 11, label: 'My Arch Linux setup', href: `${BLOG_URL}/blog/linux-experience`, image: 'arch-linux-mark.svg' },
-    { id: 'football', order: 12, label: 'Football stories', href: `${BLOG_URL}/blog/barclays-fantasy-league`, image: 'football.webp' },
+    { id: 'football', order: 12, label: 'The Long Stride', href: `${BLOG_URL}/blog/the-long-stride`, image: 'football.webp' },
     { id: 'hills', order: 13, label: 'Munnar trip', href: `${BLOG_URL}/blog/munnar-trip`, image: 'hill-station.webp' },
     { id: 'theme', order: 8, label: theme === 'dark' ? 'Turn the lights on' : 'Turn the lights off' },
     { id: 'constellation', order: 9, label: 'Constellation', href: 'https://spotify.russel.is-a.dev/', image: 'spotify-planet-polished.webp' },

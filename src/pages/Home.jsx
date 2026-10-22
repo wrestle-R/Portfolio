@@ -18,9 +18,10 @@ const Home = () => {
   const entrance = useHomeEntrance();
   return (
     <div className="portfolio-home min-h-screen">
+      <a className="portfolio-skip-link" href="#main-content">Skip to content</a>
       <PortfolioBackground />
       <StickerNavigation />
-      <main id="main-content">
+      <main id="main-content" tabIndex={-1}>
       {sections.map((Section, index) => (
         <SectionReveal key={index} enabled={entrance && index === 0} index={index}>
           <div className="portfolio-charm-section">

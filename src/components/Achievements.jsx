@@ -82,7 +82,7 @@ export default function Achievements() {
   return (
     <section className="relative z-10 w-full px-4 pt-8 md:pt-10" id="achievements" style={{ backgroundColor: "transparent" }}>
       <div className="mx-auto w-full max-w-4xl">
-        <article className="w-full overflow-hidden rounded-xl border p-5 md:p-6" style={{ backgroundColor: "oklch(var(--background))", borderColor: "oklch(var(--border))" }}>
+        <article data-portfolio-panel className="w-full overflow-hidden rounded-xl border p-5 md:p-6" style={{ backgroundColor: "oklch(var(--background))", borderColor: "oklch(var(--border))" }}>
           <div className="mb-5 flex items-center justify-between gap-3 border-b pb-3" style={{ borderColor: "oklch(var(--border))" }}>
             <h2 className="text-2xl font-bold" style={{ color: "oklch(var(--foreground))" }}>
               Achievements
