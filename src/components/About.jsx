@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 
 const shortBio =
-  "I'm a fourth-year computer engineering student. I build web apps and IoT dashboards.";
+  "I'm a fourth-year computer engineering student. I build web apps and love taking part in hackathons.";
 
 const socialLinks = [
   {
@@ -69,16 +69,12 @@ const About = () => {
 
             <div className="hero-notes">
               <div>
-                <p className="hero-command"><span aria-hidden="true">$</span> stack --current</p>
-                <p className="hero-note-value">MERN · Next.js · AI/ML · IoT</p>
+                <p className="hero-command">Arch</p>
+                <p className="hero-note-value">I use Arch with Hyprland.</p>
               </div>
-              <div>
-                <p className="hero-command"><span aria-hidden="true">$</span> tools --daily</p>
-                <p className="hero-note-value">Codex · GitHub Copilot</p>
-              </div>
-              <div className="hero-blog-note hidden md:block">
-                <p className="hero-command"><span aria-hidden="true">$</span> cat blogs.txt --reason</p>
-                <p className="hero-note-value">I write down things I don't want to forget: running, Linux, and thoughts that sometimes turn into a whole blog.</p>
+              <div className="hero-blog-note">
+                <p className="hero-command">Blog</p>
+                <p className="hero-note-value">I write about running, Arch, and things I don't want to forget.</p>
               </div>
             </div>
 
@@ -100,7 +96,6 @@ const About = () => {
             </div>
 
             <div className="hero-facts hidden md:flex">
-              <span>I use Arch, by the way.</span>
               <span className="hero-age"><LiveAge /> <span>years old</span></span>
               <span>Football · Running</span>
             </div>
