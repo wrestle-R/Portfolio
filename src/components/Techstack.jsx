@@ -3,6 +3,9 @@ import { motion as Motion } from 'framer-motion';
 import { techData } from './tech/TechData';
 import { useTheme } from '../context/ThemeContext';
 
+const mobileTechNames = ['TypeScript', 'Python', 'Rust', 'React', 'Next.js', 'Tailwind CSS', 'Node.js', 'MongoDB', 'PostgreSQL', 'Tauri', 'Docker', 'MQTT'];
+const mobileTech = mobileTechNames.map((name) => techData.flatMap((category) => category.items).find((item) => item.name === name) || { name });
+
 const cardVariants = {
   hidden: { opacity: 0, y: 14, filter: 'blur(8px)' },
   visible: (index) => ({
@@ -31,7 +34,7 @@ const TechIcon = ({ item, theme }) => {
   const [hasError, setHasError] = useState(false);
   const source = theme === 'dark' ? item.iconDark || item.icon : item.iconLight || item.icon;
 
-  if (hasError) {
+  if (hasError || !source) {
     return (
       <span
         className="grid h-7 w-7 place-items-center rounded-md border text-[10px] font-black tracking-tight"
@@ -66,7 +69,7 @@ const Techstack = () => {
     <section className="relative w-full overflow-hidden px-4 pt-8 md:pt-10" id="tech">
       <div className="relative z-10 mx-auto w-full max-w-4xl">
         <article data-portfolio-panel
-          className="relative w-full min-h-[560px] overflow-hidden rounded-xl border p-5 md:min-h-[620px] md:p-6 transition-colors duration-300 ease-in-out hover:bg-muted/50"
+          className="relative w-full min-h-0 overflow-hidden rounded-xl border p-5 md:min-h-[620px] md:p-6 transition-colors duration-300 ease-in-out hover:bg-muted/50"
           style={{
             backgroundColor: 'oklch(var(--background))',
             borderColor: 'oklch(var(--border))',
@@ -76,12 +79,20 @@ const Techstack = () => {
             <h2 className="text-2xl font-semibold" style={{ color: 'oklch(var(--foreground))' }}>
               Tech Stack
             </h2>
-            <span className="font-mono text-[11px]" style={{ color: 'oklch(var(--muted-foreground))' }}>
+            <span className="hidden font-mono text-[11px] md:inline" style={{ color: 'oklch(var(--muted-foreground))' }}>
               ~/russel/stack.json
             </span>
           </div>
 
-          <div className="relative mt-5 grid grid-cols-1 gap-4 md:mt-6 md:grid-cols-2">
+          <ul className="mobile-tech-stack mt-4 grid grid-cols-2 gap-2 md:hidden" aria-label="Main technologies">
+            {mobileTech.map((item) => (
+              <li key={item.name} className="flex min-w-0 items-center gap-2 py-2 text-xs">
+                <TechIcon item={item} theme={theme} />
+                <span>{item.name}</span>
+              </li>
+            ))}
+          </ul>
+          <div className="relative mt-5 hidden grid-cols-1 gap-4 md:mt-6 md:grid md:grid-cols-2">
             {techData.map((category, idx) => (
               <Motion.article
                 key={category.category}

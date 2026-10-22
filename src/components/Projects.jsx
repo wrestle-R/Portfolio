@@ -1,6 +1,6 @@
 "use client"
 
-import { useMemo, useState } from "react"
+import { useMemo, useState, useSyncExternalStore } from "react"
 import { useTheme } from "../context/ThemeContext"
 
 // Previous project entries preserved for future use.
@@ -93,7 +93,7 @@ const projectsData = [
     id: 1,
     name: "Multi Codex",
     description:
-      "Desktop app for managing multiple Codex accounts and launching them in isolated VS Code windows. Each account keeps its own login and workspace, with repeat launches opening a fresh window without changing your default Codex login.",
+      "Separate logins and VS Code windows for my Codex accounts.",
     url: "https://github.com/wrestle-R/multi-codex/releases/latest",
     primaryLabel: "Download App",
     github: "https://github.com/wrestle-R/multi-codex",
@@ -126,7 +126,7 @@ const projectsData = [
     id: 4,
     name: "ASOIAF",
     description:
-      "A map of Westeros and Essos, with character locations and storylines from Game of Thrones, House of the Dragon, and A Knight of the Seven Kingdoms.",
+      "Characters and storylines across Westeros and Essos.",
     url: "https://asoiaf-rdp.vercel.app/",
     github: "https://github.com/wrestle-R/ASOIAF",
     tech: ["React", "JavaScript", "Tailwind CSS", "Vite"],
@@ -137,7 +137,7 @@ const projectsData = [
     id: 5,
     name: "HyprTrack",
     description:
-      "An app for tracking which programs I use on Hyprland. A Python collector writes activity to SQLite, and the dashboard shows app usage and sessions. The data stays on my machine.",
+      "Tracks my app usage on Hyprland. Everything stays on my machine.",
     url: "https://github.com/wrestle-R/HyprTrack/releases/latest",
     primaryLabel: "Download App",
     github: "https://github.com/wrestle-R/HyprTrack",
@@ -147,14 +147,23 @@ const projectsData = [
   },
 ]
 
+const subscribeToMobile = (onChange) => {
+  const media = window.matchMedia('(max-width: 767px)')
+  media.addEventListener('change', onChange)
+  return () => media.removeEventListener('change', onChange)
+}
+const getMobileSnapshot = () => window.matchMedia('(max-width: 767px)').matches
+
 export default function Projects() {
   const [activeProject, setActiveProject] = useState(projectsData[0])
   const { theme } = useTheme()
+  const isMobile = useSyncExternalStore(subscribeToMobile, getMobileSnapshot, () => false)
+  const selectedProject = isMobile && activeProject.id > 3 ? projectsData[0] : activeProject
 
   const activeImage = useMemo(() => {
-    if (theme === "dark") return activeProject.imageDark || activeProject.image
-    return activeProject.imageLight || activeProject.image
-  }, [activeProject, theme])
+    if (theme === "dark") return selectedProject.imageDark || selectedProject.image
+    return selectedProject.imageLight || selectedProject.image
+  }, [selectedProject, theme])
 
   return (
     <section className="relative z-10 w-full px-4 pt-8 md:pt-10" id="projects" style={{ backgroundColor: "transparent" }}>
@@ -169,21 +178,21 @@ export default function Projects() {
               Projects
             </h2>
             <span className="rounded-full border px-3 py-1.5 text-xs font-mono" style={{ borderColor: "oklch(var(--border))", color: "oklch(var(--muted-foreground))" }}>
-              {projectsData.length} featured
+              {isMobile ? 3 : projectsData.length} featured
             </span>
             </div>
             <span className="mobile-sticker-slot" data-mobile-sticker-slot="constellation" aria-hidden="true" />
           </div>
 
           <div className="mb-5 grid grid-cols-3 gap-2 pb-1 md:grid-cols-5">
-            {/* Mobile: Show project tabs in 2 rows */}
-            {projectsData.map((project) => (
+            {/* Mobile: Keep the first three projects in one row */}
+            {projectsData.slice(0, 3).map((project) => (
               <button
                 key={project.id}
                 onClick={() => setActiveProject(project)}
                 className="md:hidden w-full cursor-pointer rounded-lg border px-2 py-2 text-center text-xs sm:text-sm font-medium transition-colors duration-200 truncate"
                 style={
-                  activeProject.id === project.id
+                  selectedProject.id === project.id
                     ? {
                         backgroundColor: "oklch(var(--primary))",
                         color: "oklch(var(--primary-foreground))",
@@ -208,7 +217,7 @@ export default function Projects() {
                 onClick={() => setActiveProject(project)}
                 className="hidden md:block w-full cursor-pointer rounded-lg border px-2 py-2 text-center text-xs lg:text-sm font-medium transition-colors duration-200 truncate"
                 style={
-                  activeProject.id === project.id
+                  selectedProject.id === project.id
                     ? {
                         backgroundColor: "oklch(var(--primary))",
                         color: "oklch(var(--primary-foreground))",
@@ -229,7 +238,7 @@ export default function Projects() {
 
           {/* Project Details with fade animation on tab switch */}
           <div 
-            key={activeProject.id} 
+            key={selectedProject.id}
             className="animate-fade-in-up duration-300 rounded-xl border p-4 md:p-5" 
             style={{ 
               borderColor: "oklch(var(--border))", 
@@ -239,15 +248,15 @@ export default function Projects() {
           >
             <div className="mb-4">
               <h3 className="mb-2 text-2xl font-bold" style={{ color: "oklch(var(--foreground))" }}>
-                {activeProject.name}
+                {selectedProject.name}
               </h3>
               <p className="text-sm leading-relaxed md:text-base" style={{ color: "oklch(var(--muted-foreground))" }}>
-                {activeProject.description}
+                {selectedProject.description}
               </p>
             </div>
 
             <div className="mb-5 flex flex-wrap gap-2">
-              {activeProject.tech.map((tech) => (
+              {selectedProject.tech.map((tech) => (
                 <span
                   key={tech}
                   className="rounded-md border px-2.5 py-1 text-xs font-medium"
@@ -262,10 +271,10 @@ export default function Projects() {
               <div className="relative w-full" style={{ aspectRatio: "1332/768" }}>
                 <img
                   src={activeImage}
-                  alt={`${activeProject.name} Preview`}
+                  alt={`${selectedProject.name} Preview`}
                   className="block h-full w-full object-fill transition-all duration-300"
                   onError={(e) => {
-                    e.target.src = `https://via.placeholder.com/1332x768/e5e5e5/666666?text=${encodeURIComponent(activeProject.name)}+Preview`
+                    e.target.src = `https://via.placeholder.com/1332x768/e5e5e5/666666?text=${encodeURIComponent(selectedProject.name)}+Preview`
                   }}
                 />
               </div>
@@ -273,16 +282,16 @@ export default function Projects() {
 
             <div className="mt-5 flex flex-wrap gap-3">
               <a
-                href={activeProject.url}
+                href={selectedProject.url}
                 target="_blank"
                 rel="noopener noreferrer"
                 className="rounded-lg px-5 py-2.5 text-sm font-medium transition-opacity hover:opacity-85"
                 style={{ backgroundColor: "oklch(var(--primary))", color: "oklch(var(--primary-foreground))" }}
               >
-                {activeProject.primaryLabel || "Live Demo"}
+                {selectedProject.primaryLabel || "Live Demo"}
               </a>
               <a
-                href={activeProject.github}
+                href={selectedProject.github}
                 target="_blank"
                 rel="noopener noreferrer"
                 className="rounded-lg border px-5 py-2.5 text-sm font-medium transition-colors"

@@ -1,58 +1,56 @@
-/* Same paper/graphite palette as the Blog. Existing Portfolio consumers use
+/* Multi Codex Ocean palette, shared with the Blog. Existing Portfolio consumers use
    OKLCH channels, so keep that contract while sharing the material colors. */
 :root, :root[data-theme="light"] {
-  --background: 0.958261 0.011099 89.7230;
-  --foreground: 0.304126 0.010586 99.2333;
-  --primary: 0.448560 0.043183 151.7630;
-  --primary-foreground: 0.993928 0.008183 91.4805;
-  --muted: 0.922008 0.015338 90.2408;
-  --muted-foreground: 0.508705 0.017105 98.5183;
-  --border: 0.854377 0.021104 91.6074;
-  --ring: 0.521022 0.047078 147.9690;
-  --destructive: 0.528386 0.158644 26.0084;
+  --background: 0.966939 0.005975 223.4561;
+  --foreground: 0.328785 0.035610 225.5211;
+  --primary: 0.478971 0.070328 222.5567;
+  --primary-foreground: 1.000000 0.000000 89.8756;
+  --muted: 0.936712 0.011996 223.5283;
+  --muted-foreground: 0.536965 0.033040 227.5507;
+  --border: 0.907072 0.017124 225.2061;
+  --ring: 0.478971 0.070328 222.5567;
 }
 :root[data-theme="dark"] {
-  --background: 0.248722 0.006295 134.9536;
-  --foreground: 0.936883 0.016548 91.5560;
-  --primary: 0.819055 0.051663 129.7259;
-  --primary-foreground: 0.283885 0.024149 142.5246;
-  --muted: 0.296042 0.011427 128.8981;
-  --muted-foreground: 0.765151 0.019548 110.1705;
-  --border: 0.394058 0.020339 122.3344;
-  --ring: 0.819055 0.051663 129.7259;
-  --destructive: 0.744424 0.123029 25.2936;
+  --background: 0.143262 0.005654 246.4405;
+  --foreground: 0.933638 0.008428 236.5649;
+  --primary: 0.740233 0.071673 224.7537;
+  --primary-foreground: 0.219159 0.023192 238.4044;
+  --muted: 0.277623 0.010286 242.0639;
+  --muted-foreground: 0.725823 0.024076 237.7850;
+  --border: 0.313371 0.012233 243.2258;
+  --ring: 0.740233 0.071673 224.7537;
 }
 
 :root {
   color-scheme: light;
-  --sk-surface: #faf8f1;
-  --sk-surface-raised: #fdfbf6;
-  --sk-well: #efebe0;
-  --sk-edge: #d4cfc0;
+  --sk-surface: #ffffff;
+  --sk-surface-raised: #ffffff;
+  --sk-well: #eaf1f4;
+  --sk-edge: #d5e3e9;
   --sk-highlight: #ffffffc7;
-  --sk-base: #e4dfd1;
-  --sk-shadow: #3b322312;
+  --sk-base: #dce7ed;
+  --sk-shadow: #18384612;
   --sk-paper-shadow: inset 0 1px 0 var(--sk-highlight), 0 2px 0 var(--sk-base), 0 3px 0 var(--sk-edge), 0 8px 16px -8px var(--sk-shadow);
-  --contribution-0: #e9e5da;
-  --contribution-1: #c7d2be;
-  --contribution-2: #9eb591;
-  --contribution-3: #718b63;
-  --contribution-4: #435c49;
+  --contribution-0: #e2ecf0;
+  --contribution-1: #c0d5df;
+  --contribution-2: #8cb5c6;
+  --contribution-3: #528da4;
+  --contribution-4: #28667a;
 }
 :root[data-theme='dark'] {
   color-scheme: dark;
-  --sk-surface: #292c26;
-  --sk-surface-raised: #30332c;
-  --sk-well: #252820;
-  --sk-edge: #44483c;
+  --sk-surface: #141719;
+  --sk-surface-raised: #1a2024;
+  --sk-well: #101519;
+  --sk-edge: #2c3237;
   --sk-highlight: #ffffff12;
-  --sk-base: #191c17;
+  --sk-base: #040607;
   --sk-shadow: #00000055;
-  --contribution-0: #30342c;
-  --contribution-1: #4a5d40;
-  --contribution-2: #6b855a;
-  --contribution-3: #90aa7c;
-  --contribution-4: #b9cba8;
+  --contribution-0: #24292d;
+  --contribution-1: #1c3643;
+  --contribution-2: #28596f;
+  --contribution-3: #4289a6;
+  --contribution-4: #78b5cd;
 }
 @theme inline {
   --color-background: oklch(var(--background));
@@ -109,3 +107,10 @@
 @media (prefers-reduced-motion: reduce) {
   .portfolio-home *, .portfolio-home *::before { animation-duration: .01ms !important; transition-duration: .01ms !important; }
 }
+
+@media (max-width: 767px) {
+  .hero-socials > [data-mobile-hide='true'] { display: none; }
+  .mobile-tech-stack img { width: 24px; height: 24px; }
+}
+.contribution-tooltip__surface { line-height: 1.5; white-space: normal; }
+.portfolio-home footer a { display: inline-flex; align-items: center; min-height: 44px; }

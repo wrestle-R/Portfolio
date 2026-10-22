@@ -125,6 +125,7 @@ const About = () => {
               {socialLinks.map((social) => (
                 <a
                   key={social.name}
+                  data-mobile-hide={social.name === "LinkedIn" ? "true" : undefined}
                   href={social.url}
                   target="_blank"
                   rel="noopener noreferrer"

@@ -117,7 +117,7 @@ const Contact = () => {
                   aria-describedby="contact-send-help"
                   aria-busy={isSubmitting}
                 >
-                  <svg className="send-message-sticker__icon" viewBox="0 0 32 26" fill="none" aria-hidden="true"><path d="m3 11 26-8-8 21-6-9-12-4Z" fill="#e1e8d7" stroke="currentColor" strokeWidth="1.5" strokeLinejoin="round"/><path d="m15 15 14-12M15 15l-1 6 4-3" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/></svg>
+                  <svg className="send-message-sticker__icon" viewBox="0 0 32 26" fill="none" aria-hidden="true"><path d="m3 11 26-8-8 21-6-9-12-4Z" fill="#deedf3" stroke="currentColor" strokeWidth="1.5" strokeLinejoin="round"/><path d="m15 15 14-12M15 15l-1 6 4-3" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/></svg>
                   <span>{isSubmitting ? "Sending..." : "Send message"}</span>
                 </button>
               </div>

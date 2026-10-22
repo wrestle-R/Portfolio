@@ -115,10 +115,13 @@ export const ContributionGraph = ({ contributions, activityLabel = 'contribution
                     <Motion.div
                       key={`${weekIndex}-${dayIndex}`}
                       whileHover={isMobile ? undefined : { scale: 1.28, zIndex: 40 }}
-                      className="group relative"
+                      className="group relative focus-within:z-40"
                     >
-                      <div
-                        title={`${countText} on ${dateStr}`}
+                      <button
+                        type="button"
+                        aria-label={`${countText} on ${dateStr}`}
+                        aria-describedby={`contribution-${day.date}`}
+                        tabIndex={weekIndex === visibleWeeks.length - 1 && dayIndex === week.length - 1 ? 0 : -1}
                         className={`w-4 h-4 rounded-[4px] transition-all duration-200 ${isMobile ? 'cursor-default' : 'cursor-pointer'}`}
                         style={{ 
                           backgroundColor: getColor(level),
@@ -126,25 +129,27 @@ export const ContributionGraph = ({ contributions, activityLabel = 'contribution
                         }}
                       />
                       
-                      {!isMobile && (
+                      {(
                         <>
                           {/* Tooltip */}
                           <div
-                            className={`pointer-events-none absolute ${isTopRow ? 'top-[calc(100%+4px)] mt-2' : 'bottom-[calc(100%+4px)] mb-2'} ${tooltipPositionClass} w-max opacity-0 transition-opacity group-hover:opacity-100 z-[9999]`}
+                            id={`contribution-${day.date}`}
+                            role="tooltip"
+                            className={`contribution-tooltip pointer-events-none absolute ${isTopRow ? 'top-[calc(100%+4px)] mt-2' : 'bottom-[calc(100%+4px)] mb-2'} ${tooltipPositionClass} w-max max-w-[min(15rem,calc(100vw-4rem))] opacity-0 transition-opacity group-hover:opacity-100 group-focus-within:opacity-100 z-50`}
                           >
-                            <div className="rounded-md px-3 py-1.5 text-xs shadow-lg font-medium border" style={{ backgroundColor: 'oklch(var(--background))', color: 'oklch(var(--foreground))', borderColor: 'oklch(var(--border))' }}>
+                            <div className="contribution-tooltip__surface rounded-md px-3 py-1.5 text-xs font-medium border" style={{ backgroundColor: 'var(--sk-surface)', color: 'oklch(var(--foreground))', borderColor: 'var(--sk-edge)', boxShadow: 'var(--sk-paper-shadow)' }}>
                               <span className="font-bold">{countText}</span> on {dateStr}
                             </div>
                             {/* Tooltip arrow */}
                             {isTopRow ? (
                               <>
                                 <div className={`absolute bottom-full ${arrowPositionClass} border-[5px] border-transparent`} style={{ borderBottomColor: 'oklch(var(--border))' }} />
-                                <div className={`absolute bottom-[calc(100%-1.5px)] ${arrowPositionClass} border-[5px] border-transparent`} style={{ borderBottomColor: 'oklch(var(--background))' }} />
+                                <div className={`absolute bottom-[calc(100%-1.5px)] ${arrowPositionClass} border-[5px] border-transparent`} style={{ borderBottomColor: 'var(--sk-surface)' }} />
                               </>
                             ) : (
                               <>
                                 <div className={`absolute top-full ${arrowPositionClass} border-[5px] border-transparent`} style={{ borderTopColor: 'oklch(var(--border))' }} />
-                                <div className={`absolute top-[calc(100%-1.5px)] ${arrowPositionClass} border-[5px] border-transparent`} style={{ borderTopColor: 'oklch(var(--background))' }} />
+                                <div className={`absolute top-[calc(100%-1.5px)] ${arrowPositionClass} border-[5px] border-transparent`} style={{ borderTopColor: 'var(--sk-surface)' }} />
                               </>
                             )}
                           </div>
