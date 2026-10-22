@@ -71,8 +71,8 @@
 .portfolio-skip-link:focus { transform: none; }
 .portfolio-background { background: none; }
 .portfolio-background::before {
-  background-image: linear-gradient(color-mix(in srgb, var(--sk-edge) 24%, transparent) 1px, transparent 1px), linear-gradient(90deg, color-mix(in srgb, var(--sk-edge) 24%, transparent) 1px, transparent 1px);
-  background-size: 32px 32px;
+  background-image: linear-gradient(color-mix(in srgb, var(--sk-edge) 8%, transparent) 1px, transparent 1px), linear-gradient(90deg, color-mix(in srgb, var(--sk-edge) 8%, transparent) 1px, transparent 1px);
+  background-size: 48px 48px;
   mask-image: none;
 }
 .portfolio-background::after { display: none; }
