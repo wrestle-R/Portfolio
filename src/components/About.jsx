@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 
 const shortBio =
-  "Fourth year computer engineering student. I build web apps and IoT dashboards.";
+  "I'm a fourth-year computer engineering student. I build web apps and IoT dashboards.";
 
 const socialLinks = [
   {
@@ -53,94 +53,56 @@ function LiveAge() {
 
 const About = () => {
   return (
-    <section
-      className="relative flex w-full items-center justify-center px-4 pt-6"
-      id="about"
-      style={{ backgroundColor: "transparent" }}
-    >
+    <section className="relative w-full px-4 pt-6" id="about">
       <div className="relative z-10 mx-auto w-full max-w-4xl">
-        <article data-portfolio-panel
-          className="hero-intro relative isolate overflow-hidden rounded-xl border p-5 md:p-6 transition-colors duration-300 ease-in-out hover:bg-muted/50"
-          style={{ backgroundColor: "oklch(var(--background))", borderColor: "oklch(var(--border))" }}
-        >
-          <div className="relative">
-            {/* Arch Logo / details on top right */}
-            <div className="hero-facts hidden md:flex absolute top-0 right-0 flex-col items-start text-sm font-mono opacity-90" style={{ color: "oklch(var(--foreground) / 0.82)" }}>
-              <div className="flex items-center">
-                <svg className="w-3 h-3 mr-1.5" viewBox="0 0 24 24" fill="currentColor">
-                  <path d="M12 2L2 22h4.5l5.5-12.5L17.5 22H22L12 2zm0 6.5l-3 7h6l-3-7z" />
-                </svg>
-                <span>i use arch btw</span>
-              </div>
-              <div className="flex flex-col items-start mt-2 space-y-1.5 text-sm text-current">
-                <LiveAge />
-                <span>Fourth year in computer engineering</span>
-                <span>Football | Running</span>
-              </div>
-            </div>
-
+        <article data-portfolio-panel className="hero-intro portfolio-intro relative isolate rounded-xl border">
+          <div className="hero-layout">
             <div className="hero-headphone-slot" data-mobile-sticker-slot="headphones" aria-hidden="true" />
             <div className="hero-running-slot" data-mobile-sticker-slot="runny" aria-hidden="true" />
 
-            <div className="hero-copy space-y-2 font-mono text-sm">
-              <p>
-                <span style={{ color: "oklch(var(--muted-foreground))" }}>$</span> whoami
-              </p>
-              <h1 className="pl-4 font-normal text-sm" style={{ color: "oklch(var(--muted-foreground))", fontFamily: "inherit" }}>
-                Russel Daniel Paul
-              </h1>
-              <p className="pl-4" style={{ color: "oklch(var(--muted-foreground))" }}>Full Stack Developer</p>
-              <p>
-                <span style={{ color: "oklch(var(--muted-foreground))" }}>$</span> stack --current
-              </p>
-              <p className="pl-4" style={{ color: "oklch(var(--muted-foreground))" }}>
-                mern | next | ai/ml | iot
-              </p>
-              <p>
-                <span style={{ color: "oklch(var(--muted-foreground))" }}>$</span> tools --daily
-              </p>
-              <p className="pl-4" style={{ color: "oklch(var(--muted-foreground))" }}>
-                Codex | GitHub Copilot
-              </p>
-              <div className="hidden md:block">
-                <p>
-                  <span style={{ color: "oklch(var(--muted-foreground))" }}>$</span> cat blogs.txt --reason
-                </p>
-                <p className="pl-4 leading-relaxed" style={{ color: "oklch(var(--muted-foreground))" }}>
-                  I write down things I don't want to forget.
-                </p>
-                <p className="pl-4 leading-relaxed" style={{ color: "oklch(var(--muted-foreground))" }}>
-                  The blog has my running updates, Linux setup, and a few longer personal posts.
-                </p>
-              </div>
-              <p>
-                <span style={{ color: "oklch(var(--muted-foreground))" }}>$</span> cat ethos.txt
-              </p>
-              <p className="pl-4 leading-relaxed" style={{ color: "oklch(var(--muted-foreground))" }}>
-                {shortBio}
-              </p>
+            <div className="hero-copy">
+              <p className="hero-command"><span aria-hidden="true">$</span> whoami</p>
+              <h1>Russel Daniel Paul</h1>
+              <p className="hero-role">Full Stack Developer</p>
+              <p className="hero-summary">{shortBio}</p>
             </div>
 
-            <div className="hero-socials mt-5 flex flex-wrap gap-2">
+            <div className="hero-notes">
+              <div>
+                <p className="hero-command"><span aria-hidden="true">$</span> stack --current</p>
+                <p className="hero-note-value">MERN · Next.js · AI/ML · IoT</p>
+              </div>
+              <div>
+                <p className="hero-command"><span aria-hidden="true">$</span> tools --daily</p>
+                <p className="hero-note-value">Codex · GitHub Copilot</p>
+              </div>
+              <div className="hero-blog-note hidden md:block">
+                <p className="hero-command"><span aria-hidden="true">$</span> cat blogs.txt --reason</p>
+                <p className="hero-note-value">I write down things I don't want to forget: running, Linux, and thoughts that sometimes turn into a whole blog.</p>
+              </div>
+            </div>
+
+            <div className="hero-socials">
+              <a className="hero-project-link" href="#projects">View projects <span aria-hidden="true">↗</span></a>
               {socialLinks.map((social) => (
                 <a
                   key={social.name}
                   data-mobile-hide={social.name === "LinkedIn" ? "true" : undefined}
                   href={social.url}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  aria-label={`Visit Russel on ${social.name}`}
-                  className="inline-flex items-center gap-2 rounded-lg border px-3 py-2 text-xs font-semibold transition-colors duration-300 hover:bg-black/5 hover:[animation:wiggle_0.45s_ease-in-out] active:[animation:wiggle_0.35s_ease-in-out] focus-visible:outline-2 focus-visible:outline-offset-2"
-                  style={{
-                    borderColor: "oklch(var(--border))",
-                    color: "oklch(var(--muted-foreground))",
-                    outlineColor: "oklch(var(--foreground))",
-                  }}
+                  target={social.url.startsWith("https:") ? "_blank" : undefined}
+                  rel={social.url.startsWith("https:") ? "noopener noreferrer" : undefined}
+                  aria-label={social.url.startsWith("mailto:") ? "Email Russel" : `Visit Russel on ${social.name}`}
                 >
                   {social.icon}
-                  {social.name !== "X" ? <span>{social.name}</span> : null}
+                  <span>{social.name}</span>
                 </a>
               ))}
+            </div>
+
+            <div className="hero-facts hidden md:flex">
+              <span>I use Arch, by the way.</span>
+              <span className="hero-age"><LiveAge /> <span>years old</span></span>
+              <span>Football · Running</span>
             </div>
           </div>
         </article>

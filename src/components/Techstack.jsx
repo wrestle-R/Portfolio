@@ -92,7 +92,7 @@ const Techstack = () => {
               </li>
             ))}
           </ul>
-          <div className="relative mt-5 hidden grid-cols-1 gap-4 md:mt-6 md:grid md:grid-cols-2">
+          <div className="tech-categories relative mt-5 hidden grid-cols-1 gap-4 md:mt-6 md:grid md:grid-cols-2">
             {techData.map((category, idx) => (
               <Motion.article
                 key={category.category}
@@ -102,9 +102,9 @@ const Techstack = () => {
                 whileInView="visible"
                 viewport={{ once: true, amount: 0.18 }}
                 whileHover={{ y: -2, transition: { duration: 0.18, ease: 'easeOut' } }}
-                className="group/card relative overflow-hidden rounded-xl border p-4 transition-[border-color,background-color,box-shadow] duration-250 hover:bg-muted/30"
+                className="tech-category group/card relative overflow-hidden py-4"
                 style={{
-                  backgroundColor: 'oklch(var(--background) / 0.7)',
+                  backgroundColor: 'transparent',
                   borderColor: 'oklch(var(--border))',
                   boxShadow: '0 0 0 0 oklch(var(--foreground) / 0)',
                 }}

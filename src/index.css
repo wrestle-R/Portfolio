@@ -1,6 +1,7 @@
 @import "tailwindcss";
 
-  @import "@fontsource/montserrat"; /* Montserrat font */
+  @import "@fontsource/montserrat/latin-600.css";
+  @import "@fontsource/montserrat/latin-700.css";
   @import "@fontsource/inter";
   @import "tw-animate-css";
 

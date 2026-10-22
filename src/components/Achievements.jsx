@@ -8,12 +8,12 @@ const achievementsData = [
     id: 1,
     title: "Coherence Hackathon",
     project: "ScreenSmart",
-    description: "AI hiring assistant for resume screening and bias-free ranking.",
+    description: "AI hiring assistant for résumé screening and bias-free ranking.",
     teammates: ["Liza", "Romeiro", "Gavin"],
     host: "Vartak College of Engineering",
     duration: "24-hour offline",
     image: "/Projects/Coherence.jpg",
-    type: "Runners Up",
+    type: "Runner-up",
   },
   {
     id: 2,
@@ -24,19 +24,19 @@ const achievementsData = [
     host: "Certifiyo",
     duration: "12-hour online",
     image: "/Projects/Certifiyo.jpg",
-    type: "Second Runners Up",
+    type: "Second runner-up",
   },
   {
     id: 3,
     title: "Neural Nexus 2.0",
     project: "AI-Powered Trekking Platform",
     description:
-      "AI and Data Science driven trekking website and mobile app for intelligent trek recommendations, safety insights, and route visualizations.",
+      "AI and data science platform for trek recommendations, safety information, and route visualizations.",
     teammates: ["Shravya", "Gavin", "Aliqyaan"],
     host: "Vijaybhoomi University",
-    duration: "7 day hybrid",
+    duration: "7-day hybrid",
     image: "/Projects/Karjat.jpeg",
-    type: "Second Runners Up",
+    type: "Second runner-up",
   },
 ]
 

@@ -93,7 +93,7 @@ const projectsData = [
     id: 1,
     name: "Multi Codex",
     description:
-      "Separate logins and VS Code windows for my Codex accounts.",
+      "I use this to keep my Codex logins and VS Code windows separate.",
     url: "https://github.com/wrestle-R/multi-codex/releases/latest",
     primaryLabel: "Download App",
     github: "https://github.com/wrestle-R/multi-codex",
@@ -137,7 +137,7 @@ const projectsData = [
     id: 5,
     name: "HyprTrack",
     description:
-      "Tracks my app usage on Hyprland. Everything stays on my machine.",
+      "I track my app usage on Hyprland. Everything stays on my machine.",
     url: "https://github.com/wrestle-R/HyprTrack/releases/latest",
     primaryLabel: "Download App",
     github: "https://github.com/wrestle-R/HyprTrack",
@@ -177,19 +177,20 @@ export default function Projects() {
             <h2 className="text-2xl font-bold" style={{ color: "oklch(var(--foreground))" }}>
               Projects
             </h2>
-            <span className="rounded-full border px-3 py-1.5 text-xs font-mono" style={{ borderColor: "oklch(var(--border))", color: "oklch(var(--muted-foreground))" }}>
-              {isMobile ? 3 : projectsData.length} featured
+            <span className="project-count text-xs font-mono" style={{ borderColor: "oklch(var(--border))", color: "oklch(var(--muted-foreground))" }}>
+              {isMobile ? 3 : projectsData.length} projects
             </span>
             </div>
             <span className="mobile-sticker-slot" data-mobile-sticker-slot="constellation" aria-hidden="true" />
           </div>
 
-          <div className="mb-5 grid grid-cols-3 gap-2 pb-1 md:grid-cols-5">
+          <div className="project-tabs mb-5 grid grid-cols-3 gap-2 pb-1 md:grid-cols-5" aria-label="Choose a project">
             {/* Mobile: Keep the first three projects in one row */}
             {projectsData.slice(0, 3).map((project) => (
               <button
                 key={project.id}
                 onClick={() => setActiveProject(project)}
+                aria-pressed={selectedProject.id === project.id}
                 className="md:hidden w-full cursor-pointer rounded-lg border px-2 py-2 text-center text-xs sm:text-sm font-medium transition-colors duration-200 truncate"
                 style={
                   selectedProject.id === project.id
@@ -215,6 +216,7 @@ export default function Projects() {
               <button
                 key={project.id}
                 onClick={() => setActiveProject(project)}
+                aria-pressed={selectedProject.id === project.id}
                 className="hidden md:block w-full cursor-pointer rounded-lg border px-2 py-2 text-center text-xs lg:text-sm font-medium transition-colors duration-200 truncate"
                 style={
                   selectedProject.id === project.id
@@ -236,69 +238,30 @@ export default function Projects() {
             ))}
           </div>
 
-          {/* Project Details with fade animation on tab switch */}
-          <div 
-            key={selectedProject.id}
-            className="animate-fade-in-up duration-300 rounded-xl border p-4 md:p-5" 
-            style={{ 
-              borderColor: "oklch(var(--border))", 
-              backgroundColor: "oklch(var(--background) / 0.75)",
-              animation: "fade-in 0.4s ease-out forwards"
-            }}
-          >
-            <div className="mb-4">
-              <h3 className="mb-2 text-2xl font-bold" style={{ color: "oklch(var(--foreground))" }}>
-                {selectedProject.name}
-              </h3>
-              <p className="text-sm leading-relaxed md:text-base" style={{ color: "oklch(var(--muted-foreground))" }}>
-                {selectedProject.description}
-              </p>
-            </div>
-
-            <div className="mb-5 flex flex-wrap gap-2">
-              {selectedProject.tech.map((tech) => (
-                <span
-                  key={tech}
-                  className="rounded-md border px-2.5 py-1 text-xs font-medium"
-                  style={{ borderColor: "oklch(var(--border))", backgroundColor: "oklch(var(--background))", color: "oklch(var(--foreground))" }}
-                >
-                  {tech}
-                </span>
-              ))}
-            </div>
-
-            <div className="overflow-hidden rounded-lg border" style={{ borderColor: "oklch(var(--border))", backgroundColor: "oklch(var(--background))" }}>
-              <div className="relative w-full" style={{ aspectRatio: "1332/768" }}>
-                <img
-                  src={activeImage}
-                  alt={`${selectedProject.name} Preview`}
-                  className="block h-full w-full object-fill transition-all duration-300"
-                  onError={(e) => {
-                    e.target.src = `https://via.placeholder.com/1332x768/e5e5e5/666666?text=${encodeURIComponent(selectedProject.name)}+Preview`
-                  }}
-                />
+          <div key={selectedProject.id} className="project-showcase">
+            <div className="project-copy">
+              <h3>{selectedProject.name}</h3>
+              <p className="project-description">{selectedProject.description}</p>
+              <ul className="project-technologies" aria-label={`${selectedProject.name} technologies`}>
+                {selectedProject.tech.map((tech) => <li key={tech}>{tech}</li>)}
+              </ul>
+              <div className="project-actions">
+                <a className="project-primary-action" href={selectedProject.url} target="_blank" rel="noopener noreferrer">
+                  {selectedProject.primaryLabel || "Live Demo"} <span aria-hidden="true">↗</span>
+                </a>
+                <a className="project-code-action" href={selectedProject.github} target="_blank" rel="noopener noreferrer">
+                  View Code <span aria-hidden="true">↗</span>
+                </a>
               </div>
             </div>
-
-            <div className="mt-5 flex flex-wrap gap-3">
-              <a
-                href={selectedProject.url}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="rounded-lg px-5 py-2.5 text-sm font-medium transition-opacity hover:opacity-85"
-                style={{ backgroundColor: "oklch(var(--primary))", color: "oklch(var(--primary-foreground))" }}
-              >
-                {selectedProject.primaryLabel || "Live Demo"}
-              </a>
-              <a
-                href={selectedProject.github}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="rounded-lg border px-5 py-2.5 text-sm font-medium transition-colors"
-                style={{ borderColor: "oklch(var(--border))", color: "oklch(var(--foreground))" }}
-              >
-                View Code
-              </a>
+            <div className="project-preview">
+              <div className="project-preview-bar" aria-hidden="true"><span className="project-preview-dots"><i /><i /><i /></span><span>{selectedProject.name}</span></div>
+              <img
+                src={activeImage}
+                alt={`${selectedProject.name} Preview`}
+                width="1332"
+                height="768"
+              />
             </div>
           </div>
         </article>
