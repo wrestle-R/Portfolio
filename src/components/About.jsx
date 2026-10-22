@@ -23,15 +23,7 @@ const socialLinks = [
       </svg>
     ),
   },
-  {
-    name: "LinkedIn",
-    url: "https://linkedin.com/in/russel-daniel-970b8a303",
-    icon: (
-      <svg viewBox="0 0 24 24" className="h-4 w-4" fill="currentColor" aria-hidden="true">
-        <path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433c-1.144 0-2.063-.926-2.063-2.065 0-1.138.92-2.063 2.063-2.063 1.14 0 2.064.925 2.064 2.063 0 1.139-.925 2.065-2.064 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z" />
-      </svg>
-    ),
-  },
+
 ];
 
 const birthTimestamp = new Date("2005-03-22T11:45:00+05:30").getTime();
@@ -53,51 +45,93 @@ function LiveAge() {
 
 const About = () => {
   return (
-    <section className="relative w-full px-4 pt-6" id="about">
+    <section
+      className="relative flex w-full items-center justify-center px-4 pt-6"
+      id="about"
+      style={{ backgroundColor: "transparent" }}
+    >
       <div className="relative z-10 mx-auto w-full max-w-4xl">
-        <article data-portfolio-panel className="hero-intro portfolio-intro relative isolate rounded-xl border">
-          <div className="hero-layout">
+        <article data-portfolio-panel
+          className="hero-intro relative isolate overflow-hidden rounded-xl border p-5 md:p-6 transition-colors duration-300 ease-in-out hover:bg-muted/50"
+          style={{ backgroundColor: "oklch(var(--background))", borderColor: "oklch(var(--border))" }}
+        >
+          <div className="relative">
+            {/* Arch Logo / details on top right */}
+            <div className="hero-facts hidden md:flex absolute top-0 right-0 flex-col items-start text-sm font-mono opacity-90" style={{ color: "oklch(var(--foreground) / 0.82)" }}>
+              <div className="flex items-center">
+                <svg className="w-3 h-3 mr-1.5" viewBox="0 0 24 24" fill="currentColor">
+                  <path d="M12 2L2 22h4.5l5.5-12.5L17.5 22H22L12 2zm0 6.5l-3 7h6l-3-7z" />
+                </svg>
+                <span>I use Arch, btw.</span>
+              </div>
+              <div className="flex flex-col items-start mt-2 space-y-1.5 text-sm text-current">
+                <LiveAge />
+                <span>Fourth year in computer engineering</span>
+                <span>Football | Running</span>
+              </div>
+            </div>
+
             <div className="hero-headphone-slot" data-mobile-sticker-slot="headphones" aria-hidden="true" />
             <div className="hero-running-slot" data-mobile-sticker-slot="runny" aria-hidden="true" />
 
-            <div className="hero-copy">
-              <p className="hero-command"><span aria-hidden="true">$</span> whoami</p>
-              <h1>Russel Daniel Paul</h1>
-              <p className="hero-role">Full Stack Developer</p>
-              <p className="hero-summary">{shortBio}</p>
+            <div className="hero-copy space-y-2 font-mono text-sm">
+              <p>
+                <span style={{ color: "oklch(var(--muted-foreground))" }}>$</span> whoami
+              </p>
+              <h1 className="pl-4 font-normal text-sm" style={{ color: "oklch(var(--muted-foreground))", fontFamily: "inherit" }}>
+                Russel Daniel Paul
+              </h1>
+              <p className="pl-4" style={{ color: "oklch(var(--muted-foreground))" }}>Full Stack Developer</p>
+              <p>
+                <span style={{ color: "oklch(var(--muted-foreground))" }}>$</span> stack --current
+              </p>
+              <p className="pl-4" style={{ color: "oklch(var(--muted-foreground))" }}>
+                MERN | Next.js | AI/ML | IoT
+              </p>
+              <p>
+                <span style={{ color: "oklch(var(--muted-foreground))" }}>$</span> tools --daily
+              </p>
+              <p className="pl-4" style={{ color: "oklch(var(--muted-foreground))" }}>
+                Codex | GitHub Copilot
+              </p>
+              <div className="hidden md:block">
+                <p>
+                  <span style={{ color: "oklch(var(--muted-foreground))" }}>$</span> cat blogs.txt --reason
+                </p>
+                <p className="pl-4 leading-relaxed" style={{ color: "oklch(var(--muted-foreground))" }}>
+                  I write down things I don't want to forget.
+                </p>
+                <p className="pl-4 leading-relaxed" style={{ color: "oklch(var(--muted-foreground))" }}>
+                  The blog has my running updates, Linux setup, and a few longer personal posts.
+                </p>
+              </div>
+              <p>
+                <span style={{ color: "oklch(var(--muted-foreground))" }}>$</span> cat ethos.txt
+              </p>
+              <p className="pl-4 leading-relaxed" style={{ color: "oklch(var(--muted-foreground))" }}>
+                {shortBio}
+              </p>
             </div>
 
-            <div className="hero-notes">
-              <div>
-                <p className="hero-command">Arch</p>
-                <p className="hero-note-value">I use Arch with Hyprland.</p>
-              </div>
-              <div className="hero-blog-note">
-                <p className="hero-command">Blog</p>
-                <p className="hero-note-value">I write about running, Arch, and things I don't want to forget.</p>
-              </div>
-            </div>
-
-            <div className="hero-socials">
-              <a className="hero-project-link" href="#projects">View projects <span aria-hidden="true">↗</span></a>
+            <div className="hero-socials mt-5 flex flex-wrap gap-2">
               {socialLinks.map((social) => (
                 <a
                   key={social.name}
-                  data-mobile-hide={social.name === "LinkedIn" ? "true" : undefined}
                   href={social.url}
-                  target={social.url.startsWith("https:") ? "_blank" : undefined}
-                  rel={social.url.startsWith("https:") ? "noopener noreferrer" : undefined}
-                  aria-label={social.url.startsWith("mailto:") ? "Email Russel" : `Visit Russel on ${social.name}`}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  aria-label={`Visit Russel on ${social.name}`}
+                  className="inline-flex items-center gap-2 rounded-lg border px-3 py-2 text-xs font-semibold transition-colors duration-300 hover:bg-black/5 hover:[animation:wiggle_0.45s_ease-in-out] active:[animation:wiggle_0.35s_ease-in-out] focus-visible:outline-2 focus-visible:outline-offset-2"
+                  style={{
+                    borderColor: "oklch(var(--border))",
+                    color: "oklch(var(--muted-foreground))",
+                    outlineColor: "oklch(var(--foreground))",
+                  }}
                 >
                   {social.icon}
-                  <span>{social.name}</span>
+                  {social.name !== "X" ? <span>{social.name}</span> : null}
                 </a>
               ))}
-            </div>
-
-            <div className="hero-facts hidden md:flex">
-              <span className="hero-age"><LiveAge /> <span>years old</span></span>
-              <span>Football · Running</span>
             </div>
           </div>
         </article>
