@@ -1,0 +1,9 @@
+.git
+.vercel
+node_modules
+dist
+local-docs
+docs
+screenshots
+.env*
+minecraft/model-source
