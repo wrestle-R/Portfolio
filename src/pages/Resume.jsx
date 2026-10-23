@@ -46,6 +46,7 @@ const Resume = () => {
               <div className="resume-actions mt-5 flex flex-wrap gap-2">
                 <button
                   type="button"
+                  data-admin-event="resume_pdf"
                   onClick={() => downloadResume("pdf")}
                   className="inline-flex items-center gap-2 rounded-lg px-3 py-2 text-xs font-semibold transition-opacity hover:opacity-90"
                   style={{ backgroundColor: "oklch(var(--primary))", color: "oklch(var(--primary-foreground))" }}
@@ -55,6 +56,7 @@ const Resume = () => {
                 </button>
                 <button
                   type="button"
+                  data-admin-event="resume_image"
                   onClick={() => downloadResume("image")}
                   className="inline-flex items-center gap-2 rounded-lg border px-3 py-2 text-xs font-semibold transition-colors hover:bg-muted/70"
                   style={{ borderColor: "oklch(var(--border))", color: "oklch(var(--muted-foreground))" }}
