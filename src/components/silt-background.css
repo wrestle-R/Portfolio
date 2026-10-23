@@ -1,0 +1,17 @@
+/* Fine silt, exactly the preview's maximum (100%) texture strength.
+   Static, locally tiled images keep the material crisp without a canvas loop. */
+.portfolio-silt-background {
+  position: fixed;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
+  background-image: url('/textures/fine-silt-light.png');
+  background-repeat: repeat;
+  background-size: 384px 384px;
+  opacity: 1;
+}
+:root[data-theme='dark'] .portfolio-silt-background {
+  background-image: url('/textures/fine-silt-dark.png');
+}
+.portfolio-home > main { position: relative; z-index: 1; }
+@media print { .portfolio-silt-background { display: none; } }

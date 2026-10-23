@@ -1,168 +1,114 @@
-import React, { useState } from 'react';
-import { motion as Motion } from 'framer-motion';
+import React, { useEffect, useRef, useState } from 'react';
+import { motion as Motion, useReducedMotion } from 'framer-motion';
 import { techData } from './tech/TechData';
 import { useTheme } from '../context/ThemeContext';
+import iconPaths from './tech/IconPaths.json';
+import './techstack.css';
 
-const mobileTechNames = ['TypeScript', 'Python', 'Rust', 'React', 'Next.js', 'Tailwind CSS', 'Node.js', 'MongoDB', 'PostgreSQL', 'Tauri', 'Docker', 'MQTT'];
-const mobileTech = mobileTechNames.map((name) => techData.flatMap((category) => category.items).find((item) => item.name === name) || { name });
+// Keep the complete desktop inventory; phones show a curated set in all six groups.
+const mobileNames = new Set([
+  'JavaScript', 'TypeScript', 'Python', 'SQL',
+  'React', 'Next.js', 'Tailwind CSS', 'Tauri',
+  'Node.js', 'FastAPI', 'MQTT',
+  'MongoDB', 'PostgreSQL',
+  'Vercel', 'Cloudflare Workers',
+  'Git & GitHub', 'VS Code', 'Codex', 'Docker',
+]);
 
-const cardVariants = {
-  hidden: { opacity: 0, y: 14, filter: 'blur(8px)' },
-  visible: (index) => ({
-    opacity: 1,
-    y: 0,
-    filter: 'blur(0px)',
-    transition: {
-      delay: index * 0.08,
-      duration: 0.5,
-      ease: [0.22, 1, 0.36, 1],
-    },
-  }),
-};
+function TechIcon({ item, theme }) {
+  const [failedSource, setFailedSource] = useState(null);
+  const original = theme === 'dark' ? item.iconDark || item.icon : item.iconLight || item.icon;
+  const source = iconPaths[original] || original;
+  return (
+    <span className="magnetic-stack__icon" data-tool={item.name} aria-hidden="true">
+      {source && failedSource !== source ? (
+        <img src={source} alt="" loading="lazy" decoding="async" width="24" height="24" onError={() => setFailedSource(source)} />
+      ) : (
+        <span className="magnetic-stack__initials">{item.name.slice(0, 2)}</span>
+      )}
+    </span>
+  );
+}
 
-const getInitials = (name) =>
-  name
-    .replace(/[^a-zA-Z+ ]/g, '')
-    .split(/\s|\/|&/)
-    .filter(Boolean)
-    .slice(0, 2)
-    .map((part) => part[0])
-    .join('')
-    .toUpperCase();
+function MagneticTile({ category, index, theme, reducedMotion }) {
+  const frame = useRef(null);
+  const tile = useRef(null);
+  const mobileCount = category.items.filter(item => mobileNames.has(item.name)).length;
 
-const TechIcon = ({ item, theme }) => {
-  const [hasError, setHasError] = useState(false);
-  const source = theme === 'dark' ? item.iconDark || item.icon : item.iconLight || item.icon;
+  useEffect(() => () => {
+    if (frame.current !== null) cancelAnimationFrame(frame.current);
+  }, []);
 
-  if (hasError || !source) {
-    return (
-      <span
-        className="grid h-7 w-7 place-items-center rounded-md border text-[10px] font-black tracking-tight"
-        style={{
-          borderColor: 'oklch(var(--border))',
-          backgroundColor: 'oklch(var(--muted))',
-          color: 'oklch(var(--foreground))',
-        }}
-        aria-hidden="true"
-      >
-        {getInitials(item.name)}
-      </span>
-    );
+  function followPointer(event) {
+    if (event.pointerType !== 'mouse' || reducedMotion) return;
+    const element = tile.current;
+    const rect = element.getBoundingClientRect();
+    const x = (event.clientX - rect.left) / rect.width;
+    const y = (event.clientY - rect.top) / rect.height;
+    if (frame.current !== null) cancelAnimationFrame(frame.current);
+    frame.current = requestAnimationFrame(() => {
+      element.style.setProperty('--magnet-x', `${x * 100}%`);
+      element.style.setProperty('--magnet-y', `${y * 100}%`);
+      element.style.setProperty('--magnet-rx', `${(y - .5) * -7}deg`);
+      element.style.setProperty('--magnet-ry', `${(x - .5) * 7}deg`);
+      frame.current = null;
+    });
+  }
+
+  function resetPointer() {
+    if (frame.current !== null) cancelAnimationFrame(frame.current);
+    frame.current = null;
+    tile.current?.style.setProperty('--magnet-rx', '0deg');
+    tile.current?.style.setProperty('--magnet-ry', '0deg');
+    tile.current?.style.removeProperty('--magnet-x');
+    tile.current?.style.removeProperty('--magnet-y');
   }
 
   return (
-    <img
-      src={source}
-      alt=""
-      loading="lazy"
-      decoding="async"
-      onError={() => setHasError(true)}
-      className="h-7 w-7 object-contain transition-transform duration-300 group-hover:scale-105"
-    />
+    <Motion.section
+      ref={tile}
+      className="magnetic-stack__tile"
+      aria-labelledby={`stack-category-${index}`}
+      initial={reducedMotion ? false : { opacity: 0 }}
+      whileInView={{ opacity: 1 }}
+      viewport={{ once: true, amount: .15 }}
+      transition={{ duration: .5, delay: index * .055 }}
+      onPointerMove={followPointer}
+      onPointerLeave={resetPointer}
+      onPointerCancel={resetPointer}
+    >
+      <h3 id={`stack-category-${index}`}>
+        <span className="magnetic-stack__number" aria-hidden="true">{String(index + 1).padStart(2, '0')}</span>
+        {category.category}
+        <span className="magnetic-stack__count" aria-hidden="true"><span className="magnetic-stack__desktop">{category.items.length}</span><span className="magnetic-stack__mobile">{mobileCount}</span></span>
+      </h3>
+      <ul className="magnetic-stack__tools">
+        {category.items.map(item => (
+          <li key={item.name} className={mobileNames.has(item.name) ? undefined : 'magnetic-stack__desktop'}>
+            <TechIcon item={item} theme={theme} />
+            <span>{item.name}</span>
+          </li>
+        ))}
+      </ul>
+    </Motion.section>
   );
-};
+}
 
-const Techstack = () => {
+export default function Techstack() {
   const { theme } = useTheme();
-
+  const reducedMotion = useReducedMotion();
   return (
-    <section className="relative w-full overflow-hidden px-4 pt-8 md:pt-10" id="tech">
+    <section className="relative w-full px-4 pt-8 md:pt-10 magnetic-stack" id="tech" aria-labelledby="tech-stack-title">
       <div className="relative z-10 mx-auto w-full max-w-4xl">
-        <article data-portfolio-panel
-          className="relative w-full min-h-0 overflow-hidden rounded-xl border p-5 md:min-h-[620px] md:p-6 transition-colors duration-300 ease-in-out hover:bg-muted/50"
-          style={{
-            backgroundColor: 'oklch(var(--background))',
-            borderColor: 'oklch(var(--border))',
-          }}
-        >
-          <div className="relative flex items-center justify-between border-b  pr-4 pb-3" style={{ borderColor: 'oklch(var(--border))' }}>
-            <h2 className="text-2xl font-semibold" style={{ color: 'oklch(var(--foreground))' }}>
-              Tech Stack
-            </h2>
-            <span className="hidden font-mono text-[11px] md:inline" style={{ color: 'oklch(var(--muted-foreground))' }}>
-              ~/russel/stack.json
-            </span>
-          </div>
-
-          <ul className="mobile-tech-stack mt-4 grid grid-cols-2 gap-2 md:hidden" aria-label="Main technologies">
-            {mobileTech.map((item) => (
-              <li key={item.name} className="flex min-w-0 items-center gap-2 py-2 text-xs">
-                <TechIcon item={item} theme={theme} />
-                <span>{item.name}</span>
-              </li>
-            ))}
-          </ul>
-          <div className="tech-categories relative mt-5 hidden grid-cols-1 gap-4 md:mt-6 md:grid md:grid-cols-2">
-            {techData.map((category, idx) => (
-              <Motion.article
-                key={category.category}
-                custom={idx}
-                variants={cardVariants}
-                initial="hidden"
-                whileInView="visible"
-                viewport={{ once: true, amount: 0.18 }}
-                whileHover={{ y: -2, transition: { duration: 0.18, ease: 'easeOut' } }}
-                className="tech-category group/card relative overflow-hidden py-4"
-                style={{
-                  backgroundColor: 'transparent',
-                  borderColor: 'oklch(var(--border))',
-                  boxShadow: '0 0 0 0 oklch(var(--foreground) / 0)',
-                }}
-              >
-                <div
-                  className="pointer-events-none absolute inset-x-0 top-0 h-px opacity-70"
-                  style={{ background: 'linear-gradient(90deg, transparent, oklch(var(--foreground) / 0.24), transparent)' }}
-                />
-
-                <div className="mb-4 flex items-center justify-between gap-3">
-                  <div>
-                    <h3 className="font-mono text-sm font-semibold" style={{ color: 'oklch(var(--foreground))' }}>
-                      {category.category}
-                    </h3>
-                  </div>
-                  <span
-                    className="h-2.5 w-2.5 rounded-full border"
-                    style={{
-                      borderColor: 'oklch(var(--border))',
-                      backgroundColor: 'oklch(var(--foreground) / 0.16)',
-                      boxShadow: '0 0 18px oklch(var(--foreground) / 0.08)',
-                    }}
-                  />
-                </div>
-
-                <div className="flex flex-wrap gap-2">
-                  {category.items.map((item) => (
-                    <Motion.div
-                      key={item.name}
-                      whileHover={{ y: -1 }}
-                      whileTap={{ scale: 0.98 }}
-                      className="group relative flex items-center gap-2 overflow-hidden rounded-lg border px-2.5 py-2 text-xs transition-[background-color,border-color,transform] duration-200 hover:bg-muted/40"
-                      style={{
-                        borderColor: 'oklch(var(--border))',
-                        backgroundColor: 'oklch(var(--background) / 0.78)',
-                      }}
-                    >
-                      <span className="absolute inset-x-2 top-0 h-px bg-foreground/10 opacity-0 transition-opacity duration-300 group-hover:opacity-100" />
-                      <span
-                        className="relative z-10 grid h-9 w-9 place-items-center rounded-md border transition-transform duration-300 group-hover:-translate-y-0.5"
-                        style={{
-                          borderColor: 'oklch(var(--border))',
-                          backgroundColor: 'oklch(var(--muted) / 0.42)',
-                        }}
-                      >
-                      <TechIcon item={item} theme={theme} />
-                      </span>
-                      <span className="relative z-10 whitespace-nowrap font-medium">{item.name}</span>
-                    </Motion.div>
-                  ))}
-                </div>
-              </Motion.article>
-            ))}
+        <article data-portfolio-panel className="magnetic-stack__panel">
+          <header className="magnetic-stack__header">
+            <div><p>~/russel/stack.json</p><h2 id="tech-stack-title">Tech Stack<span>.</span></h2></div>
+          </header>
+          <div className="magnetic-stack__grid">
+            {techData.map((category, index) => <MagneticTile key={category.category} category={category} index={index} theme={theme} reducedMotion={reducedMotion} />)}
           </div>
         </article>
       </div>
     </section>
   );
-};
-
-export default Techstack;
+}

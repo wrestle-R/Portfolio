@@ -59,38 +59,6 @@
     z-index: 40;
   }
 
-  .portfolio-background {
-    position: fixed;
-    inset: 0;
-    z-index: 0;
-    pointer-events: none;
-    background:
-      radial-gradient(ellipse 32rem 27rem at 6% 22%, oklch(var(--foreground) / 0.035), transparent 75%),
-      radial-gradient(ellipse 38rem 32rem at 96% 62%, oklch(var(--foreground) / 0.03), transparent 75%);
-  }
-
-  .portfolio-background::before,
-  .portfolio-background::after {
-    content: '';
-    position: absolute;
-    inset: 0;
-  }
-
-  .portfolio-background::before {
-    background-image:
-      linear-gradient(to right, oklch(var(--foreground) / 0.026) 1px, transparent 1px),
-      linear-gradient(to bottom, oklch(var(--foreground) / 0.026) 1px, transparent 1px);
-    background-size: 64px 64px;
-    mask-image: linear-gradient(to right, black, transparent 38%, transparent 62%, black);
-  }
-
-  .portfolio-background::after {
-    background-image: radial-gradient(oklch(var(--foreground) / 0.11) 0.65px, transparent 0.8px);
-    background-size: 22px 22px;
-    mask-image: linear-gradient(to right, black, transparent 27%, transparent 73%, black);
-    opacity: .45;
-  }
-
   .portfolio-charm-section {
     position: relative;
   }
@@ -243,10 +211,6 @@
   @media (prefers-reduced-motion: reduce) {
     .portfolio-charm__object,
     .portfolio-charm__note { transition: none; }
-  }
-
-  @media (max-width: 767px) {
-    .portfolio-background { display: none !important; }
   }
 
   @media (max-width: 1399px), (hover: none), (pointer: coarse) {
