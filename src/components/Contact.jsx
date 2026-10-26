@@ -1,7 +1,6 @@
 "use client"
 
 import React, { useState } from "react"
-import emailjs from "@emailjs/browser"
 import "./contact-sticker.css"
 import { useHydrated } from "../lib/use-hydrated"
 
@@ -22,6 +21,8 @@ const Contact = () => {
     setSubmitStatus("")
 
     try {
+      // Keep the email SDK off the startup path; its storage access can throw.
+      const { default: emailjs } = await import("@emailjs/browser")
       const serviceId = import.meta.env.VITE_PUBLIC_EMAILJS_SERVICE_ID
       const templateId = import.meta.env.VITE_PUBLIC_EMAILJS_TEMPLATE_ID
       const publicKey = import.meta.env.VITE_PUBLIC_EMAILJS_PUBLIC_KEY

@@ -5,11 +5,12 @@ import tailwindcss from "@tailwindcss/vite"
 import react from "@vitejs/plugin-react"
 import { defineConfig, loadEnv } from "vite"
 import githubContributions from "./api/github-contributions.js"
+import { introPlugin } from "./scripts/intro-plugin.js"
 import { seoPlugin } from "./scripts/seo-plugin.js"
 
 // https://vite.dev/config/
 export default defineConfig({
-  plugins: [react(), tailwindcss(), seoPlugin(), {
+  plugins: [react(), tailwindcss(), introPlugin(), seoPlugin(), {
     name: 'github-activity-api',
     configureServer(server) {
       // Read credentials only in the Node dev server, matching Vercel Functions.

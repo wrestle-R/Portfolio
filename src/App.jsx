@@ -23,6 +23,7 @@ function BlogRedirect() {
 
 export function AppContent() {
   React.useEffect(() => {
+    document.dispatchEvent(new Event('russel:page-ready'));
     return registerCopyAttribution();
   }, []);
 

@@ -1,6 +1,7 @@
 import React from 'react';
 import { Github, Linkedin, Mail } from 'lucide-react';
 import './footer.css';
+import { STICKER_DISCOVERIES } from '../lib/sticker-discoveries';
 
 const footerLinks = [
   { label: 'GitHub', href: 'https://github.com/wrestle-R', Icon: Github },
@@ -26,6 +27,7 @@ export default function Footer() {
             </div>
           </nav>
         </div>
+        <p className="sticker-discovery-progress" data-discovery-progress role="status" aria-live="polite" aria-atomic="true">0 / {STICKER_DISCOVERIES.portfolio.length} Easter eggs · Texture 12%</p>
       </div>
     </footer>
   );

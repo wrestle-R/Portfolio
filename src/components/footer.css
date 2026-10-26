@@ -37,3 +37,5 @@
 /* Leave the existing floating return button clear of footer links. */
 @media (max-width:1199px) { .site-footer { padding-bottom:calc(64px + env(safe-area-inset-bottom)); } }
 @media (prefers-reduced-motion:reduce) { .site-footer-links a { transition:none; } }
+
+.portfolio-footer .sticker-discovery-progress { margin: 14px 2px 0; color: var(--footer-muted); font: 11px/1.6 ui-monospace, monospace; }

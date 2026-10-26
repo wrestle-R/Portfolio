@@ -94,3 +94,18 @@
 }
 
 .portfolio-sticker-navigation .portfolio-charm__object img { filter: var(--sticker-cutout); }
+
+/* Linked objects lift gently; their saved drag translation stays on the parent. */
+.sticker-navigation a.sticker-link[href] { cursor: pointer; transform-origin: 50% 75%; transition: transform 360ms cubic-bezier(.2,.8,.2,1), filter 360ms ease; }
+@media (hover: hover) and (prefers-reduced-motion: no-preference) {
+  .sticker-navigation__item:not([data-dragging='true']) > a.sticker-link[href]:is(:hover, :focus-visible):not(:active) {
+    transform: translateY(-4px) rotate(calc(var(--sticker-angle, -5deg) * .35)) scale(1.025);
+    filter: drop-shadow(0 7px 6px #0002);
+  }
+  .headphone-sticker__destination { transition: transform 240ms ease; }
+  .headphone-sticker__destination:hover { transform: translateY(-2px); }
+}
+@media (prefers-reduced-motion: reduce) {
+  .sticker-navigation a.sticker-link[href] { transition: none; }
+  .sticker-navigation__item:not([data-dragging='true']) > a.sticker-link[href]:hover { transform: rotate(var(--sticker-angle, -5deg)); }
+}

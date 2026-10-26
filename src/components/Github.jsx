@@ -59,7 +59,7 @@ const Github = () => {
       style={{ backgroundColor: 'transparent' }}
     >
       <div className="max-w-4xl mx-auto relative z-10 w-full">
-        <article data-portfolio-panel
+        <article data-portfolio-panel data-intro-pending={loading ? "" : undefined}
           className="rounded-xl border p-5 md:p-6 w-full flex flex-col items-center relative overflow-hidden transition-colors duration-300 ease-in-out hover:bg-muted/50" 
           style={{ backgroundColor: "oklch(var(--background))", borderColor: "oklch(var(--border))" }}
         >
