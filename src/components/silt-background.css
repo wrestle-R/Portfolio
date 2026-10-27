@@ -1,4 +1,4 @@
-/* Selected Fine silt: discoveries gradually reveal the original full-strength tiles. */
+/* Selected Fine silt at full strength from the first paint. */
 .portfolio-silt-background {
   position: fixed;
   inset: 0;
@@ -7,7 +7,7 @@
   background-image: url('/textures/fine-silt-light.png');
   background-repeat: repeat;
   background-size: 384px 384px;
-  opacity: var(--discovery-texture, .12);
+  opacity: 1;
   transition: opacity 900ms ease;
 }
 :root[data-theme='dark'] .portfolio-silt-background {

@@ -1,4 +1,3 @@
-import { initStickerDiscoveries } from './sticker-discoveries';
 
 // Stickers follow named content corners; moving one never activates its link.
 export function initStickerNavigation(root) {
@@ -252,7 +251,6 @@ export function initStickerNavigation(root) {
     main?.setAttribute('tabindex', '-1'); main?.focus({ preventScroll: true });
     scrollTo({ top: 0, behavior: matchMedia('(prefers-reduced-motion: reduce)').matches ? 'instant' : 'smooth' });
   });
-  const cleanupDiscoveries = initStickerDiscoveries(root, isBlog ? 'blog' : 'portfolio');
   updateBack(); positionItems();
-  return () => { cleanupDiscoveries(); finish(true); controller.abort(); returnHeading?.removeAttribute('data-return-home-heading'); observer.disconnect(); cancelAnimationFrame(frame); };
+  return () => { finish(true); controller.abort(); returnHeading?.removeAttribute('data-return-home-heading'); observer.disconnect(); cancelAnimationFrame(frame); };
 }

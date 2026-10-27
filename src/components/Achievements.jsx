@@ -149,7 +149,7 @@ export default function Achievements() {
               >
                 {achievementsData.map((achievement) => (
                   <div key={achievement.id} className="w-full min-w-0 shrink-0 p-3">
-                    <div className="flex min-h-[520px] flex-col">
+                    <div className="flex min-h-[360px] flex-col">
                       <div>
                         <div className="min-w-0">
                           <span className="inline-flex rounded-full border px-2.5 py-1 text-[11px] font-medium uppercase tracking-[0.08em]" style={{ borderColor: "oklch(var(--border))", color: "oklch(var(--muted-foreground))" }}>
@@ -161,21 +161,6 @@ export default function Achievements() {
                           <p className="mt-1 text-sm font-semibold" style={{ color: "oklch(var(--foreground))" }}>
                             {achievement.project}
                           </p>
-                        </div>
-                      </div>
-
-                      <p className="mt-3 break-words text-sm leading-relaxed" style={{ color: "oklch(var(--muted-foreground))" }}>
-                        {achievement.description}
-                      </p>
-
-                      <div className="mt-3 grid grid-cols-2 gap-2 text-xs">
-                        <div className="min-w-0 rounded-lg border px-3 py-2" style={{ borderColor: "oklch(var(--border))", backgroundColor: "oklch(var(--muted) / 0.22)" }}>
-                          <p className="font-medium" style={{ color: "oklch(var(--foreground))" }}>Host</p>
-                          <p className="mt-1 break-words leading-snug" style={{ color: "oklch(var(--muted-foreground))" }}>{achievement.host}</p>
-                        </div>
-                        <div className="min-w-0 rounded-lg border px-3 py-2" style={{ borderColor: "oklch(var(--border))", backgroundColor: "oklch(var(--muted) / 0.22)" }}>
-                          <p className="font-medium" style={{ color: "oklch(var(--foreground))" }}>Duration</p>
-                          <p className="mt-1 break-words leading-snug" style={{ color: "oklch(var(--muted-foreground))" }}>{achievement.duration}</p>
                         </div>
                       </div>
 
