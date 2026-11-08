@@ -110,8 +110,30 @@
   .sticker-navigation__item:not([data-dragging='true']) > a.sticker-link[href]:hover { transform: rotate(var(--sticker-angle, -5deg)); }
 }
 
-/* A permanent paper arrow makes link stickers recognisable on touchscreens. */
-a.sticker-link[href] { position: relative; }
-.sticker-link__cue { position: absolute; top: 4px; right: 2px; display: grid; place-items: center; width: 23px; height: 23px; border: 1px solid #30382f35; border-radius: 50%; background: #fffdf6; color: #30382f; box-shadow: 0 2px 4px #0002; font: 600 16px/1 system-ui, sans-serif; pointer-events: none; }
-a.sticker-link[href]:is(:hover, :focus-visible) .sticker-link__cue { background: #30382f; color: #fffdf6; }
-[data-sticker-id][data-dragging='true'] .sticker-link__cue { opacity: .35; }
+/* Arrow-free focus corners follow each object's own artwork bounds. */
+.sticker-link__art { position: relative; display: block; width: 80px; max-width: 100%; }
+.sticker-link__art img { max-width: 100%; }
+.sticker-link__cue { position: absolute; inset: var(--cue-top, 6%) var(--cue-right, 6%) var(--cue-bottom, 6%) var(--cue-left, 6%); color: var(--sticker-foreground); opacity: .45; pointer-events: none; transition: opacity 220ms ease, transform 220ms ease; }
+.sticker-link__cue i { position: absolute; width: var(--cue-corner, 10px); height: var(--cue-corner, 10px); border: 0 solid currentColor; }
+.sticker-link__cue i:nth-child(1) { top: 0; left: 0; border-top-width: 1px; border-left-width: 1px; border-top-left-radius: var(--cue-radius, 0px); }
+.sticker-link__cue i:nth-child(2) { top: 0; right: 0; border-top-width: 1px; border-right-width: 1px; border-top-right-radius: var(--cue-radius, 0px); }
+.sticker-link__cue i:nth-child(3) { bottom: 0; left: 0; border-bottom-width: 1px; border-left-width: 1px; border-bottom-left-radius: var(--cue-radius, 0px); }
+.sticker-link__cue i:nth-child(4) { bottom: 0; right: 0; border-bottom-width: 1px; border-right-width: 1px; border-bottom-right-radius: var(--cue-radius, 0px); }
+a.sticker-link:is(:hover, :focus-visible) .sticker-link__cue { opacity: .95; transform: scale(1.055); }
+[data-sticker-id][data-dragging='true'] .sticker-link__cue { opacity: .18; transform: none; }
+/* Shoe: low and wide; notebook/papers: square page corners. */
+[data-sticker-id='runny'] { --cue-top: 30%; --cue-bottom: 24%; --cue-left: 0%; --cue-right: 0%; --cue-corner: 12px; --cue-radius: 3px; }
+[data-sticker-id='blog'], [data-sticker-id='posts'] { --cue-top: 15%; --cue-bottom: 15%; --cue-left: 3%; --cue-right: 3%; --cue-corner: 9px; }
+[data-sticker-id='resume'] { --cue-top: 5%; --cue-bottom: 3%; --cue-left: 3%; --cue-right: 9%; --cue-corner: 12px; }
+/* Tall objects get narrow brackets; the pick keeps softer cutout corners. */
+[data-sticker-id='guitar'] { --cue-top: 0%; --cue-bottom: 0%; --cue-left: 26%; --cue-right: 26%; --cue-corner: 8px; }
+[data-sticker-id='guitar-room'], [data-sticker-id='songbook'] { --cue-top: 5%; --cue-bottom: 5%; --cue-left: 12%; --cue-right: 12%; --cue-corner: 9px; --cue-radius: 4px; }
+[data-sticker-id='minecraft'] { --cue-top: 0%; --cue-bottom: 0%; --cue-left: 7%; --cue-right: 7%; --cue-corner: 8px; }
+[data-sticker-id='arch'] { --cue-top: 4%; --cue-bottom: 4%; --cue-left: 5%; --cue-right: 5%; --cue-corner: 11px; }
+/* Round balls/orbits and landscape artwork each keep their natural silhouette. */
+[data-sticker-id='football'], [data-sticker-id='about'] { --cue-top: 6%; --cue-bottom: 6%; --cue-left: 6%; --cue-right: 6%; --cue-corner: 12px; --cue-radius: 10px; }
+[data-sticker-id='constellation'] { --cue-top: 11%; --cue-bottom: 11%; --cue-left: 0%; --cue-right: 0%; --cue-corner: 12px; --cue-radius: 7px; }
+[data-sticker-id='hills'], [data-sticker-id='wallpapers'] { --cue-top: 20%; --cue-bottom: 18%; --cue-left: 3%; --cue-right: 3%; --cue-corner: 12px; --cue-radius: 2px; }
+[data-sticker-id='home'], [data-sticker-id='spotify-back'] { --cue-top: 0%; --cue-bottom: 0%; --cue-left: 0%; --cue-right: 0%; --cue-corner: 6px; --cue-radius: 2px; }
+@media (min-width: 1200px) { .sticker-link__art { width: 100%; } }
+@media (prefers-reduced-motion: reduce) { .sticker-link__cue { transition: none; } }
