@@ -12,7 +12,7 @@ import CloudThemeIcon from './CloudThemeIcon';
  * [x] Use movable object stickers without visible captions; retain accessible names.
  * [x] Restore the original desktop positions and sizes without adding gaps between sections.
  * [x] Restore Arch, guitar, football and hills on desktop; retain Blog, shoes and Minecraft.
- * [x] Keep Resume near the top and use fewer, smaller contextual stickers on phones.
+ * [x] Use fewer, smaller contextual stickers on phones; Resume navigation removed on request.
  * [x] Preserve the headphone song and play/pause behavior, including suppression after dragging.
  * [x] Keep mouse dragging, phone hold-to-drag, ordinary swipe scrolling and keyboard positioning.
  * [x] Remove the Home house sticker; keep the simpler green Constellation planet and its link.
@@ -39,7 +39,6 @@ export default function StickerNavigation({ compact = false }) {
   const items = [
     { id: 'blog', order: 2, label: 'Blog', href: BLOG_URL, image: 'blog-notebook.webp' },
     { id: 'runny', order: 3, label: 'Runny', href: buildSubdomainUrl('runny'), image: 'running-shoe.webp' },
-    { id: 'resume', order: 4, label: 'Resume', href: '/resume', image: 'resume-paper.webp', current: pathname === '/resume' },
     { id: 'minecraft', order: 6, label: 'Minecraft', href: '/minecraft', image: 'minecraft-wrestle.webp' },
     { id: 'headphones', order: 7, label: 'Play music' },
     { id: 'guitar', order: 10, label: 'Songbook', href: `${BLOG_URL}/songs`, image: 'guitar.webp' },
