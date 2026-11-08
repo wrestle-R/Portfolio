@@ -43,21 +43,22 @@ export default function StickerNavigation({ compact = false }) {
     { id: 'minecraft', order: 6, label: 'Minecraft', href: '/minecraft', image: 'minecraft-wrestle.webp' },
     { id: 'headphones', order: 7, label: 'Play music' },
     { id: 'guitar', order: 10, label: 'Songbook', href: `${BLOG_URL}/songs`, image: 'guitar.webp' },
+    { id: 'guitar-room', order: 14, label: 'Guitar room', href: `${BLOG_URL}/guitar`, image: 'guitar-pick.svg' },
     { id: 'arch', order: 11, label: 'My Arch Linux setup', href: `${BLOG_URL}/blog/linux-experience`, image: 'arch-linux-mark.svg' },
     { id: 'football', order: 12, label: 'The Long Stride', href: `${BLOG_URL}/blog/the-long-stride`, image: 'football.webp' },
     { id: 'hills', order: 13, label: 'Munnar trip', href: `${BLOG_URL}/blog/munnar-trip`, image: 'hill-station.webp' },
     { id: 'theme', order: 8, label: theme === 'dark' ? 'Turn the lights on' : 'Turn the lights off' },
     { id: 'constellation', order: 9, label: 'Constellation', href: 'https://spotify.russel.is-a.dev/', image: 'spotify-planet-polished.webp' },
-  ].filter((item) => !(pathname.replace(/\/+$/, '') === '/resume' && ['blog','guitar','arch','football','hills'].includes(item.id)))
+  ].filter((item) => !(pathname.replace(/\/+$/, '') === '/resume' && ['blog','guitar','guitar-room','arch','football','hills'].includes(item.id)))
     .filter((item) => !compact || item.id === 'theme');
   return (
     <nav ref={ref} className={`sticker-navigation portfolio-sticker-navigation${compact ? ' sticker-navigation--compact' : ''}`} data-sticker-navigation={compact ? 'portfolio-return' : 'portfolio'} aria-description="Drag stickers to move them. On a phone, press and hold first. With a keyboard, use Alt and arrow keys." data-sticker-count={items.length} aria-label="Explore Russel’s portfolio">
       <div className="sticker-navigation__list" data-sticker-list id="portfolio-sticker-links">
         {items.map((item) => {
-          const content = item.id === 'theme' ? null : <><img src={`/charms/${item.image}`} alt="" draggable="false" width="94" height="80" /></>;
+          const content = item.id === 'theme' ? null : <><img src={`/charms/${item.image}`} alt="" draggable="false" width="94" height="80" /><span className="sticker-link__cue" aria-hidden="true">↗</span></>;
           return (
             <div key={item.id} className="sticker-navigation__item" data-sticker-id={item.id} data-mobile-hidden={item.id !== 'theme'} data-sticker-order={item.order} data-sticker-side={item.order <= 4 ? 'left' : 'right'} style={{ '--sticker-row': (item.order - 1) % 4, '--sticker-angle': `${[-5, 6, -7, 4, 5, -5, 3, -6, -9][(item.order - 1) % 9]}deg` }}>
-              {item.id === 'headphones' ? <PortfolioCharm type="headphones" managed /> : item.id === 'theme' ? <button type="button" className="theme-switch" data-theme-switch role="switch" aria-checked={theme === 'light'} onClick={(event) => toggleTheme(event.currentTarget)} aria-label="Light mode" title={item.label}><CloudThemeIcon /></button> : item.href.startsWith('http') ? <a className="sticker-link" href={item.href} aria-label={item.label} title={item.label}>{content}</a> : <Link className="sticker-link" aria-label={item.label} title={item.label} to={item.href} aria-current={item.current ? 'page' : undefined} onClick={() => {
+              {item.id === 'headphones' ? <PortfolioCharm type="headphones" managed /> : item.id === 'theme' ? <button type="button" className="theme-switch" data-theme-switch role="switch" aria-checked={theme === 'light'} onClick={(event) => toggleTheme(event.currentTarget)} aria-label="Light mode" title={item.label}><CloudThemeIcon /></button> : item.href.startsWith('http') ? <a className="sticker-link" href={item.href} target="_blank" rel="noopener noreferrer" aria-label={item.label} title={item.label}>{content}</a> : <Link className="sticker-link" aria-label={item.label} title={item.label} to={item.href} aria-current={item.current ? 'page' : undefined} onClick={() => {
                 const hash = item.href.split('#')[1];
                 if (hash) requestAnimationFrame(() => document.getElementById(hash)?.scrollIntoView({ behavior: matchMedia('(prefers-reduced-motion: reduce)').matches ? 'instant' : 'smooth' }));
                 else window.scrollTo({ top: 0, behavior: 'instant' });

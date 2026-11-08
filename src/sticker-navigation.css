@@ -30,7 +30,7 @@
   .sticker-navigation__item[data-sticker-id='resume'] { --sticker-size: 126px; }
   .sticker-navigation__item[data-sticker-id='blog'], .sticker-navigation__item[data-sticker-id='posts'], .sticker-navigation__item[data-sticker-id='runny'] { --sticker-size: 204px; }
   .sticker-navigation__item[data-sticker-id='minecraft'] { --sticker-size: 184px; }
-  .sticker-navigation__item[data-sticker-id='arch'], .sticker-navigation__item[data-sticker-id='guitar'], .sticker-navigation__item[data-sticker-id='songbook'] { --sticker-size: 148px; }
+  .sticker-navigation__item[data-sticker-id='guitar-room'], .sticker-navigation__item[data-sticker-id='arch'], .sticker-navigation__item[data-sticker-id='guitar'], .sticker-navigation__item[data-sticker-id='songbook'] { --sticker-size: 148px; }
   .sticker-navigation__item[data-sticker-id='football'] { --sticker-size: 126px; }
   .sticker-navigation__item[data-sticker-id='hills'], .sticker-navigation__item[data-sticker-id='wallpapers'] { --sticker-size: 198px; }
   .sticker-navigation__item[data-sticker-id='constellation'] { --sticker-size: 178px; }
@@ -109,3 +109,9 @@
   .sticker-navigation a.sticker-link[href] { transition: none; }
   .sticker-navigation__item:not([data-dragging='true']) > a.sticker-link[href]:hover { transform: rotate(var(--sticker-angle, -5deg)); }
 }
+
+/* A permanent paper arrow makes link stickers recognisable on touchscreens. */
+a.sticker-link[href] { position: relative; }
+.sticker-link__cue { position: absolute; top: 4px; right: 2px; display: grid; place-items: center; width: 23px; height: 23px; border: 1px solid #30382f35; border-radius: 50%; background: #fffdf6; color: #30382f; box-shadow: 0 2px 4px #0002; font: 600 16px/1 system-ui, sans-serif; pointer-events: none; }
+a.sticker-link[href]:is(:hover, :focus-visible) .sticker-link__cue { background: #30382f; color: #fffdf6; }
+[data-sticker-id][data-dragging='true'] .sticker-link__cue { opacity: .35; }

@@ -204,7 +204,7 @@ export function initStickerNavigation(root) {
           return;
         }
       } else if (wide && home) {
-        const original = { headphones: ['#about', 'left', .55, 168], minecraft: ['#about', 'right', .48, 164], runny: ['#github', 'right', .49, 185], blog: ['#latest-blog', 'left', .5, 185], guitar: ['#tech', 'left', .46, 132], arch: ['#tech', 'right', .48, 132], football: ['#internship', 'right', .47, 112], hills: ['#contact', 'left', .48, 180], constellation: ['#tech', 'left', .84, 160] };
+        const original = { headphones: ['#about', 'left', .55, 168], minecraft: ['#about', 'right', .48, 164], runny: ['#github', 'right', .49, 185], blog: ['#latest-blog', 'left', .5, 185], guitar: ['#tech', 'left', .46, 132], 'guitar-room': ['#latest-blog', 'right', .5, 148], arch: ['#tech', 'right', .48, 132], football: ['#internship', 'right', .47, 112], hills: ['#contact', 'left', .48, 180], constellation: ['#tech', 'left', .84, 160] };
         if (id === 'resume' && intro) {
           const themeWidth = root.querySelector('[data-sticker-id="theme"]')?.getBoundingClientRect().width || 64;
           put(item, Math.min(intro.right + 16, innerWidth - itemWidth(item) - themeWidth - 24), 10 - scrollY);
