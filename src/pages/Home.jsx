@@ -3,7 +3,6 @@ import StickerNavigation from '../components/StickerNavigation';
 import About from '../components/About';
 import Github from '../components/Github';
 import LatestBlog from '../components/LatestBlog';
-import Techstack from '../components/Techstack';
 import Internship from '../components/Internship';
 import Projects from '../components/Projects';
 import Achievements from '../components/Achievements';
@@ -12,7 +11,7 @@ import Footer from '../components/Footer';
 import SectionReveal from '../components/ui/section-reveal';
 import SiltBackground from '../components/SiltBackground';
 
-const sections = [About, Github, LatestBlog, Techstack, Internship, Projects, Achievements, Contact, Footer];
+const sections = [About, Github, LatestBlog, Internship, Projects, Achievements, Contact, Footer];
 const Home = () => {
   return (
     <div className="portfolio-home min-h-screen">

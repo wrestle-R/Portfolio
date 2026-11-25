@@ -1,6 +1,6 @@
 "use client"
 
-import { useMemo, useState, useSyncExternalStore } from "react"
+import { useState } from "react"
 import { useTheme } from "../context/ThemeContext"
 
 // Previous project entries preserved for future use.
@@ -147,26 +147,43 @@ const projectsData = [
   },
 ]
 
-const subscribeToMobile = (onChange) => {
-  const media = window.matchMedia('(max-width: 767px)')
-  media.addEventListener('change', onChange)
-  return () => media.removeEventListener('change', onChange)
-}
-const getMobileSnapshot = () => window.matchMedia('(max-width: 767px)').matches
-
-export default function Projects() {
-  const [activeProject, setActiveProject] = useState(projectsData[0])
-  const { theme } = useTheme()
-  const isMobile = useSyncExternalStore(subscribeToMobile, getMobileSnapshot, () => false)
-  const selectedProject = isMobile && activeProject.id > 3 ? projectsData[0] : activeProject
-
-  const activeImage = useMemo(() => {
-    if (theme === "dark") return selectedProject.imageDark || selectedProject.image
-    return selectedProject.imageLight || selectedProject.image
-  }, [selectedProject, theme])
+function ProjectShowcase({ project, theme, selected }) {
+  const image = theme === "dark" ? project.imageDark : project.imageLight
 
   return (
-    <section className="relative z-10 w-full px-4 pt-8 md:pt-10" id="projects" style={{ backgroundColor: "transparent" }}>
+    <article className="project-showcase" data-selected={selected} aria-label={project.name}>
+      <div className="project-copy">
+        <h3>{project.name}</h3>
+        <p className="project-description">{project.description}</p>
+        <ul className="project-technologies" aria-label={`${project.name} technologies`}>
+          {project.tech.map((tech) => <li key={tech}>{tech}</li>)}
+        </ul>
+        <div className="project-actions">
+          <a className="project-primary-action" href={project.url} target="_blank" rel="noopener noreferrer">
+            {project.primaryLabel || "Live Demo"} <span aria-hidden="true">↗</span>
+          </a>
+          <a className="project-code-action" href={project.github} target="_blank" rel="noopener noreferrer">
+            View Code <span aria-hidden="true">↗</span>
+          </a>
+        </div>
+      </div>
+      <div className="project-preview">
+        <div className="project-preview-bar" aria-hidden="true">
+          <span className="project-preview-dots"><i /><i /><i /></span>
+          <span>{project.name}</span>
+        </div>
+        <img src={image} alt={`${project.name} Preview`} width="1332" height="768" loading="lazy" />
+      </div>
+    </article>
+  )
+}
+
+export default function Projects() {
+  const [activeProjectId, setActiveProjectId] = useState(projectsData[0].id)
+  const { theme } = useTheme()
+
+  return (
+    <section className="relative z-10 w-full px-4 pt-8 md:pt-10" id="projects" aria-labelledby="projects-heading">
       <div className="relative z-10 mx-auto w-full max-w-4xl">
         <article data-portfolio-panel
           className="relative w-full overflow-hidden rounded-xl border p-5 md:p-6 transition-colors duration-300 ease-in-out hover:bg-muted/50"
@@ -174,63 +191,22 @@ export default function Projects() {
         >
           <div className="projects-heading mb-5 flex items-start justify-between gap-3 border-b pb-3" style={{ borderColor: "oklch(var(--border))" }}>
             <div>
-            <h2 className="text-2xl font-bold" style={{ color: "oklch(var(--foreground))" }}>
-              Projects
-            </h2>
-            <span className="project-count text-xs font-mono" style={{ borderColor: "oklch(var(--border))", color: "oklch(var(--muted-foreground))" }}>
-              {isMobile ? 3 : projectsData.length} projects
-            </span>
+              <h2 id="projects-heading" className="text-2xl font-bold" style={{ color: "oklch(var(--foreground))" }}>
+                Projects
+              </h2>
+              <span className="project-count text-xs font-mono">{projectsData.length} projects</span>
             </div>
             <span className="mobile-sticker-slot" data-mobile-sticker-slot="constellation" aria-hidden="true" />
           </div>
 
-          <div className="project-tabs mb-5 grid grid-cols-3 gap-2 pb-1 md:grid-cols-5" aria-label="Choose a project">
-            {/* Mobile: Keep the first three projects in one row */}
-            {projectsData.slice(0, 3).map((project) => (
-              <button
-                key={project.id}
-                onClick={() => setActiveProject(project)}
-                aria-pressed={selectedProject.id === project.id}
-                className="md:hidden w-full cursor-pointer rounded-lg border px-2 py-2 text-center text-xs sm:text-sm font-medium transition-colors duration-200 truncate"
-                style={
-                  selectedProject.id === project.id
-                    ? {
-                        backgroundColor: "oklch(var(--primary))",
-                        color: "oklch(var(--primary-foreground))",
-                        borderColor: "oklch(var(--primary))",
-                      }
-                    : {
-                        backgroundColor: "oklch(var(--background))",
-                        color: "oklch(var(--foreground))",
-                        borderColor: "oklch(var(--border))",
-                      }
-                }
-                title={project.name}
-              >
-                {project.name}
-              </button>
-            ))}
-            
-            {/* Desktop: Show all project tabs without horizontal scroll */}
+          <div className="project-tabs mb-5 hidden gap-2 md:grid md:grid-cols-5" role="group" aria-label="Choose a project">
             {projectsData.map((project) => (
               <button
                 key={project.id}
-                onClick={() => setActiveProject(project)}
-                aria-pressed={selectedProject.id === project.id}
-                className="hidden md:block w-full cursor-pointer rounded-lg border px-2 py-2 text-center text-xs lg:text-sm font-medium transition-colors duration-200 truncate"
-                style={
-                  selectedProject.id === project.id
-                    ? {
-                        backgroundColor: "oklch(var(--primary))",
-                        color: "oklch(var(--primary-foreground))",
-                        borderColor: "oklch(var(--primary))",
-                      }
-                    : {
-                        backgroundColor: "oklch(var(--background))",
-                        color: "oklch(var(--foreground))",
-                        borderColor: "oklch(var(--border))",
-                      }
-                }
+                type="button"
+                onClick={() => setActiveProjectId(project.id)}
+                aria-pressed={activeProjectId === project.id}
+                className="w-full cursor-pointer truncate rounded-lg border px-2 py-2 text-center text-xs font-medium transition-colors duration-200 lg:text-sm"
                 title={project.name}
               >
                 {project.name}
@@ -238,31 +214,10 @@ export default function Projects() {
             ))}
           </div>
 
-          <div key={selectedProject.id} className="project-showcase">
-            <div className="project-copy">
-              <h3>{selectedProject.name}</h3>
-              <p className="project-description">{selectedProject.description}</p>
-              <ul className="project-technologies" aria-label={`${selectedProject.name} technologies`}>
-                {selectedProject.tech.map((tech) => <li key={tech}>{tech}</li>)}
-              </ul>
-              <div className="project-actions">
-                <a className="project-primary-action" href={selectedProject.url} target="_blank" rel="noopener noreferrer">
-                  {selectedProject.primaryLabel || "Live Demo"} <span aria-hidden="true">↗</span>
-                </a>
-                <a className="project-code-action" href={selectedProject.github} target="_blank" rel="noopener noreferrer">
-                  View Code <span aria-hidden="true">↗</span>
-                </a>
-              </div>
-            </div>
-            <div className="project-preview">
-              <div className="project-preview-bar" aria-hidden="true"><span className="project-preview-dots"><i /><i /><i /></span><span>{selectedProject.name}</span></div>
-              <img
-                src={activeImage}
-                alt={`${selectedProject.name} Preview`}
-                width="1332"
-                height="768"
-              />
-            </div>
+          <div className="project-gallery">
+            {projectsData.map((project) => (
+              <ProjectShowcase key={project.id} project={project} theme={theme} selected={activeProjectId === project.id} />
+            ))}
           </div>
         </article>
       </div>
